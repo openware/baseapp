@@ -11,7 +11,6 @@ import { useCallback } from 'react';
 const WebSocketContext = React.createContext(null);
 
 export default ({ children }) => {
-    const [ connected, setConnected ] = useState<boolean>(false);
     const [ withAuth, setWithAuth ] = useState<boolean>(false);
     const [ withP2P, setWithP2P ] = useState<boolean>(false);
     const [ subscriptions, setSubscriptions ] = useState<string[]>([]);
@@ -36,14 +35,14 @@ export default ({ children }) => {
     }, [currentMarket]);
 
     useEffect(() => {
-        if (!connected && ((!userLoggedIn && !userLoading) || (userLoggedIn && !abilitiesLoading))) {
+        if (((!userLoggedIn && !userLoading) || (userLoggedIn && !abilitiesLoading))) {
             setWithAuth(userLoggedIn);
             setWithP2P(canReadP2P);
-        } else if (connected && ((!withAuth && userLoggedIn && !abilitiesLoading) || (!withP2P && canReadP2P))) {
+        } else if (((!withAuth && userLoggedIn && !abilitiesLoading) || (!withP2P && canReadP2P))) {
             setWithAuth(userLoggedIn);
             setWithP2P(canReadP2P);
         }
-    }, [connected, userLoggedIn, userLoading, userLoggedIn, abilitiesLoading, withAuth, withP2P, canReadP2P]);
+    }, [userLoggedIn, userLoading, userLoggedIn, abilitiesLoading, withAuth, withP2P, canReadP2P]);
 
     const baseUrl = useMemo(() => `${rangerUrl()}/${withAuth ? 'private' : 'public'}`, []);
 
@@ -59,7 +58,6 @@ export default ({ children }) => {
     } = useWebSocket(socketUrl, {
         onOpen: () => {
             window.console.log('WebSocket connection opened');
-            setConnected(true);
 
             for (const m of messages) {
                 sendJsonMessage(m);
@@ -69,7 +67,6 @@ export default ({ children }) => {
         },
         onClose: () => {
             console.log("WebSocket connection closed");
-            setConnected(false);
         },
         onError: error => {
             window.console.log(`WebSocket error ${error}`);
@@ -147,7 +144,6 @@ export default ({ children }) => {
                         }
                         if (previousSequence + 1 !== event.sequence) {
                             window.console.log(`Bad sequence detected in incremental orderbook previous: ${previousSequence}, event: ${event.sequence}`);
-                            setConnected(false);
 
                             return;
                         }
