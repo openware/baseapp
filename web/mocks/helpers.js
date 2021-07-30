@@ -282,7 +282,7 @@ const Helpers = {
             }
         }
     },
-    getStreamsFromUrl: (url) => url.replace("/", "").split(/[&?]stream=/).filter(stream => stream.length > 0),
+    getStreamsFromUrl: (url) => url.replace("/", "").split(/[&?]stream=/).filter(stream => stream.length > 0 && stream !== 'api/v2/ranger/public/' && stream !== 'api/v2/ranger/private'),
     unique: (list) => list.filter((value, index, self) => self.indexOf(value) === index)
 }
 
