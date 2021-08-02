@@ -110,63 +110,6 @@
   }
 
   &__body {
-    fieldset {
-      border: 1px solid var(--input-border-color);
-      border-radius: calc(var(--gap) * 0.6);
-      box-sizing: border-box;
-      color: var(--input-text-color);
-      float: right;
-      height: calc(var(--gap) * 6.56);
-      margin: calc(var(--gap) * 2) 0;
-      max-width: 100%;
-      padding-left: 0;
-      width: auto;
-
-      &:focus-within {
-        border-color: var(--input-border-color-active);
-        color: var(--input-text-color-active);
-      }
-
-      .hidden-label {
-        font-size: 1.25rem;
-        height: 0;
-        padding: 0 10px;
-        visibility: hidden;
-      }
-
-      input {
-        background: transparent;
-        border: unset;
-        bottom: 0;
-        color: var(--input-text-color);
-        font-size: calc(var(--gap) * 2);
-        margin-top: calc(var(--gap) * 1.16);
-
-        &::placeholder {
-          color: var(--input-placeholder-color);
-        }
-      }
-    }
-
-    &--input {
-      padding: 0;
-      position: relative;
-      width: 100%;
-
-      .custom-input {
-        padding: 0;
-
-        .input-group {
-          padding: 0;
-
-          input {
-            margin-top: 0;
-            padding: 0 0 0 10px;
-          }
-        }
-      }
-    }
-
     &--text {
       display: flex;
       flex-direction: column;
@@ -188,6 +131,7 @@
         align-items: center;
         display: flex;
         margin: calc(var(--gap) * 2) 0;
+        justify-content: space-between;
 
         a {
           color: var(--primary-cta-color);
@@ -199,6 +143,25 @@
 
         div {
           padding: 0 calc(var(--gap) * 1.5) 0 calc(var(--gap) * 4.16);
+        }
+
+        .cr-email-form__group {
+          padding: 0;
+          max-width: 45%;
+          margin-bottom: 0 !important;
+
+          .custom-input {
+            padding: 0;
+            margin-bottom: 0 !important;
+
+            label {
+              left: 36px !important;
+            }
+
+            input {
+              height: 48px;
+            }
+          }
         }
       }
     }

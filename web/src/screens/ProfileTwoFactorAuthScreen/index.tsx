@@ -1,3 +1,4 @@
+import cr from 'classnames';
 import { History } from 'history';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
@@ -39,11 +40,13 @@ type Props = RouterProps & ReduxProps & DispatchProps & IntlProps;
 
 interface State {
     otpCode: string;
+    otpCodeFocus: boolean;
 }
 
 class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
     public state = {
         otpCode: '',
+        otpCodeFocus: false,
     };
 
     public componentDidMount() {
@@ -84,12 +87,16 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
             barcode,
             qrUrl,
         } = this.props;
-        const { otpCode } = this.state;
+        const { otpCode, otpCodeFocus } = this.state;
 
         const secretRegex = /secret=(\w+)/;
         const secretMatch = qrUrl.match(secretRegex);
         const secret = secretMatch ? secretMatch[1] : null;
         const submitHandler = enable2fa ? this.handleEnable2fa : this.handleDisable2fa;
+
+        const otpCodeClass = cr('cr-email-form__group', {
+            'cr-email-form__group--focused': otpCodeFocus,
+        });
 
         return (
             <div className="container mt-5 pg-profile-two-factor-auth__form p-0">
@@ -136,19 +143,19 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                                 <span className="cr-item-number">3   </span>
                                 <span className="cr-item-text">{this.translate('page.body.profile.header.account.content.twoFactorAuthentication.message.4')}</span>
                             </div>
-                            <div className="col-12 col-sm-7">
-                                <fieldset className="pg-profile-two-factor-auth__body--input">
-                                    <div className="hidden-label">{this.translate('page.body.profile.header.account.content.twoFactorAuthentication.subHeader')}</div>
-                                    <CustomInput
-                                        handleChangeInput={this.handleOtpCodeChange}
-                                        type="tel"
-                                        inputValue={otpCode}
-                                        placeholder={this.translate('page.body.profile.header.account.content.twoFactorAuthentication.subHeader')}
-                                        onKeyPress={this.handleEnterPress}
-                                        label={this.translate('page.body.profile.header.account.content.twoFactorAuthentication.subHeader')}
-                                        defaultLabel=""
-                                    />
-                                </fieldset>
+                            <div className={otpCodeClass}>
+                                <CustomInput
+                                    handleChangeInput={this.handleOtpCodeChange}
+                                    handleFocusInput={() => this.handleFieldFocus('otpCodeFocus')}
+                                    type="tel"
+                                    inputValue={otpCode}
+                                    placeholder={this.translate('page.body.profile.header.account.content.twoFactorAuthentication.subHeader')}
+                                    onKeyPress={this.handleEnterPress}
+                                    label={this.translate('page.body.profile.header.account.content.twoFactorAuthentication.subHeader')}
+                                    defaultLabel=""
+                                    classNameLabel="cr-email-form__label"
+                                    classNameInput="cr-email-form__input"
+                                />
                             </div>
                         </div>
                     </div>
@@ -168,6 +175,13 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                 </div>
             </div>
         );
+    };
+
+    private handleFieldFocus = (field: string) => {
+        // @ts-ignore
+        this.setState(prev => ({
+            [field]: !prev[field],
+        }));
     };
 
     private renderTwoFactorAuthQR = (barcode: string) => {
