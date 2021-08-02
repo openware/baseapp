@@ -48,12 +48,12 @@ const getLayouts = () => {
     const rowHeight = 14;
     const margin = 6;
 
-    const orderHeight = 21;
+    const orderHeight = 22;
     const minOrderBookHeight = 21;
     const minRecentTradesHeight = 10;
     const minTradingChartHeight = 21;
     const minOpenOrdersHeight = 7;
-    const minMarketsHeight = 10;
+    const minMarketsHeight = 9;
     const staticHeight = getStaticHeight() || 96;
     const isDraggable = isDraggableGrid();
     const isResizable = isResizableGrid();
@@ -88,7 +88,7 @@ const getLayouts = () => {
             { x: 16, y: 0, w: 4, h: orderBookHeight, i: '3', minH: minOrderBookHeight, minW: 4, isDraggable: isDraggable, isResizable: isResizable },
             { x: 4, y: 60, w: 12, h: openOrdersHeight, i: '4', minH: minOpenOrdersHeight, minW: 5, isDraggable: isDraggable, isResizable: isResizable },
             { x: 0, y: 0, w: 4, h: recentTradesHeight, i: '5', minH: minRecentTradesHeight, minW: 4, isDraggable: isDraggable, isResizable: isResizable },
-            { x: 20, y: 40, w: 4, h: marketsHeight, i: '6', minH: minMarketsHeight, minW: 4, isDraggable: isDraggable, isResizable: isResizable },
+            { x: 22, y: 40, w: 4, h: marketsHeight, i: '6', minH: minMarketsHeight, minW: 4, isDraggable: isDraggable, isResizable: isResizable },
         ],
         md: [
             { x: 16, y: 18, w: 8, h: orderHeight, i: '1', minH: orderHeight, maxH: orderHeight, minW: 4, isDraggable: isDraggable, isResizable: isResizable },
@@ -96,7 +96,7 @@ const getLayouts = () => {
             { x: 16, y: 0, w: 8, h: orderBookHeight, i: '3', minH: minOrderBookHeight, minW: 4, isDraggable: isDraggable, isResizable: isResizable },
             { x: 0, y: 60, w: 16, h: openOrdersHeight, i: '4', minH: minOpenOrdersHeight, minW: 5, isDraggable: isDraggable, isResizable: isResizable },
             { x: 0, y: 60, w: 16, h: recentTradesHeight, i: '5', minH: minRecentTradesHeight, minW: 4, isDraggable: isDraggable, isResizable: isResizable },
-            { x: 20, y: 36, w: 8, h: marketsHeight, i: '6', minH: minMarketsHeight, minW: 4, isDraggable: isDraggable, isResizable: isResizable },
+            { x: 22, y: 36, w: 8, h: marketsHeight, i: '6', minH: minMarketsHeight, minW: 4, isDraggable: isDraggable, isResizable: isResizable },
         ],
         sm: [
             { x: 0, y: 12, w: 12, h: 22, i: '1', minH: 22, maxH: 22, minW: 5, isDraggable: false },

@@ -213,7 +213,6 @@
     &__group__amount,
     &__group__code {
       background: transparent;
-      margin-bottom: calc(var(--gap) * 1.83);
       position: relative;
       width: 100%;
 
@@ -225,25 +224,32 @@
         position: absolute;
         top: 0;
       }
+    }
 
-      .custom-input {
-        margin-top: 10px;
-      }
+    &__group__address {
+      margin-bottom: 33px;
     }
 
     &__group__amount,
     &__group__code {
       width: 50%;
+      margin-bottom: 0;
 
       .custom-input {
         label {
           margin-top: 0;
+          color: var(--secondary-contrast-cta-color);
+          top: -1px !important;
         }
 
         &:focus-within {
           label {
             color: var(--input-legend-color-active) !important;
           }
+        }
+
+        input {
+          height: 48px;
         }
       }
     }
@@ -309,6 +315,21 @@
     }
   }
 
+  .cr-copyable-text-field {
+    .cr-deposit-crypto__copyable-area {
+      .input-group-append {
+        margin-right: 3px;
+      }
+
+      .custom-input {
+        label {
+          margin-top: -12px !important;
+          color: var(--secondary-contrast-cta-color);
+        }
+      }
+    }
+  }
+
   .cr-copyable-text-field__disabled {
     .cr-deposit-crypto {
       &__copyable {
@@ -328,10 +349,6 @@
           .custom-input {
             .input-group {
               border: none;
-            }
-
-            label {
-              margin-top: -10px !important;
             }
           }
         }
