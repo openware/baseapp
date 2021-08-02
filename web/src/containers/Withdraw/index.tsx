@@ -5,11 +5,10 @@ import { injectIntl } from 'react-intl';
 import { compose } from 'redux';
 import { IntlProps } from 'src';
 import {
-    Beneficiaries,
-    CustomInput,
+    Beneficiaries, CustomInput, InputWithButton,
     SummaryField,
-    Tooltip,
-} from '../../components';
+    Tooltip
+} from "../../components";
 import { Decimal } from '../../components/Decimal';
 import { cleanPositiveFloatInput, precisionRegExp } from '../../helpers';
 import { Beneficiary, BlockchainCurrencies } from '../../modules';
@@ -20,6 +19,9 @@ import { GLOBAL_PLATFORM_CURRENCY, DEFAULT_FIAT_PRECISION } from '../../constant
 
 export interface WithdrawProps {
     currency: string;
+    currency: string;
+    fee: number;
+    balance: string;
     onClick: (amount: string, total: string, beneficiary: Beneficiary, otpCode: string, fee: string) => void;
     fixed: number;
     className?: string;
@@ -35,6 +37,7 @@ export interface WithdrawProps {
     withdrawDone: boolean;
     networks: BlockchainCurrencies[];
     isMobileDevice?: boolean;
+    withdrawAllButtonLabel?: string;
 }
 
 const defaultBeneficiary: Beneficiary = {
@@ -103,6 +106,7 @@ class WithdrawComponent extends React.Component<Props, WithdrawState> {
             withdrawFeeLabel,
             withdrawTotalLabel,
             withdrawButtonLabel,
+            withdrawAllButtonLabel,
             fixed,
             price,
             name,
@@ -183,14 +187,14 @@ class WithdrawComponent extends React.Component<Props, WithdrawState> {
                         : null}
                         <div className="cr-withdraw__divider cr-withdraw__divider-one" />
                             <div className={withdrawAmountClass}>
-                                <CustomInput
+                                <InputWithButton
                                     type="number"
+                                    value={amount}
                                     label={withdrawAmountLabel || 'Withdrawal Amount'}
-                                    defaultLabel="Withdrawal Amount"
-                                    inputValue={amount}
-                                    placeholder={withdrawAmountLabel || 'Amount'}
-                                    classNameInput="cr-withdraw__input"
                                     handleChangeInput={this.handleChangeInputAmount}
+                                    className="cr-withdraw__input"
+                                    buttonText={withdrawAllButtonLabel}
+                                    handleClickButton={this.handleClickAllAmount}
                                 />
                             </div>
                             <div className={lastDividerClassName} />
@@ -298,6 +302,11 @@ class WithdrawComponent extends React.Component<Props, WithdrawState> {
             });
         }
     };
+
+    private handleClickAllAmount = () => {
+        this.setState({ amount: this.props.balance })
+        this.handleChangeInputAmount(this.props.balance);
+    }
 
     private setTotal = (value: string) => {
         this.setState({ total: value });

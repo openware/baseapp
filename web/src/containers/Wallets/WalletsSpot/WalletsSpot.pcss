@@ -107,7 +107,7 @@
 
       &__icon {
         margin-left: 12px;
-        margin-right: 0px;
+        margin-right: 0;
         min-width: 23px; /* update after changing icon lib */
       }
 
@@ -325,7 +325,21 @@
       }
 
       .custom-input {
+        flex: 1;
         margin-top: 20px;
+      }
+
+      .cr-input-with-button_wrapper {
+        background: inherit;
+        margin-top: 20px;
+        background: var(--input-background-color);
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .cr-input-with-button {
+        margin-right: 5px;
       }
     }
 
@@ -352,8 +366,8 @@
         padding: 4px;
 
         label {
-          left: 0;
           font-size: 10px;
+          left: 0;
           margin-top: 2px;
           padding: 0;
           text-transform: uppercase;
