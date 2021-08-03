@@ -537,14 +537,14 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
     };
 
     private renderWithdrawContent = () => {
-        const { withdrawDone, selectedWalletIndex } = this.state;
+        const { withdrawDone, selectedWalletIndex, fee } = this.state;
 
         if (selectedWalletIndex === -1) {
             return [{ content: null, label: '' }];
         }
         const { user: { level, otp }, wallets, currencies, memberLevels } = this.props;
         const wallet = wallets[selectedWalletIndex];
-        const { currency, fee, type, balance } = wallet;
+        const { currency, type, balance } = wallet;
         const fixed = (wallet || { fixed: 0 }).fixed;
         const currencyItem = (currencies && currencies.find(item => item.id === wallet.currency));
 
@@ -554,7 +554,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
             price: currencyItem.price,
             name: currencyItem.name,
             currency,
-            fee,
+            fee: +fee,
             balance,
             onClick: this.toggleConfirmModal,
             twoFactorAuthRequired: this.isTwoFactorAuthRequired(level, otp),
