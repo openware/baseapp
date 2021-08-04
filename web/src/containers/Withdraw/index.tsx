@@ -19,7 +19,6 @@ import { GLOBAL_PLATFORM_CURRENCY, DEFAULT_FIAT_PRECISION } from '../../constant
 
 export interface WithdrawProps {
     currency: string;
-    currency: string;
     fee: number;
     balance: string;
     onClick: (amount: string, total: string, beneficiary: Beneficiary, otpCode: string, fee: string) => void;
