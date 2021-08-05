@@ -284,9 +284,9 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                 return (
                     <div className="cr-order-input">
                         <fieldset className="cr-order-input__fieldset">
-                            <legend className={'cr-order-input__fieldset__label'}>
+                            <label className="cr-order-input__fieldset__label">
                                 {priceText}
-                            </legend>
+                            </label>
                             <div className="cr-order-input__fieldset__input">
                                 &asymp;<span className="cr-order-input__fieldset__input__price">
                                     {handleSetValue(Decimal.format(safePrice, currentMarketBidPrecision, ','), '0')}
