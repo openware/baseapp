@@ -22,16 +22,19 @@
 
     .cr-deposit-crypto__copyable-title {
       background: var(--input-background-color);
-      margin-top: calc(var(--gap) * -1.5);
+      margin-top: -10px;
+      margin-left: 13px;
       padding: calc(var(--gap) * 0.2);
       position: absolute;
       width: max-content;
+      z-index: 1;
     }
 
     .pg-copyable-text-field {
       &__input {
         border: none;
         padding: var(--gap) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap) !important;
+        height: 48px;
 
         .input-group {
           display: flex;
@@ -46,6 +49,11 @@
               margin-top: -13px;
               z-index: 10;
             }
+          }
+
+          .input-group-append {
+            top: 1px;
+            height: 40px;
           }
         }
 

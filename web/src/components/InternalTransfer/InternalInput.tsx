@@ -76,7 +76,7 @@ export const InternalTransferInput = (props: InternalTransferInputProps) => {
             <CustomInput
                 type="text"
                 label={translate(`page.body.internal.transfer.label.${props.field}`)}
-                placeholder={translate(`page.body.internal.transfer.placeholder.${props.field}`)}
+                placeholder={inputFocused ? '' : translate(`page.body.internal.transfer.placeholder.${props.field}`)}
                 defaultLabel={props.field}
                 handleChangeInput={handleChange}
                 inputValue={inputValue}
@@ -84,6 +84,7 @@ export const InternalTransferInput = (props: InternalTransferInputProps) => {
                 classNameLabel="cr-email-form__label"
                 classNameInput="cr-email-form__input"
                 autoFocus={props.field === 'username' || props.field === 'uid'}
+                labelVisible={inputFocused}
             />
         </div>
     );

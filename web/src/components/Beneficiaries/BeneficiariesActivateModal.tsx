@@ -86,14 +86,17 @@ const BeneficiariesActivateModalComponent: React.FC<Props> = (props: Props) => {
                 <CustomInput
                     type="text"
                     label={formatMessage({ id: `page.body.wallets.beneficiaries.confirmationModal.body.${field}` })}
-                    placeholder={formatMessage({ id: `page.body.wallets.beneficiaries.confirmationModal.body.${field}` })}
+                    placeholder={confirmationModalCodeFocused ? '' : formatMessage({
+                        id: `page.body.wallets.beneficiaries.confirmationModal.body.${field}`,
+                    })}
                     defaultLabel={field}
-                    handleChangeInput={value => handleChangeFieldValue(field, value)}
+                    handleChangeInput={(value) => handleChangeFieldValue(field, value)}
                     inputValue={confirmationModalCode}
                     handleFocusInput={() => handleChangeFieldFocus(`${field}Focused`)}
                     classNameLabel="cr-email-form__label"
                     classNameInput="cr-email-form__input"
                     autoFocus={true}
+                    labelVisible={confirmationModalCodeFocused}
                 />
             </div>
         );

@@ -4,7 +4,7 @@
 
   &__fieldset {
     align-items: center;
-    background-color: var(--input-background-color);
+    background-color: var(--body-background-color);
     border: 1px solid var(--input-border-color);
     color: var(--input-text-color);
     display: flex;
@@ -16,6 +16,7 @@
 
     label {
       color: var(--input-legend-color);
+      width: max-content;
     }
 
     .custom-input {
@@ -43,7 +44,6 @@
 
     &--focused {
       border-color: var(--input-border-color-active) !important;
-      background: var(--input-background-color-active) !important;
 
       label {
         color: var(--input-legend-color-active);
@@ -61,7 +61,6 @@
 
   &__crypto-icon {
     align-items: center;
-    background-color: var(--input-background-color);
     border: 1px solid var(--input-border-color);
     border-left: none;
     display: flex;

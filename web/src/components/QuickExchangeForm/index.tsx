@@ -41,7 +41,7 @@ export const QuickExchangeForm = (props: QuickExchangeFormProps) => {
             <CustomInput
                 type="text"
                 label={translate(`page.body.quick.exchange.label.${props.field}`)}
-                placeholder={translate(`page.body.quick.exchange.placeholder.${props.field}`)}
+                placeholder={inputFocused ? '' : translate(`page.body.quick.exchange.placeholder.${props.field}`)}
                 defaultLabel={props.field}
                 handleChangeInput={handleChange}
                 inputValue={props.value}
@@ -49,6 +49,7 @@ export const QuickExchangeForm = (props: QuickExchangeFormProps) => {
                 classNameLabel="cr-email-form__label"
                 classNameInput="cr-email-form__input"
                 isDisabled={props.isDisabled}
+                labelVisible={inputFocused}
             />
         </div>
     );

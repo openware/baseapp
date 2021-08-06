@@ -1,5 +1,5 @@
 .cr-dropdown {
-  background-color: var(--input-background-color);
+  background-color: var(--body-background-color);
   outline: none;
   position: relative;
 
@@ -18,7 +18,7 @@
 
     &-toggle {
       align-items: center;
-      background: var(--input-background-color) !important;
+      background: transparent !important;
       border: 1px solid var(--input-border-color);
       color: var(--input-placeholder-color);
       display: flex;
@@ -61,6 +61,7 @@
       width: 100%;
       box-shadow: 0px 6px 12px var(--header-shadow-color-level-1);
       border: none;
+      z-index: 10000;
     }
 
     &-item {

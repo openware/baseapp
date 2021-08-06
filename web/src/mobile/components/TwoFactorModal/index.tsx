@@ -29,7 +29,7 @@ export const TwoFactorModalComponent = props => {
                     <CustomInput
                         type="text"
                         label="2FA code"
-                        placeholder="2FA code"
+                        placeholder={code2FAFocus ? '' : "2FA code"}
                         defaultLabel=""
                         handleFocusInput={() => setCode2FAFocus(true)}
                         handleChangeInput={setCode2FA}
@@ -37,6 +37,7 @@ export const TwoFactorModalComponent = props => {
                         classNameLabel="cr-email-form__label"
                         classNameInput="cr-email-form__input"
                         autoFocus={true}
+                        labelVisible={code2FAFocus}
                     />
                 </div>
             </div>

@@ -164,7 +164,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
                 <CustomInput
                     type="password"
                     label={passwordLabel || 'Password'}
-                    placeholder={passwordLabel || 'Password'}
+                    placeholder={passwordFocused ? '' : passwordLabel || 'Password'}
                     defaultLabel="Password"
                     handleChangeInput={handleChangePassword}
                     inputValue={password}
@@ -172,6 +172,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
                     classNameLabel="cr-sign-up-form__label"
                     classNameInput="cr-sign-up-form__input"
                     autoFocus={false}
+                    labelVisible={passwordFocused}
                 />
                 {password ? (
                     <PasswordStrengthMeter
@@ -283,13 +284,13 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
                         <div
                             className={cr('cr-sign-up-form__group', {
                                 'cr-sign-up-form__group--focused': usernameFocused,
-                                'cr-sign-up-form__group--errored': username.length &&
-                                !usernameFocused && !username.match(USERNAME_REGEX),
+                                'cr-sign-up-form__group--errored':
+                                    username.length && !usernameFocused && !username.match(USERNAME_REGEX),
                             })}>
                             <CustomInput
                                 type="text"
                                 label={usernameLabel || 'Username'}
-                                placeholder={usernameLabel || 'Username'}
+                                placeholder={usernameFocused ? '' : usernameLabel || 'Username'}
                                 defaultLabel="Username"
                                 handleChangeInput={handleChangeUsername}
                                 inputValue={username}
@@ -297,11 +298,10 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
                                 classNameLabel="cr-sign-up-form__label"
                                 classNameInput="cr-sign-up-form__input"
                                 autoFocus={!isMobileDevice}
+                                labelVisible={usernameFocused}
                             />
                             {!username.match(USERNAME_REGEX) && !usernameFocused && username.length ? (
-                                <div className="cr-sign-up-form__error">
-                                    {renderUsernameError(username)}
-                                </div>
+                                <div className="cr-sign-up-form__error">{renderUsernameError(username)}</div>
                             ) : null}
                         </div>
                     ) : null}
@@ -312,7 +312,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
                         <CustomInput
                             type="email"
                             label={emailLabel || 'Email'}
-                            placeholder={emailLabel || 'Email'}
+                            placeholder={emailFocused ? '' :emailLabel || 'Email'}
                             defaultLabel="Email"
                             handleChangeInput={handleChangeEmail}
                             inputValue={email}
@@ -320,6 +320,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
                             classNameLabel="cr-sign-up-form__label"
                             classNameInput="cr-sign-up-form__input"
                             autoFocus={!isUsernameEnabled() && !isMobileDevice}
+                            labelVisible={emailFocused}
                         />
                         {emailError && <div className="cr-sign-up-form__error">{emailError}</div>}
                     </div>
@@ -331,7 +332,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
                         <CustomInput
                             type="password"
                             label={confirmPasswordLabel || 'Confirm Password'}
-                            placeholder={confirmPasswordLabel || 'Confirm Password'}
+                            placeholder={confirmPasswordFocused ? '' :confirmPasswordLabel || 'Confirm Password'}
                             defaultLabel="Confirm Password"
                             handleChangeInput={handleChangeConfirmPassword}
                             inputValue={confirmPassword}
@@ -339,6 +340,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
                             classNameLabel="cr-sign-up-form__label"
                             classNameInput="cr-sign-up-form__input"
                             autoFocus={false}
+                            labelVisible={confirmPasswordFocused}
                         />
                         {confirmationError && <div className={'cr-sign-up-form__error'}>{confirmationError}</div>}
                     </div>
@@ -349,7 +351,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
                         <CustomInput
                             type="text"
                             label={referalCodeLabel || 'Referral code'}
-                            placeholder={referalCodeLabel || 'Referral code'}
+                            placeholder={refIdFocused ? '' : referalCodeLabel || 'Referral code'}
                             defaultLabel="Referral code"
                             handleChangeInput={handleChangeRefId}
                             inputValue={refId}
@@ -357,6 +359,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
                             classNameLabel="cr-sign-up-form__label"
                             classNameInput="cr-sign-up-form__input"
                             autoFocus={false}
+                            labelVisible={refIdFocused}
                         />
                     </div>
                     <Form className="cr-sign-up-form__group" onClick={clickCheckBox}>
