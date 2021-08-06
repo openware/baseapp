@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { DEFAULT_PERCENTAGE_PRECISION } from 'src/constants';
 import { Decimal, TickerTable } from '../../components';
 import {
     useMarketsFetch,
@@ -68,12 +69,23 @@ const MarketsTableComponent = props => {
         currentBidUnitMarkets = currentBidUnitMarkets.length ? currentBidUnitMarkets.filter(market => market.quote_unit === currentBidUnit) : [];
     }
 
+
+    const formatPercentageValue = React.useCallback((value: string) => (
+        <React.Fragment>
+            {value?.charAt(0)}
+            <Decimal fixed={DEFAULT_PERCENTAGE_PRECISION} thousSep=",">
+                {value?.slice(1, -1)}
+            </Decimal>
+            %
+        </React.Fragment>
+    ), []);
+
     const formattedMarkets = currentBidUnitMarkets.length ? currentBidUnitMarkets.map(market =>
         ({
             ...market,
             last: Decimal.format(Number((marketTickers[market.id] || defaultTicker).last), market.amount_precision),
             open: Decimal.format(Number((marketTickers[market.id] || defaultTicker).open), market.price_precision),
-            price_change_percent: String((marketTickers[market.id] || defaultTicker).price_change_percent),
+            price_change_percent: formatPercentageValue((marketTickers[market.id] || defaultTicker).price_change_percent),
             high: Decimal.format(Number((marketTickers[market.id] || defaultTicker).high), market.amount_precision),
             low: Decimal.format(Number((marketTickers[market.id] || defaultTicker).low), market.amount_precision),
             volume: Decimal.format(Number((marketTickers[market.id] || defaultTicker).volume), market.amount_precision),

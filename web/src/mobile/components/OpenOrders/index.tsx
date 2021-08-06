@@ -19,7 +19,7 @@ const OpenOrdersComponent: React.FC = () => {
     const shouldFetchCancelAll = useSelector(selectShouldFetchCancelAll);
     const shouldFetchCancelSingle = useSelector(selectShouldFetchCancelSingle);
     useUserOrdersHistoryFetch(0, 'open', 25);
-    const waitOrders = orders.filter(o => ['wait', 'pending'].includes(o.state));
+    const waitOrders = orders.filter(o => ['wait', 'trigger_wait'].includes(o.state));
 
     const handleCancelAllOrders = () => {
         if (shouldFetchCancelAll) {

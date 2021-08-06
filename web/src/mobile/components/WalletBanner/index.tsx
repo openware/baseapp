@@ -24,14 +24,14 @@ const WalletBannerComponent = (props: Props) => {
             <div className="cr-wallet-banner-mobile__item">
                 <span className="cr-wallet-banner-mobile__item-title">{intl.formatMessage({ id: 'page.mobile.wallets.banner.total' })}</span>
                 <div className="cr-wallet-banner-mobile__item-info">
-                    <Decimal fixed={fixed} children={+(balance || 0) + +(locked || 0)}/>
+                    <Decimal fixed={fixed} children={+(balance || 0) + +(locked || 0)} thousSep=","/>
                     <span className="cr-wallet-banner-mobile__item-info-currency">{currency}</span>
                 </div>
             </div>
             <div className="cr-wallet-banner-mobile__item">
                 <span className="cr-wallet-banner-mobile__item-title">{intl.formatMessage({ id: 'page.mobile.wallets.banner.available' })}</span>
                 <div className="cr-wallet-banner-mobile__item-info">
-                    <Decimal fixed={fixed} children={balance || 0}/>
+                    <Decimal fixed={fixed} children={balance || 0} thousSep=","/>
                     <span className="cr-wallet-banner-mobile__item-info-currency">{currency}</span>
                 </div>
             </div>

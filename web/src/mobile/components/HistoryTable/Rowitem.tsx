@@ -7,7 +7,7 @@ const RowItemComponent = props => {
         <div className="cr-mobile-table-row">
             <div className="cr-mobile-table-row__amount">
                 <div className="cr-mobile-table-row__amount-value">
-                    <Decimal fixed={props.fixed}>{props.amount}</Decimal>
+                    <Decimal fixed={props.fixed} thousSep=",">{props.amount}</Decimal>
                 </div>
                 <span className="cr-mobile-table-row__amount-currency">{props.currency}</span>
             </div>

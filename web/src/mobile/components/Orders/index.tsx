@@ -34,7 +34,7 @@ const OrdersComponent: React.FC<IOrdersComponentProps> = ({ withDropdownSelect }
     const firstElemIndex = useSelector((state: RootState) => selectOrdersFirstElemIndex(state, 25));
     const lastElemIndex = useSelector((state: RootState) => selectOrdersLastElemIndex(state, 25));
     const ordersNextPageExists = useSelector(selectOrdersNextPageExists);
-    const filteredOrders = currentTabIndex === 0 ? orders.filter(o => ['wait', 'pending'].includes(o.state)) : orders;
+    const filteredOrders = currentTabIndex === 0 ? orders.filter(o => ['wait', 'trigger_wait'].includes(o.state)) : orders;
     useUserOrdersHistoryFetch(currentPageIndex, userOrdersHistoryTabs[currentTabIndex], 25);
     useMarketsFetch();
 

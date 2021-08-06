@@ -86,7 +86,7 @@ const OrdersItemComponent = props => {
                         <span className="pg-mobile-orders-item__row__block__value">
                             {
                                 order.trigger_price ?
-                                    <Decimal fixed={currentMarket.price_precision}>{order.trigger_price}</Decimal> :
+                                    <Decimal fixed={currentMarket.price_precision} thousSep={","}>{order.trigger_price}</Decimal> :
                                     '-'
                             }
                         </span>

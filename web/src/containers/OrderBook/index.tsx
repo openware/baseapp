@@ -250,7 +250,7 @@ class OrderBookContainer extends React.Component<Props, State> {
         const amountFixed = currentMarket ? currentMarket.amount_precision : 0;
 
         if (isMobileDevice) {
-            return this.getOrderBookData(isMobileDevice, isLarge, side, array, priceFixed, amountFixed, total, message);
+            return this.getOrderBookData(isLarge, side, array, priceFixed, amountFixed, total, message);
         }
 
         return array.length ? array.map((item, i) => {
@@ -283,12 +283,14 @@ class OrderBookContainer extends React.Component<Props, State> {
         }) : [[[''], message]];
     };
 
-    private getOrderBookData = (isMobileDevice, isLarge, side, array, priceFixed, amountFixed, total, message) => {
+    private getOrderBookData = (isLarge, side, array, priceFixed, amountFixed, total, message) => {
         return array.length ? array.map((item, i) => {
             const [price] = item;
 
             switch (side) {
                 case 'asks':
+                    total = isLarge ? accumulateVolume(array) : accumulateVolume(array.slice(0).reverse()).slice(0).reverse();
+
                     return [
                         <Decimal key={i} fixed={priceFixed} thousSep="," prevValue={array[i + 1] ? array[i + 1][0] : 0}>{price}</Decimal>,
                         <Decimal key={i} fixed={amountFixed} thousSep=",">{total[i]}</Decimal>,
