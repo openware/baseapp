@@ -1,5 +1,5 @@
 {
-    "extends": ["tslint:recommended", "tslint-plugin-prettier", "tslint-react-hooks"],
+    "extends": ["tslint:recommended"],
     "linterOptions": {
         "exclude": ["config/**/*.js", "node_modules/**/*.ts", "coverage/lcov-report/*.js", "src/charting_library/*"]
     },
