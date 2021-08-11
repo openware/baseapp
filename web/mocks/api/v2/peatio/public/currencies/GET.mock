@@ -137,7 +137,7 @@ Access-Control-Allow-Credentials: true
     "withdraw_limit_24h": "100.0",
     "withdraw_limit_72h": "200.0",
     "deposit_enabled": true,
-    "withdrawal_enabled": false,
+    "withdrawal_enabled": true,
     "base_factor": 1000000,
     "precision": 8
   },
