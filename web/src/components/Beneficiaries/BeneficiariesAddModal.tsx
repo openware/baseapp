@@ -131,7 +131,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         dispatch(beneficiariesCreate(payload));
         handleClearModalsInputs();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [coinAddress, coinBeneficiaryName, coinDescription, currency]);
+    }, [coinAddress, coinBeneficiaryName, coinDescription, currency, coinDestinationTag, isRipple]);
 
     const getState = React.useCallback(key => {
         switch (key) {

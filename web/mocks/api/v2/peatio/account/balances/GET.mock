@@ -58,8 +58,13 @@ Access-Control-Allow-Credentials: true
     },
     {
         "currency":"xrp",
-        "balance":"0",
-        "locked":"0"
+        "balance":"1000",
+        "locked":"0",
+        "deposit_address": {
+            "currencies": ["xrp"],
+            "address": "rPEPPER7kfTD9w2To4CQk6UCfuHM9c6GDY?dt=102079",
+            "state": "active"
+        }
     },
     {
         "currency":"krw",
