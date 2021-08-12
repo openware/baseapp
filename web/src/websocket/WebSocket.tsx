@@ -7,18 +7,18 @@ import { formatTicker, generateSocketURI, marketStreams, streamsBuilder } from '
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import { rangerUserOrderUpdate } from 'src/modules/public/ranger';
 import { useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const WebSocketContext = React.createContext(null);
 
 export default ({ children }) => {
-    const [ withAuth, setWithAuth ] = useState<boolean>(false);
-    const [ withP2P, setWithP2P ] = useState<boolean>(false);
-    const [ subscriptions, setSubscriptions ] = useState<string[]>([]);
-    const [socketUrl, setSocketUrl] = useState<string>('');
+    const [ _, setSubscriptions ] = useState<string[]>([]);
+    const [ socketUrl, setSocketUrl ] = useState<string>('');
     const [ previousMarket, setPreviousMarket ] = useState<Market | undefined>();
     const [ messages, setMessages ] = useState<object[]>([]);
 
     const dispatch = useDispatch();
+    const location = useLocation();
     const userLoggedIn = useSelector(selectUserLoggedIn);
     const userLoading = useSelector(selectUserFetching);
     const abilities = useSelector(selectAbilities);
@@ -35,20 +35,16 @@ export default ({ children }) => {
     }, [currentMarket]);
 
     useEffect(() => {
-        if (((!userLoggedIn && !userLoading) || (userLoggedIn && !abilitiesLoading))) {
-            setWithAuth(userLoggedIn);
-            setWithP2P(canReadP2P);
-        } else if (((!withAuth && userLoggedIn && !abilitiesLoading) || (!withP2P && canReadP2P))) {
-            setWithAuth(userLoggedIn);
-            setWithP2P(canReadP2P);
+        if (!userLoading && !abilitiesLoading) {
+            const streams = streamsBuilder(userLoggedIn, canReadP2P, currentMarket, location.pathname);
+
+            if (streams.length) {
+                setSocketUrl(generateSocketURI(baseUrl(userLoggedIn), streams));
+            }
         }
-    }, [userLoggedIn, userLoading, userLoggedIn, abilitiesLoading, withAuth, withP2P, canReadP2P]);
+    }, [userLoggedIn, canReadP2P, currentMarket, userLoading, abilitiesLoading, location]);
 
-    const baseUrl = useMemo(() => `${rangerUrl()}/${withAuth ? 'private' : 'public'}`, []);
-
-    useEffect(() => {
-        setSocketUrl(generateSocketURI(baseUrl, streamsBuilder(withAuth, withP2P, subscriptions, currentMarket)));
-    }, [withAuth, withP2P, subscriptions, currentMarket]);
+    const baseUrl = useCallback((withAuth: boolean) => `${rangerUrl()}/${withAuth ? 'private' : 'public'}`, []);
 
     const {
         sendJsonMessage,
@@ -84,9 +80,9 @@ export default ({ children }) => {
 
         setPreviousMarket(currentMarket);
 
-        // if (currentMarket) {
-        //     subscribeMarket(currentMarket);
-        // }
+        if (currentMarket) {
+            subscribeMarket(currentMarket);
+        }
     }, [previousMarket, currentMarket]);
 
     const postMessage = useCallback(data => {

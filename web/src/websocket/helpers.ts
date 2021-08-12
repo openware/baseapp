@@ -35,53 +35,67 @@ export const formatTicker = (events: { [pair: string]: TickerEvent }): { [pair: 
     return tickers;
 };
 
-export const streamsBuilder = (withAuth: boolean, withP2P: boolean, prevSubscriptions: string[], market: Market | undefined) => {
-    let streams: string[] = ['global.tickers'];
+export const streamsBuilder = (withAuth: boolean, withP2P: boolean, market: Market | undefined, route: string) => {
+    let streams: string[] = [];
 
-    if (withP2P) {
-        streams = [
-            ...streams,
-            'p2p.event',
-        ];
-    }
-
-    if (withAuth) {
-        streams = [
-            ...streams,
-            'order',
-            'trade',
-            'deposit_address',
-        ];
-
-        if (isFinexEnabled()) {
+    switch (route.split('/')[1]) {
+        case 'wallets':
             streams = [
-                ...streams,
-                'balances',
+                (withAuth && isFinexEnabled() && 'balances'),
+                (withAuth && 'deposit_address'),
             ];
-        }
 
-        if (withP2P) {
+            break;
+        case 'trading':
             streams = [
-                ...streams,
-                'p2p',
+                (withAuth && isFinexEnabled() && 'balances'),
+                (withAuth && 'order'),
+                (withAuth && 'trade'),
+                ...(market ? marketStreams(market).channels : []),
+                'global.tickers',
             ];
-        }
+
+            break;
+        case 'quick-exchange':
+            streams = [
+                (withAuth && isFinexEnabled() && 'balances'),
+                'global.tickers',
+            ];
+
+            break;
+        case 'orders':
+            streams = [ withAuth && 'order' ];
+
+            break;
+        case 'history':
+            streams = [ withAuth && 'trade' ];
+
+            break;
+        case 'p2p':
+            streams = [
+                withAuth && isFinexEnabled() && 'balances',
+                (withP2P && 'p2p.event'),
+            ];
+
+            break;
+        case 'internal-transfer':
+            streams = [ withAuth && isFinexEnabled() && 'balances' ];
+
+            break;
+        case '':
+            streams = [ 'global.tickers' ];
+
+            break;
+        default:
+            break;
     }
 
-    if (market) {
-        streams = [
-            ...streams,
-            ...(marketStreams(market).channels),
-        ];
-    }
+    streams = [
+        ...streams,
+        (withP2P && withAuth && 'p2p'),
+    ];
 
-    for (const stream of prevSubscriptions) {
-        if (streams.indexOf(stream) < 0) {
-            streams.push(stream);
-        }
-    }
-
-    return streams;
+    return streams.filter(i => !!i);
 };
 
 export const periodsMapNumber: { [pair: string]: number } = {
