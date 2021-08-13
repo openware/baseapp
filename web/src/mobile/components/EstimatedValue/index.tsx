@@ -31,11 +31,11 @@ const EstimatedValueMobile = React.memo(() => {
             </div>
             <div className="cr-mobile-wallets-banner__body">
                 <div className="cr-mobile-wallets-banner__body-wrap">
-                    <span className="cr-mobile-wallets-banner__body-number">{Decimal.format(estimatedValue, estimatedPrecision, ",")}</span>
+                    <span className="cr-mobile-wallets-banner__body-number">{Decimal.format(estimatedValue, estimatedPrecision, ',')}</span>
                     <span className="cr-mobile-wallets-banner__body-currency">{VALUATION_PRIMARY_CURRENCY.toUpperCase()}</span>
                 </div>
                 <div className="cr-mobile-wallets-banner__body-wrap">
-                    <span className="cr-mobile-wallets-banner__body-number">{Decimal.format(estimatedSecondaryValue, estimatedSecondaryPrecision, ",")}</span>
+                    <span className="cr-mobile-wallets-banner__body-number">{Decimal.format(estimatedSecondaryValue, estimatedSecondaryPrecision, ',')}</span>
                     <span className="cr-mobile-wallets-banner__body-currency">{VALUATION_SECONDARY_CURRENCY.toUpperCase()}</span>
                 </div>
             </div>

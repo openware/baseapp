@@ -85,7 +85,7 @@ const CurrentMarketInfoComponent: React.FC = () => {
                     </span>
                     <span className={currentMarketChangeClass}>
                         {currentMarketTicker.price_change_percent?.charAt(0)}
-                        {Decimal.format(currentMarketTicker.price_change_percent?.slice(1, -1), DEFAULT_PERCENTAGE_PRECISION, ",")}
+                        {Decimal.format(currentMarketTicker.price_change_percent?.slice(1, -1), DEFAULT_PERCENTAGE_PRECISION, ',')}
                         %
                     </span>
                 </div>

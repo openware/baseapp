@@ -84,7 +84,7 @@ class HeaderToolbarContainer extends React.Component<Props> {
     private formatPercentageValue = (value: string) => (
         <React.Fragment>
             {value?.charAt(0)}
-            {Decimal.format(value?.slice(1, -1), DEFAULT_PERCENTAGE_PRECISION, ",")}
+            {Decimal.format(value?.slice(1, -1), DEFAULT_PERCENTAGE_PRECISION, ',')}
             %
         </React.Fragment>
     );
