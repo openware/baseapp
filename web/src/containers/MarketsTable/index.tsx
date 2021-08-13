@@ -69,7 +69,6 @@ const MarketsTableComponent = props => {
         currentBidUnitMarkets = currentBidUnitMarkets.length ? currentBidUnitMarkets.filter(market => market.quote_unit === currentBidUnit) : [];
     }
 
-
     const formatPercentageValue = React.useCallback((value: string) => (
         <React.Fragment>
             {value?.charAt(0)}
