@@ -4,6 +4,8 @@ import {
     KLINE_ERROR,
     KLINE_FETCH,
     KLINE_PUSH,
+    KLINE_SUBSCRIBE,
+    KLINE_UNSUBSCRIBE,
     KLINE_UPDATE_PERIOD,
     KLINE_UPDATE_TIME_RANGE,
 } from './constants';
@@ -52,13 +54,30 @@ export interface KlineError {
     error: CommonError;
 }
 
+export interface KlineSubscribe {
+    type: typeof KLINE_SUBSCRIBE;
+    payload: {
+        marketId: string;
+        period: string;
+    };
+}
+
+export interface KlineUnsubscribe {
+    type: typeof KLINE_UNSUBSCRIBE;
+    payload: {
+        marketId: string;
+        period: string;
+    };
+}
+
 export type KlineActions = KlinePush
     | KlineFetch
     | KlineData
     | KlineUpdateTimeRange
     | KlineUpdatePeriod
-    | KlineError;
-
+    | KlineError
+    | KlineSubscribe
+    | KlineUnsubscribe;
 
 export const klinePush = (payload: KlinePush['payload']): KlinePush => ({
     type: KLINE_PUSH,
@@ -88,4 +107,14 @@ export const klineUpdatePeriod = (payload: KlineUpdatePeriod['payload']): KlineU
 export const klineError = (error: CommonError): KlineError => ({
     type: KLINE_ERROR,
     error,
+});
+
+export const klineSubscribe = (payload: KlineSubscribe['payload']): KlineSubscribe => ({
+    type: KLINE_SUBSCRIBE,
+    payload,
+});
+
+export const klineUnsubscribe = (payload: KlineUnsubscribe['payload']): KlineUnsubscribe => ({
+    type: KLINE_UNSUBSCRIBE,
+    payload,
 });

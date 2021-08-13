@@ -2,8 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { incrementalOrderBook, isFinexEnabled, rangerUrl } from 'src/api'
 import { useDispatch, useSelector } from 'react-redux';
 import { CanCan } from 'src/containers';
-import { alertPush, depthData, depthDataIncrement, depthDataSnapshot, depthIncrementSubscribe, klinePush, Market, marketsTickersData, p2pOffersUpdate, p2pOrdersDataWS, p2pUserOffersUpdate, pushHistoryEmit, recentTradesPush, selectAbilities, selectCurrentMarket, selectLoadingAbilities, selectOpenOrdersList, selectOrderBookSequence, selectUserFetching, selectUserLoggedIn, updateP2PWalletsDataByRanger, updateWalletsDataByRanger, walletsAddressDataWS } from '../modules';
-import { formatTicker, generateSocketURI, marketStreams, streamsBuilder } from './helpers';
+import { alertPush, depthData, depthDataIncrement, depthDataSnapshot, depthIncrementSubscribe, klinePush, Market, marketsTickersData, p2pOffersUpdate, p2pOrdersDataWS, p2pUserOffersUpdate, pushHistoryEmit, recentTradesPush, selectAbilities, selectCurrentMarket, selectKline, selectLoadingAbilities, selectOpenOrdersList, selectOrderBookSequence, selectUserFetching, selectUserLoggedIn, updateP2PWalletsDataByRanger, updateWalletsDataByRanger, walletsAddressDataWS } from '../modules';
+import { formatTicker, generateSocketURI, marketKlineStreams, marketStreams, streamsBuilder } from './helpers';
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import { rangerUserOrderUpdate } from 'src/modules/public/ranger';
 import { useCallback } from 'react';
@@ -27,6 +27,7 @@ export default ({ children }) => {
     const currentMarket = useSelector(selectCurrentMarket);
     const previousSequence = useSelector(selectOrderBookSequence);
     const orders = useSelector(selectOpenOrdersList);
+    const kline = useSelector(selectKline);
 
     useEffect(() => {
         if (incrementalOrderBook()) {
@@ -43,6 +44,21 @@ export default ({ children }) => {
             }
         }
     }, [userLoggedIn, canReadP2P, currentMarket, userLoading, abilitiesLoading, location]);
+
+    useEffect(() => {
+        if (kline.marketId && kline.period && !kline.loading) {
+            switch (kline.message) {
+                case 'subscribe':
+                    subscribe(marketKlineStreams(kline.marketId, kline.period).channels);
+                    break;
+                case 'unsubscribe':
+                    unsubscribe(marketKlineStreams(kline.marketId, kline.period).channels);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }, [kline.period, kline.marketId, kline.message, kline.loading]);
 
     const baseUrl = useCallback((withAuth: boolean) => `${rangerUrl()}/${withAuth ? 'private' : 'public'}`, []);
 
@@ -75,13 +91,13 @@ export default ({ children }) => {
 
     useEffect(() => {
         if (previousMarket) {
-            unsubscribeMarket(previousMarket);
+            unsubscribe(marketStreams(previousMarket).channels);
         }
 
         setPreviousMarket(currentMarket);
 
         if (currentMarket) {
-            subscribeMarket(currentMarket);
+            subscribe(marketStreams(currentMarket).channels);
         }
     }, [previousMarket, currentMarket]);
 
@@ -93,12 +109,12 @@ export default ({ children }) => {
         }
     }, [readyState, messages]);
 
-    const subscribeMarket = useCallback((market: Market) => {
-        postMessage({ event: 'subscribe', streams: marketStreams(market).channels });
+    const subscribe = useCallback((streams: string[]) => {
+        postMessage({ event: 'subscribe', streams });
     }, []);
 
-    const unsubscribeMarket = useCallback((market: Market) => {
-        postMessage({ event: 'unsubscribe', streams: marketStreams(market).channels });
+    const unsubscribe = useCallback((streams: string[]) => {
+        postMessage({ event: 'unsubscribe', streams });
     }, []);
 
     useEffect(() => {

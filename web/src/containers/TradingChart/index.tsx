@@ -13,6 +13,8 @@ import {
 import { stdTimezoneOffset } from '../../helpers';
 import {
     KlineState,
+    klineSubscribe,
+    klineUnsubscribe,
     klineUpdatePeriod,
     klineUpdateTimeRange,
     Market,
@@ -27,10 +29,6 @@ import {
     selectMarketTickers,
     selectMobileDeviceState,
 } from '../../modules';
-import {
-    rangerSubscribeKlineMarket,
-    rangerUnsubscribeKlineMarket,
-} from '../../modules/public/ranger';
 import { periodStringToMinutes } from '../../modules/public/ranger/helpers';
 import {
     CurrentKlineSubscription,
@@ -55,8 +53,8 @@ interface ReduxProps {
 }
 
 interface DispatchProps {
-    subscribeKline: typeof rangerSubscribeKlineMarket;
-    unSubscribeKline: typeof rangerUnsubscribeKlineMarket;
+    subscribeKline: typeof klineSubscribe;
+    unSubscribeKline: typeof klineUnsubscribe;
     klineUpdateTimeRange: typeof klineUpdateTimeRange;
     klineUpdatePeriod: typeof klineUpdatePeriod;
 }
@@ -276,8 +274,8 @@ const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
     klineUpdateTimeRange: payload => dispatch(klineUpdateTimeRange(payload)),
-    subscribeKline: (marketId: string, periodString: string) => dispatch(rangerSubscribeKlineMarket(marketId, periodString)),
-    unSubscribeKline: (marketId: string, periodString: string) => dispatch(rangerUnsubscribeKlineMarket(marketId, periodString)),
+    subscribeKline: payload => dispatch(klineSubscribe(payload)),
+    unSubscribeKline: payload => dispatch(klineUnsubscribe(payload)),
     klineUpdatePeriod: payload => dispatch(klineUpdatePeriod(payload)),
 });
 
