@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { CloseIcon } from '../../../assets/images/CloseIcon';
 import { Decimal, FilterInput } from '../../../components';
-import { DEFAULT_CCY_PRECISION } from '../../../constants';
+import { DEFAULT_CCY_PRECISION, DEFAULT_PERCENTAGE_PRECISION } from '../../../constants';
 import { MarketsTable } from '../../../containers';
 import { Market, selectCurrentMarket, selectMarkets, selectMarketTickers } from '../../../modules';
 import { ChevronIcon } from '../../assets/images/ChevronIcon';
@@ -83,7 +83,11 @@ const CurrentMarketInfoComponent: React.FC = () => {
                     <span className={currentMarketChangeClass}>
                         {Decimal.format(currentMarketTicker.last, currentMarketPricePrecision, ',')}
                     </span>
-                    <span className={currentMarketChangeClass}>{currentMarketTicker.price_change_percent}</span>
+                    <span className={currentMarketChangeClass}>
+                        {currentMarketTicker.price_change_percent?.charAt(0)}
+                        {Decimal.format(currentMarketTicker.price_change_percent?.slice(1, -1), DEFAULT_PERCENTAGE_PRECISION, ',')}
+                        %
+                    </span>
                 </div>
             </div>
             <div className="pg-mobile-current-market-info__right">

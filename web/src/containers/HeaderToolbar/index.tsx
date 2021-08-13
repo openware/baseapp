@@ -2,6 +2,7 @@ import * as React from 'react';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { DEFAULT_PERCENTAGE_PRECISION } from 'src/constants';
 import { IntlProps } from '../../';
 import { Decimal } from '../../components/Decimal';
 import {
@@ -70,7 +71,7 @@ class HeaderToolbarContainer extends React.Component<Props> {
                 </div>
                 <div className="pg-header__toolbar-item">
                     <p className={`pg-header__toolbar-item-value pg-header__toolbar-item-value-${cls}`}>
-                        {currentMarket && (marketTickers[currentMarket.id] || defaultTicker).price_change_percent}
+                        {currentMarket && this.formatPercentageValue((marketTickers[currentMarket.id] || defaultTicker).price_change_percent)}
                     </p>
                     <p className="pg-header__toolbar-item-text">
                         {this.translate('page.body.trade.toolBar.change')}
@@ -79,6 +80,14 @@ class HeaderToolbarContainer extends React.Component<Props> {
             </div>
         );
     }
+
+    private formatPercentageValue = (value: string) => (
+        <React.Fragment>
+            {value?.charAt(0)}
+            {Decimal.format(value?.slice(1, -1), DEFAULT_PERCENTAGE_PRECISION, ',')}
+            %
+        </React.Fragment>
+    );
 
     private getTickerValue = (value: string) => {
         const { marketTickers, currentMarket } = this.props;

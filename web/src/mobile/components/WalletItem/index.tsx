@@ -27,7 +27,7 @@ const WalletItemComponent = (props: Props) => {
                 <span className="cr-mobile-wallet-item__name">{name}</span>
             </div>
             <div className="cr-mobile-wallet-item__balance">
-                <span><Decimal fixed={fixed} children={balance || 0}/></span>
+                <span><Decimal fixed={fixed} children={balance || 0} thousSep=","/></span>
             </div>
         </div>
     );
