@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+import { DEFAULT_PERCENTAGE_PRECISION } from 'src/constants';
 import { incrementalOrderBook } from '../../api';
 import { Decimal } from '../../components/Decimal';
 import { Markets } from '../../components/Markets';
@@ -34,6 +35,13 @@ export const MarketsComponent = () => {
         formatMessage({ id: 'page.body.trade.header.markets.content.change' }),
     ]), [formatMessage]);
 
+    const formatPercentageValue = React.useCallback((value: string) => (
+        <React.Fragment>
+            {value?.charAt(0)}
+            {Decimal.format(value?.slice(1, -1), DEFAULT_PERCENTAGE_PRECISION, ',')}
+            %
+        </React.Fragment>
+    ), []);
 
     const mapMarkets = React.useCallback(() => {
         const defaultTicker = {
@@ -49,7 +57,7 @@ export const MarketsComponent = () => {
             return ([
                 market.name,
                 Decimal.format(Number((marketTickers[market.id] || defaultTicker).last), market.amount_precision, ','),
-                (marketTickers[market.id] || defaultTicker).price_change_percent,
+                formatPercentageValue((marketTickers[market.id] || defaultTicker).price_change_percent),
             ])
         });
     }, [marketTickers, marketsData]);
