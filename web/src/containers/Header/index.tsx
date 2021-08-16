@@ -5,7 +5,7 @@ import { RouterProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { IntlProps } from '../../';
-import { showLanding } from '../../api';
+import { showLanding, useSharedLayout } from '../../api';
 import { Logo } from '../../components';
 import {
     Market,
@@ -68,16 +68,20 @@ class Head extends React.Component<Props> {
         return (
             <header className={`pg-header`}>
                 <div className={`pg-container pg-header__content ${tradingCls}`}>
-                    <div
-                        className={`pg-sidebar__toggler ${mobileWallet && 'pg-sidebar__toggler-mobile'}`}
-                        onClick={this.openSidebar}>
-                        <span className="pg-sidebar__toggler-item" />
-                        <span className="pg-sidebar__toggler-item" />
-                        <span className="pg-sidebar__toggler-item" />
-                    </div>
-                    <div onClick={(e) => this.redirectToLanding()} className="pg-header__logo">
-                        <Logo />
-                    </div>
+                    {!useSharedLayout() &&
+                        <>
+                            <div
+                                className={`pg-sidebar__toggler ${mobileWallet && 'pg-sidebar__toggler-mobile'}`}
+                                onClick={this.openSidebar}>
+                                <span className="pg-sidebar__toggler-item" />
+                                <span className="pg-sidebar__toggler-item" />
+                                <span className="pg-sidebar__toggler-item" />
+                            </div>
+                            <div onClick={(e) => this.redirectToLanding()} className="pg-header__logo">
+                                <Logo />
+                            </div>
+                        </>
+                    }
                     {this.renderMarketToggler()}
                     <div className="pg-header__location">
                         {mobileWallet ? <span>{mobileWallet}</span> : <span>{location.pathname.split('/')[1]}</span>}
@@ -85,7 +89,7 @@ class Head extends React.Component<Props> {
                     {this.renderMobileWalletNav()}
                     <div className="pg-header__navbar">
                         {this.renderMarketToolbar()}
-                        <NavBar onLinkChange={this.closeMenu} />
+                        {!useSharedLayout() && <NavBar onLinkChange={this.closeMenu} />}
                     </div>
                 </div>
             </header>

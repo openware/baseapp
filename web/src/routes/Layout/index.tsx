@@ -7,9 +7,15 @@ import { Route, RouterProps, Switch } from 'react-router';
 import { Redirect, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { IntlProps } from '../../';
-import { minutesUntilAutoLogout, sessionCheckInterval, showLanding, wizardStep } from '../../api';
+import {
+    minutesUntilAutoLogout,
+    sessionCheckInterval,
+    showLanding,
+    wizardStep,
+    useSharedLayout,
+} from '../../api';
 import { ExpiredSessionModal } from '../../components';
-import { WalletsFetch, CanCan } from '../../containers';
+import { WalletsFetch } from '../../containers';
 import { P2PTradesHistory } from '../../containers/P2P/TradesHistory';
 import { applyCustomizationSettings, toggleColorTheme } from '../../helpers';
 import {
@@ -268,6 +274,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         const { isShownExpSessionModal } = this.state;
         const desktopCls = classnames('container-fluid pg-layout', {
             'trading-layout': location.pathname.includes('/trading'),
+            'shared-layout': useSharedLayout,
         });
         const mobileCls = classnames('container-fluid pg-layout pg-layout--mobile', {
             'pg-layout--mobile-setup': location.pathname.includes('/setup'),
