@@ -47,6 +47,7 @@ const mockConfig: Config = {
         'address'
     ],
     themeSwitcher: 'visible',
+    useSharedLayout: 'false',
 };
 
 // tslint:disable no-any no-console

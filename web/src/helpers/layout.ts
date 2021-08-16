@@ -45,7 +45,7 @@ export const pixelsToGridUnits = (pixels: number, rowHeight: number, margin: num
 };
 
 const getLayouts = () => {
-    const rowHeight = 14;
+    const rowHeight = 14.5;
     const margin = 6;
 
     const orderHeight = 21;
