@@ -13,7 +13,7 @@ const WebSocketContext = React.createContext(null);
 
 export default ({ children }) => {
     const [ _, setSubscriptions ] = useState<string[]>([]);
-    const [ socketUrl, setSocketUrl ] = useState<string>('');
+    const [ socketUrl, setSocketUrl ] = useState<string>(null);
     const [ previousMarket, setPreviousMarket ] = useState<Market | undefined>();
     const [ messages, setMessages ] = useState<object[]>([]);
 
