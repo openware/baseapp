@@ -1,8 +1,10 @@
-import { incrementalOrderBook, isFinexEnabled } from 'src/api';
+import { incrementalOrderBook, isFinexEnabled, rangerUrl } from 'src/api';
 import { DEFAULT_TRADING_VIEW_INTERVAL } from 'src/constants';
 import { Market, Ticker, TickerEvent } from 'src/modules/public/markets';
 
-export const generateSocketURI = (baseUrl: string, s: string[]) => `${baseUrl}/?stream=${s.sort().join('&stream=')}`;
+export const baseUrl = (withAuth: boolean) => `${rangerUrl()}/${withAuth ? 'private' : 'public'}`;
+export const isTradingPage = route => route?.split('/')[1] === 'trading';
+export const generateSocketURI = (withAuth: boolean, s: string[]) => `${baseUrl(withAuth)}/?stream=${s.sort().join('&stream=')}`;
 
 export const formatTicker = (events: { [pair: string]: TickerEvent }): { [pair: string]: Ticker } => {
     const tickers = {};

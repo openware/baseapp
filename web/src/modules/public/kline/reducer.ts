@@ -72,8 +72,8 @@ export const klineReducer = (state = initialKlineState, action: KlineActions): K
         case KLINE_UNSUBSCRIBE:
             return {
                 ...state,
-                marketId: undefined,
-                period: undefined,
+                marketId: action.payload.marketId,
+                period: action.payload.period,
                 message: 'unsubscribe',
             };
         case KLINE_PUSH:

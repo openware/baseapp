@@ -1,20 +1,49 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { incrementalOrderBook, isFinexEnabled, rangerUrl } from 'src/api'
+import React, { useCallback, useEffect, useState } from 'react';
+import { incrementalOrderBook, isFinexEnabled } from 'src/api'
 import { useDispatch, useSelector } from 'react-redux';
 import { CanCan } from 'src/containers';
-import { alertPush, depthData, depthDataIncrement, depthDataSnapshot, depthIncrementSubscribe, klinePush, Market, marketsTickersData, p2pOffersUpdate, p2pOrdersDataWS, p2pUserOffersUpdate, pushHistoryEmit, recentTradesPush, selectAbilities, selectCurrentMarket, selectKline, selectLoadingAbilities, selectOpenOrdersList, selectOrderBookSequence, selectUserFetching, selectUserLoggedIn, updateP2PWalletsDataByRanger, updateWalletsDataByRanger, walletsAddressDataWS } from '../modules';
-import { formatTicker, generateSocketURI, marketKlineStreams, marketStreams, streamsBuilder } from './helpers';
+import {
+    alertPush,
+    depthData,
+    depthDataIncrement,
+    depthDataSnapshot,
+    depthIncrementSubscribe,
+    klinePush,
+    Market,
+    marketsTickersData,
+    p2pOffersUpdate,
+    p2pOrdersDataWS,
+    p2pUserOffersUpdate,
+    pushHistoryEmit,
+    recentTradesPush,
+    selectAbilities,
+    selectCurrentMarket,
+    selectKline,
+    selectLoadingAbilities,
+    selectOpenOrdersList,
+    selectOrderBookSequence,
+    selectUserFetching,
+    selectUserLoggedIn,
+    updateP2PWalletsDataByRanger,
+    updateWalletsDataByRanger,
+    walletsAddressDataWS,
+} from '../modules';
+import {
+    formatTicker,
+    generateSocketURI,
+    isTradingPage,
+    marketKlineStreams,
+    streamsBuilder,
+} from './helpers';
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import { rangerUserOrderUpdate } from 'src/modules/public/ranger';
-import { useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const WebSocketContext = React.createContext(null);
 
 export default ({ children }) => {
-    const [ _, setSubscriptions ] = useState<string[]>([]);
+    const [ subscriptions, setSubscriptions ] = useState<string[]>([]);
     const [ socketUrl, setSocketUrl ] = useState<string>(null);
-    const [ previousMarket, setPreviousMarket ] = useState<Market | undefined>();
     const [ messages, setMessages ] = useState<object[]>([]);
 
     const dispatch = useDispatch();
@@ -35,16 +64,35 @@ export default ({ children }) => {
         }
     }, [currentMarket]);
 
+    // generate streams list for first WS connection
     useEffect(() => {
-        if (!userLoading && !abilitiesLoading) {
+        if (!userLoading && !abilitiesLoading && !socketUrl) {
             const streams = streamsBuilder(userLoggedIn, canReadP2P, currentMarket, location.pathname);
 
             if (streams.length) {
-                setSocketUrl(generateSocketURI(baseUrl(userLoggedIn), streams));
+                setSocketUrl(generateSocketURI(userLoggedIn, streams));
             }
         }
-    }, [userLoggedIn, canReadP2P, currentMarket, userLoading, abilitiesLoading, location]);
+    }, [userLoggedIn, canReadP2P, currentMarket, userLoading, abilitiesLoading, location, socketUrl]);
 
+    // handle change subscriptions
+    useEffect(() => {
+        if (!userLoading && !abilitiesLoading && subscriptions.length) {
+            const streams = streamsBuilder(userLoggedIn, canReadP2P, currentMarket, location.pathname);
+
+            const subscribeStreams = streams.filter(i => !subscriptions.includes(i));
+            if (subscribeStreams.length) {
+                subscribe(subscribeStreams);
+            }
+
+            const unsubscribeStreams = subscriptions.filter(i => !streams.includes(i) && !(isTradingPage(location.pathname) && i.includes('kline')));
+            if (unsubscribeStreams.length) {
+                unsubscribe(unsubscribeStreams);
+            }
+        }
+    }, [userLoggedIn, canReadP2P, currentMarket, userLoading, abilitiesLoading, location, subscriptions]);
+
+    // handle k-line subscriptions
     useEffect(() => {
         if (kline.marketId && kline.period && !kline.loading) {
             switch (kline.message) {
@@ -60,8 +108,7 @@ export default ({ children }) => {
         }
     }, [kline.period, kline.marketId, kline.message, kline.loading]);
 
-    const baseUrl = useCallback((withAuth: boolean) => `${rangerUrl()}/${withAuth ? 'private' : 'public'}`, []);
-
+    // handle main websocket events
     const {
         sendJsonMessage,
         lastJsonMessage,
@@ -78,7 +125,7 @@ export default ({ children }) => {
             setMessages([]);
         },
         onClose: () => {
-            console.log("WebSocket connection closed");
+            window.console.log("WebSocket connection closed");
         },
         onError: error => {
             window.console.log(`WebSocket error ${error}`);
@@ -89,23 +136,22 @@ export default ({ children }) => {
         retryOnError: true,
     });
 
+    // empty buffer messages
     useEffect(() => {
-        if (previousMarket) {
-            unsubscribe(marketStreams(previousMarket).channels);
+        if (messages.length) {
+            for (const m of messages) {
+                sendJsonMessage(m);
+            }
+    
+            setMessages([]);
         }
-
-        setPreviousMarket(currentMarket);
-
-        if (currentMarket) {
-            subscribe(marketStreams(currentMarket).channels);
-        }
-    }, [previousMarket, currentMarket]);
+    }, [messages]);
 
     const postMessage = useCallback(data => {
         if (readyState === ReadyState.OPEN) {
             sendJsonMessage(data);
         } else {
-            setMessages([ ...messages, data ]);
+            setMessages(messages => [ ...messages, data]);
         }
     }, [readyState, messages]);
 
@@ -117,6 +163,7 @@ export default ({ children }) => {
         postMessage({ event: 'unsubscribe', streams });
     }, []);
 
+    // handle websocket events
     useEffect(() => {
         let payload: { [pair: string]: any } = lastJsonMessage;
 
