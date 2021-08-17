@@ -53,19 +53,23 @@ class RecentTradesComponent extends React.Component<RecentTradesProps, State> {
         this.props.resetHistory();
     }
 
-    public shouldComponentUpdate(nextProps: RecentTradesProps) {
+    public shouldComponentUpdate(nextProps: RecentTradesProps, nextState: State) {
         const {
             recentTrades,
             isMobileDevice,
             currentMarket,
             userLoggedIn,
         } = this.props;
+        const { tab, index, disable } = this.state;
 
         return (
             JSON.stringify(nextProps.recentTrades) !== JSON.stringify(recentTrades) ||
-            (nextProps.currentMarket && nextProps.currentMarket.id) !== (currentMarket && currentMarket.id) ||
-            (nextProps.isMobileDevice !== isMobileDevice) ||
-            (nextProps.userLoggedIn !== userLoggedIn)
+            nextProps.currentMarket?.id !== currentMarket?.id ||
+            nextProps.isMobileDevice !== isMobileDevice ||
+            nextProps.userLoggedIn !== userLoggedIn ||
+            nextState.disable !== disable ||
+            nextState.index !== index ||
+            nextState.tab !== tab
         );
     }
 
