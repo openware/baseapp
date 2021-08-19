@@ -34,7 +34,7 @@ export const handleIncrementalUpdateArray = (depthOld: string[][], newLevels: st
         prices[newLevels[i][0]] = newLevels[i][1];
     }
 
-    const rest = depthOld.filter(([price]) => !prices[price]);
+    const rest = depthOld.filter(([price, _]) => !prices.hasOwnProperty(price));
     const newData = newLevels.filter(([_, amount]) => Number(amount) !== 0);
     const result = [...rest, ...newData];
 

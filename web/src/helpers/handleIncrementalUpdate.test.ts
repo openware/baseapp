@@ -468,7 +468,7 @@ describe('Describe incremental array update of order book asks', () => {
             ['0.95', '0.5'],
         ];
 
-        const newAsksOrderArray: string[][] = [['0.60', '0.0'], ['0.75', '0.0'], ['0.95', '0.0']];
+        const newAsksOrderArray: string[][] = [['0.60', ''], ['0.75', ''], ['0.95', '0.0']];
 
         const updatedAsks: string[][] = [
             ['0.70', '1.5'],
