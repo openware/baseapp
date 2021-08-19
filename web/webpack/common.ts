@@ -29,9 +29,8 @@ const config: webpack.Configuration = {
             hash: true,
             chunks: ['common', 'bundle', 'styles'],
         }),
-        // Ignore all locale files of moment.js
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-        new LodashModuleReplacementPlugin({ shorthands: true, flattering: true }),
+        new LodashModuleReplacementPlugin({ shorthands: true, flattening: true }),
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash].css',
             chunkFilename: '[id].[contenthash].css',
