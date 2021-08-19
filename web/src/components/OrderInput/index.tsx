@@ -80,7 +80,7 @@ export const OrderInput: React.FunctionComponent<OrderInputProps> = React.memo((
         currency,
         handleChangeValue,
         handleFocusInput,
-        handleClickAllButton
+        handleClickAllButton,
         isFocused,
         label,
         labelVisible,
