@@ -6,10 +6,10 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
-	"strconv"
 
 	"baseapp/daemons"
 
@@ -70,6 +70,7 @@ func Setup(app *sonic.Runtime) {
 
 	// Serve static files
 	router.Static("/public", "./public")
+	router.Static("/fonts", "./public/assets/fonts")
 
 	// React is looking for these files in root
 	// TODO: find solution for react build (webpack)
@@ -144,10 +145,10 @@ func index(ctx *gin.Context) {
 	}
 
 	ctx.HTML(http.StatusOK, "index", gin.H{
-		"title":    	"BaseApp",
-		"cssFiles": 	cssFiles,
-		"jsFiles":  	jsFiles,
-		"rootID":   	"root",
+		"title":        "BaseApp",
+		"cssFiles":     cssFiles,
+		"jsFiles":      jsFiles,
+		"rootID":       "root",
 		"renderFooter": renderFooter,
 	})
 }

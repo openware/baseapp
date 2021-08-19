@@ -73,6 +73,15 @@ const config = merge(commonConfig, {
                 ],
                 exclude: /node_modules/,
             },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/i,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        outputPath: 'fonts',
+                    },
+                }]
+            },
         ],
     },
     stats: {
