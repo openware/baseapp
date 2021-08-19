@@ -23,6 +23,10 @@ const config = merge(commonConfig, {
     module: {
         rules: [
             {
+                test: /\.(woff|woff2|eot|ttf|otf)$/i,
+                use: ['file-loader'],
+            },
+            {
                 test: /\.(css|sass|scss|pcss)$/,
                 use: [
                     'style-loader',
@@ -56,7 +60,9 @@ const config = merge(commonConfig, {
                             happyPackMode: true,
                         },
                     },
+                    
                 ],
+                
                 exclude: /node_modules/,
             },
         ],
