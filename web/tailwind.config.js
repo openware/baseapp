@@ -1,6 +1,6 @@
 module.exports = {
     // we need it for prod
-    // purge: ["./src/**/**/*.{js,jsx,ts,tsx}"],
+    purge: ["./src/**/**/*.{js,jsx,ts,tsx}", "./node_modules/@openware/react-opendax/**/*.js"],
     darkMode: false, // or 'media' or 'class'
     important: true,
     theme: {
