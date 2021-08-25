@@ -43,7 +43,7 @@ export const MarketsComponent = () => {
         </React.Fragment>
     ), []);
 
-    const mapMarkets = React.useCallback(() => {
+    const mapMarkets = React.useMemo(() => {
         const defaultTicker = {
             last: 0,
             price_change_percent: '+0.00%',
@@ -56,9 +56,9 @@ export const MarketsComponent = () => {
 
             return ([
                 market.name,
-                Decimal.format(Number((marketTickers[market.id] || defaultTicker).last), market.amount_precision, ','),
+                Decimal.format(Number((marketTickers[market.id] || defaultTicker).last), market.price_precision, ','),
                 formatPercentageValue((marketTickers[market.id] || defaultTicker).price_change_percent),
-            ])
+            ]);
         });
     }, [marketTickers, marketsData]);
 
@@ -76,7 +76,7 @@ export const MarketsComponent = () => {
 
     const renderMarkets = React.useCallback(() => {
         const key = currentMarket && currentMarket.name;
-        const marketData = mapMarkets().filter(item => item[0] !== null);
+        const marketData = mapMarkets.filter(item => item[0] !== null);
 
         return (
             <Markets
