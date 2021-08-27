@@ -18,9 +18,8 @@ require (
 	github.com/openware/kaigara/pkg/vault v0.0.0-20210428072529-c9aa6080bfe8
 	github.com/openware/pkg/database v0.0.0-20210402092258-edc0b8ed56a0
 	github.com/openware/pkg/ika v0.0.0-20210402092258-edc0b8ed56a0
-	github.com/openware/pkg/jwt v0.0.0-20210427221722-08a80973e205
 	github.com/openware/pkg/kli v0.0.0-20210402092258-edc0b8ed56a0
-	github.com/openware/pkg/mngapi v0.0.0-20210611082050-d92a5be356d2
+	github.com/openware/pkg/mngapi v0.0.0-20210826153348-d3a3c79100ce
 	github.com/openware/pkg/sonic v0.0.0-20210615125010-3058204b14ff
 	github.com/openware/pkg/utils v0.0.0-20210402092258-edc0b8ed56a0
 	github.com/pierrec/lz4 v2.6.0+incompatible // indirect

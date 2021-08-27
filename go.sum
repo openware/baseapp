@@ -181,8 +181,9 @@ github.com/openware/pkg/jwt v0.0.0-20210427221722-08a80973e205 h1:b44hkYTx+A3VHW
 github.com/openware/pkg/jwt v0.0.0-20210427221722-08a80973e205/go.mod h1:LB6Vl3pne5B756MTNooMiUmzvrgXji5n+ZsWYTkqjJw=
 github.com/openware/pkg/kli v0.0.0-20210402092258-edc0b8ed56a0 h1:j2toR2654Lbw7N0cN3XQU2GsU0eqBkq0rsI5bnsYphM=
 github.com/openware/pkg/kli v0.0.0-20210402092258-edc0b8ed56a0/go.mod h1:GOlHexRI3ZB6oePaiqObLDwZ6/FmrmTb6hho62wehOE=
-github.com/openware/pkg/mngapi v0.0.0-20210611082050-d92a5be356d2 h1:lxgxc8a+QCxaMlp7nwHckLPHVaJEakRthRIYwwQr2VA=
 github.com/openware/pkg/mngapi v0.0.0-20210611082050-d92a5be356d2/go.mod h1:GUztR5SqRXRJCWjiElZaTpTkCpODOgztP6D/V/syEJg=
+github.com/openware/pkg/mngapi v0.0.0-20210826153348-d3a3c79100ce h1:j+v822fHYhGv3/2cOlBE/cqOgKSjUmQ4YkcvgqE1wLw=
+github.com/openware/pkg/mngapi v0.0.0-20210826153348-d3a3c79100ce/go.mod h1:GUztR5SqRXRJCWjiElZaTpTkCpODOgztP6D/V/syEJg=
 github.com/openware/pkg/sonic v0.0.0-20210615125010-3058204b14ff h1:QWP7AP6pQAm7sIArPHMJQ7tGj7/sDyuGKkan3XQa6/0=
 github.com/openware/pkg/sonic v0.0.0-20210615125010-3058204b14ff/go.mod h1:OqCgyLlFxoPJBBU0DDcWqfaXtDxQJkCjXQqZH11brw8=
 github.com/openware/pkg/utils v0.0.0-20210402092258-edc0b8ed56a0 h1:RaIymVHgliSeCzDlvV3/F7SqdWhG6DbYBMpElmNQojY=

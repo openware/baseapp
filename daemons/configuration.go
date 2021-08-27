@@ -150,6 +150,7 @@ func createCurrencies(peatioClient *peatio.Client, currencies []CurrencyResponse
 		if res == nil && apiError != nil {
 			currencyParams := peatio.CreateCurrencyParams{
 				Code:                currency.ID,
+				Name:                currency.Name,
 				Type:                currency.Type,
 				BaseFactor:          currency.BaseFactor,
 				Position:            currency.Position,
@@ -161,8 +162,9 @@ func createCurrencies(peatioClient *peatio.Client, currencies []CurrencyResponse
 				MinWithdrawAmount:   currency.MinWithdrawAmount,
 				WithdrawLimit24:     currency.WithdrawLimit24h,
 				WithdrawLimit72:     currency.WithdrawLimit72h,
-				DepositEnabled:      currency.DepositEnabled,
-				WithdrawEnabled:     currency.WithdrawalEnabled,
+				DepositEnabled:      false,
+				WithdrawEnabled:     false,
+				Visible:             false,
 				Precision:           currency.Precision,
 				Price:               currency.Price,
 				IconURL:             currency.IconUrl,
@@ -307,7 +309,6 @@ func createDepositAndHotWallet(peatioClient *peatio.Client, currencies []string,
 	params := peatio.CreateWalletParams{
 		BlockchainKey: "opendax-cloud",
 		Gateway:       "opendax_cloud",
-		Address:       "address",
 		Currencies:    currencies,
 		Status:        "active",
 		Settings: peatio.Settings{
