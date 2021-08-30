@@ -79,16 +79,20 @@ export const MarketsComponent = () => {
         const marketData = mapMarkets.filter(item => item[0] !== null);
 
         return (
-            <Markets
-                filters={false}
-                data={marketData}
-                rowKeyIndex={0}
-                onSelect={handleOnSelect}
-                selectedKey={key}
-                headers={headers}
-                title={formatMessage({id: 'page.body.trade.header.markets'})}
-                filterPlaceholder={formatMessage({ id: 'page.body.trade.header.markets.content.search'})}
-            />
+            <div>
+                <div className="cr-table-header__content">
+                    <div className="cr-title-component">{formatMessage({id: 'page.body.trade.header.markets'})}</div>
+                </div>
+                <Markets
+                    filters={false}
+                    data={marketData}
+                    rowKeyIndex={0}
+                    onSelect={handleOnSelect}
+                    selectedKey={key}
+                    headers={headers}
+                    filterPlaceholder={formatMessage({ id: 'page.body.trade.header.markets.content.search'})}
+                />
+            </div>
         );
     }, [currentMarket, formatMessage, handleOnSelect, headers, mapMarkets]);
 

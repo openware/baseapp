@@ -32,10 +32,6 @@ export interface MarketsProps {
      */
     headers?: string[];
     /**
-     * Title of widget
-     */
-    title?: string;
-    /**
      * Value for FilterInput placeholder
      */
     filterPlaceholder?: string;
@@ -44,7 +40,7 @@ export interface MarketsProps {
 export const Markets = (props: MarketsProps) => {
     const [searchKey, setSearchKey] = React.useState('');
 
-    const { headers, title, filterPlaceholder = '', rowKeyIndex, selectedKey, data, filters } = props;
+    const { headers, filterPlaceholder = '', rowKeyIndex, selectedKey, data, filters } = props;
 
     const searchFilter = React.useCallback(
         (row: CellData[], key: string) => {
@@ -136,7 +132,6 @@ export const Markets = (props: MarketsProps) => {
                 filters={getFilters()}
                 header={headers || DEFAULT_MARKET_HEADERS}
                 onSelect={props.onSelect}
-                titleComponent={title || 'Markets'}
             />
             <FilterInput data={props.data} filter={searchFilter} placeholder={filterPlaceholder} />
         </div>
