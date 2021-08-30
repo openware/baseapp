@@ -148,18 +148,20 @@
           .cr-table {
             td {
               width: 33% !important;
+              padding-top: 8px !important;
+              padding-bottom: 9px !important;
             }
 
             &-background {
               left: 0;
               right: 0;
-              top: calc(var(--gap) * 8);
+              top: 44px;
             }
 
             tbody::before {
               content: '';
               display: block;
-              height: calc(var(--gap) * 8);
+              height: 44px;
             }
 
             &-container {
@@ -191,7 +193,8 @@
 
       .cr-table-background {
         &__row {
-          padding-bottom: calc(var(--gap) * 1.6);
+          padding: 0 !important;
+          padding-bottom: 32px !important;
         }
       }
     }
