@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { validateBeneficiaryAddress, validateBeneficiaryTestnetAddress } from '../../helpers';
+import { is2faValid, validateBeneficiaryAddress, validateBeneficiaryTestnetAddress } from '../../helpers';
 import { Modal } from '../../mobile/components/Modal';
 import {
     beneficiariesCreate,
@@ -11,10 +11,13 @@ import {
     selectCurrencies,
     selectMobileDeviceState,
     BlockchainCurrencies,
+    selectBeneficiariesCreateSuccess,
+    selectBeneficiariesCreateError,
 } from '../../modules';
 import { CustomInput } from '../CustomInput';
 import { DropdownBeneficiary } from './DropdownBeneficiary';
 import { BeneficiariesBlockchainItem } from './BeneficiariesCrypto/BeneficiariesBlockchainItem';
+import { CodeVerification } from '..';
 
 interface Props {
     currency: string;
@@ -58,14 +61,26 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
     const [fiatIntermediaryBankNameFocused, setFiatIntermediaryBankNameFocused] = React.useState(false);
     const [fiatIntermediaryBankSwiftCodeFocused, setFiatIntermediaryBankSwiftCodeFocused] = React.useState(false);
 
+    const [code2FA, setCode2FA] = React.useState<string>('');
+
     const { type, handleToggleAddAddressModal, currency } = props;
     const { formatMessage } = useIntl();
     const dispatch = useDispatch();
 
     const isMobileDevice = useSelector(selectMobileDeviceState);
     const currencies = useSelector(selectCurrencies);
+    const createSuccess = useSelector(selectBeneficiariesCreateSuccess);
+    const createError = useSelector(selectBeneficiariesCreateError);
     const currencyItem = React.useMemo(() => currencies.find(item => item.id === currency), [currencies]);
     const isRipple = React.useMemo(() => currency === 'xrp', [currency]);
+
+    React.useEffect(() => {
+        if (createSuccess) {
+            handleClearModalsInputs();
+        } else if (createError) {
+            setCode2FA('');
+        }
+    }, [createSuccess, createError]);
 
     const handleClearModalsInputs = React.useCallback(() => {
         setCoinAddress('');
@@ -94,6 +109,8 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         setFiatBankSwiftCodeFocused(false);
         setFiatIntermediaryBankNameFocused(false);
         setFiatIntermediaryBankSwiftCodeFocused(false);
+
+        setCode2FA('');
     }, []);
 
     const handleSubmitAddAddressCoinModal = React.useCallback(() => {
@@ -105,11 +122,12 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                 address: (isRipple && coinDestinationTag ? `${coinAddress}?dt=${coinDestinationTag}` : coinAddress),
             }),
             ...(coinDescription && { description: coinDescription }),
+            otp: Number(code2FA),
         };
 
         dispatch(beneficiariesCreate(payload));
         handleClearModalsInputs();
-    }, [coinAddress, coinBeneficiaryName, coinDescription, currency, coinBlockchainName]);
+    }, [coinAddress, coinBeneficiaryName, coinDescription, currency, coinBlockchainName, code2FA]);
 
     const getState = React.useCallback(key => {
         switch (key) {
@@ -157,6 +175,8 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                 return fiatIntermediaryBankNameFocused;
             case 'fiatIntermediaryBankSwiftCodeFocused':
                 return fiatIntermediaryBankSwiftCodeFocused;
+            case 'code2FA':
+                return code2FA;
             default:
                 return '';
         }
@@ -183,6 +203,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         fiatIntermediaryBankSwiftCodeFocused,
         fiatName,
         fiatNameFocused,
+        code2FA,
     ]);
 
     const validateCoinAddressFormat = React.useCallback((value: string) => {
@@ -339,8 +360,28 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         );
     }, []);
 
+    const render2FACode = React.useMemo(() => {
+        return (
+            <div className="cr-email-form__group">
+                <span className="otp-label">
+                    {formatMessage({ id: 'page.body.wallets.beneficiaries.addAddressModal.body.otpCode' })}
+                </span>
+                <CodeVerification
+                    code={code2FA}
+                    onChange={setCode2FA}
+                    codeLength={6}
+                    type="text"
+                    placeholder="X"
+                    inputMode="decimal"
+                    showPaste2FA={true}
+                    isMobile={isMobileDevice}
+                />
+            </div>
+        );
+    }, [code2FA, isMobileDevice]);
+
     const renderAddAddressModalCryptoBody = React.useMemo(() => {
-        const isDisabled = !coinAddress || !coinBeneficiaryName || !coinAddressValid || !coinBlockchainName.blockchainKey;
+        const isDisabled = !coinAddress || !coinBeneficiaryName || !coinAddressValid || !coinBlockchainName.blockchainKey || !is2faValid(code2FA);
 
         return (
             <div className="cr-email-form__form-content">
@@ -356,6 +397,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                 {renderAddAddressModalBodyItem('coinBeneficiaryName')}
                 {renderAddAddressModalBodyItem('coinDescription', true)}
                 {isRipple && renderAddAddressModalBodyItem('coinDestinationTag', true)}
+                {render2FACode}
                 <div className="cr-email-form__button-wrapper">
                     <Button
                         disabled={isDisabled}
@@ -369,7 +411,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
             </div>
         );
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [coinAddress, coinBeneficiaryName, coinDescription, coinDestinationTag]);
+    }, [coinAddress, coinBeneficiaryName, coinDescription, coinDestinationTag, render2FACode]);
 
     const handleSubmitAddAddressFiatModal = React.useCallback(() => {
         const data: BeneficiaryBank = {
@@ -385,6 +427,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
             currency: currency || '',
             name: fiatName,
             data: JSON.stringify(data),
+            otp: +code2FA,
         };
 
         dispatch(beneficiariesCreate(payload));
@@ -398,10 +441,11 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         fiatIntermediaryBankName,
         fiatIntermediaryBankSwiftCode,
         fiatName,
+        code2FA,
     ]);
 
     const renderAddAddressModalFiatBody = React.useMemo(() => {
-        const isDisabled = !fiatName || !fiatFullName || !fiatAccountNumber || !fiatBankName;
+        const isDisabled = !fiatName || !fiatFullName || !fiatAccountNumber || !fiatBankName || !is2faValid(code2FA);
 
         return (
             <div className="cr-email-form__form-content">
@@ -412,6 +456,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                 {renderAddAddressModalBodyItem('fiatBankSwiftCode', true)}
                 {renderAddAddressModalBodyItem('fiatIntermediaryBankName', true)}
                 {renderAddAddressModalBodyItem('fiatIntermediaryBankSwiftCode', true)}
+                {render2FACode}
                 <div className="cr-email-form__button-wrapper">
                     <Button
                         disabled={isDisabled}
@@ -433,6 +478,8 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         fiatBankSwiftCode,
         fiatIntermediaryBankName,
         fiatIntermediaryBankSwiftCode,
+        render2FACode,
+        code2FA,
     ]);
 
     const renderContent = React.useCallback(() => {

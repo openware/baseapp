@@ -293,6 +293,7 @@ export const ru: LangType = {
     'page.body.wallets.beneficiaries.addAddressModal.body.coinBeneficiaryName': 'Beneficiary Name',
     'page.body.wallets.beneficiaries.addAddressModal.body.coinDescription': 'Description (optional)',
     'page.body.wallets.beneficiaries.addAddressModal.body.coinDestinationTag': 'Destination Tag (optional)',
+    'page.body.wallets.beneficiaries.addAddressModal.body.otpCode': 'Enter 2fa code from the Google Authenticator app',
 
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatName': 'Beneficiary Name',
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatFullName': 'Full Name',
