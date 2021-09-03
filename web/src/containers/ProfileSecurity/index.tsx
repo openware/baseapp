@@ -15,6 +15,7 @@ import { CheckBigIcon } from '../../assets/images/kyc/CheckBigIcon';
 import { ClocksIcon } from '../../assets/images/kyc/ClocksIcon';
 import { CrossIcon } from '../../assets/images/kyc/CrossIcon';
 import { ChangePassword, CodeVerification, Modal, Tooltip } from '../../components';
+import { is2faValid } from 'src/helpers';
 import {
     entropyPasswordFetch,
     Label,
@@ -327,13 +328,12 @@ class ProfileSecurityComponent extends React.Component<Props, State> {
 
     private renderModalFooter = () => {
         const { code2FA } = this.state;
-        const isValid2FA = code2FA.match('^[0-9]{6}$');
 
         return (
             <div className="pg-exchange-modal-submit-footer">
                 <Button
                     block={true}
-                    disabled={!isValid2FA}
+                    disabled={!is2faValid(code2FA)}
                     onClick={this.handleDisable2FA}
                     size="lg"
                     variant="primary"
