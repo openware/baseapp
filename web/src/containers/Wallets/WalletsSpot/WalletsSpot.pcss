@@ -224,7 +224,6 @@
     &__group__warning {
       align-items: center;
       background: var(--system-yellow-level-1);
-      border-radius: 4px;
       color: var(--primary-text-color);
       display: flex;
       font-size: 14px;
@@ -275,7 +274,6 @@
         display: flex;
         flex-flow: row;
 
-
         &__group {
           display: flex;
           justify-content: space-between;
@@ -325,7 +323,23 @@
 
       .custom-input {
         flex: 1;
-        margin-top: 20px;
+        margin-top: 24px;
+
+        input {
+          height: 48px !important;
+        }
+
+        label {
+          background: var(--body-background-color);
+          font-size: 10px;
+          font-weight: bold;
+          left: 0;
+          letter-spacing: 0.06em;
+          margin-top: -18px;
+          padding: 0;
+          position: absolute;
+          text-transform: uppercase;
+        }
       }
 
       .cr-input-with-button_wrapper {
@@ -334,7 +348,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        margin-top: 20px;
+        margin-top: 24px;
       }
 
       .cr-input-with-button {

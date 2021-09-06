@@ -504,9 +504,13 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
             'beneficiaries-add-address-modal--fiat': type === 'fiat',
         });
 
+        const formClass = classnames('cr-email-form', {
+            'cr-email-form--mobile': isMobileDevice,
+        });
+
         return (
             <div className={addModalClass}>
-                <div className="cr-email-form">
+                <div className={formClass}>
                     {type === 'coin' ? renderAddAddressModalCryptoBody : renderAddAddressModalFiatBody}
                 </div>
             </div>

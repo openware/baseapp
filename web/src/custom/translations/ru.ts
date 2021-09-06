@@ -1378,5 +1378,7 @@ export const ru: LangType = {
     // finex
     'order.action.not_permitted': 'Action is not permitted',
     'order.action_role.not_permitted': 'Action is not permitted for your user role',
-    'order.action_level.not_permitted': 'Action is not permitted for your user verification level'
+    'order.action_level.not_permitted': 'Action is not permitted for your user verification level',
+
+    'page.body.profile.whitelisted.paste': 'Paste'
 };

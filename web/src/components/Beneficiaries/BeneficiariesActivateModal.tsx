@@ -120,9 +120,13 @@ const BeneficiariesActivateModalComponent: React.FC<Props> = (props: Props) => {
     }, [confirmationModalCode, formatMessage, handleResendConfirmationCode, handleSubmitConfirmationModal, renderConfirmationModalBodyItem]);
 
     const renderContent = React.useCallback(() => {
+        const formClass = classnames('cr-email-form', {
+            'cr-email-form--mobile': isMobileDevice,
+        });
+
         return (
             <div className="beneficiaries-confirmation-modal">
-                <div className="cr-email-form">
+                <div className={formClass}>
                     {renderConfirmationModalBody()}
                 </div>
             </div>
