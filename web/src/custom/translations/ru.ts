@@ -308,6 +308,8 @@ export const ru: LangType = {
     'page.body.wallets.beneficiaries.fee': 'Fee:',
     'page.body.wallets.beneficiaries.tab.panel.add.whitelisted': 'Add Whitelisted',
     'page.body.wallets.beneficiaries.tab.panel.whitelisted': 'Whitelisted',
+    'page.body.wallets.beneficiaries.delete.2fa.button': 'Confirm',
+    'page.body.wallets.beneficiaries.delete.2fa.header': 'Enter 2fa code',
 
     'page.body.wallets.withdraw.blockchain.network': 'Blockchain Network',
     'page.body.wallets.withdraw.details': 'Withdrawal details',

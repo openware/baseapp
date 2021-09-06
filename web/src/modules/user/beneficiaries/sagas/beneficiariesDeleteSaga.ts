@@ -13,7 +13,7 @@ const config = (csrfToken?: string): RequestOptions => {
 
 export function* beneficiariesDeleteSaga(action: BeneficiariesDelete) {
     try {
-        yield call(API.delete(config(getCsrfToken())), `/account/beneficiaries/${action.payload.id}`);
+        yield call(API.delete(config(getCsrfToken())), `/account/beneficiaries/${action.payload.id}`, { otp: action.payload.otp });
         yield put(beneficiariesDeleteData({ id: action.payload.id }));
         yield put(alertPush({message: ['success.beneficiaries.deleted'], type: 'success'}));
     } catch (error) {
