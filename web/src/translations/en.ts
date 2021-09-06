@@ -183,7 +183,7 @@ export const en = {
     'page.body.wallets.tabs.deposit.disabled.message': 'Deposit was disabled by administration',
     'page.body.wallets.tabs.deposit.ccy.message.submit': 'Please submit a deposit payment using one of the following options. You deposit will be reflected in your account after {confirmations} confirmations',
     'page.body.wallets.tabs.deposit.ccy.message.address': 'Deposit Address',
-    'page.body.wallets.tabs.deposit.ccy.message.button': 'COPY',
+    'page.body.wallets.tabs.deposit.ccy.message.button': 'Copy',
     'page.body.wallets.tabs.deposit.ccy.message.success': 'Address copied',
     'page.body.wallets.tabs.deposit.ccy.message.pending': 'Generating deposit address',
     'page.body.wallets.tabs.deposit.ccy.button.generate': 'Generate',
