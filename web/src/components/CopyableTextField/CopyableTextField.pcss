@@ -25,20 +25,31 @@
   }
 
   .cr-copyable-text-field__button.btn.btn-primary,
-  .cr-copyable-text-field__button.btn.btn-primary:focus  {
-    background: var(--dropdown-background-color);
-    border: 1px solid var(--secondary-contrast-cta-color-level-4);
+  .cr-copyable-text-field__button.btn.btn-primary:focus {
+    background: var(--secondary-contrast-cta-color-level-1);
     color: var(--secondary-contrast-cta-color);
-    letter-spacing: 0.04em;
-    font-weight: 600;
     font-size: 14px;
+    font-weight: 500;
+    height: 40px;
+    letter-spacing: 0.04em;
     line-height: 18px;
 
     &:hover {
       background: var(--button-secondary-cta-background-color-hover);
       color: var(--button-secondary-cta-text-color-hover);
       transition: 0.2s;
+
+      svg {
+        path {
+          fill: var(--button-secondary-cta-text-color-hover);
+          transition: 0.2s;
+        }
+      }
     }
+  }
+
+  svg {
+    margin-right: 7px;
   }
 
   legend {
@@ -70,20 +81,24 @@
 
   .custom-input input {
     label {
-      font-weight: bold;
       font-size: 10px;
-      line-height: 13px;
+      font-weight: bold;
       letter-spacing: 0.06em;
+      line-height: 13px;
     }
   }
 
   .custom-input input,
   .custom-input input:focus, {
-    background: var(--dropdown-background-color) !important;
-    border-radius: 0;
+    background: var(--input-background-color) !important;
+    border-radius: 4px;
     border-style: none;
     color: var(--input-text-color);
     outline: none;
+    width: 100%;
+  }
+
+  fieldset {
     width: 100%;
   }
 }
