@@ -455,6 +455,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         };
         this.props.walletsWithdrawCcy(withdrawRequest);
         this.toggleConfirmModal();
+        this.setState({ otpCode: '' });
     };
 
     private renderDeposit = () => {
