@@ -1035,9 +1035,12 @@ export const ru: LangType = {
     'account.withdraw.invalid_otp': 'Неверный 2FA',
     'account.withdraw.disabled_api': 'Снятие API отключено',
 
-    'account.beneficiary.invalid_pin': 'Invalid beneficiary activation pin',
-    'account.beneficiary.cant_resend_within_1_minute': 'Can\'t resend activation pin within 1 minute',
-    'account.beneficiary.duplicate_address': 'Beneficiary address already exists',
+    'account.beneficiary.invalid_pin': 'Недопустимый код активации бенефициара',
+    'account.beneficiary.cant_resend_within_1_minute': 'Невозможно повторно отправить код активации в течение одной минуты',
+    'account.beneficiary.duplicate_address': 'Адрес бенефициара уже существует',
+    'account.beneficiary.too_long_name': 'Имя бенефициара не может быть длиннее 64 символов',
+    'account.beneficiary.too_long_description': 'Описание не может быть длиннее 255 символов',
+    'account.beneficiary.pin_expired': 'Срок годности пин кода истёк',
 
     'market.market.doesnt_exist': 'Рынок не существует',
     'market.order.invalid_state': 'Неверное состояние депозита',

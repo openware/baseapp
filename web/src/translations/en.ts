@@ -1033,6 +1033,9 @@ export const en = {
     'account.beneficiary.invalid_pin': 'Invalid beneficiary activation pin',
     'account.beneficiary.cant_resend_within_1_minute': 'Can\'t resend activation pin within 1 minute',
     'account.beneficiary.duplicate_address': 'Beneficiary address already exists',
+    'account.beneficiary.too_long_name': 'Beneficiary name cannot be longer than 64 characters',
+    'account.beneficiary.too_long_description': 'Beneficiary description cannot be longer than 255 characters',
+    'account.beneficiary.pin_expired': 'Pin code expired',
 
     'market.market.doesnt_exist': 'Market doesn\'t exist',
     'market.order.invalid_state': 'Invalid deposit state',
