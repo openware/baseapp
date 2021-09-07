@@ -184,6 +184,8 @@ github.com/openware/pkg/kli v0.0.0-20210402092258-edc0b8ed56a0/go.mod h1:GOlHexR
 github.com/openware/pkg/mngapi v0.0.0-20210611082050-d92a5be356d2/go.mod h1:GUztR5SqRXRJCWjiElZaTpTkCpODOgztP6D/V/syEJg=
 github.com/openware/pkg/mngapi v0.0.0-20210826153348-d3a3c79100ce h1:j+v822fHYhGv3/2cOlBE/cqOgKSjUmQ4YkcvgqE1wLw=
 github.com/openware/pkg/mngapi v0.0.0-20210826153348-d3a3c79100ce/go.mod h1:GUztR5SqRXRJCWjiElZaTpTkCpODOgztP6D/V/syEJg=
+github.com/openware/pkg/mngapi v0.0.0-20210906093647-17e3d6ddde39 h1:mO6W2a73zj1al7eWArDHYt8gO8+XgZy7bTJId9cu6Bk=
+github.com/openware/pkg/mngapi v0.0.0-20210906093647-17e3d6ddde39/go.mod h1:GUztR5SqRXRJCWjiElZaTpTkCpODOgztP6D/V/syEJg=
 github.com/openware/pkg/sonic v0.0.0-20210615125010-3058204b14ff h1:QWP7AP6pQAm7sIArPHMJQ7tGj7/sDyuGKkan3XQa6/0=
 github.com/openware/pkg/sonic v0.0.0-20210615125010-3058204b14ff/go.mod h1:OqCgyLlFxoPJBBU0DDcWqfaXtDxQJkCjXQqZH11brw8=
 github.com/openware/pkg/utils v0.0.0-20210402092258-edc0b8ed56a0 h1:RaIymVHgliSeCzDlvV3/F7SqdWhG6DbYBMpElmNQojY=
