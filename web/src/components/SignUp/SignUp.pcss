@@ -41,36 +41,6 @@
   &__form-content {
     box-sizing: border-box;
     padding: var(--email-form-padding);
-
-    .custom-control {
-      &-label {
-        display: flex;
-        flex-direction: row;
-        font-size: calc(var(--gap) * 2.35);
-        justify-content: space-around;
-        width: 83%;
-
-        &::before {
-          background-color: var(--input-background-color);
-          border-color: var(--input-border-color);
-          height: 18px;
-          margin-right: calc(var(--gap) * 3);
-          top: 0;
-          transition: 0.2s;
-          width: 18px;
-        }
-
-        &::after {
-          height: 18px;
-          top: 0;
-          width: 18px;
-        }
-
-        &:hover {
-          cursor: pointer;
-        }
-      }
-    }
   }
 
   & > * {
@@ -108,6 +78,11 @@
 
   &__button-wrapper {
     background: transparent;
+    padding: 12px 0;
+
+    button {
+      min-height: 40px;
+    }
   }
 
   &__button-wrapper--empty {
