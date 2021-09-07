@@ -122,7 +122,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                 address: (isRipple && coinDestinationTag ? `${coinAddress}?dt=${coinDestinationTag}` : coinAddress),
             }),
             ...(coinDescription && { description: coinDescription }),
-            otp: Number(code2FA),
+            otp: code2FA,
         };
 
         dispatch(beneficiariesCreate(payload));
@@ -427,7 +427,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
             currency: currency || '',
             name: fiatName,
             data: JSON.stringify(data),
-            otp: +code2FA,
+            otp: code2FA,
         };
 
         dispatch(beneficiariesCreate(payload));

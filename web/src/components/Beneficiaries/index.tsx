@@ -466,7 +466,7 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
      }, []);
 
     const deleteBeneficiary = React.useCallback(() => {
-        dispatch(beneficiariesDelete({ id: selectedId, otp: Number(code2FA) }));
+        dispatch(beneficiariesDelete({ id: selectedId, otp: code2FA }));
         setSelectedId(-1);
         setCode2FA('');
         setOtpModalState(false);
