@@ -538,9 +538,7 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
         <div className="pg-beneficiaries">
             {beneficiaries.length && currentWithdrawalBeneficiary.id && currentWithdrawalBeneficiary.currency === beneficiaries[0].currency ? renderAddressItem(currentWithdrawalBeneficiary) : renderAddAddress}
             {isOpenAddressModal && renderBeneficiariesModal}
-            <div className="kek">
-                {isOpenOtpModal && renderOtpModal}
-            </div>
+            {isOpenOtpModal && renderOtpModal}
         </div>
     );
 }
