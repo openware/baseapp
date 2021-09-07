@@ -1,19 +1,16 @@
 .custom-input {
   input {
-    border: 2px solid var(--input-border-color);
+    border-color: var(--input-border-color);
   }
 
   label {
-    font-size: 10px;
-    font-weight: bold;
-    margin-bottom: 4px;
-    text-transform: uppercase;
-  }
-
-  .input-group-lg {
-    .form-control-lg {
-      height: 48px;
-    }
+    font-size: calc(var(--gap) * 2);
+    left: 5%;
+    margin-top: -8px;
+    padding: 0 calc(var(--gap) * 0.7);
+    position: absolute;
+    top: 0;
+    z-index: 5;
   }
 
   input,
