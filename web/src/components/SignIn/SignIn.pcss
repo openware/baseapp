@@ -94,6 +94,11 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding: 12px 0;
+
+    button {
+      min-height: 40px;
+    }
   }
 
   &__button-wrapper--empty {
@@ -108,11 +113,10 @@
       background: transparent;
       color: var(--secondary-contrast-cta-color);
       cursor: pointer;
-      font-size: 14px;
+      font-size: 12px;
       font-style: normal;
       font-weight: normal;
       line-height: 30px;
-      text-align: center;
       transition: 0.2s;
 
       &:hover {
