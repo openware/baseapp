@@ -344,7 +344,7 @@ export const en = {
     'page.body.openOrders.header.button.cancelAll': 'Cancel all',
 
     'page.body.history.deposit': 'Deposit History',
-    'page.body.history.deposit.header.txid': 'txID',
+    'page.body.history.deposit.header.txID': 'txID',
     'page.body.history.deposit.header.blockchain': 'Network',
     'page.body.history.deposit.header.date': 'Date',
     'page.body.history.deposit.header.currency': 'Currency',
