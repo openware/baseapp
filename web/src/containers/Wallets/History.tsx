@@ -26,6 +26,7 @@ import {
 } from '../../modules';
 import { FailIcon } from './FailIcon';
 import { SucceedIcon } from './SucceedIcon';
+import { PendingIcon } from './PendingIcon';
 
 export interface HistoryProps {
     label: string;
@@ -101,8 +102,9 @@ export class WalletTable extends React.Component<Props> {
 
     private getHeaders = (label: string) => [
         this.props.intl.formatMessage({ id: `page.body.history.${label}.header.date` }),
-        this.props.intl.formatMessage({ id: `page.body.history.${label}.header.status` }),
+        this.props.intl.formatMessage({ id: `page.body.history.${label}.header.txID` }),
         this.props.intl.formatMessage({ id: `page.body.history.${label}.header.amount` }),
+        this.props.intl.formatMessage({ id: `page.body.history.${label}.header.status` }),
     ];
 
     private onClickPrevPage = () => {
@@ -130,7 +132,7 @@ export class WalletTable extends React.Component<Props> {
 
         return list.sort((a, b) => {
             return localeDate(a.created_at, 'fullDate') > localeDate(b.created_at, 'fullDate') ? -1 : 1;
-        }).map((item, index) => {
+        }).map(item => {
             const blockchainLink = this.getBlockchainLink(currency, item.txid, item.rid);
             const amount = 'amount' in item ? Number(item.amount) : Number(item.price) * Number(item.volume);
             const confirmations = type === 'deposits' && item.confirmations;
@@ -140,15 +142,15 @@ export class WalletTable extends React.Component<Props> {
             const state = 'state' in item ? this.formatTxState(item.state, confirmations, minConfirmations) : '';
 
             return [
-                localeDate(item.created_at, 'fullDate'),
+                localeDate(item.created_at, 'shortDate'),
                 <div className="pg-history-elem__hide" key={item.txid || item.rid}>
                     <a href={blockchainLink} target="_blank" rel="noopener noreferrer">
                         {item.txid || item.rid}
                     </a>
                     <LinkIcon className="pg-history-elem__link" />
                 </div>,
+                Decimal.format(amount, fixed, ','),
                 state,
-                <Decimal key={index} fixed={fixed} thousSep=",">{amount}</Decimal>,
             ];
         });
     };
@@ -171,23 +173,41 @@ export class WalletTable extends React.Component<Props> {
     };
 
     private formatTxState = (tx: string, confirmations?: number | string, minConfirmations?: number) => {
+        const accepted = (
+            <div className="accepted">
+                <span className="label">{this.props.intl.formatMessage({ id: 'page.body.wallets.table.accepted' })}</span><SucceedIcon />
+            </div>
+        );
+
+        const rejected = (
+            <div className="rejected">
+                <span className="label">{this.props.intl.formatMessage({ id: 'page.body.wallets.table.rejected' })}</span><FailIcon />
+            </div>
+        );
+
+        const pending = (
+            <div className="pending">
+                <span className="label">{this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' })}</span><PendingIcon />
+            </div>
+        );
+
         const statusMapping = {
-            succeed: <SucceedIcon />,
-            failed: <FailIcon />,
-            accepted: <SucceedIcon />,
-            collected: <SucceedIcon />,
-            canceled: <FailIcon />,
-            rejected: <FailIcon />,
-            processing: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' }),
-            fee_processing: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' }),
-            prepared: this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' }),
+            succeed: accepted,
+            failed: rejected,
+            accepted: accepted,
+            collected: accepted,
+            canceled: rejected,
+            rejected: rejected,
+            processing: pending,
+            fee_processing: pending,
+            prepared: pending,
             submitted: (minConfirmations && confirmations && confirmations !== 'N/A') ? (
                 `${confirmations}/${minConfirmations}`
             ) : (
-                this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' })
+                pending
             ),
-            skipped: <SucceedIcon />,
-            errored: <span className="cr-mobile-history-table--failed">{this.props.intl.formatMessage({ id: 'page.body.history.deposit.content.status.errored' })}</span>,
+            skipped: accepted,
+            errored: <span className="rejected">{this.props.intl.formatMessage({ id: 'page.body.history.deposit.content.status.errored' })}</span>,
         };
 
         return statusMapping[tx];
