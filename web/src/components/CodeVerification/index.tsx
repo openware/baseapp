@@ -20,7 +20,6 @@ const CodeVerification: FC<CodeVerificationProps> = (props: CodeVerificationProp
         code,
         codeLength,
         inputMode,
-        isMobile,
         onSubmit,
         placeholder,
         showPaste2FA = true,

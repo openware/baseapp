@@ -128,7 +128,8 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         };
 
         dispatch(beneficiariesCreate(payload));
-    }, [coinAddress, coinBeneficiaryName, coinDescription, currency, coinBlockchainName, code2FA]);
+        handleClearModalsInputs();
+    }, [coinAddress, coinBeneficiaryName, coinDescription, currency, coinBlockchainName, coinDestinationTag, code2FA]);
 
     const getState = React.useCallback(key => {
         switch (key) {

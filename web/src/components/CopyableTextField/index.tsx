@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import * as React from 'react';
 import { copy } from '../../helpers';
 import { InputWithButton } from "src/components/InputWithButton";
+import { CopyIcon } from 'src/assets/images/CopyIcon';
 
 
 export interface CopyableTextFieldProps {
@@ -67,6 +68,7 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
                 label={label}
                 buttonText={copyButtonText || 'Copy'}
                 buttonClassName="cr-copyable-text-field__button"
+                icon={<CopyIcon />}
             />
         );
     }
