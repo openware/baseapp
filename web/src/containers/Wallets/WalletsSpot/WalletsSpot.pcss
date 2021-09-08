@@ -648,13 +648,13 @@
             text-align: right;
             width: calc(var(--big-gap) * 2);
 
-            &:first-child {
+            &:first-child, &:nth-child(2) {
               margin-left: 10px;
               text-align: left;
             }
 
-            &:nth-child(7) {
-              white-space: nowrap;
+            &:last-child {
+              padding-right: 40px !important;
             }
           }
         }
@@ -682,6 +682,10 @@
               text-align: left;
             }
 
+            &:nth-child(2) {
+              text-align: left;
+            }
+
             &:last-child {
               border-bottom-right-radius: calc(var(--gap) * 0.5);
 
@@ -693,6 +697,39 @@
             a {
               color: var(--table-text-color);
               text-decoration: none;
+            }
+
+            .accepted, .rejected, .pending {
+              .label {
+                margin-right: 8px;
+                font-size: 12px;
+                line-height: 15px;
+                font-weight: normal;
+              }
+            }
+
+            .accepted {
+              color: var(--system-green);
+
+              path {
+                fill: var(--system-green);
+              }
+            }
+
+            .pending {
+              color: var(--system-yellow);
+
+              path {
+                fill: var(--system-yellow);
+              }
+            }
+
+            .rejected {
+              color: var(--system-red);
+
+              path {
+                fill: var(--system-red);
+              }
             }
           }
 

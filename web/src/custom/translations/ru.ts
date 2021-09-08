@@ -221,6 +221,7 @@ export const ru: LangType = {
     'page.body.wallets.tabs.deposit.fiat.referenceCode': 'Ваш уникальный код',
     'page.body.wallets.table.pending': 'Обрабатывается',
     'page.body.wallets.table.rejected': 'Отклонен',
+    'page.body.wallets.table.accepted': 'Accepted',
     'page.body.wallets.tabs.deposit.fiat.admin': 'Для того, чтобы вывести эту валюту, обратитесь к администратору!',
 
     'page.body.wallets.tabs.withdraw': 'Вывод',
@@ -371,6 +372,7 @@ export const ru: LangType = {
     'page.body.history.withdraw.header.id': 'ID',
     'page.body.history.withdraw.header.blockchain': 'Network',
     'page.body.history.withdraw.header.date': 'Дата',
+    'page.body.history.withdraw.header.txID': 'txID',
     'page.body.history.withdraw.header.currency': 'Валюта',
     'page.body.history.withdraw.header.address': 'Адрес',
     'page.body.history.withdraw.header.amount': 'Сумма',
