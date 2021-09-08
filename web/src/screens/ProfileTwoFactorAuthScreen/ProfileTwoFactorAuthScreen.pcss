@@ -29,14 +29,8 @@
       width: 100%;
 
       legend {
-        background: var(--input-background-color);
-        font-size: calc(var(--gap) * 2.33);
-        left: 5%;
-        padding: 0 3px;
-        position: absolute;
-        top: -10px;
-        width: auto;
-        z-index: 5;
+        font-size: 10px;
+        font-weight: bold;
       }
 
       &:focus-within {
@@ -56,7 +50,7 @@
       width: 100%;
 
       .cr-copyable-text-field {
-        padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap);
+        background: var(--input-background-color);
 
         .input-group {
           display: flex;
@@ -66,8 +60,9 @@
           .custom-input {
             width: 70%;
 
-            label {
-              margin-top: -18px;
+            input {
+              background: none;
+              height: 48px;
             }
           }
 
@@ -110,13 +105,11 @@
 
   &__body {
     fieldset {
-      border: 1px solid var(--input-border-color);
+      border: 2px solid transparent;
       border-radius: calc(var(--gap) * 0.6);
       box-sizing: border-box;
       color: var(--input-text-color);
       float: right;
-      height: calc(var(--gap) * 6.56);
-      margin: calc(var(--gap) * 2) 0;
       max-width: 100%;
       padding-left: 0;
       width: auto;
@@ -155,10 +148,15 @@
       .custom-input {
         padding: 0;
 
+        label {
+          display: none;
+        }
+
         .input-group {
           padding: 0;
 
           input {
+            height: 48px;
             margin-top: 0;
             padding: 0 0 0 10px;
           }
@@ -246,6 +244,10 @@
       color: var(--input-text-color);
       font-size: var(--font-size);
     }
+  }
+
+  .btn-lg {
+    min-height: 40px;
   }
 }
 
