@@ -91,16 +91,47 @@
         padding-bottom: 8px;
       }
 
+      .input-group {
+        .form-control {
+          border: 2px solid var(--input-border-color) !important;
+          margin-top: 4px;
+        }
+      }
+
+      .input-group-lg {
+        .form-control-lg {
+          height: 48px;
+        }
+      }
+
       .cr-email-form {
         &__label {
-          margin-top: 18px;
+          background: none;
+          font-size: 10px;
+          font-weight: bold;
+          margin: 0;
+          padding: 0;
+          position: static;
+          text-transform: uppercase;
         }
 
         &__group {
           &--amount {
             margin-bottom: 0;
           }
+
+          &--focused {
+            .input-group {
+              .form-control {
+                border-color: var(--input-border-color-active) !important;
+              }
+            }
+          }
         }
+      }
+
+      .btn-lg {
+        min-height: 40px;
       }
     }
 
@@ -122,26 +153,70 @@
 
       &--balance {
         margin-bottom: 20px;
+        margin-top: 4px;
         width: fit-content;
+      }
+
+      &--balance-value {
+        color: var(--primary-cta-color);
+        display: inline-block;
+        font-weight: bold;
+
+        .cr-decimal__opacity {
+          opacity: 1;
+        }
       }
 
       &--error {
         color: var(--system-red);
+
+        .cr-internal-transfer__group--balance-value {
+          color: inherit;
+        }
       }
 
       .cr-dropdown.pg-confirm__content-address__row__content-number-dropdown {
-        height: calc(1.5em + 1rem + 6px);
         margin-top: 0;
         position: absolute;
         right: 0;
-        top: 28px;
+        top: 50px;
         width: 26%;
       }
 
       .dropdown-toggle.btn.btn-primary {
         border-bottom-left-radius: 0;
+        border-bottom-right-radius: .3rem;
         border-top-left-radius: 0;
-        height: calc(1.5em + 1rem + 6px);
+        border-top-right-radius: .3rem;
+        height: 48px;
+      }
+
+      .cr-dropdown {
+        background: none;
+
+        .dropdown-toggle {
+          font-size: 1.25rem;
+
+          &:focus {
+            border: none;
+          }
+
+          &:active {
+            border: none;
+          }
+        }
+
+        .show {
+          .dropdown-toggle {
+            border: none;
+          }
+        }
+
+        .btn-primary {
+          &:active {
+            color: inherit;
+          }
+        }
       }
     }
   }
