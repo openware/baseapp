@@ -126,7 +126,6 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         };
 
         dispatch(beneficiariesCreate(payload));
-        handleClearModalsInputs();
     }, [coinAddress, coinBeneficiaryName, coinDescription, currency, coinBlockchainName, code2FA]);
 
     const getState = React.useCallback(key => {
@@ -431,7 +430,6 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         };
 
         dispatch(beneficiariesCreate(payload));
-        handleClearModalsInputs();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         fiatAccountNumber,
