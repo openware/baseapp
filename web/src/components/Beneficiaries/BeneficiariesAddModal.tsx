@@ -1,9 +1,9 @@
 import classnames from 'classnames';
+import * as WAValidator from 'multicoin-address-validator';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { validateBeneficiaryAddress, validateBeneficiaryTestnetAddress } from '../../helpers';
 import { Modal } from '../../mobile/components/Modal';
 import {
     beneficiariesCreate,
@@ -34,6 +34,7 @@ const defaultSelected = {
 const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
     const [coinAddress, setCoinAddress] = React.useState('');
     const [coinAddressValid, setCoinAddressValid] = React.useState(false);
+    const [coinTestnetAddressValid, setCoinTestnetAddressValid] = React.useState(false);
     const [coinBlockchainName, setCoinBlockchainName] = React.useState(defaultSelected);
     const [coinBeneficiaryName, setCoinBeneficiaryName] = React.useState('');
     const [coinDescription, setCoinDescription] = React.useState('');
@@ -78,7 +79,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         setCoinDescriptionFocused(false);
         setCoinDestinationTagFocused(false);
         setCoinAddressValid(false);
-        // setCoinTestnetAddressValid(false);
+        setCoinTestnetAddressValid(false);
 
         setFiatAccountNumber('');
         setFiatName('');
@@ -186,11 +187,15 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
     ]);
 
     const validateCoinAddressFormat = React.useCallback((value: string) => {
-        const coinAddressValidator = validateBeneficiaryAddress.cryptocurrency(currency, true);
-        const coinAddressTestnetValidator = validateBeneficiaryTestnetAddress.cryptocurrency(currency, true);
+        const doesCurrencyExistsInPackage = WAValidator.findCurrency(currency);
 
-        setCoinAddressValid(coinAddressValidator.test(value.trim()));
-        // setCoinTestnetAddressValid(coinAddressTestnetValidator.test(value.trim()));
+        if (doesCurrencyExistsInPackage) {
+            setCoinAddressValid(WAValidator.validate(value.trim(), currency));
+            setCoinTestnetAddressValid(WAValidator.validate(value.trim(), currency, 'testnet'));
+        } else {
+            setCoinAddressValid(true);
+            setCoinTestnetAddressValid(true);
+        }
     }, [currency]);
 
     const handleChangeFieldValue = React.useCallback((key: string, value: string) => {
@@ -310,6 +315,15 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [coinAddress]);
 
+    const renderTestnetAddressMessage = React.useMemo(() => {
+        return (
+          <div className="cr-email-form__group">
+              <span className="pg-beneficiaries__warning-text">{formatMessage({ id: 'page.body.wallets.beneficiaries.addAddressModal.body.testnetAddress' })}</span>
+          </div>
+        );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [coinAddress]);
+
     const handleChangenBlockchain = React.useCallback((index: number) => {
         const blockchainItem = currencyItem.networks[index];
 
@@ -340,12 +354,14 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
     }, []);
 
     const renderAddAddressModalCryptoBody = React.useMemo(() => {
-        const isDisabled = !coinAddress || !coinBeneficiaryName || !coinAddressValid || !coinBlockchainName.blockchainKey;
+        const addressValid = coinAddressValid || coinTestnetAddressValid;
+        const isDisabled = !coinAddress || !coinBeneficiaryName || !addressValid || !coinBlockchainName.blockchainKey;
 
         return (
             <div className="cr-email-form__form-content">
                 {renderAddAddressModalBodyItem('coinAddress')}
-                {!coinAddressValid && coinAddress && renderInvalidAddressMessage}
+                {!coinAddressValid && !coinTestnetAddressValid && coinAddress && renderInvalidAddressMessage}
+                {!coinAddressValid && coinTestnetAddressValid && coinAddress && renderTestnetAddressMessage}
                 <DropdownBeneficiary
                     list={currencyItem?.networks?.map(renderDropdownItem(currencyItem.name, currencyItem.precision, currencyItem.price))}
                     selectedValue={coinBlockchainName}

@@ -50,5 +50,4 @@ export * from './titleCase';
 export * from './convertSecondToMinute';
 export * from './getCountDownDate';
 export * from './validateBeneficiaryTestnetAddress';
-export * from './validateBeneficiaryAddress';
 export * from './is2faValid';
