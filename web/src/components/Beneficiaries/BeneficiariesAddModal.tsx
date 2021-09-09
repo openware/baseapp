@@ -208,8 +208,15 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
     ]);
 
     const validateCoinAddressFormat = React.useCallback((value: string) => {
-        setCoinAddressValid(WAValidator.validate(value.trim(), currency));
-        setCoinTestnetAddressValid(WAValidator.validate(value.trim(), currency, 'testnet'));
+        const doesCurrencyExistsInPackage = WAValidator.findCurrency(currency);
+
+        if (doesCurrencyExistsInPackage) {
+            setCoinAddressValid(WAValidator.validate(value.trim(), currency));
+            setCoinTestnetAddressValid(WAValidator.validate(value.trim(), currency, 'testnet'));
+        } else {
+            setCoinAddressValid(true);
+            setCoinTestnetAddressValid(true);
+        }
     }, [currency]);
 
     const handleChangeFieldValue = React.useCallback((key: string, value: string) => {
