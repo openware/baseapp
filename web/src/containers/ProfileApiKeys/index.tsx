@@ -349,9 +349,6 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
         }
         body = !body ? (
             <div className="cr-email-form__form-content">
-                <div className="cr-email-form__header">
-                    {this.t('page.body.profile.apiKeys.modal.title')}
-                </div>
                 <div className={emailGroupClass}>
                     <CodeVerification
                         code={otpCode}
