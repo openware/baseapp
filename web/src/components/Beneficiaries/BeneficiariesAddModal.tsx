@@ -1,18 +1,18 @@
 import classnames from 'classnames';
+import * as WAValidator from 'multicoin-address-validator';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { validateBeneficiaryAddress, validateBeneficiaryTestnetAddress } from '../../helpers';
-import { Modal } from '../../mobile/components/Modal';
+import { CustomInput } from 'src/components/CustomInput';
+import { Modal } from 'src/mobile/components/Modal';
 import {
     alertPush,
     beneficiariesCreate,
     BeneficiaryBank,
     selectBeneficiariesCreateError,
     selectMobileDeviceState,
-} from '../../modules';
-import { CustomInput } from '../CustomInput';
+} from 'src/modules';
 
 interface Props {
     currency: string;
@@ -208,11 +208,8 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
     ]);
 
     const validateCoinAddressFormat = React.useCallback((value: string) => {
-        const coinAddressValidator = validateBeneficiaryAddress.cryptocurrency(currency, true);
-        const coinAddressTestnetValidator = validateBeneficiaryTestnetAddress.cryptocurrency(currency, true);
-
-        setCoinAddressValid(coinAddressValidator.test(value.trim()));
-        setCoinTestnetAddressValid(coinAddressTestnetValidator.test(value.trim()));
+        setCoinAddressValid(WAValidator.validate(value.trim(), currency));
+        setCoinTestnetAddressValid(WAValidator.validate(value.trim(), currency, 'testnet'));
     }, [currency]);
 
     const handleChangeFieldValue = React.useCallback((key: string, value: string) => {
