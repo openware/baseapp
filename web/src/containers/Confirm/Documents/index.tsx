@@ -139,14 +139,11 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
             <React.Fragment>
                 <div className="pg-confirm__content-documents">
                     <div className="pg-confirm__content-documents__row__content">
-                        <div className="pg-confirm__content-documents__row__content-label">
-                            {this.translate('page.body.kyc.documentsType')}
-                        </div>
                         <DropdownComponent
                             className="pg-confirm__content-documents__row__content-number-dropdown"
                             list={this.data}
                             onSelect={onSelect}
-                            placeholder={this.translate('page.body.kyc.documentsType.placeholder')}
+                            placeholder={this.translate('page.body.kyc.documentsType')}
                         />
                     </div>
                     <div className="pg-confirm__content-documents__row">
@@ -154,7 +151,6 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                             <CustomInput
                                 type="string"
                                 label={this.translate('page.body.kyc.documents.idNumber')}
-                                labelVisible={true}
                                 defaultLabel={''}
                                 placeholder={this.translate('page.body.kyc.documents.idNumber.placeholder')}
                                 inputValue={idNumber}
@@ -166,7 +162,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                     <div className="pg-confirm__content-documents__row input-group">
                         <fieldset className={issuedDateFocusedClass}>
                             <div className="custom-input">
-                                <label>{this.translate('page.body.kyc.documents.issuedDate')}</label>
+                                {issuedDate && <label>{this.translate('page.body.kyc.documents.issuedDate')}</label>}
                                 <div className="input-group input-group-lg">
                                     <MaskInput
                                         maskString="00/00/0000"
@@ -183,7 +179,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                         </fieldset>
                         <fieldset className={expireDateFocusedClass}>
                             <div className="custom-input">
-                                <label>{this.translate('page.body.kyc.documents.expiryDate')}</label>
+                                {expireDate && <label>{this.translate('page.body.kyc.documents.expiryDate')}</label>}
                                 <div className="input-group input-group-lg">
                                     <MaskInput
                                         maskString="00/00/0000"
