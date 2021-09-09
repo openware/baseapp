@@ -230,12 +230,12 @@ class WithdrawComponent extends React.Component<Props, WithdrawState> {
         );
     }
 
-    private clearFields = () => {
+    private clearFields = (beneficiary?: Beneficiary) => {
         this.setState({
             amount: '',
             otpCode: '',
             total: '',
-            beneficiary: defaultBeneficiary,
+            beneficiary: beneficiary || defaultBeneficiary,
         });
     };
 
@@ -283,7 +283,7 @@ class WithdrawComponent extends React.Component<Props, WithdrawState> {
             blockchainItem.withdraw_fee?.toString(),
         );
 
-        this.clearFields();
+        this.clearFields(beneficiary);
     }
 
     private handleChangeInputAmount = (value: string) => {
