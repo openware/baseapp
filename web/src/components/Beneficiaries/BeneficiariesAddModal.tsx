@@ -119,7 +119,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formatMessage]);
 
-    const currencyPayloadAddress = React.useCallback(() => {
+    const currencyPayloadAddress = React.useMemo(() => {
         if (coinDestinationTag) {
             if (isDestinationTagExists) {
                 return `${coinAddress}?dt=${coinDestinationTag}`;
@@ -292,7 +292,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                 break;
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [isDestinationTagExists, isMemoTagExists]);
 
     const handleChangeFieldFocus = React.useCallback((key: string) => {
         switch (key) {
@@ -403,7 +403,16 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                 </div>
             </div>
         );
-    }, [coinAddress, coinBeneficiaryName, coinAddressValid, coinTestnetAddressValid, coinDescription, coinDestinationTag, isDestinationTagExists, isMemoTagExists]);
+    }, [
+        coinAddress,
+        coinBeneficiaryName,
+        coinAddressValid,
+        coinTestnetAddressValid,
+        coinDescription,
+        coinDestinationTag,
+        isDestinationTagExists,
+        isMemoTagExists,
+    ]);
 
     const handleSubmitAddAddressFiatModal = React.useCallback(() => {
         const data: BeneficiaryBank = {
