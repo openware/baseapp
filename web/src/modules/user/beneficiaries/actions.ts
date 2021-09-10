@@ -24,6 +24,7 @@ export interface BeneficiariesFetch {
     type: typeof BENEFICIARIES_FETCH;
     payload?: {
         currency_id: string;
+        state?: string | string[];
     };
 }
 
