@@ -13,6 +13,7 @@ export interface CodeVerificationProps {
     onSubmit?: (e: any) => void; // tslint:disable-line
     showPaste2FA?: boolean;
     isMobile?: boolean;
+    message?: string;
 }
 
 const CodeVerification: FC<CodeVerificationProps> = (props: CodeVerificationProps): ReactElement => {
@@ -24,6 +25,7 @@ const CodeVerification: FC<CodeVerificationProps> = (props: CodeVerificationProp
         placeholder,
         showPaste2FA = true,
         type,
+        message,
     } = props;
 
     const { formatMessage } = useIntl();
@@ -78,7 +80,7 @@ const CodeVerification: FC<CodeVerificationProps> = (props: CodeVerificationProp
     return (
         <div className="pg-code-verification">
             <div className="pg-code-verification__label">
-                {formatMessage({ id: 'page.body.profile.whitelisted.add.beneficiary.2fa' })}
+                {message || formatMessage({ id: 'page.body.profile.whitelisted.add.beneficiary.2fa' })}
             </div>
             <div className="pg-code-verification__block">
                 <div className="pg-code-verification__block__content">
