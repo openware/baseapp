@@ -426,11 +426,13 @@
 
     .secret-section {
       color: var(--system-yellow);
+      display: flex;
       font-size: calc(var(--gap) * 2.33);
       font-style: normal;
       font-weight: bold;
       line-height: calc(var(--gap) * 3);
-      margin: calc(var(--gap) * 3);
+      margin: 0 calc(var(--gap) * 3);
+      padding: calc(var(--gap) * 2);
 
       .secret-sign {
         float: left;
@@ -450,6 +452,7 @@
     .note-section {
       font-size: calc(var(--gap) * 2);
       margin: calc(var(--gap) * 3);
+      margin-bottom: 12px;
       padding: calc(var(--gap) * 2);
 
       span {
