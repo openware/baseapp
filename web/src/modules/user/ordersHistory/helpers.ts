@@ -16,6 +16,7 @@ export const insertOrUpdate = (list: OrderCommon[], order: OrderCommon): OrderCo
     const index = list.findIndex((value: OrderCommon) => value.id === order.id);
     switch (order.state) {
         case 'wait':
+        case 'trigger_wait':
             if (index === -1) {
                 return [{...order}].concat(list);
             }
