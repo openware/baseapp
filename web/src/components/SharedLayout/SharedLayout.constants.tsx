@@ -114,7 +114,7 @@ export const NAVIGATIONS = navigations ? navigations.map(item => (
     }
 )) : DEFAULT_NAVIGATIONS;
 
-export const FOOTER_OPTIONS = footerNavigation && footerNavigation ? {
+export const FOOTER_OPTIONS = footerNavigation ? {
     navigations: footerNavigation,
     socials: footerSocials?.map(item => (
         {
@@ -128,15 +128,15 @@ export const FOOTER_OPTIONS = footerNavigation && footerNavigation ? {
     socialIconNumDisplay: 4,
 } : DEFAULT_FOOTER_OPTIONS;
 
-export const DEFAULT_USER_MENU = () => [
+export const DEFAULT_USER_MENU = (profileFunc, logoutFunc) => [
     {
         icon: <SharedLayoutIcons name="user" />,
         label: 'Profile',
-        onClick: () => window.console.log('your func'),
+        onClick: () => profileFunc(),
     },
     {
         icon: <SharedLayoutIcons name="logout" />,
         label: 'Logout',
-        onClick: () => window.console.log('yout func'),
+        onClick: () => logoutFunc(),
     },
 ];
