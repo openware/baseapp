@@ -41,12 +41,12 @@ export const defaultConfig: Config = {
     ],
     captcha_type: 'none',
     password_min_entropy: 0,
-    wizard_step: "false",
+    wizard_step: 'false',
     barong_upload_size_min_range: '1',
     barong_upload_size_max_range: '20',
     themeSwitcher: 'visible',
     peatio_platform_currency: 'usdt',
-    useSharedLayout: "true",
+    useSharedLayout: 'false',
 };
 
 export const Cryptobase = {
