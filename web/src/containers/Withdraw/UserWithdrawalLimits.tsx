@@ -11,7 +11,8 @@ import {
     selectUserWithdrawalLimitsDay,
     selectUserWithdrawalLimitsMonth,    
 } from '../../modules';
-import { GLOBAL_PLATFORM_CURRENCY, DEFAULT_FIAT_PRECISION } from '../../constants';
+import { DEFAULT_FIAT_PRECISION } from '../../constants';
+import { platformCurrency } from 'src/api';
 
 interface UserWithdrawalLimitsProps {
     currencyId: string;
@@ -91,7 +92,7 @@ export const UserWithdrawalLimits = React.memo((props: UserWithdrawalLimitsProps
                 <canvas style={{ maxWidth: "46px" }} className="cr-withdrawal-limits__group-arc"></canvas>
                 <div className="cr-withdrawal-limits__group-info">
                     <div className="cr-withdrawal-limits__group-info-usdt">
-                        <Decimal fixed={DEFAULT_FIAT_PRECISION} thousSep=",">{limit?.toString()}</Decimal>&nbsp;{GLOBAL_PLATFORM_CURRENCY}
+                        <Decimal fixed={DEFAULT_FIAT_PRECISION} thousSep=",">{limit?.toString()}</Decimal>&nbsp;{platformCurrency()}
                         <span className="cr-withdrawal-limits__group-info-period">&nbsp;/{period}</span></div>
                     <div className="cr-withdrawal-limits__group-info-currency">
                         <Decimal fixed={fixed} thousSep=",">{estimatedValue?.toString()}</Decimal>&nbsp;{currencyId?.toUpperCase()}
