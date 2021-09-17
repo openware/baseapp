@@ -112,6 +112,7 @@ const matchedTradesMock = (ws, marketId) => {
         kind = kind == "bid" ? "ask" : "bid";
         const takerType = Math.random() < 0.5 ? "buy" : "sell";
         const orderType = Math.random() < 0.5 ? "limit" : "market";
+        const orderState = Math.random() < 0.5 ? "wait" : "trigger_wait";
         price += price > 0.01 ? Math.random() < 0.5 ? +0.01 : -0.01 : 0.01;
         volume += 50;
         let bidId = kind == "bid" ? orderId : orderId - 10;
@@ -128,7 +129,7 @@ const matchedTradesMock = (ws, marketId) => {
             "kind": kind,
             "price": price,
             "avg_price": price,
-            "state": "wait",
+            "state": orderState,
             "remaining_volume": volume,
             "origin_volume": volume,
             "executed_volume": executedVolume,

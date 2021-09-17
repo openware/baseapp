@@ -171,6 +171,7 @@ const initRanger = (
                             if (isFinexEnabled() && event) {
                                 switch (event.state) {
                                     case 'wait':
+                                    case 'trigger_wait':
                                     case 'pending':
                                         const orders = selectOpenOrdersList(store.getState());
                                         const updatedOrder = orders.length && orders.find(order => event.uuid && order.uuid === event.uuid);
