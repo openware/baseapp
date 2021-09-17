@@ -206,19 +206,36 @@ func createMarkets(peatioClient *peatio.Client, markets []MarketResponse) (shoul
 			if apiError != nil {
 				log.Printf("ERROR: createMarkets: Can't create market with id %s. Error: %v. Errors: %v", market.ID, apiError.Error, apiError.Errors)
 			}
-		} else if res != nil && (market.MinPrice >= res.MinPrice || market.MinAmount >= res.MinAmount) {
+		} else if res != nil {
 			shouldRestart = true
+			shouldSendRequest := false
 			marketParams := peatio.UpdateMarketParams{
 				ID:        res.ID,
 				EngineID:  strconv.Itoa(res.EngineID),
-				MinPrice:  market.MinPrice,
-				MaxPrice:  market.MaxPrice,
-				MinAmount: market.MinAmount,
 			}
-			_, apiError := peatioClient.UpdateMarket(marketParams)
-			if apiError != nil {
-				log.Printf("ERROR: createMarkets: Can't create market with id %s. Error: %v. Errors: %v",
-					market.ID, apiError.Error, apiError.Errors)
+
+			if (market.MinPrice >= res.MinPrice || market.MinAmount >= res.MinAmount) {
+				marketParams.MinPrice = market.MinPrice
+				marketParams.MaxPrice = market.MaxPrice
+				marketParams.MinAmount = market.MinAmount
+				shouldSendRequest = true
+			}
+
+			if (market.AmountPrecision != int64(res.AmountPrecision) || market.PricePrecision != int64(res.PricePrecision)) {
+				marketParams.AmountPrecision = market.AmountPrecision
+				marketParams.PricePrecision = market.PricePrecision
+				marketParams.MinPrice = market.MinPrice
+				marketParams.MaxPrice = market.MaxPrice
+				marketParams.MinAmount = market.MinAmount
+				shouldSendRequest = true
+			}
+
+			if (shouldSendRequest) {
+				_, apiError := peatioClient.UpdateMarket(marketParams)
+				if apiError != nil {
+					log.Printf("ERROR: createMarkets: Can't create market with id %s. Error: %v. Errors: %v",
+						market.ID, apiError.Error, apiError.Errors)
+				}
 			}
 		}
 	}

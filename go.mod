@@ -19,7 +19,7 @@ require (
 	github.com/openware/pkg/database v0.0.0-20210402092258-edc0b8ed56a0
 	github.com/openware/pkg/ika v0.0.0-20210402092258-edc0b8ed56a0
 	github.com/openware/pkg/kli v0.0.0-20210402092258-edc0b8ed56a0
-	github.com/openware/pkg/mngapi v0.0.0-20210826153348-d3a3c79100ce
+	github.com/openware/pkg/mngapi v0.0.0-20210906093647-17e3d6ddde39
 	github.com/openware/pkg/sonic v0.0.0-20210615125010-3058204b14ff
 	github.com/openware/pkg/utils v0.0.0-20210402092258-edc0b8ed56a0
 	github.com/pierrec/lz4 v2.6.0+incompatible // indirect
