@@ -11,9 +11,10 @@ import {
     BlockchainCurrencies,
 } from '../../../modules';
 import { TrashBin } from '../../../assets/images/TrashBin';
-import { GLOBAL_PLATFORM_CURRENCY, DEFAULT_FIAT_PRECISION } from '../../../constants';
+import { DEFAULT_FIAT_PRECISION } from '../../../constants';
 import { Decimal, Tooltip  } from '../../../components';
 import { TipIcon } from '../../../assets/images/TipIcon';
+import { platformCurrency } from 'src/api';
 
 interface SelectBeneficiariesCryptoProps {
     blockchainKey: string;
@@ -131,7 +132,7 @@ export const SelectBeneficiariesCrypto: React.FunctionComponent<SelectBeneficiar
                             </div>
                             <div className="cr-withdraw-blockchain-item__estimated-value">
                                 ≈<Decimal fixed={DEFAULT_FIAT_PRECISION} thousSep=",">{estimatedValueFee.toString()}</Decimal>
-                                &nbsp;{GLOBAL_PLATFORM_CURRENCY}
+                                &nbsp;{platformCurrency()}
                             </div>
                         </div>
                     </div>

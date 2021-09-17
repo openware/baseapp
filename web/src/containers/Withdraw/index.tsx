@@ -15,7 +15,8 @@ import { Beneficiary, BlockchainCurrencies } from '../../modules';
 import { TipIcon } from '../../assets/images/TipIcon';
 import { RadioButton } from '../../assets/images/RadioButton';
 import { UserWithdrawalLimits } from './UserWithdrawalLimits';
-import { GLOBAL_PLATFORM_CURRENCY, DEFAULT_FIAT_PRECISION } from '../../constants';
+import { DEFAULT_FIAT_PRECISION } from '../../constants';
+import { platformCurrency } from 'src/api';
 
 export interface WithdrawProps {
     currency: string;
@@ -172,7 +173,7 @@ class WithdrawComponent extends React.Component<Props, WithdrawState> {
                                             </div>
                                             <div className="cr-withdraw-blockchain-item-block">
                                                 <div className="cr-withdraw-blockchain-item__fee"><span>{this.translate('page.body.wallets.beneficiaries.fee')}&nbsp;</span><Decimal fixed={fixed} thousSep=",">{blockchainItem?.withdraw_fee?.toString()}</Decimal> {currency.toUpperCase()}</div>
-                                                <div className="cr-withdraw-blockchain-item__estimated-value">≈<Decimal fixed={DEFAULT_FIAT_PRECISION} thousSep=",">{estimatedValueFee.toString()}</Decimal> {GLOBAL_PLATFORM_CURRENCY}</div>
+                                                <div className="cr-withdraw-blockchain-item__estimated-value">≈<Decimal fixed={DEFAULT_FIAT_PRECISION} thousSep=",">{estimatedValueFee.toString()}</Decimal> {platformCurrency()}</div>
                                             </div>
                                         </div>
                                     </div>

@@ -38,6 +38,7 @@ declare global {
         barong_upload_size_min_range?: string;
         barong_upload_size_max_range?: string;
         themeSwitcher: 'visible' | 'hidden';
+        peatio_platform_currency?: string;
     }
 
     interface Window {

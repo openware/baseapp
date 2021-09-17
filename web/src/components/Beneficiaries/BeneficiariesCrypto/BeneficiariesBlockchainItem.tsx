@@ -1,8 +1,9 @@
 import classnames from 'classnames';
 import * as React from 'react';
-import { GLOBAL_PLATFORM_CURRENCY, DEFAULT_FIAT_PRECISION } from '../../../constants';
+import { DEFAULT_FIAT_PRECISION } from '../../../constants';
 import { Decimal } from '../..';
 import { useIntl } from 'react-intl';
+import { platformCurrency } from 'src/api';
 
 export interface BeneficiariesBlockchainItemProps {
     blockchainKey: string;
@@ -51,7 +52,7 @@ export const BeneficiariesBlockchainItem: React.FunctionComponent<BeneficiariesB
             </div>
             <div className="cr-beneficiaries-blockchain-item-block">
                 <div className="cr-beneficiaries-blockchain-item__withdraw"><span>{formatMessage({ id: "page.body.wallets.beneficiaries.min.withdraw" })}</span> {minWithdraw} {id.toUpperCase()}</div>
-                <div>≈<Decimal fixed={DEFAULT_FIAT_PRECISION} thousSep=",">{estimatedFeeValue.toString()}</Decimal> {GLOBAL_PLATFORM_CURRENCY}</div>
+                <div>≈<Decimal fixed={DEFAULT_FIAT_PRECISION} thousSep=",">{estimatedFeeValue.toString()}</Decimal> {platformCurrency()}</div>
             </div>
         </div>
     );
