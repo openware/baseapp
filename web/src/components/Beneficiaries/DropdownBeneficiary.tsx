@@ -1,9 +1,11 @@
 import classnames from 'classnames';
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import { Dropdown } from 'react-bootstrap';
 import { ChevronIcon } from '../../assets/images/ChevronIcon';
 import { convertToString } from '../../helpers';
 import { BeneficiariesBlockchainItemProps } from './BeneficiariesCrypto/BeneficiariesBlockchainItem';
+import { selectUserIsMember } from '../../modules';
 
 type DropdownElem = number | string | React.ReactNode;
 
@@ -55,6 +57,7 @@ const defaultSelected = {
  */
 
 export const DropdownBeneficiary = (props: DropdownBeneficiaryProps) => {
+    const isMember: boolean = useSelector(selectUserIsMember);
     const [selected, setSelected] = useState<BeneficiariesBlockchainItemProps | undefined>(defaultSelected);
 
     const { list, className, placeholder, clear, onSelect } = props;
@@ -84,6 +87,11 @@ export const DropdownBeneficiary = (props: DropdownBeneficiaryProps) => {
     }, []);
 
     const renderElem = useCallback((elem: DropdownElem, index: number) => {
+        // @ts-ignore
+        if (elem?.props?.isHidden && isMember) {
+            return null;
+        }
+
         return  (
             <Dropdown.Item
                 key={index}

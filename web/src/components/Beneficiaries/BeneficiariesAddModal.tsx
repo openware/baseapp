@@ -349,6 +349,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                 fixed={fixed}
                 price={price}
                 disabled={item.status === 'disabled'}
+                isHidden={item.status === 'hidden'}
             />
         );
     }, []);
