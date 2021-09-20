@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { is2faValid, validateBeneficiaryAddress, validateBeneficiaryTestnetAddress } from '../../helpers';
+import { is2faValid } from '../../helpers';
 import { Modal } from '../../mobile/components/Modal';
 import {
     beneficiariesCreate,
