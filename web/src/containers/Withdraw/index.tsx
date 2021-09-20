@@ -76,12 +76,7 @@ class WithdrawComponent extends React.Component<Props, WithdrawState> {
         const { currency, withdrawDone } = this.props;
 
         if ((nextProps && (JSON.stringify(nextProps.currency) !== JSON.stringify(currency))) || (nextProps.withdrawDone && !withdrawDone)) {
-            this.setState({
-                amount: '',
-                otpCode: '',
-                total: '',
-                beneficiary: defaultBeneficiary,
-            });
+            this.clearFields();
         }
     }
 
@@ -235,6 +230,15 @@ class WithdrawComponent extends React.Component<Props, WithdrawState> {
         );
     }
 
+    private clearFields = (beneficiary?: Beneficiary) => {
+        this.setState({
+            amount: '',
+            otpCode: '',
+            total: '',
+            beneficiary: beneficiary || defaultBeneficiary,
+        });
+    };
+
     private handleCheckButtonDisabled = (total: string, beneficiary: Beneficiary, otpCode: string) => {
         const isPending = beneficiary.state && beneficiary.state.toLowerCase() === 'pending';
 
@@ -278,6 +282,8 @@ class WithdrawComponent extends React.Component<Props, WithdrawState> {
             this.state.otpCode,
             blockchainItem.withdraw_fee?.toString(),
         );
+
+        this.clearFields(beneficiary);
     }
 
     private handleChangeInputAmount = (value: string) => {

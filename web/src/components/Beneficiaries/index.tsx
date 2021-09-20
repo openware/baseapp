@@ -22,12 +22,15 @@ import { ChevronIcon } from '../../assets/images/ChevronIcon';
 import { PlusIcon } from '../../assets/images/PlusIcon';
 import { TipIcon } from '../../assets/images/TipIcon';
 import { LogoIcon } from '../../assets/images/LogoIcon';
-import { HugeCloseIcon } from '../../assets/images/CloseIcon';
+import { CloseIcon, HugeCloseIcon } from '../../assets/images/CloseIcon';
 import { BeneficiariesActivateModal } from './BeneficiariesActivateModal';
 import { BeneficiariesAddModal } from './BeneficiariesAddModal';
 import { BeneficiariesFailAddModal } from './BeneficiariesFailAddModal';
 import { TabPanel } from '../TabPanel';
 import { SelectBeneficiariesCrypto } from './BeneficiariesCrypto/SelectBeneficiariesCrypto';
+import { Button } from 'react-bootstrap';
+import { is2faValid } from 'src/helpers';
+import { CodeVerification, Modal } from '..';
 
 interface OwnProps {
     currency: string;
@@ -60,7 +63,10 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
     const [isOpenAddressModal, setAddressModalState] = React.useState(false);
     const [isOpenConfirmationModal, setConfirmationModalState] = React.useState(false);
     const [isOpenFailModal, setFailModalState] = React.useState(false);
+    const [isOpenOtpModal, setOtpModalState] = React.useState(false);
     const [isOpenTip, setTipState] = React.useState(false);
+    const [code2FA, setCode2FA] = React.useState<string>('');
+    const [selectedId, setSelectedId] = React.useState<number>(-1);
 
     const { currency, type, onChangeValue } = props;
 
@@ -134,7 +140,8 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
     }, [beneficiaries, beneficiariesAddSuccess, beneficiariesActivateSuccess]);
 
     const handleDeleteAddress = React.useCallback((item: Beneficiary) => () => {
-        dispatch(beneficiariesDelete({ id: item.id }));
+        setSelectedId(item.id);
+        setOtpModalState(true);
     }, []);
 
     const handleClickSelectAddress = React.useCallback((item: Beneficiary) => () => {
@@ -452,10 +459,86 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
         );
     }, [renderTabPanel, tab]);
 
+    const closeModal = React.useCallback(() => {
+        setOtpModalState(false);
+        setCode2FA('');
+        setSelectedId(-1);
+     }, []);
+
+    const deleteBeneficiary = React.useCallback(() => {
+        dispatch(beneficiariesDelete({ id: selectedId, otp: code2FA }));
+        setSelectedId(-1);
+        setCode2FA('');
+        setOtpModalState(false);
+    }, [selectedId, code2FA]);
+
+    const renderModalHeader = React.useMemo(() => {
+        return (
+            <div className="cr-email-form__options-group">
+                <div className="cr-email-form__option">
+                    <div className="cr-email-form__option-inner">
+                        {formatMessage({ id: 'page.body.wallets.beneficiaries.delete.2fa.header' })}
+                        <div className="cr-email-form__cros-icon" onClick={closeModal}>
+                            <CloseIcon className="close-icon" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }, []);
+
+    const renderModalBody = React.useMemo(() => {
+        return (
+            <div className="pg-exchange-modal-submit-body pg-exchange-modal-submit-body-2fa">
+                <div className="cr-email-form__group">
+                    <CodeVerification
+                        code={code2FA}
+                        onChange={setCode2FA}
+                        codeLength={6}
+                        type="text"
+                        placeholder="X"
+                        inputMode="decimal"
+                        showPaste2FA={true}
+                        isMobile={isMobileDevice}
+                    />
+                </div>
+            </div>
+        );
+    }, [code2FA, isMobileDevice]);
+
+    const renderModalFooter = React.useMemo(() => {
+        return (
+            <div className="pg-exchange-modal-submit-footer">
+                <Button
+                    block={true}
+                    disabled={!is2faValid(code2FA)}
+                    onClick={deleteBeneficiary}
+                    size="lg"
+                    variant="primary"
+                >
+                    {formatMessage({id: 'page.body.wallets.beneficiaries.delete.2fa.button' })}
+                </Button>
+            </div>
+        );
+    }, [code2FA]);
+
+    const renderOtpModal = React.useMemo(() => {
+        return (
+            <Modal
+                className="pg-beneficiaries__2fa"
+                show={isOpenOtpModal}
+                header={renderModalHeader}
+                content={renderModalBody}
+                footer={renderModalFooter}
+            />
+        );
+    }, [isOpenOtpModal, isMobileDevice, code2FA]);
+
     return (
         <div className="pg-beneficiaries">
             {beneficiaries.length && currentWithdrawalBeneficiary.id && currentWithdrawalBeneficiary.currency === beneficiaries[0].currency ? renderAddressItem(currentWithdrawalBeneficiary) : renderAddAddress}
             {isOpenAddressModal && renderBeneficiariesModal}
+            {isOpenOtpModal && renderOtpModal}
         </div>
     );
 }

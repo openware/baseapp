@@ -286,6 +286,7 @@ export const en = {
     'page.body.wallets.beneficiaries.addAddressModal.body.coinBeneficiaryName': 'Beneficiary Name',
     'page.body.wallets.beneficiaries.addAddressModal.body.coinDescription': 'Description (optional)',
     'page.body.wallets.beneficiaries.addAddressModal.body.coinDestinationTag': 'Destination Tag (optional)',
+    'page.body.wallets.beneficiaries.addAddressModal.body.otpCode': 'Enter 2fa code from the Google Authenticator app',
 
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatName': 'Beneficiary Name',
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatFullName': 'Full Name',
@@ -300,6 +301,8 @@ export const en = {
     'page.body.wallets.beneficiaries.fee': 'Fee:',
     'page.body.wallets.beneficiaries.tab.panel.add.whitelisted': 'Add Whitelisted',
     'page.body.wallets.beneficiaries.tab.panel.whitelisted': 'Whitelisted',
+    'page.body.wallets.beneficiaries.delete.2fa.button': 'Confirm',
+    'page.body.wallets.beneficiaries.delete.2fa.header': 'Enter 2fa code',
 
     'page.body.wallets.withdraw.blockchain.network': 'Blockchain Network',
     'page.body.wallets.withdraw.details': 'Withdrawal details',
@@ -1033,6 +1036,9 @@ export const en = {
     'account.beneficiary.invalid_pin': 'Invalid beneficiary activation pin',
     'account.beneficiary.cant_resend_within_1_minute': 'Can\'t resend activation pin within 1 minute',
     'account.beneficiary.duplicate_address': 'Beneficiary address already exists',
+    'account.beneficiary.too_long_name': 'Beneficiary name cannot be longer than 64 characters',
+    'account.beneficiary.too_long_description': 'Beneficiary description cannot be longer than 255 characters',
+    'account.beneficiary.pin_expired': 'Pin code expired',
 
     'market.market.doesnt_exist': 'Market doesn\'t exist',
     'market.order.invalid_state': 'Invalid deposit state',

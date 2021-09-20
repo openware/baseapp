@@ -294,6 +294,7 @@ export const ru: LangType = {
     'page.body.wallets.beneficiaries.addAddressModal.body.coinBeneficiaryName': 'Beneficiary Name',
     'page.body.wallets.beneficiaries.addAddressModal.body.coinDescription': 'Description (optional)',
     'page.body.wallets.beneficiaries.addAddressModal.body.coinDestinationTag': 'Destination Tag (optional)',
+    'page.body.wallets.beneficiaries.addAddressModal.body.otpCode': 'Enter 2fa code from the Google Authenticator app',
 
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatName': 'Beneficiary Name',
     'page.body.wallets.beneficiaries.addAddressModal.body.fiatFullName': 'Full Name',
@@ -308,6 +309,8 @@ export const ru: LangType = {
     'page.body.wallets.beneficiaries.fee': 'Fee:',
     'page.body.wallets.beneficiaries.tab.panel.add.whitelisted': 'Add Whitelisted',
     'page.body.wallets.beneficiaries.tab.panel.whitelisted': 'Whitelisted',
+    'page.body.wallets.beneficiaries.delete.2fa.button': 'Confirm',
+    'page.body.wallets.beneficiaries.delete.2fa.header': 'Enter 2fa code',
 
     'page.body.wallets.withdraw.blockchain.network': 'Blockchain Network',
     'page.body.wallets.withdraw.details': 'Withdrawal details',
@@ -1035,9 +1038,12 @@ export const ru: LangType = {
     'account.withdraw.invalid_otp': 'Неверный 2FA',
     'account.withdraw.disabled_api': 'Снятие API отключено',
 
-    'account.beneficiary.invalid_pin': 'Invalid beneficiary activation pin',
-    'account.beneficiary.cant_resend_within_1_minute': 'Can\'t resend activation pin within 1 minute',
-    'account.beneficiary.duplicate_address': 'Beneficiary address already exists',
+    'account.beneficiary.invalid_pin': 'Недопустимый код активации бенефициара',
+    'account.beneficiary.cant_resend_within_1_minute': 'Невозможно повторно отправить код активации в течение одной минуты',
+    'account.beneficiary.duplicate_address': 'Адрес бенефициара уже существует',
+    'account.beneficiary.too_long_name': 'Имя бенефициара не может быть длиннее 64 символов',
+    'account.beneficiary.too_long_description': 'Описание не может быть длиннее 255 символов',
+    'account.beneficiary.pin_expired': 'Срок годности пин кода истёк',
 
     'market.market.doesnt_exist': 'Рынок не существует',
     'market.order.invalid_state': 'Неверное состояние депозита',

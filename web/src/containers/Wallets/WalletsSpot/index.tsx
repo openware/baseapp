@@ -236,7 +236,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
             (next.beneficiariesAddSuccess && !beneficiariesAddSuccess)) {
             const selectedCurrency = (next.wallets[selectedWalletIndex] || { currency: '' }).currency;
 
-            this.props.fetchBeneficiaries({ currency_id: selectedCurrency.toLowerCase() });
+            this.props.fetchBeneficiaries({ currency_id: selectedCurrency.toLowerCase(), state: [ 'active', 'pending' ] });
         }
 
         // if (!this.props.beneficiariesAddError && next.beneficiariesAddError && next.beneficiariesAddError.message) {
@@ -252,7 +252,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
 
         if (prevState.currentTabIndex === 0 && tabIndex === 1 && wallets.length) {
             const walletToSet = wallets.find(i => i.currency?.toLowerCase() === currency?.toLowerCase()) || wallets[0];
-            walletToSet?.currency && this.props.fetchBeneficiaries({ currency_id: walletToSet.currency?.toLowerCase() });
+            walletToSet?.currency && this.props.fetchBeneficiaries({ currency_id: walletToSet.currency?.toLowerCase(), state: [ 'active', 'pending' ] });
         }
     }
 
@@ -455,6 +455,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         };
         this.props.walletsWithdrawCcy(withdrawRequest);
         this.toggleConfirmModal();
+        this.setState({ otpCode: '' });
     };
 
     private renderDeposit = () => {
@@ -598,7 +599,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
             withdrawDone: false,
         });
 
-        currentTabIndex === 1 && this.props.fetchBeneficiaries({ currency_id: value.currency.toLowerCase() });
+        currentTabIndex === 1 && this.props.fetchBeneficiaries({ currency_id: value.currency.toLowerCase(), state: [ 'active', 'pending' ] });
         this.props.history.push(`/wallets/spot/${value.currency.toLowerCase()}/${this.tabMapping[currentTabIndex]}`);
         this.props.setMobileWalletUi(wallets[nextWalletIndex].name);
     };

@@ -158,6 +158,16 @@
 
         &__form-content {
           padding: 0;
+
+          .otp-label {
+            font-size: 16px;
+            letter-spacing: 0.1px;
+            color: var(--secondary-contrast-cta-color);
+            margin-bottom: 12px;
+            position: relative;
+            display: block;
+            margin-top: -12px;
+          }
         }
       }
     }
@@ -570,6 +580,23 @@
         &:first-child {
           margin-right: 30px;
         }
+      }
+    }
+  }
+
+  &__2fa {
+    .cr-modal__container-header {
+      height: 58px;
+      padding: 0;
+
+      .cr-email-form__cros-icon {
+        cursor: pointer;
+        display: inline-block;
+        height: calc(var(--gap) * 2.5);
+        margin-left: calc(var(--gap) * 2.6);
+        margin-top: -1px;
+        position: absolute;
+        width: calc(var(--gap) * 2.5);
       }
     }
   }
