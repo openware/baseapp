@@ -5,6 +5,7 @@ import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { CustomInput } from 'src/components/CustomInput';
+import { CURRENCIES_MEMO } from 'src/constants';
 import { Modal } from 'src/mobile/components/Modal';
 import {
     alertPush,
@@ -54,7 +55,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
     const beneficiariesAddError = useSelector(selectBeneficiariesCreateError);
     const isMobileDevice = useSelector(selectMobileDeviceState);
     const isDestinationTagExists = React.useMemo(() => currency === 'xrp', [currency]);
-    const isMemoTagExists = React.useMemo(() => currency === 'xlm' || currency === 'eos' || currency === 'luna', [currency]);
+    const isMemoTagExists = React.useMemo(() => CURRENCIES_MEMO.includes(currency), [currency]);
 
     const handleClearModalsInputs = React.useCallback(() => {
         setCoinAddress('');
