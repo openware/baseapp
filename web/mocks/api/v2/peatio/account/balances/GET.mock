@@ -67,6 +67,16 @@ Access-Control-Allow-Credentials: true
         }
     },
     {
+        "currency":"luna",
+        "balance":"1000",
+        "locked":"0",
+        "deposit_address": {
+            "currencies": ["luna"],
+            "address": "terra19nvntwk2uvwd5f87td28lt4z4exlujsmhnjrud?memo=4F64A3BD5B808B2D2C07",
+            "state": "active"
+        }
+    },
+    {
         "currency":"krw",
         "balance":"548000",
         "locked":"2000"
