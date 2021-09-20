@@ -24,7 +24,7 @@ exports[`DepositFiat should match snapshot 1`] = `
       <p
         className="cr-deposit-fiat-detail__label"
       >
-        <FormattedMessage
+        <MemoizedFormattedMessage
           id="page.body.wallets.tabs.deposit.fiat.bankName"
         />
         :
@@ -42,7 +42,7 @@ exports[`DepositFiat should match snapshot 1`] = `
       <p
         className="cr-deposit-fiat-detail__label"
       >
-        <FormattedMessage
+        <MemoizedFormattedMessage
           id="page.body.wallets.tabs.deposit.fiat.accountNumber"
         />
         :
@@ -60,7 +60,7 @@ exports[`DepositFiat should match snapshot 1`] = `
       <p
         className="cr-deposit-fiat-detail__label"
       >
-        <FormattedMessage
+        <MemoizedFormattedMessage
           id="page.body.wallets.tabs.deposit.fiat.accountName"
         />
         :
@@ -78,7 +78,7 @@ exports[`DepositFiat should match snapshot 1`] = `
       <p
         className="cr-deposit-fiat-detail__label"
       >
-        <FormattedMessage
+        <MemoizedFormattedMessage
           id="page.body.wallets.tabs.deposit.fiat.phoneNumber"
         />
         :
@@ -96,7 +96,7 @@ exports[`DepositFiat should match snapshot 1`] = `
       <p
         className="cr-deposit-fiat-detail__label"
       >
-        <FormattedMessage
+        <MemoizedFormattedMessage
           id="page.body.wallets.tabs.deposit.fiat.referenceCode"
         />
         :
