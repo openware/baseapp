@@ -126,4 +126,4 @@ export const colors = {
 export const FIXED_VOL_PRECISION = 2;
 export const DEFAULT_PERCENTAGE_PRECISION = 2;
 
-export const CURRENCIES_MEMO = ['xlm', 'eos', 'luna']
+export const CURRENCIES_MEMO = ['xlm', 'eos', 'luna'];
