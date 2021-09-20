@@ -17,7 +17,7 @@ export const selectMobileWalletUi = (state: RootState): string =>
     state.user.wallets.wallets.mobileWalletChosen;
 
 export const selectShouldFetchWallets = (state: RootState): boolean =>
-    !selectWalletsTimestamp(state) && !selectWalletsLoading(state);
+    (!selectWalletsTimestamp(state) || !selectWallets(state).length) && !selectWalletsLoading(state);
 
 export const selectP2PWalletsLoading = (state: RootState): boolean =>
     state.user.wallets.p2pWallets.loading;

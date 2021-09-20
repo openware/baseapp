@@ -273,6 +273,11 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                     );
                 body = (
                     <div className="cr-success-create">
+                        <p className="note-section">
+                            <span>{this.t('page.body.profile.apiKeys.modal.note')} </span>
+                            <br/>
+                            {this.t('page.body.profile.apiKeys.modal.note_content')}
+                        </p>
                         <div className="pg-copyable-text__section">
                             <fieldset onClick={() => this.handleCopy('access-key-id', 'access')}>
                                 <CopyableTextField
@@ -283,15 +288,6 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                                   label={this.t('page.body.profile.apiKeys.modal.access_key')}
                                 />
                             </fieldset>
-                        </div>
-                        <div className="secret-section">
-                            <span className="secret-sign">&#9888;</span>
-                            <p className="secret-warning">
-                                <span>{this.t('page.body.profile.apiKeys.modal.secret_key')}</span>
-                                <br/>
-                                {this.t('page.body.profile.apiKeys.modal.secret_key_info')}
-                                <span> {this.t('page.body.profile.apiKeys.modal.secret_key_store')}</span>
-                            </p>
                         </div>
                         <div className="pg-copyable-text__section">
                             <fieldset onClick={() => this.handleCopy('secret-key-id', 'secret')}>
@@ -304,11 +300,15 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
                                 />
                             </fieldset>
                         </div>
-                        <p className="note-section">
-                            <span>{this.t('page.body.profile.apiKeys.modal.note')} </span>
-                            <br/>
-                            {this.t('page.body.profile.apiKeys.modal.note_content')}
-                        </p>
+                        <div className="secret-section">
+                            <span className="secret-sign">&#9888;</span>
+                            <p className="secret-warning">
+                                <span>{this.t('page.body.profile.apiKeys.modal.secret_key')}</span>
+                                <br/>
+                                {this.t('page.body.profile.apiKeys.modal.secret_key_info')}
+                                <span> {this.t('page.body.profile.apiKeys.modal.secret_key_store')}</span>
+                            </p>
+                        </div>
                         <div className="button-confirmation">
                             {button}
                         </div>
@@ -349,9 +349,6 @@ class ProfileApiKeysComponent extends React.Component<Props, ProfileApiKeysState
         }
         body = !body ? (
             <div className="cr-email-form__form-content">
-                <div className="cr-email-form__header">
-                    {this.t('page.body.profile.apiKeys.modal.title')}
-                </div>
                 <div className={emailGroupClass}>
                     <CodeVerification
                         code={otpCode}

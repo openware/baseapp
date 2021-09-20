@@ -75,6 +75,7 @@ class AddressComponent extends React.Component<Props, State> {
             postcode,
             postcodeFocused,
             fileScan,
+            country,
         } = this.state;
 
         /* tslint:disable */
@@ -111,7 +112,6 @@ class AddressComponent extends React.Component<Props, State> {
                                 placeholder={this.translate('page.body.kyc.address.address.placeholder')}
                                 label={this.translate('page.body.kyc.address.address')}
                                 defaultLabel={''}
-                                labelVisible={true}
                                 handleChangeInput={e => this.handleChange(e, 'address')}
                                 handleFocusInput={this.handleFieldFocus('address')}
                             />
@@ -122,7 +122,6 @@ class AddressComponent extends React.Component<Props, State> {
                             <CustomInput
                                 type="string"
                                 label={this.translate('page.body.kyc.address.city')}
-                                labelVisible={true}
                                 defaultLabel={''}
                                 placeholder={this.translate('page.body.kyc.address.city.placeholder')}
                                 inputValue={city}
@@ -134,7 +133,6 @@ class AddressComponent extends React.Component<Props, State> {
                             <CustomInput
                                 type="string"
                                 label={this.translate('page.body.kyc.address.postcode')}
-                                labelVisible={true}
                                 defaultLabel={''}
                                 placeholder={this.translate('page.body.kyc.address.postcode.placeholder')}
                                 inputValue={postcode}
@@ -144,9 +142,9 @@ class AddressComponent extends React.Component<Props, State> {
                         </fieldset>
                     </div>
                     <div className="pg-confirm__content-address__row__content">
-                        <div className="pg-confirm__content-address__row__content-label">
+                        {country && <div className="pg-confirm__content-address__row__content-label">
                             {this.translate('page.body.kyc.documents.country')}
-                        </div>
+                        </div>}
                         <SearchDropdown
                             className="pg-confirm__content-address__row__content-number-dropdown"
                             options={dataCountries}
