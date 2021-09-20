@@ -111,7 +111,7 @@ export const SelectBeneficiariesCrypto: React.FunctionComponent<SelectBeneficiar
     });
 
     const currentBeneficiary = React.useMemo(() => beneficiaries.find(item => item.blockchain_key === blockchainItem?.blockchain_key), [beneficiaries]);
-    window.console.log(blockchainItem);
+
     return (
         <div className="cr-beneficiary-blockchain-item" key={blockchainKey}>
             <div className="cr-withdraw__group__blockchain-item">

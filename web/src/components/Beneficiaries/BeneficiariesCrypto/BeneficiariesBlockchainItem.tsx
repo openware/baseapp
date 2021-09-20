@@ -14,6 +14,7 @@ export interface BeneficiariesBlockchainItemProps {
     fixed?: number;
     price?: string;
     disabled?: boolean;
+    isHidden?: boolean;
 }
 
 export const BeneficiariesBlockchainItem: React.FunctionComponent<BeneficiariesBlockchainItemProps> = ({
