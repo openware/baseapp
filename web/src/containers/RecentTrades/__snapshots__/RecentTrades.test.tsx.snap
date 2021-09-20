@@ -5,11 +5,11 @@ exports[`RecentTradesComponent should render 1`] = `
   value={
     Object {
       "store": Object {
+        "@@observable": [Function],
         "dispatch": [Function],
         "getState": [Function],
         "replaceReducer": [Function],
         "subscribe": [Function],
-        Symbol(observable): [Function],
       },
       "subscription": Subscription {
         "handleChangeWrapper": [Function],
@@ -19,11 +19,11 @@ exports[`RecentTradesComponent should render 1`] = `
         "onStateChange": [Function],
         "parentSub": undefined,
         "store": Object {
+          "@@observable": [Function],
           "dispatch": [Function],
           "getState": [Function],
           "replaceReducer": [Function],
           "subscribe": [Function],
-          Symbol(observable): [Function],
         },
         "unsubscribe": null,
       },

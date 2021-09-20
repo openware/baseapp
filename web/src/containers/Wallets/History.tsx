@@ -146,7 +146,7 @@ export class WalletTable extends React.Component<Props> {
         }
 
         return list.sort((a, b) => {
-            return localeDate(a.created_at, 'fullDate') > localeDate(b.created_at, 'fullDate') ? -1 : 1;
+            return new Date(a) > new Date(b) ? -1 : 1;
         }).map((item, index) => {
             const amount = 'amount' in item ? Number(item.amount) : Number(item.price) * Number(item.volume);
             const confirmations = type === 'deposits' && item.confirmations;

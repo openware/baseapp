@@ -8,14 +8,8 @@ exports[`Markets should render 1`] = `
     class="cr-table-container"
   >
     <div
-      class="cr-table-header__content"
-    >
-      <div
-        class="cr-title-component"
-      >
-        Markets
-      </div>
-    </div>
+      class="cr-table-header__content cr-table-header__content-empty"
+    />
     <table
       class="cr-table"
     >
@@ -953,7 +947,7 @@ exports[`Markets should render empty data 1`] = `
         "page.body.wallets.beneficiaries.addAddressModal.body.coinAddress": "Blockchain Address",
         "page.body.wallets.beneficiaries.addAddressModal.body.coinBeneficiaryName": "Beneficiary Name",
         "page.body.wallets.beneficiaries.addAddressModal.body.coinDescription": "Description (optional)",
-        "page.body.wallets.beneficiaries.addAddressModal.body.coinDestinationTag": "Destination Tag (optional)",
+        "page.body.wallets.beneficiaries.addAddressModal.body.coinDestinationTag": "Destination Tag/Memo (optional)",
         "page.body.wallets.beneficiaries.addAddressModal.body.fiatAccountNumber": "Account Number",
         "page.body.wallets.beneficiaries.addAddressModal.body.fiatBankName": "Bank Name",
         "page.body.wallets.beneficiaries.addAddressModal.body.fiatBankSwiftCode": "Bank Swift Code (optional)",
@@ -1352,11 +1346,11 @@ exports[`Markets should render empty data 1`] = `
     <Provider
       store={
         Object {
+          "@@observable": [Function],
           "dispatch": [Function],
           "getState": [Function],
           "replaceReducer": [Function],
           "subscribe": [Function],
-          Symbol(observable): [Function],
         }
       }
     >

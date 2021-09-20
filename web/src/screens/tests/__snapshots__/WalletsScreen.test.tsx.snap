@@ -7,9 +7,6 @@ Array [
     class="pg-container pg-wallet"
   >
     <div
-      class="text-center"
-    />
-    <div
       class="row no-gutters pg-wallet__tabs-content pg-wallet__tabs-content-height"
     >
       <div
