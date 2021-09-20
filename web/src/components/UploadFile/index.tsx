@@ -67,6 +67,10 @@ const UploadFileComponent: React.FC<Props> = ({
         );
     }, [handleHoverTooltipIcon, handleToggleTooltipVisible, tipText, title]);
 
+    const uploadCls = classnames('pg-upload-file__content__form__info', {
+        'pg-upload-file__content__form__info__center': !exampleImagePath,
+    });
+
     return (
         <div className="pg-upload-file">
             <div className="pg-upload-file__content">
@@ -84,8 +88,8 @@ const UploadFileComponent: React.FC<Props> = ({
                         id={id || 'file'}
                         onChange={handleUploadScan}
                     />
-                    <div className="pg-upload-file__content__form__info">
-                        {exampleImagePath && isMobileDevice ? (
+                    <div className={uploadCls}>
+                        {exampleImagePath ? (
                             <div className="pg-upload-file__doc-image">
                                 <img src={exampleImagePath} alt={`${label} example`} />
                             </div>
@@ -96,7 +100,9 @@ const UploadFileComponent: React.FC<Props> = ({
                                     {buttonText}
                                 </span>
                             ) : null}
-                            <span className="pg-upload-file__content__form__error__text">{fileSizeErrorMessage ? fileSizeErrorMessage : ''}</span>
+                            {fileSizeErrorMessage ? (
+                                <span className="pg-upload-file__content__form__error__text">{fileSizeErrorMessage}</span>
+                            ) : null }
                             {sizesText ? (
                                 <span className="pg-upload-file__content__form__info__text">{sizesText}</span>
                             ) : null}
@@ -110,11 +116,6 @@ const UploadFileComponent: React.FC<Props> = ({
                     </div>
                 </div>
             </div>
-            {exampleImagePath && !isMobileDevice ? (
-                <div className="pg-upload-file__doc-image">
-                    <img src={exampleImagePath} alt={`${label} example`} />
-                </div>
-            ) : null}
             {tipText ? (
                 <span
                     className={classnames('pg-upload-file__tooltip tooltip-hover', {

@@ -43,6 +43,29 @@
     padding: var(--email-form-padding) var(--email-form-padding) 12px;
   }
 
+  .custom-input {
+    input {
+      border: 2px solid var(--input-border-color);
+    }
+
+    label {
+      font-size: 10px;
+      font-weight: bold;
+      margin: 0;
+      position: static;
+      padding: 0;
+      text-transform: uppercase;
+    }
+
+    .input-group-lg {
+      margin-top: 4px;
+
+      .form-control-lg {
+        height: 48px;
+      }
+    }
+  }
+
   & > * {
     background: transparent;
   }
@@ -94,6 +117,11 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding: 12px 0;
+
+    button {
+      min-height: 40px;
+    }
   }
 
   &__button-wrapper--empty {
@@ -108,11 +136,10 @@
       background: transparent;
       color: var(--secondary-contrast-cta-color);
       cursor: pointer;
-      font-size: 14px;
+      font-size: 12px;
       font-style: normal;
       font-weight: normal;
       line-height: 30px;
-      text-align: center;
       transition: 0.2s;
 
       &:hover {

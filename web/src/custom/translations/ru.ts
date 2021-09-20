@@ -221,6 +221,7 @@ export const ru: LangType = {
     'page.body.wallets.tabs.deposit.fiat.referenceCode': 'Ваш уникальный код',
     'page.body.wallets.table.pending': 'Обрабатывается',
     'page.body.wallets.table.rejected': 'Отклонен',
+    'page.body.wallets.table.accepted': 'Accepted',
     'page.body.wallets.tabs.deposit.fiat.admin': 'Для того, чтобы вывести эту валюту, обратитесь к администратору!',
 
     'page.body.wallets.tabs.withdraw': 'Вывод',
@@ -351,7 +352,7 @@ export const ru: LangType = {
     'page.body.openOrders.header.button.cancelAll': 'Отменить все',
 
     'page.body.history.deposit': 'История депозитов',
-    'page.body.history.deposit.header.txid': 'txID',
+    'page.body.history.deposit.header.txID': 'txID',
     'page.body.history.deposit.header.date': 'Дата',
     'page.body.history.deposit.header.blockchain': 'Network',
     'page.body.history.deposit.header.currency': 'Валюта',
@@ -371,6 +372,7 @@ export const ru: LangType = {
     'page.body.history.withdraw.header.id': 'ID',
     'page.body.history.withdraw.header.blockchain': 'Network',
     'page.body.history.withdraw.header.date': 'Дата',
+    'page.body.history.withdraw.header.txID': 'txID',
     'page.body.history.withdraw.header.currency': 'Валюта',
     'page.body.history.withdraw.header.address': 'Адрес',
     'page.body.history.withdraw.header.amount': 'Сумма',
@@ -616,6 +618,7 @@ export const ru: LangType = {
     'page.body.kyc.address.city.placeholder': 'Your city',
     'page.body.kyc.address.postcode': 'Postcode (ZIP)',
     'page.body.kyc.address.postcode.placeholder': 'Your Postcode',
+    'page.body.kyc.address.country.placeholder': 'Select your country',
     'page.body.kyc.address.uploadFile.title': 'Proof of Address',
     'page.body.kyc.address.uploadFile.label': 'Please upload a Utility bill with your Address (Photo or scan)',
     'page.body.kyc.address.uploadFile.button': 'Upload',

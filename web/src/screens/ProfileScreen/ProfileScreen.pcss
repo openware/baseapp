@@ -390,8 +390,19 @@
       text-transform: uppercase;
     }
 
-    .cr-modal__container-footer {
-      display: none;
+    .cr-modal {
+      &__container-footer {
+        display: none;
+      }
+
+      .cr-email-form {
+        max-width: 504px;
+        min-height: unset;
+
+        &__button-wrapper button {
+          height: 40px;
+        }
+      }
     }
 
     &__state {
@@ -415,11 +426,13 @@
 
     .secret-section {
       color: var(--system-yellow);
+      display: flex;
       font-size: calc(var(--gap) * 2.33);
       font-style: normal;
       font-weight: bold;
       line-height: calc(var(--gap) * 3);
-      margin: calc(var(--gap) * 3);
+      margin: 0 calc(var(--gap) * 3);
+      padding: calc(var(--gap) * 2);
 
       .secret-sign {
         float: left;
@@ -439,6 +452,7 @@
     .note-section {
       font-size: calc(var(--gap) * 2);
       margin: calc(var(--gap) * 3);
+      margin-bottom: 12px;
       padding: calc(var(--gap) * 2);
 
       span {
@@ -450,6 +464,10 @@
       bottom: calc(var(--gap) * 4.33);
       margin: calc(var(--gap) * 3);
       padding-left: calc(var(--gap) * 0.66);
+
+      button {
+        height: 40px;
+      }
 
       input {
         margin: auto;
@@ -468,8 +486,7 @@
       min-height: calc(var(--big-gap) * 6.46);
 
       .pg-copyable-text__section {
-        margin: auto;
-        max-width: calc(var(--big-gap) * 6.33);
+        margin: 0 24px;
         overflow: hidden;
         padding: calc(var(--gap) * 4) 0 calc(var(--gap) * 2) 0;
         position: relative;
@@ -494,7 +511,6 @@
 
           .cr-copyable-text-field {
             border: none;
-            padding: 9px 2px;
 
             .input-group {
               display: flex;
@@ -502,10 +518,25 @@
               justify-content: space-between;
 
               .custom-input {
+                background: transparent;
+                border-radius: 4px;
                 width: 80%;
 
+                input {
+                  background: none !important;
+                  height: 48px !important;
+                }
+
                 label {
+                  background: var(--body-background-color);
+                  font-size: 10px;
+                  font-weight: bold;
+                  left: 0;
+                  letter-spacing: 0.06em;
                   margin-top: -18px;
+                  padding: 0;
+                  position: absolute;
+                  text-transform: uppercase;
                 }
               }
 

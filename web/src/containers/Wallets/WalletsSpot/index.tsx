@@ -174,8 +174,6 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
                 filteredWallets: wallets,
             });
 
-            walletToSet?.currency && this.props.fetchBeneficiaries({ currency_id: walletToSet.currency?.toLowerCase() });
-
             if (walletToSet?.currency && currency !== walletToSet?.currency) {
                 this.props.history.push(`/wallets/spot/${walletToSet.currency.toLowerCase()}/${this.tabMapping[currentTabIndex]}`);
             }
@@ -218,8 +216,6 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
                 filteredWallets: next.wallets,
             });
 
-            walletToSet?.currency && this.props.fetchBeneficiaries({ currency_id: walletToSet.currency?.toLowerCase() });
-
             if (walletToSet?.currency && currency !== walletToSet?.currency) {
                 this.props.history.push(`/wallets/spot/${walletToSet.currency.toLowerCase()}/${this.tabMapping[currentTabIndex]}`);
             }
@@ -248,6 +244,16 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         //         this.props.fetchSuccess({ message: next.beneficiariesAddError.message, type: 'error'});
         //     }
         // }
+    }
+
+    public componentDidUpdate(prevProps: Props, prevState: WalletsState) {
+        const { action, wallets, currency } = this.props;
+        const tabIndex = this.tabMapping.indexOf(action);
+
+        if (prevState.currentTabIndex === 0 && tabIndex === 1 && wallets.length) {
+            const walletToSet = wallets.find(i => i.currency?.toLowerCase() === currency?.toLowerCase()) || wallets[0];
+            walletToSet?.currency && this.props.fetchBeneficiaries({ currency_id: walletToSet.currency?.toLowerCase() });
+        }
     }
 
     public render() {
@@ -592,7 +598,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
             withdrawDone: false,
         });
 
-        this.props.fetchBeneficiaries({ currency_id: value.currency.toLowerCase() });
+        currentTabIndex === 1 && this.props.fetchBeneficiaries({ currency_id: value.currency.toLowerCase() });
         this.props.history.push(`/wallets/spot/${value.currency.toLowerCase()}/${this.tabMapping[currentTabIndex]}`);
         this.props.setMobileWalletUi(wallets[nextWalletIndex].name);
     };
