@@ -170,5 +170,22 @@ Access-Control-Allow-Credentials: true
     "withdrawal_enabled": false,
     "base_factor": 1,
     "precision": 2
+  },
+  {
+    "id": "luna",
+    "name": "Terra",
+    "symbol": "ꭆ",
+    "explorer_transaction": "https://terra.stake.id/#/tx/#{txid}",
+    "explorer_address": "https://terra.stake.id/#/address/#{address}",
+    "type": "coin",
+    "min_confirmations": 5,
+    "deposit_fee": "0.0",
+    "withdraw_fee": "0.02",
+    "withdraw_limit_24h": "100.0",
+    "withdraw_limit_72h": "200.0",
+    "deposit_enabled": true,
+    "withdrawal_enabled": true,
+    "base_factor": 1000000,
+    "precision": 8
   }
 ]

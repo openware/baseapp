@@ -54,7 +54,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
     const beneficiariesAddError = useSelector(selectBeneficiariesCreateError);
     const isMobileDevice = useSelector(selectMobileDeviceState);
     const isDestinationTagExists = React.useMemo(() => currency === 'xrp', [currency]);
-    const isMemoTagExists = React.useMemo(() => currency === 'xlm' || currency === 'eos', [currency]);
+    const isMemoTagExists = React.useMemo(() => currency === 'xlm' || currency === 'eos' || currency === 'luna', [currency]);
 
     const handleClearModalsInputs = React.useCallback(() => {
         setCoinAddress('');
