@@ -22,7 +22,19 @@ Access-Control-Allow-Credentials: true
         "digits":5,
         "type":"significant_digits"
       }
-    ]
+    ],
+    "features": {
+      "order_types": [
+        "fok",
+        "limit",
+        "market",
+        "fok",
+        "stop_loss",
+        "stop_limit",
+        "take_profit",
+        "take_limit"
+      ]
+    }
   },
   {
     "id":"ethbtc",

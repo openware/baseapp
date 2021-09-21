@@ -17,6 +17,10 @@ export interface MarketFilterSignificantDigit {
 
 export type MarketFilter = MarketFilterSignificantDigit | MarketFilterCustomStep;
 
+export type MarketFeature = {
+    order_types: string[];
+}
+
 export interface Market {
     id: MarketId;
     name: string;
@@ -29,6 +33,7 @@ export interface Market {
     price_precision: number;
     state?: string;
     filters?: MarketFilter[];
+    features?: MarketFeature;
 }
 
 export interface Ticker {
