@@ -77,6 +77,16 @@ Access-Control-Allow-Credentials: true
         }
     },
     {
+        "currency":"xem",
+        "balance":"1000",
+        "locked":"0",
+        "deposit_address": {
+            "currencies": ["xem"],
+            "address": "NDMGK6H6QCOVIIO27J2ZNHV45ZYDF73OW5VPSXYC?memo=FFFE658AF2CF2A77B3DD",
+            "state": "active"
+        }
+    },
+    {
         "currency":"krw",
         "balance":"548000",
         "locked":"2000"
