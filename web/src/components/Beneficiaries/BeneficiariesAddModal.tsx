@@ -499,14 +499,14 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         code2FA,
     ]);
 
+    const formClass = React.useMemo(() => classnames('cr-email-form', {
+        'cr-email-form--mobile': isMobileDevice,
+    }), [isMobileDevice]);
+
     const renderContent = React.useCallback(() => {
         const addModalClass = classnames('beneficiaries-add-address-modal', {
             'beneficiaries-add-address-modal--coin': type === 'coin',
             'beneficiaries-add-address-modal--fiat': type === 'fiat',
-        });
-
-        const formClass = classnames('cr-email-form', {
-            'cr-email-form--mobile': isMobileDevice,
         });
 
         return (
@@ -517,7 +517,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
             </div>
         );
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [type, isMobileDevice, getState]);
+    }, [type, isMobileDevice, getState, formClass]);
 
     return (
         isMobileDevice ?

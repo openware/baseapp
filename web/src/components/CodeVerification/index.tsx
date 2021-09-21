@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { FC, ReactElement, useCallback } from 'react';
+import React, { FC, ReactElement, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import { PasteIcon } from 'src/assets/images/PasteIcon';
 
@@ -30,7 +30,7 @@ const CodeVerification: FC<CodeVerificationProps> = (props: CodeVerificationProp
 
     const { formatMessage } = useIntl();
 
-    const getCodeBlocks = useCallback(() => {
+    const getCodeBlocks = useMemo(() => {
         const codeItems = code.split('');
 
         for (let i = 0; i < codeLength; i++) {
@@ -77,6 +77,15 @@ const CodeVerification: FC<CodeVerificationProps> = (props: CodeVerificationProp
         }
     };
 
+    const renderPaste2FA = useMemo(() => {
+        return showPaste2FA ? 
+            <div className="pg-code-verification__paste" onClick={paste2FA}>
+                <PasteIcon />
+                {formatMessage({ id: 'page.body.profile.whitelisted.paste' })}
+            </div>
+            : null;
+    }, [showPaste2FA, paste2FA]);
+
     return (
         <div className="pg-code-verification">
             <div className="pg-code-verification__label">
@@ -85,7 +94,7 @@ const CodeVerification: FC<CodeVerificationProps> = (props: CodeVerificationProp
             <div className="pg-code-verification__block">
                 <div className="pg-code-verification__block__content">
                     <div className="pg-code-verification__wrapper">
-                        {getCodeBlocks()}
+                        {getCodeBlocks}
                     </div>
                     <div className="pg-code-verification__input">
                         <input
@@ -98,12 +107,7 @@ const CodeVerification: FC<CodeVerificationProps> = (props: CodeVerificationProp
                         />
                     </div>
                 </div>
-                {showPaste2FA && 
-                    <div className="pg-code-verification__paste" onClick={() => paste2FA()}>
-                        <PasteIcon />
-                        {formatMessage({ id: 'page.body.profile.whitelisted.paste' })}
-                    </div>
-                }
+                {renderPaste2FA}
             </div>
         </div>
     );

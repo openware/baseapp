@@ -119,11 +119,11 @@ const BeneficiariesActivateModalComponent: React.FC<Props> = (props: Props) => {
         );
     }, [confirmationModalCode, formatMessage, handleResendConfirmationCode, handleSubmitConfirmationModal, renderConfirmationModalBodyItem]);
 
-    const renderContent = React.useCallback(() => {
-        const formClass = classnames('cr-email-form', {
-            'cr-email-form--mobile': isMobileDevice,
-        });
+    const formClass = React.useMemo(() => classnames('cr-email-form', {
+        'cr-email-form--mobile': isMobileDevice,
+    }),[isMobileDevice]);
 
+    const renderContent = React.useCallback(() => {
         return (
             <div className="beneficiaries-confirmation-modal">
                 <div className={formClass}>
@@ -131,7 +131,7 @@ const BeneficiariesActivateModalComponent: React.FC<Props> = (props: Props) => {
                 </div>
             </div>
         );
-    }, [isMobileDevice, renderConfirmationModalBody]);
+    }, [isMobileDevice, renderConfirmationModalBody, formClass]);
 
     return (
         isMobileDevice ?
