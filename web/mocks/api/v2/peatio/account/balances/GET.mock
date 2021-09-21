@@ -116,5 +116,17 @@ Access-Control-Allow-Credentials: true
         "balance":"1000.0",
         "account_type": "spot",
         "locked":"0.0"
+    },
+    {
+        "currency":"luna",
+        "balance":"1000.0",
+        "account_type": "spot",
+        "locked":"0.0"
+    },
+    {
+        "currency":"xem",
+        "balance":"1000.0",
+        "account_type": "spot",
+        "locked":"0.0"
     }
 ]
