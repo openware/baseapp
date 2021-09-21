@@ -19,6 +19,7 @@ import { CustomInput } from '../CustomInput';
 import { DropdownBeneficiary } from './DropdownBeneficiary';
 import { BeneficiariesBlockchainItem } from './BeneficiariesCrypto/BeneficiariesBlockchainItem';
 import { CodeVerification } from '..';
+import { getAddressWithoutTag, getTag, requiresMemoTag, requiresDTTag } from 'src/helpers/tagBasedAsset';
 
 interface Props {
     currency: string;
@@ -74,7 +75,8 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
     const createSuccess = useSelector(selectBeneficiariesCreateSuccess);
     const createError = useSelector(selectBeneficiariesCreateError);
     const currencyItem = React.useMemo(() => currencies.find(item => item.id === currency), [currencies]);
-    const isRipple = React.useMemo(() => currency === 'xrp', [currency]);
+    const isDestinationTagExists = requiresDTTag(currency);
+    const isMemoTagExists = requiresMemoTag(currency);
 
     React.useEffect(() => {
         if (createSuccess) {
@@ -115,13 +117,21 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         setCode2FA('');
     }, []);
 
+    const currencyPayloadAddress = React.useMemo(() => {
+        const address = isDestinationTagExists && coinDestinationTag ? `${coinAddress}?dt=${coinDestinationTag}`
+            : isMemoTagExists && coinDestinationTag ? `${coinAddress}?memo=${coinDestinationTag}`
+            : coinAddress;
+
+        return address;
+    }, [coinDestinationTag, isDestinationTagExists, isMemoTagExists, coinAddress]);
+
     const handleSubmitAddAddressCoinModal = React.useCallback(() => {
         const payload = {
             currency: currency || '',
             name: coinBeneficiaryName,
             blockchain_key: coinBlockchainName.blockchainKey,
             data: JSON.stringify({
-                address: (isRipple && coinDestinationTag ? `${coinAddress}?dt=${coinDestinationTag}` : coinAddress),
+                address: currencyPayloadAddress,
             }),
             ...(coinDescription && { description: coinDescription }),
             otp: code2FA,
@@ -223,8 +233,14 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
     const handleChangeFieldValue = React.useCallback((key: string, value: string) => {
         switch (key) {
             case 'coinAddress':
-                setCoinAddress(value);
-                validateCoinAddressFormat(value);
+                const address = getAddressWithoutTag(value);
+                setCoinAddress(address);
+                validateCoinAddressFormat(address);
+
+                const memoTag = getTag(value);
+                if (memoTag !== '-') {
+                    setCoinDestinationTag(memoTag);
+                }
                 break;
             case 'coinBeneficiaryName':
                 setCoinBeneficiaryName(value);
@@ -260,7 +276,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                 break;
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [isDestinationTagExists, isMemoTagExists]);
 
     const handleChangeFieldFocus = React.useCallback((key: string) => {
         switch (key) {
@@ -414,7 +430,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                 />
                 {renderAddAddressModalBodyItem('coinBeneficiaryName')}
                 {renderAddAddressModalBodyItem('coinDescription', true)}
-                {isRipple && renderAddAddressModalBodyItem('coinDestinationTag', true)}
+                {(isDestinationTagExists || isMemoTagExists) && renderAddAddressModalBodyItem('coinDestinationTag', true)}
                 {render2FACode}
                 <div className="cr-email-form__button-wrapper">
                     <Button
@@ -429,7 +445,15 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
             </div>
         );
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [coinAddress, coinBeneficiaryName, coinDescription, coinDestinationTag, render2FACode]);
+    }, [
+        coinAddress, 
+        coinBeneficiaryName, 
+        coinDescription, 
+        coinDestinationTag,
+        render2FACode,
+        isDestinationTagExists,
+        isMemoTagExists,
+    ]);
 
     const handleSubmitAddAddressFiatModal = React.useCallback(() => {
         const data: BeneficiaryBank = {
