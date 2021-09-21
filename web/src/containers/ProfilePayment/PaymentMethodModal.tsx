@@ -99,6 +99,7 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
             if (option.type === 'dropdown') {
                 return (
                     <div className={inputClass(option)}>
+                        <label></label>
                         <DropdownComponent
                             list={option.options.map(i => i?.value)}
                             onSelect={value => props.handleCustomFieldChange(option.options[value].value, option.key)}
@@ -203,12 +204,10 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
                 break
             case 'delete':
                 body = (
-                    <div className="cr-email-form__form-content">
-                        <p>{translate('page.body.profile.payment.modal.body.sureDelete', {name: modal.name})}?</p>
-                    </div>
+                    <p>{translate('page.body.profile.payment.modal.body.sureDelete', {name: modal.name})}?</p>
                 );
                 button = (
-                    <div>
+                    <div className="delete-confirm-buttons">
                         <Button
                             onClick={props.handleDelete}
                             size="lg"
