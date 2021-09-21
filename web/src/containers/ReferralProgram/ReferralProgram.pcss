@@ -5,24 +5,29 @@
   width: 100%;
 
   h2 {
-    color: var(--main-text-color);
+    color: var(--primary-text-color);
     font-size: 22px;
   }
 
   p {
     color: var(--secondary-contrast-cta-color);
-    font-size: 14px;
+    font-size: 16px;
+    margin: 12px 0;
   }
 
   fieldset {
     background: inherit;
     flex-grow: 1;
-    margin-top: 30px;
+    margin-top: 24px;
     overflow: hidden;
     padding: 0;
 
     .cr-deposit-crypto__copyable-title {
-      margin: 0;
+      color: var(--secondary-contrast-cta-color);
+      font-weight: bold;
+      font-size: 10px;
+      margin-left: 0;
+      text-transform: uppercase;
     }
 
     .pg-copyable-text-field {
@@ -36,23 +41,29 @@
           flex-direction: row;
           flex-wrap: nowrap;
           justify-content: space-between;
+          height: 100%;
+
+          &-append {
+            position: static;
+            right: unset;
+            top: unset;
+          }
 
           .custom-input {
             width: inherit;
 
-            label {
-              margin-top: -13px;
-              z-index: 10;
-            }
-
             input {
               background: transparent !important;
+              font-size: 12px;
+              height: 100%;
             }
           }
         }
 
         .btn-primary {
           border-radius: 0.3rem;
+          display: flex;
+          align-items: center;
         }
       }
     }
