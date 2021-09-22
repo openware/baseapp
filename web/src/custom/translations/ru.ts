@@ -806,7 +806,7 @@ export const ru: LangType = {
     'page.documentation.models.item.table.data.required.false': 'No',
 
     /* Quick Exchange */
-    'page.body.quick.exchange.header': 'Quick exchang',
+    'page.body.quick.exchange.header': 'Quick exchange',
 
     'page.body.quick.exchange.label.exchange': 'You exchange',
     'page.body.quick.exchange.label.receive': 'You receive',
