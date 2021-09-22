@@ -1,6 +1,23 @@
 .pg-code-verification {
   width: 100%;
 
+  &__label {
+    color: var(--secondary-contrast-cta-color);
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  &__block {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+    &__content {
+      margin-right: 18px;
+      width: 100%;
+    }
+  }
+
   &__wrapper {
     display: flex;
     justify-content: space-between;
@@ -17,11 +34,19 @@
       font-weight: bold;
       height: 50px;
       justify-content: space-around;
-      margin: 0 6px;
+      margin: 0 3px;
       width: 50px;
 
       &:first-child {
         margin-left: 0;
+      }
+
+      &:nth-child(3) {
+        margin-right: 9px;
+      }
+
+      &:nth-child(4) {
+        margin-left: 9px;
       }
 
       &:last-child {
@@ -58,12 +83,32 @@
   }
 
   &__paste {
+    border: 1px solid var(--secondary-contrast-cta-color-level-4);
+    border-radius: 4px;
+    color: var(--secondary-contrast-cta-color);
     cursor: pointer;
     display: flex;
     font-weight: bolder;
+    height: 40px;
     justify-content: center;
-    padding-top: 16px;
-    text-decoration: underline;
+    padding: 11px 16px;
+
+    &:hover {
+      background: var(--button-secondary-cta-background-color-hover);
+      color: var(--button-secondary-cta-text-color-hover);
+      transition: 0.2s;
+
+      svg {
+        path {
+          fill: var(--button-secondary-cta-text-color-hover);
+          transition: 0.2s;
+        }
+      }
+    }
+
+    svg {
+      margin-right: 7px;
+    }
   }
 }
 
@@ -87,7 +132,14 @@
 
     &__paste {
       font-size: 12px;
-      margin-top: 14px;
+      margin-left: 8px;
+      margin-top: -6px;
+    }
+
+    &__block {
+      &__content {
+        margin-right: unset;
+      }
     }
   }
 }

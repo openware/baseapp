@@ -311,8 +311,8 @@ export const en = {
 
     'page.body.wallets.beneficiaries.confirmationModal.header': 'Confirm new address',
     'page.body.wallets.beneficiaries.confirmationModal.body.text': 'We have sent you an email containing a confirmation code pin, please enter it below to save the new address:',
-    'page.body.wallets.beneficiaries.confirmationModal.body.confirmationModalCode': 'Pin code',
-    'page.body.wallets.beneficiaries.confirmationModal.body.resendButton': 'Resend pin',
+    'page.body.wallets.beneficiaries.confirmationModal.body.confirmationModalCode': 'Email verification code',
+    'page.body.wallets.beneficiaries.confirmationModal.body.resendButton': 'Send Code',
     'page.body.wallets.beneficiaries.confirmationModal.body.button': 'Confirm',
 
     'page.body.wallets.beneficiaries.tipAddress': 'Address',
@@ -1374,5 +1374,8 @@ export const en = {
     // finex
     'order.action.not_permitted': 'Action is not permitted',
     'order.action_role.not_permitted': 'Action is not permitted for your user role',
-    'order.action_level.not_permitted': 'Action is not permitted for your user verification level'
+    'order.action_level.not_permitted': 'Action is not permitted for your user verification level',
+
+    'page.body.profile.whitelisted.add.beneficiary.2fa': 'Enter 2fa code from the Google Authenticator app',
+    'page.body.profile.whitelisted.paste': 'Paste'
 };

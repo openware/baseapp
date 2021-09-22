@@ -1,5 +1,7 @@
 import classnames from 'classnames';
-import React, { FC, ReactElement, useCallback } from 'react';
+import React, { FC, ReactElement, useMemo } from 'react';
+import { useIntl } from 'react-intl';
+import { PasteIcon } from 'src/assets/images/PasteIcon';
 
 export interface CodeVerificationProps {
     placeholder: string;
@@ -11,6 +13,7 @@ export interface CodeVerificationProps {
     onSubmit?: (e: any) => void; // tslint:disable-line
     showPaste2FA?: boolean;
     isMobile?: boolean;
+    message?: string;
 }
 
 const CodeVerification: FC<CodeVerificationProps> = (props: CodeVerificationProps): ReactElement => {
@@ -18,14 +21,16 @@ const CodeVerification: FC<CodeVerificationProps> = (props: CodeVerificationProp
         code,
         codeLength,
         inputMode,
-        isMobile,
         onSubmit,
         placeholder,
-        showPaste2FA,
+        showPaste2FA = true,
         type,
+        message,
     } = props;
 
-    const getCodeBlocks = useCallback(() => {
+    const { formatMessage } = useIntl();
+
+    const getCodeBlocks = useMemo(() => {
         const codeItems = code.split('');
 
         for (let i = 0; i < codeLength; i++) {
@@ -72,21 +77,37 @@ const CodeVerification: FC<CodeVerificationProps> = (props: CodeVerificationProp
         }
     };
 
+    const renderPaste2FA = useMemo(() => {
+        return showPaste2FA ? 
+            <div className="pg-code-verification__paste" onClick={paste2FA}>
+                <PasteIcon />
+                {formatMessage({ id: 'page.body.profile.whitelisted.paste' })}
+            </div>
+            : null;
+    }, [showPaste2FA, paste2FA]);
+
     return (
         <div className="pg-code-verification">
-            <div className="pg-code-verification__wrapper">
-                {getCodeBlocks()}
+            <div className="pg-code-verification__label">
+                {message || formatMessage({ id: 'page.body.profile.whitelisted.add.beneficiary.2fa' })}
             </div>
-            <div className="pg-code-verification__input">
-                <input
-                    autoFocus={true}
-                    type={type}
-                    value={code}
-                    inputMode={inputMode}
-                    onChange={onCodeChange}
-                    onKeyPress={onSubmit}
-                />
-                {isMobile && showPaste2FA && <div className="pg-code-verification__paste" onClick={() => paste2FA()}>Paste 2FA</div>}
+            <div className="pg-code-verification__block">
+                <div className="pg-code-verification__block__content">
+                    <div className="pg-code-verification__wrapper">
+                        {getCodeBlocks}
+                    </div>
+                    <div className="pg-code-verification__input">
+                        <input
+                            autoFocus={true}
+                            type={type}
+                            value={code}
+                            inputMode={inputMode}
+                            onChange={onCodeChange}
+                            onKeyPress={onSubmit}
+                        />
+                    </div>
+                </div>
+                {renderPaste2FA}
             </div>
         </div>
     );

@@ -51,7 +51,6 @@ export const TwoFactorAuthComponent: React.FC<TwoFactorAuthProps> = ({
                         </div>
                     </div>
                     <div className="cr-email-form__form-content">
-                        <div className="cr-email-form__header">{message}</div>
                         <div className="cr-email-form__group">
                             <CodeVerification
                                 code={otpCode}
@@ -63,6 +62,7 @@ export const TwoFactorAuthComponent: React.FC<TwoFactorAuthProps> = ({
                                 inputMode="decimal"
                                 showPaste2FA={true}
                                 isMobile={isMobile}
+                                message={message}
                             />
                         </div>
                         <div className="cr-email-form__button-wrapper">

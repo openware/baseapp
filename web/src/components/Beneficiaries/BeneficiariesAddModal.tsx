@@ -128,7 +128,8 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         };
 
         dispatch(beneficiariesCreate(payload));
-    }, [coinAddress, coinBeneficiaryName, coinDescription, currency, coinBlockchainName, code2FA]);
+        handleClearModalsInputs();
+    }, [coinAddress, coinBeneficiaryName, coinDescription, currency, coinBlockchainName, coinDestinationTag, code2FA]);
 
     const getState = React.useCallback(key => {
         switch (key) {
@@ -498,6 +499,10 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         code2FA,
     ]);
 
+    const formClass = React.useMemo(() => classnames('cr-email-form', {
+        'cr-email-form--mobile': isMobileDevice,
+    }), [isMobileDevice]);
+
     const renderContent = React.useCallback(() => {
         const addModalClass = classnames('beneficiaries-add-address-modal', {
             'beneficiaries-add-address-modal--coin': type === 'coin',
@@ -506,13 +511,13 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
 
         return (
             <div className={addModalClass}>
-                <div className="cr-email-form">
+                <div className={formClass}>
                     {type === 'coin' ? renderAddAddressModalCryptoBody : renderAddAddressModalFiatBody}
                 </div>
             </div>
         );
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [type, isMobileDevice, getState]);
+    }, [type, isMobileDevice, getState, formClass]);
 
     return (
         isMobileDevice ?

@@ -2,15 +2,15 @@
   font-size: 14px;
   line-height: 22px;
   margin-top: 63px;
-  
+
   &-title {
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 28px;
-    letter-spacing: 0.15px;
     color: var(--primary-text-color);
-    justify-content: center;
     display: flex;
+    font-size: 20px;
+    font-weight: bold;
+    justify-content: center;
+    letter-spacing: 0.15px;
+    line-height: 28px;
   }
 
   span {
@@ -24,17 +24,17 @@
   }
 
   .tip-icon {
-    margin-left: 12px
+    margin-left: 12px;
   }
 
   &-address {
-    margin-top: 24px;
-    margin-bottom: 16px;
     letter-spacing: 0.1px;
+    margin-bottom: 16px;
+    margin-top: 24px;
 
     &-row {
-      display: flex;
       align-items: center;
+      display: flex;
     }
 
     .tip-icon {
@@ -71,12 +71,12 @@
 
   &-block {
     align-items: center;
-    display: flex;
     background: var(--input-background-color);
     border-radius: 4px;
+    display: flex;
     flex-direction: column;
-    justify-content: center;
     height: 88px;
+    justify-content: center;
     margin: 24px 0 6px;
 
     div:nth-child(2) {
@@ -85,7 +85,8 @@
     }
   }
 
-  &__tip, .tip {
+  &__tip,
+  .tip {
     background: var(--dropdown-background-color);
     border-radius: 4px;
     box-shadow: 0 8px 25px var(--shadow-color-level-3);
@@ -141,20 +142,20 @@
   text-align: center;
 
   &-verification {
-    font-weight: bold;
-    font-size: 18px;
-    line-height: 24px;
-    letter-spacing: 0.44px;
     color: var(--primary-text-color);
-    text-align: left;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 0.44px;
+    line-height: 24px;
     margin-bottom: 24px;
+    text-align: left;
   }
 
   &-title {
     font-size: 16px;
+    letter-spacing: 0.1px;
     line-height: 24px;
     text-align: left;
-    letter-spacing: 0.1px;
   }
 
   &-form {
@@ -168,20 +169,19 @@
     &-input {
       background: transparent;
       border: none;
-      padding: 0;
       margin: 16px 0 25px;
-      width: 304px;
+      padding: 0;
 
       input {
+        background: var(--input-background-second-color);
+        border: none;
+        box-shadow: none;
         color: var(--input-text-color);
         font-size: 14px;
         height: 40px;
         line-height: 19px;
-        padding: 12px;
-        background: var(--input-background-second-color);
-        border: none;
-        box-shadow: none;
         outline: none;
+        padding: 12px;
         padding-right: 56px;
         transition: 0.2s;
         width: 100%;
@@ -200,14 +200,14 @@
       align-items: center;
       border-radius: 4px;
       cursor: pointer;
-      font-weight: 600;
       flex: none !important;
+      font-weight: 600;
       height: 40px;
       line-height: 19px;
+      margin: 0;
       outline: none;
       text-align: center;
       transition: 0.2s;
-      margin: 0;
       width: 100%;
     }
   }

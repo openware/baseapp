@@ -47,6 +47,7 @@ const WalletWithdrawBodyComponent = props => {
     const withdrawFeeLabel = React.useMemo(() => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.fee' }), [intl]);
     const withdrawTotalLabel = React.useMemo(() => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.total' }), [intl]);
     const withdrawButtonLabel = React.useMemo(() => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.button' }), [intl]);
+    const withdrawAllButtonLabel = React.useMemo(() => intl.formatMessage({ id: 'page.body.wallets.tabs.withdraw.content.button.all' }), [intl]);
     const currencyItem = (currencies && currencies.find(item => item.id === currency));
 
     const isTwoFactorAuthRequired = (level: number, is2faEnabled: boolean) => {
@@ -146,6 +147,7 @@ const WalletWithdrawBodyComponent = props => {
                 withdrawTotalLabel={withdrawTotalLabel}
                 withdrawDone={withdrawData.withdrawDone}
                 withdrawButtonLabel={withdrawButtonLabel}
+                withdrawAllButtonLabel={withdrawAllButtonLabel}
                 twoFactorAuthRequired={isTwoFactorAuthRequired(user.level, user.otp)}
                 fee={fee}
                 balance={balance}

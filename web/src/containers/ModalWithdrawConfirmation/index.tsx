@@ -187,9 +187,6 @@ class ModalWithdraw extends React.Component<Props, State> {
         return (
             <div className="pg-exchange-modal-submit-footer modal-footer__withdraw-confirm">
                 <div className="modal-footer__withdraw-confirm-verification">{this.translate('page.body.wallets.tabs.withdraw.modal.verification')}</div>
-                <div className="modal-footer__withdraw-confirm-title">
-                    {this.translate('page.body.wallets.tabs.withdraw.modal.message')}
-                </div>
                 <div className="modal-footer__withdraw-confirm-form">
                     <div className="modal-footer__withdraw-confirm-form-row">
                         <fieldset className="modal-footer__withdraw-confirm-form-input">
@@ -203,6 +200,7 @@ class ModalWithdraw extends React.Component<Props, State> {
                                 inputMode="decimal"
                                 showPaste2FA={true}
                                 isMobile={isMobileDevice}
+                                message={this.translate('page.body.wallets.tabs.withdraw.modal.message')}
                             />
                         </fieldset>
                         <Button
