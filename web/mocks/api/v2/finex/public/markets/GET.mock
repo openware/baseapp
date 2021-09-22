@@ -28,7 +28,6 @@ Access-Control-Allow-Credentials: true
         "fok",
         "limit",
         "market",
-        "fok",
         "stop_loss",
         "stop_limit",
         "take_profit",
@@ -81,7 +80,13 @@ Access-Control-Allow-Credentials: true
           }
         ]
       }
-    ]
+    ],
+    "features": {
+      "order_types": [
+        "limit",
+        "market"
+      ]
+    }
   },
   {
     "id":"btcusd",
