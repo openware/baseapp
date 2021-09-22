@@ -44,12 +44,13 @@ const HistoryTable = (props: any) => {
             processing: <span className="cr-mobile-history-table--pending">{intl.formatMessage({ id: 'page.body.history.deposit.content.status.processing' })}</span>,
             fee_processing: <span className="cr-mobile-history-table--pending">{intl.formatMessage({ id: 'page.body.history.deposit.content.status.fee_processing' })}</span>,
             prepared: <span className="cr-mobile-history-table--pending">{intl.formatMessage({ id: 'page.body.wallets.table.pending' })}</span>,
+            confirming: <span className="cr-mobile-history-table--pending">{intl.formatMessage({ id: 'page.body.wallets.table.confirming' })}</span>,
             submitted: <span className="cr-mobile-history-table--pending">{(confirmations !== undefined && minConfirmations !== undefined) ? (
                 `${confirmations}/${minConfirmations}`
             ) : (
                 intl.formatMessage({ id: 'page.body.wallets.table.pending' })
                 )}</span>,
-            skipped: <span className="cr-mobile-history-table--success">{intl.formatMessage({ id: 'page.body.history.deposit.content.status.skipped' })}</span>,
+            skipped: <span className="cr-mobile-history-table--failed">{intl.formatMessage({ id: 'page.body.history.deposit.content.status.skipped' })}</span>,
             errored: <span className="cr-mobile-history-table--failed">{intl.formatMessage({ id: 'page.body.history.deposit.content.status.errored' })}</span>,
         };
 
