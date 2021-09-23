@@ -109,6 +109,10 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
         if (!memberLevels) {
             dispatch(memberLevelsFetch());
         }
+
+        return () => {
+            document.getElementById('root')?.style.setProperty('height', 'auto');
+        };
     }, []);
 
     React.useEffect(() => {
@@ -128,6 +132,7 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
 
         if (beneficiariesActivateSuccess) {
             setConfirmationModalState(false);
+            document.getElementById('root')?.style.setProperty('height', 'auto');
             setAddressModalState(false);
         }
 
@@ -151,6 +156,7 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
         } else {
             handleSetCurrentAddress(item);
             setConfirmationModalState(false);
+            document.getElementById('root')?.style.setProperty('height', 'auto');
             setAddressModalState(false);
         }
     }, []);
@@ -180,6 +186,7 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
             }));
         } else {
             setAddressModalState(true);
+            document.getElementById('root')?.style.setProperty('height', '100%');
         }
     }, [beneficiaries]);
 
@@ -384,6 +391,7 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
         setCurrentTabIndex(0);
         setAddressModalState(false);
         setConfirmationModalState(false);
+        document.getElementById('root')?.style.setProperty('height', 'auto');
     }, [beneficiaries, setCurrentTabIndex, setAddressModalState, setConfirmationModalState, setTab]);
 
     const onTabChange = React.useCallback(label => setTab(label), [setTab]);
