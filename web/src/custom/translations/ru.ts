@@ -220,7 +220,7 @@ export const ru: LangType = {
     'page.body.wallets.tabs.deposit.fiat.phoneNumber': 'Номер телефона',
     'page.body.wallets.tabs.deposit.fiat.referenceCode': 'Ваш уникальный код',
     'page.body.wallets.table.pending': 'Обрабатывается',
-    'page.body.wallets.table.confirming': 'подтверждающий',
+    'page.body.wallets.table.confirming': 'Подтверждается',
     'page.body.wallets.table.rejected': 'Отклонен',
     'page.body.wallets.table.accepted': 'Accepted',
     'page.body.wallets.table.skipped': 'Skipped',
