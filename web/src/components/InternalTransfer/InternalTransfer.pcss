@@ -13,16 +13,20 @@
     .cr-modal__container {
       &-header {
         align-items: center;
-        background: var(--subheader-background-color);
-        border-bottom: 0;
-        color: var(--primary-text-color);
+        border-bottom: 1px solid var(--divider-color-level-1);
+        color: var(--primary-cta-color);
         display: flex;
-        justify-content: space-between;
-        letter-spacing: 0.1px;
-        line-height: 20px;
-        margin: 0;
-        padding: 6px 12px;
-        text-align: left;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 12px 24px;
+        text-align: center;
+        justify-content: center;
+
+        &-text {
+          display: flex;
+          justify-content: center;
+          flex: 1;
+        }
 
         &-cancel {
           cursor: pointer;
@@ -75,11 +79,16 @@
     }
 
     &__header {
-      background: var(--subheader-background-color);
-      color: var(--primary-text-color);
-      letter-spacing: 0.1px;
-      line-height: 20px;
-      padding: 6px 12px;
+      align-items: center;
+      border-bottom: 1px solid var(--divider-color-level-1);
+      color: var(--primary-cta-color);
+      display: flex;
+      font-size: 14px;
+      font-weight: bold;
+      height: 60px;
+      padding: 12px 24px;
+      text-align: center;
+      justify-content: center;
     }
 
     &__inputs {
