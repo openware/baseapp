@@ -99,7 +99,6 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
             if (option.type === 'dropdown') {
                 return (
                     <div className={inputClass(option)}>
-                        <label></label>
                         <DropdownComponent
                             list={option.options.map(i => i?.value)}
                             onSelect={value => props.handleCustomFieldChange(option.options[value].value, option.key)}

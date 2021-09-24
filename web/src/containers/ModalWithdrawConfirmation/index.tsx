@@ -51,12 +51,14 @@ class ModalWithdraw extends React.Component<Props, State> {
     }
 
     public componentDidUpdate(prevProps: Props) {
-        if (!prevProps.show && this.props.show) {
-            document.getElementById('root')?.style.setProperty('height', '100%');
-        }
-
-        if (prevProps.show && !this.props.show) {
-            document.getElementById('root')?.style.setProperty('height', 'auto');
+        if (prevProps.show !== this.props.show) {
+            if (!prevProps.show && this.props.show) {
+                document.getElementById('root')?.style.setProperty('height', '100%');
+            }
+    
+            if (prevProps.show && !this.props.show) {
+                document.getElementById('root')?.style.setProperty('height', 'auto');
+            }
         }
     }
 
