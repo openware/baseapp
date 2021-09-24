@@ -35,6 +35,7 @@ import { depthFetch } from '../../modules/public/orderBook';
 const { WidthProvider, Responsive } = require('react-grid-layout');
 
 const breakpoints = {
+    xl: 1400,
     lg: 1200,
     md: 996,
     sm: 768,
@@ -43,6 +44,7 @@ const breakpoints = {
 };
 
 const cols = {
+    xl: 24,
     lg: 24,
     md: 24,
     sm: 12,
