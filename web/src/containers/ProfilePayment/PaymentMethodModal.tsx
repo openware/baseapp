@@ -100,9 +100,9 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
                 return (
                     <div className={inputClass(option)}>
                         <DropdownComponent
-                            list={option.options.map(i => i?.value)}
-                            onSelect={value => props.handleCustomFieldChange(option.options[value].value, option.key)}
-                            placeholder={option.value}
+                            list={option.options}
+                            onSelect={index => props.handleCustomFieldChange(option.options[index], option.key)}
+                            placeholder={option.name}
                         />
                         {showError && option.required && !option.value &&
                             <span className="error">{translate('page.body.profile.payment.modal.error.empty', {name: titleCase(option.name)})}</span>}
