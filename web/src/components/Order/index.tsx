@@ -225,8 +225,8 @@ export class Order extends React.Component<OrderComponentProps, State> {
                     priceLimit={priceLimit}
                     trigger={trigger}
                     onSubmit={this.props.onSubmit}
-                    orderTypes={orderTypes || defaultOrderTypes}
-                    orderTypesIndex={orderTypesIndex || defaultOrderTypes}
+                    orderTypes={this.getOrderTypes()}
+                    orderTypesIndex={this.getOrderTypes()}
                     currentMarketAskPrecision={currentMarketAskPrecision}
                     currentMarketBidPrecision={currentMarketBidPrecision}
                     totalPrice={getTotalPrice(amount, priceMarket, proposals)}
@@ -244,6 +244,16 @@ export class Order extends React.Component<OrderComponentProps, State> {
             ),
             label: preLabel || label,
         };
+    };
+
+    private getOrderTypes = () => {
+        const { orderTypes } = this.props;
+
+        if (orderTypes && orderTypes.length) {
+            return orderTypes.sort((a, b) => defaultOrderTypes.indexOf(a) < defaultOrderTypes.indexOf(b) ? -1 : 1);
+        }
+
+        return defaultOrderTypes;
     };
 
     private getPanels = () => {

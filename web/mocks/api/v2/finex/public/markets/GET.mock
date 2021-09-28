@@ -83,8 +83,9 @@ Access-Control-Allow-Credentials: true
     ],
     "features": {
       "order_types": [
+        "market",
         "limit",
-        "market"
+        "fok"
       ]
     }
   },
@@ -125,6 +126,15 @@ Access-Control-Allow-Credentials: true
         ],
         "type":"custom_price_steps"
       }
-    ]
+    ],
+    "features": {
+      "order_types": [
+        "stop_loss",
+        "stop_limit",
+        "market",
+        "limit",
+        "fok"
+      ]
+    }
   }
 ]
