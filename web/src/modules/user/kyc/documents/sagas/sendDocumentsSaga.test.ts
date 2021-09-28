@@ -1,7 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { rootSaga, sendError } from '../../../../';
+import { rootSaga, sendError, alertPush } from '../../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../../helpers/jest';
 import { CommonError } from '../../../../types';
 import { sendDocuments, sendDocumentsData, sendDocumentsError } from '../actions';
@@ -37,7 +37,6 @@ describe('KYC - Documents', () => {
 
     const expectedActionsSuccess = [
         sendDocuments({ front_side: payloadFormData, selfie: payloadFormData }),
-        sendDocumentsData(),
     ];
 
     const expectedActionsError = [
@@ -57,7 +56,7 @@ describe('KYC - Documents', () => {
 
     it('should fetch sending documents data', async () => {
         mockConfirmDocumentsFetch();
-        const promise = new Promise(resolve => {
+        const promise = new Promise<void>(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsSuccess.length) {
@@ -73,7 +72,7 @@ describe('KYC - Documents', () => {
 
     it('should fetch sending documents error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise<void>(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

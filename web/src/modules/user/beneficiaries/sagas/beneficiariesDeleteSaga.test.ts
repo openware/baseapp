@@ -27,6 +27,7 @@ describe('Beneficiaries Delete', () => {
     describe('Delete beneficiary data', () => {
         const fakePayload = {
             id: 1,
+            otp: '',
         };
 
         const fakeSuccessPayload = {
@@ -61,7 +62,7 @@ describe('Beneficiaries Delete', () => {
         it('should delete beneficiary in success flow', async () => {
             mockBeneficiariesDelete();
 
-            const promise = new Promise(resolve => {
+            const promise = new Promise<void>(resolve => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     if (actions.length === expectedBeneficiariesDeleteSuccess.length) {
@@ -77,7 +78,7 @@ describe('Beneficiaries Delete', () => {
 
         it('should handle delete beneficiary error', async () => {
             mockNetworkError(mockAxios);
-            const promise = new Promise(resolve => {
+            const promise = new Promise<void>(resolve => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     if (actions.length === expectedBeneficiariesDeleteError.length) {

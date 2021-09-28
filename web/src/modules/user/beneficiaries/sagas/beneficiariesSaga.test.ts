@@ -32,6 +32,8 @@ describe('Beneficiaries Fetch', () => {
             data: {
                 address: '0xa96bbd0de64ef10659ae49d5ca4bb8109169007eb90d53aa3f87b6dc65530d8a',
             },
+            blockchain_key: '',
+            blockchain_name: '',
         },
         {
             id: 2,
@@ -49,6 +51,8 @@ describe('Beneficiaries Fetch', () => {
                 bank_address: 'Anotherstreet 13',
                 bank_country: 'Wakanda',
             },
+            blockchain_key: '',
+            blockchain_name: '',
         },
     ];
 
@@ -79,7 +83,7 @@ describe('Beneficiaries Fetch', () => {
 
     it('should fetch benefciiaries in success flow', async () => {
         mockBeneficiaries();
-        const promise = new Promise(resolve => {
+        const promise = new Promise<void>(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedBeneficiariesActionsFetch.length) {
@@ -95,7 +99,7 @@ describe('Beneficiaries Fetch', () => {
 
     it('should trigger fetch benefciiaries error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise<void>(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedBeneficiariesActionsError.length) {

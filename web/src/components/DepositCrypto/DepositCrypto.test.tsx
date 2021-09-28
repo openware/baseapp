@@ -17,7 +17,9 @@ describe('DepositCrypto', () => {
         name: '',
         fixed: 0,
         type: 'coin',
-        fee: 0,
+        account_type: '',
+        networks: [],
+
     };
 
     beforeEach(() => {
@@ -31,6 +33,7 @@ describe('DepositCrypto', () => {
                     text={'text123'}
                     wallet={wallet}
                     disabled={false}
+                    network="erc-20"
                 />,
             </Provider>,
         );

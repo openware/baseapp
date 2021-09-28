@@ -13,6 +13,8 @@ describe('Beneficiaries reducer', () => {
             data: {
                 address: '0xa96bbd0de64ef10659ae49d5ca4bb8109169007eb90d53aa3f87b6dc65530d8a',
             },
+            blockchain_key: '',
+            blockchain_name: '',
         },
         {
             id: 2,
@@ -30,6 +32,8 @@ describe('Beneficiaries reducer', () => {
                 bank_address: 'Anotherstreet 13',
                 bank_country: 'Wakanda',
             },
+            blockchain_key: '',
+            blockchain_name: '',
         },
     ];
 
@@ -73,6 +77,8 @@ describe('Beneficiaries reducer', () => {
             data: {
                 address: '0xa96bbd0de64ef10659ae49d5ca4bb8109169007eb90d53aa3f87b6dc65530d8a',
             },
+            blockchain_key: '',
+            blockchain_name: '',
         };
 
         const fakeUpdatedBeneficiaries: Beneficiary[] = [
@@ -84,6 +90,8 @@ describe('Beneficiaries reducer', () => {
                 data: {
                     address: '0xa96bbd0de64ef10659ae49d5ca4bb8109169007eb90d53aa3f87b6dc65530d8a',
                 },
+                blockchain_key: '',
+                blockchain_name: '',
             },
             {
                 id: 2,
@@ -101,6 +109,8 @@ describe('Beneficiaries reducer', () => {
                     bank_address: 'Anotherstreet 13',
                     bank_country: 'Wakanda',
                 },
+                blockchain_key: '',
+                blockchain_name: '',
             },
         ];
 
@@ -167,6 +177,8 @@ describe('Beneficiaries reducer', () => {
             data: {
                 address: '0xa96bbd0de64ef10659ae49d5ca4bb8109169007eb90d53aa3f87b6dc65530d8a',
             },
+            blockchain_key: '',
+            blockchain_name: '',
         };
 
         const expectedState = {
@@ -209,6 +221,7 @@ describe('Beneficiaries reducer', () => {
             name: 'Company Name',
             description: 'Some description',
             data: '{"address": "0xa96bbd0de64ef10659ae49d5ca4bb8109169007eb90d53aa3f87b6dc65530d8a"}',
+            otp: '',
         };
 
         expect(beneficiariesReducer(initialBeneficiariesState, actions.beneficiariesCreate(fakePayload))).toEqual(expectedState);
@@ -223,6 +236,8 @@ describe('Beneficiaries reducer', () => {
             data: {
                 address: '0xa96bbd0de64ef10659ae49d5ca4bb8109169007eb90d53aa3f87b6dc65530d8a',
             },
+            blockchain_key: '',
+            blockchain_name: '',
         };
 
         const expectedState = {
@@ -262,6 +277,7 @@ describe('Beneficiaries reducer', () => {
 
         const fakePayload = {
             id: 1,
+            otp: '',
         };
 
 

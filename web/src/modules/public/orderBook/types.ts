@@ -39,6 +39,7 @@ export interface DepthIncrementState {
     bids: string[][];
     loading: boolean;
     sequence: number | null;
+    timestamp?: number | string;
 }
 
 export interface DepthIncrementUpdateData {

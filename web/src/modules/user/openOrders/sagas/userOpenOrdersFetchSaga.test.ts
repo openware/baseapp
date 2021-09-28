@@ -5,7 +5,7 @@ import { rootSaga, sendError } from '../../../';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { Market } from '../../../../modules';
 import { CommonError, OrderCommon } from '../../../types';
-import { userOpenOrdersData, userOpenOrdersError, userOpenOrdersFetch } from '../actions';
+import { userOpenOrdersError, userOpenOrdersFetch } from '../actions';
 
 describe('Open Orders Fetch', () => {
     let store: MockStoreEnhanced;
@@ -77,7 +77,6 @@ describe('Open Orders Fetch', () => {
 
     const expectedActionsFetch = [
         userOpenOrdersFetch(fakeFetchPayload),
-        userOpenOrdersData(fakeOpenOrders),
     ];
     const expectedActionsError = [
         userOpenOrdersFetch(fakeFetchPayload),
@@ -92,7 +91,7 @@ describe('Open Orders Fetch', () => {
 
     it('should fetch open orders', async () => {
         mockGetOpenOrders();
-        const promise = new Promise(resolve => {
+        const promise = new Promise<void>(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -108,7 +107,7 @@ describe('Open Orders Fetch', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise<void>(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

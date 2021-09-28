@@ -1,6 +1,7 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
 import { CodeVerification, CodeVerificationProps } from '../';
+import { IntlProvider } from 'react-intl';
 
 const defaultProps: CodeVerificationProps = {
     placeholder: '',
@@ -11,7 +12,7 @@ const defaultProps: CodeVerificationProps = {
     onSubmit: jest.fn(),
 };
 
-const setup = (props: Partial<CodeVerificationProps> = {}) => shallow(<CodeVerification {...{ ...defaultProps, ...props }} />);
+const setup = (props: Partial<CodeVerificationProps> = {}) => shallow(<IntlProvider locale="en"><CodeVerification {...{ ...defaultProps, ...props }} /></IntlProvider >);
 
 describe('CodeVerification test', () => {
     it('should render', () => {

@@ -5,6 +5,7 @@ import { rootSaga, sendError } from '../../..';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { CommonError } from '../../../types';
 import { userData, userError, userFetch } from '../actions';
+import { abilitiesFetch } from '../../abilities';
 
 describe('Module: User', () => {
     let store: MockStoreEnhanced;
@@ -49,6 +50,7 @@ describe('Module: User', () => {
 
     const expectedActionsFetch = [
         userFetch(),
+        abilitiesFetch(),
         userData({ user: fakeUser }),
     ];
 
@@ -65,7 +67,7 @@ describe('Module: User', () => {
 
     it('should fetch user in success flow', async () => {
         mockUser();
-        const promise = new Promise(resolve => {
+        const promise = new Promise<void>(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -82,7 +84,7 @@ describe('Module: User', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise<void>(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

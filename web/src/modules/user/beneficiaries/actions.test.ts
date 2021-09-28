@@ -30,6 +30,8 @@ describe('Beneficiaries actions', () => {
             data: {
                 address: '0xa96bbd0de64ef10659ae49d5ca4bb8109169007eb90d53aa3f87b6dc65530d8a',
             },
+            blockchain_name: '',
+            blockchain_key: '',
         },
         {
             id: 2,
@@ -47,6 +49,8 @@ describe('Beneficiaries actions', () => {
                 bank_address: 'Anotherstreet 13',
                 bank_country: 'Wakanda',
             },
+            blockchain_key: '',
+            blockchain_name: '',
         },
     ];
 
@@ -74,6 +78,8 @@ describe('Beneficiaries actions', () => {
             data: {
                 address: '0xa96bbd0de64ef10659ae49d5ca4bb8109169007eb90d53aa3f87b6dc65530d8a',
             },
+            blockchain_key: '',
+            blockchain_name: '',
         };
 
         const expectedAction = { type: BENEFICIARIES_ACTIVATE_DATA, payload: fakeActiveBeneficiary };
@@ -92,6 +98,7 @@ describe('Beneficiaries actions', () => {
             name: 'Company Name',
             description: 'Some description',
             data: '{"address": "0xa96bbd0de64ef10659ae49d5ca4bb8109169007eb90d53aa3f87b6dc65530d8a"}',
+            otp: '',
         };
 
         const expectedAction = {type: BENEFICIARIES_CREATE, payload: fakeCreatePayload };
@@ -107,6 +114,8 @@ describe('Beneficiaries actions', () => {
             data: {
                 address: '0xa96bbd0de64ef10659ae49d5ca4bb8109169007eb90d53aa3f87b6dc65530d8a',
             },
+            blockchain_key: '',
+            blockchain_name: '',
         };
 
         const expectedAction = { type: BENEFICIARIES_CREATE_DATA, payload: fakeCreateBeneficiary };
@@ -121,6 +130,7 @@ describe('Beneficiaries actions', () => {
     it('should check beneficiariesDelete action creator', () => {
         const payload = {
             id: 1,
+            otp: '',
         };
 
         const expectedAction = {type: BENEFICIARIES_DELETE, payload };
@@ -160,6 +170,8 @@ describe('Beneficiaries actions', () => {
             data: {
                 address: '0xa96bbd0de64ef10659ae49d5ca4bb8109169007eb90d53aa3f87b6dc65530d8a',
             },
+            blockchain_key: '',
+            blockchain_name: '',
         };
 
         const expectedAction = { type: BENEFICIARIES_DATA_UPDATE, payload: fakeCreateBeneficiary };
