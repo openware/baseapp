@@ -1,6 +1,7 @@
 // eslint-disable
+import { platformCurrency } from 'src/api';
 import { Decimal } from '../components/Decimal';
-import { DEFAULT_CCY_PRECISION } from '../constants';
+import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION } from '../constants';
 import {
     Currency,
     Market,
@@ -130,6 +131,15 @@ export const estimateUnitValue = (targetCurrency: string, currentCurrency: strin
     const targetCurrencyPrecision = handleCCYPrecision(currencies, formattedTargetCurrency, DEFAULT_CCY_PRECISION);
 
     return Decimal.format(estimated, targetCurrencyPrecision);
+};
+
+export const estimatePlatformValue = (currency: string, currencies: Currency[]) => {
+    const formattedPlatformCurrency = platformCurrency().toLowerCase();
+    const formattedTargetCurrency = currency.toLowerCase();
+    const estimated = currencies.find(c => c.id === formattedTargetCurrency)?.price || 0;
+    const platformCurrencyPrecision = handleCCYPrecision(currencies, formattedPlatformCurrency, DEFAULT_FIAT_PRECISION);
+
+    return Decimal.format(estimated, platformCurrencyPrecision);
 };
 
 export const findPrecision = (unit: string, markets: Market[]) => {

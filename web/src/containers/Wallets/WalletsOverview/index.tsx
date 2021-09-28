@@ -18,10 +18,10 @@ import {
     Wallet,
     selectUserIsMember,
 } from 'src/modules';
-import { estimateUnitValue } from 'src/helpers/estimateValue';
-import { VALUATION_PRIMARY_CURRENCY } from 'src/constants';
+import { estimatePlatformValue } from 'src/helpers/estimateValue';
 import { WalletsHeader } from 'src/components/WalletsHeader';
 import { useHistory } from 'react-router';
+import { platformCurrency } from 'src/api';
 
 interface Props {
     isP2PEnabled: boolean;
@@ -90,7 +90,7 @@ const WalletsOverview: FC<Props> = (props: Props): ReactElement => {
     const headerTitles = useCallback(() => ([
         translate('page.body.wallets.overview.header.wallet'),
         translate('page.body.wallets.overview.header.total'),
-        translate('page.body.wallets.overview.header.estimated'),
+        `${translate('page.body.wallets.overview.header.estimated')} (${platformCurrency()})`,
         translate('page.body.wallets.overview.header.spot'),
         isP2PEnabled ? translate('page.body.wallets.overview.header.p2p') : null,
         '',
@@ -124,7 +124,7 @@ const WalletsOverview: FC<Props> = (props: Props): ReactElement => {
                 p2pLocked,
             } = item;
             const totalBalance = Number(spotBalance) + Number(spotLocked) + Number(p2pBalance) + Number(p2pLocked);
-            const estimatedValue = Number(totalBalance) && currency ? estimateUnitValue(currency.toUpperCase(), VALUATION_PRIMARY_CURRENCY, +totalBalance, currencies, markets, tickers) : Decimal.format(0, fixed);
+            const estimatedValue = estimatePlatformValue(currency, currencies);
 
             return [
                 <div key={index} className="cr-wallets-table__wallet">

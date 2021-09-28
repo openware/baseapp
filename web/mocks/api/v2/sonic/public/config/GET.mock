@@ -39,5 +39,5 @@ Access-Control-Allow-Credentials: true
     "wizard_step": "false",
     "msPricesUpdates": "1000",
     "themeSwitcher": "visible",
-    "peatio_platform_currency": "usd"
+    "peatio_platform_currency": "eur"
 }
