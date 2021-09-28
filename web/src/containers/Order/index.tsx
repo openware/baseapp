@@ -178,6 +178,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     asks={asks}
                     bids={bids}
                     disabled={executeLoading}
+                    marketId={currentMarket.id}
                     from={currentMarket.quote_unit}
                     availableBase={this.getAvailableValue(walletBase)}
                     availableQuote={this.getAvailableValue(walletQuote)}
