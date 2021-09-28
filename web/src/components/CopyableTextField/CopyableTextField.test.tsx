@@ -1,6 +1,5 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import { CustomInput } from '../CustomInput';
 import { CopyableTextField, CopyableTextFieldProps } from './';
 
 
@@ -22,11 +21,4 @@ describe('CopyableTextField', () => {
         const wrapper = setup();
         expect(wrapper.find('.cr-copyable-text-field')).toHaveLength(1);
     });
-
-    it('should render 1 input tag', () => {
-        const wrapper = setup();
-        const input = wrapper.find(CustomInput);
-        expect(input.length).toBe(1);
-    });
-
 });

@@ -11,32 +11,34 @@ const walletItems: Wallet[] = [
     {
         active: false,
         locked: '1',
-        fee: 0.123,
         currency: 'BTC',
         name: 'Bitcoin',
         balance: '456',
         type: 'fiat',
         fixed: 8,
-        explorerTransaction: 'https://testnet.blockchain.info/tx/#{txid}',
-        explorerAddress: 'https://testnet.blockchain.info/address/#{address}'
+        networks: [],
+        account_type: '',
+
     }, {
         active: false,
-        fee: 0.123,
         locked: '100',
         currency: 'USD',
         name: 'United states Dollar',
         balance: '456',
         type: 'coin',
         fixed: 8,
+        networks: [],
+        account_type: '',
     }, {
         active: false,
-        fee: 0.3,
         locked: '0.4',
         currency: 'BTC',
         name: 'Bitcoin - 2',
         balance: '2',
         type: 'fiat',
         fixed: 8,
+        networks: [],
+        account_type: '',
     },
 ];
 
@@ -45,6 +47,9 @@ const defaultProps: WalletListProps = {
     onWalletSelectionChange: onWalletSelectionChange,
     walletItems: walletItems,
     onActiveIndexChange: jest.fn,
+    currencies: [],
+    tickers: {},
+    markets: [],
 };
 
 const setup = (props: Partial<WalletListProps> = {}) =>

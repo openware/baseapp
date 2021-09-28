@@ -19,7 +19,9 @@ describe('P2P reducer', () => {
             side: 'buy',
             payment_methods: [],
             time_limit: 1,
+            uid: '',
             user: {
+                user_uid: '',
                 user_nickname: 'King_Coin66',
                 offers_count: 123,
                 success_rate: 1,
@@ -39,7 +41,9 @@ describe('P2P reducer', () => {
             side: 'buy',
             payment_methods: [],
             time_limit: 1,
+            uid: '',
             user: {
+                user_uid: '',
                 user_nickname: 'King_Coin66',
                 offers_count: 123,
                 success_rate: 1,
@@ -90,7 +94,7 @@ describe('P2P reducer', () => {
             },
         };
 
-        expect(p2pReducer(initialP2PState, actions.offersFetch({ page: 0, limit: 1 }))).toEqual(expectedState);
+        expect(p2pReducer(initialP2PState, actions.offersFetch({ page: 0, limit: 1, side: '' }))).toEqual(expectedState);
     });
 
     it('should handle offersData', () => {
@@ -103,10 +107,15 @@ describe('P2P reducer', () => {
                 success: true,
                 page: 1,
                 total: 2,
+                side: '',
+                base: undefined,
+                quote: undefined,
+                payment_method: undefined,
+                error: undefined,
             },
          };
 
-        expect(p2pReducer(initialP2PState, actions.offersData({ list: fakeOffersArray, page: 1, total: 2 }))).toEqual(expectedState);
+        expect(p2pReducer(initialP2PState, actions.offersData({ list: fakeOffersArray, page: 1, total: 2, side: '' }))).toEqual(expectedState);
     });
 
     it('should handle offersError', () => {

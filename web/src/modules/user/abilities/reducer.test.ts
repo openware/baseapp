@@ -22,6 +22,7 @@ describe('Abilities reducer', () => {
         const expectedState = {
             ...initialAbilitiesState,
             loading: false,
+            success: true,
             abilities,
         };
         expect(abilitiesReducer(

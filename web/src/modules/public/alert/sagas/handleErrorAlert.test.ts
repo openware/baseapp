@@ -164,7 +164,7 @@ describe('Alert error handler', () => {
         const promise = new Promise(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
-                if (actions.length === 1) {
+                if (actions.length) {
                     expect(actions).toEqual([expectedErrorAction2faNeeded]);
                     setTimeout(resolve, 0.01);
                 } else {

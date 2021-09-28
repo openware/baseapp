@@ -67,7 +67,7 @@ describe('P2P Payment Methods Fetch', () => {
 
     it('should fetch p2pPaymentMethods in success flow', async () => {
         mockP2PPaymentMethods();
-        const promise = new Promise(resolve => {
+        const promise = new Promise<void>(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedP2PPaymentMethodsActionsFetch.length) {
@@ -83,7 +83,7 @@ describe('P2P Payment Methods Fetch', () => {
 
     it('should trigger fetch p2pPaymentMethods error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise<void>(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedP2PPaymentMethodsActionsError.length) {

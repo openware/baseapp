@@ -35,6 +35,7 @@ describe('Beneficiaries Create', () => {
             currency: 'eth',
             name: 'First company',
             data: '{"address": "0xa96bbd0de64ef10659ae49d5ca4bb8109169007eb90d53aa3f87b6dc65530d8a"}',
+            otp: '',
         };
 
         const fakeSuccessPayload: Beneficiary = {
@@ -45,6 +46,8 @@ describe('Beneficiaries Create', () => {
             data: {
                 address: '0xa96bbd0de64ef10659ae49d5ca4bb8109169007eb90d53aa3f87b6dc65530d8a',
             },
+            blockchain_key: '',
+            blockchain_name: '',
         };
 
         const mockBeneficiariesCreate = () => {
@@ -76,7 +79,7 @@ describe('Beneficiaries Create', () => {
         it('should create beneficiaries in success flow', async () => {
             mockBeneficiariesCreate();
 
-            const promise = new Promise(resolve => {
+            const promise = new Promise<void>(resolve => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     if (actions.length === expectedBeneficiariesCreateSuccess.length) {
@@ -92,7 +95,7 @@ describe('Beneficiaries Create', () => {
 
         it('should handle create beneficiaries error', async () => {
             mockNetworkError(mockAxios);
-            const promise = new Promise(resolve => {
+            const promise = new Promise<void>(resolve => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     if (actions.length === expectedBeneficiariesCreateError.length) {

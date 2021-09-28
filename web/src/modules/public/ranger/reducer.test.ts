@@ -27,6 +27,7 @@ describe('Ranger reducer', () => {
             connected: true,
             connecting: false,
             subscriptions: [],
+            withP2P: false,
         });
     });
 
@@ -36,12 +37,14 @@ describe('Ranger reducer', () => {
             connected: true,
             connecting: false,
             subscriptions: [],
+            withP2P: false,
         };
         expect(rangerReducer(initialState, rangerDisconnectData())).toEqual({
             withAuth: true,
             connected: false,
             connecting: false,
             subscriptions: [],
+            withP2P: false,
         });
     });
 

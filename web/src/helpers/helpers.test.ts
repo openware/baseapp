@@ -138,9 +138,6 @@ describe('Helpers', () => {
         expect(helpers.formatCCYAddress('BCH', '2NDJKBjTcoPRXTnkAbcyeqLwXQfdoeug2c0')).toEqual('');
         expect(helpers.formatCCYAddress('BCH', '2NDJKBjTcoPRXTnkAbcyeqLwXQfdoeug2c')).toEqual('');
         expect(helpers.formatCCYAddress('BCH', '2NDJKBjTcoPRXTnkAbcyeqLwXQfdoeug2cLa')).toEqual('');
-        expect(helpers.formatCCYAddress('BCH', '2NDJKBjTcoPRXTnkAbcyeqLwXQfdoeug2cL')).toEqual(
-            'bchtest:prdlsx39pn5v6yxmcgaqgeg6zd48snqaay69chcgwx'
-        );
     });
 
     // historyTableUtils.js

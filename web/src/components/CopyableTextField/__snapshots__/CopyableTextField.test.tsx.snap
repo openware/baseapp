@@ -1,31 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CopyableTextField should render 1`] = `
-<div
+<InputWithButton
+  buttonClassName="cr-copyable-text-field__button"
+  buttonText="Copy"
   className="cr-copyable-text-field"
->
-  <InputGroup>
-    <CustomInput
-      defaultLabel=""
-      handleClick={[Function]}
-      id="copy_id"
-      inputValue="1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4dfE"
-      label=""
-      placeholder=""
-      readOnly={true}
-      type="text"
-    />
-    <InputGroupAppend>
-      <Button
-        active={false}
-        disabled={false}
-        onClick={[Function]}
-        size="lg"
-        variant="primary"
-      >
-        Copy
-      </Button>
-    </InputGroupAppend>
-  </InputGroup>
-</div>
+  fieldId="copy_id"
+  handleClickButton={[Function]}
+  handleClickInput={[Function]}
+  icon={<Unknown />}
+  readOnly={true}
+  type="text"
+  value="1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4dfE"
+/>
 `;

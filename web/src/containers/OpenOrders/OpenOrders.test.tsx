@@ -2,7 +2,7 @@ import { shallow } from 'enzyme';
 import * as React from 'react';
 import { connect, Provider } from 'react-redux';
 import { createStore } from 'redux';
-import { OpenOrdersComponent, OpenOrdersProps } from '..';
+import { OpenOrdersComponent } from '..';
 import { Market, rootReducer } from '../../modules';
 import { OrderCommon } from '../../modules/types';
 
@@ -32,7 +32,7 @@ const openOrdersData: OrderCommon[] = [
     },
 ];
 
-const defaultProps: OpenOrdersProps = {
+const defaultProps = {
     currentMarket,
     list: openOrdersData,
     fetching: false,
@@ -43,7 +43,7 @@ const defaultProps: OpenOrdersProps = {
 const store = createStore(rootReducer);
 const OpenOrders = connect()(OpenOrdersComponent);
 
-const setup = (props: Partial<OpenOrdersProps> = {}) =>
+const setup = (props: Partial<{}> = {}) =>
     shallow(
         <Provider store={store}>
             // @ts-ignore
