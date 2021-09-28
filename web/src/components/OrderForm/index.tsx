@@ -56,6 +56,10 @@ export interface OrderFormProps {
      */
     className?: string;
     /**
+     * Current market id
+     */
+    marketId: string;
+    /**
      * Name of currency for price field
      */
     from: string;
@@ -170,6 +174,12 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
         if (this.props.to !== next.to || this.props.from !== next.from) {
             this.setState({ price: '', trigger: '' });
             this.props.handleAmountChange('', next.type);
+        }
+
+        if (this.props.marketId !== next.marketId) {
+            this.setState({
+                orderType: 'Limit',
+            });
         }
     }
 
@@ -351,7 +361,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                     <div className="cr-order-item__dropdown__label">
                         {translate('page.body.trade.header.newOrder.content.orderType')}
                     </div>
-                    <DropdownComponent list={orderTypes} onSelect={this.handleOrderTypeChange} placeholder=""/>
+                    <DropdownComponent list={orderTypes} onSelect={this.handleOrderTypeChange} placeholder={orderType as string}/>
                 </div>
                 <div className="cr-order-item">
                     {this.getPriceInputs()}

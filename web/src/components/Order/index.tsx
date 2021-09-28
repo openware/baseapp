@@ -49,6 +49,10 @@ export interface OrderComponentProps {
      */
     trigger?: number;
     /**
+     * Current market id
+     */
+    marketId: string;
+    /**
      * Name of currency for price field
      */
     from: string;
@@ -178,6 +182,7 @@ export class Order extends React.Component<OrderComponentProps, State> {
 
     public getPanel = (type: FormType) => {
         const {
+            marketId,
             availableBase,
             availableQuote,
             disabled,
@@ -189,8 +194,6 @@ export class Order extends React.Component<OrderComponentProps, State> {
             to,
             currentMarketAskPrecision,
             currentMarketBidPrecision,
-            orderTypes,
-            orderTypesIndex,
             asks,
             bids,
             currentMarketFilters,
@@ -216,6 +219,7 @@ export class Order extends React.Component<OrderComponentProps, State> {
         return {
             content: (
                 <OrderForm
+                    marketId={marketId}
                     type={type}
                     from={from}
                     {...disabledData}
