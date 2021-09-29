@@ -8,7 +8,7 @@ import { BlocklistAccessState, rootBlocklistAccessSaga } from './public/blocklis
 import { ConfigsState, rootConfigsSaga } from './public/configs';
 import { CurrenciesState } from './public/currencies';
 import { ErrorHandlerState, rootErrorHandlerSaga } from './public/errorHandler';
-import { ColorThemeState } from './public/globalSettings';
+import { GlobalSettingsState } from './public/globalSettings';
 import { GridLayoutState } from './public/gridLayout';
 import { LanguageState } from './public/i18n';
 import { KlineState, rootKlineFetchSaga } from './public/kline';
@@ -100,7 +100,7 @@ export interface RootState {
         alerts: AlertState;
         blockchains: BlockchainsState;
         blocklistAccess: BlocklistAccessState;
-        colorTheme: ColorThemeState;
+        globalSettings: GlobalSettingsState;
         configs: ConfigsState;
         currencies: CurrenciesState;
         depth: DepthState;

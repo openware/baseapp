@@ -6,7 +6,7 @@ import { blocklistAccessReducer } from './public/blocklistAccess';
 import { configsReducer } from './public/configs';
 import { currenciesReducer } from './public/currencies';
 import { errorHandlerReducer } from './public/errorHandler';
-import { changeColorThemeReducer  } from './public/globalSettings';
+import { changeGlobalSettingsReducer  } from './public/globalSettings';
 import { gridLayoutReducer } from './public/gridLayout';
 import { changeLanguageReducer  } from './public/i18n';
 import { klineReducer  } from './public/kline';
@@ -54,7 +54,7 @@ export const publicReducer = combineReducers({
     alerts: alertReducer,
     blockchains: blockchainsReducer,
     blocklistAccess: blocklistAccessReducer,
-    colorTheme: changeColorThemeReducer,
+    globalSettings: changeGlobalSettingsReducer,
     configs: configsReducer,
     currencies: currenciesReducer,
     errorHandler: errorHandlerReducer,

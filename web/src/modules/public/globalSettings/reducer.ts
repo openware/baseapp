@@ -8,7 +8,7 @@ import {
     TRIGGER_APPLY_WINDOW_ENVS,
 } from './constants';
 
-export interface ColorThemeState {
+export interface GlobalSettingsState {
     color: string;
     chartRebuild: boolean;
     marketSelectorActive: boolean;
@@ -18,10 +18,10 @@ export interface ColorThemeState {
     ordersHideOtherPairs: boolean;
 }
 
-const currentColorTheme: string = localStorage.getItem('colorTheme') || 'dark';
+const currentGlobalSettings: string = localStorage.getItem('colorTheme') || 'dark';
 
-export const initialChangeColorThemeState: ColorThemeState = {
-    color: currentColorTheme,
+export const initialChangeGlobalSettingsState: GlobalSettingsState = {
+    color: currentGlobalSettings,
     chartRebuild: false,
     marketSelectorActive: false,
     isMobileDevice: false,
@@ -30,7 +30,7 @@ export const initialChangeColorThemeState: ColorThemeState = {
     ordersHideOtherPairs: true,
 };
 
-export const changeColorThemeReducer = (state = initialChangeColorThemeState, action) => {
+export const changeGlobalSettingsReducer = (state = initialChangeGlobalSettingsState, action) => {
     switch (action.type) {
         case CHANGE_COLOR_THEME:
             localStorage.setItem('colorTheme', action.payload);
