@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { CryptoIcon } from 'src/components/CryptoIcon';
 import { Decimal, Table } from 'src/components';
-import { useMarketsFetch, useMarketsTickersFetch, useP2PWalletsFetch } from 'src/hooks';
+import { useMarketsFetch, useMarketsTickersFetch, useP2PCurrenciesFetch, useP2PWalletsFetch } from 'src/hooks';
 import { selectAbilities, selectCurrencies, selectMarkets, selectMarketTickers, selectP2PCurrenciesData, selectP2PWallets, selectWalletsLoading, Wallet } from 'src/modules';
 import { WalletsHeader } from 'src/components/WalletsHeader';
 import { useHistory } from 'react-router';
@@ -26,6 +26,7 @@ const WalletsP2P: FC = (): ReactElement => {
     const p2pCurrencies = useSelector(selectP2PCurrenciesData);
     const walletsLoading = useSelector(selectWalletsLoading);
 
+    useP2PCurrenciesFetch();
     useP2PWalletsFetch();
     useMarketsTickersFetch();
     useMarketsFetch();
