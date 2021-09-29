@@ -395,9 +395,6 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
     const render2FACode = React.useMemo(() => {
         return (
             <div className="cr-email-form__group">
-                <span className="otp-label">
-                    {formatMessage({ id: 'page.body.wallets.beneficiaries.addAddressModal.body.otpCode' })}
-                </span>
                 <CodeVerification
                     code={code2FA}
                     onChange={setCode2FA}
@@ -407,6 +404,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                     inputMode="decimal"
                     showPaste2FA={true}
                     isMobile={isMobileDevice}
+                    message={formatMessage({ id: 'page.body.wallets.beneficiaries.addAddressModal.body.otpCode' })}
                 />
             </div>
         );
