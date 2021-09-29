@@ -16,7 +16,6 @@
   &-search-wrapper {
     animation-duration: var(--market-selector-animation-duration);
     animation-name: pg-trading-header-selector-search;
-    background: var(--market-selector-header-background-color);
     bottom: 0;
     left: 0;
     padding: 6px;
@@ -116,13 +115,11 @@
     bottom: 0;
     box-shadow: 4px 4px 10px var(--shadow-color-level-2);
     display: block;
-    left: calc(var(--big-gap) * -0.23);
-    overflow-x: hidden;
-    overflow-y: scroll;
-    padding-left: calc(var(--gap));
-    position: absolute;
-    top: 64px;
-    width: 450px;
+    left: 0;
+    overflow: hidden;
+    position: fixed;
+    top: calc(var(--gap) * 10.67);
+    width: 436px;
     z-index: 10;
   }
 
