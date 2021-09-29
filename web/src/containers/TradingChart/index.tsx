@@ -29,7 +29,7 @@ import {
     selectMarketTickers,
     selectMobileDeviceState,
 } from '../../modules';
-import { periodStringToMinutes } from '../../modules/public/ranger/helpers';
+import { periodStringToMinutes } from 'src/websocket/helpers';
 import {
     CurrentKlineSubscription,
     dataFeedObject,

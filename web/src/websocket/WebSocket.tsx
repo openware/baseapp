@@ -26,6 +26,8 @@ import {
     selectUserLoggedIn,
     updateP2PWalletsDataByRanger,
     updateWalletsDataByRanger,
+    userOpenOrdersUpdate,
+    userOrdersHistoryRangerData,
     walletsAddressDataWS,
 } from '../modules';
 import {
@@ -36,8 +38,8 @@ import {
     streamsBuilder,
 } from './helpers';
 import useWebSocket, { ReadyState } from "react-use-websocket";
-import { rangerUserOrderUpdate } from 'src/modules/public/ranger';
 import { useLocation } from 'react-router-dom';
+import { OrderEvent } from 'src/modules/types';
 
 const WebSocketContext = React.createContext(null);
 
@@ -163,6 +165,12 @@ export default ({ children }) => {
         postMessage({ event: 'unsubscribe', streams });
     }, []);
 
+    const updateOpenOrdersState = useCallback(event => {
+        if (currentMarket && event?.market === currentMarket.id) {
+            dispatch(userOpenOrdersUpdate(event));
+        }
+    }, [currentMarket]);
+
     // handle websocket events
     useEffect(() => {
         let payload: { [pair: string]: any } = lastJsonMessage;
@@ -282,7 +290,8 @@ export default ({ children }) => {
                             }
                         }
 
-                        dispatch(rangerUserOrderUpdate(event));
+                        updateOpenOrdersState(event);
+                        dispatch(userOrdersHistoryRangerData(event));
 
                         return;
 

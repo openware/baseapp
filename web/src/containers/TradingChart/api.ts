@@ -10,7 +10,7 @@ import {
     klineUpdateTimeRange,
 } from '../../modules';
 import { Market } from '../../modules/public/markets';
-import { periodMinutesToString } from '../../modules/public/ranger/helpers';
+import { periodMinutesToString } from 'src/websocket/helpers';
 import { store } from '../../store';
 
 export const print = (...x) => window.console.log.apply(null, ['>>>> TC', ...x]);

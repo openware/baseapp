@@ -13,7 +13,6 @@ import { klineReducer  } from './public/kline';
 import { marketsReducer } from './public/markets';
 import { memberLevelsReducer } from './public/memberLevels';
 import { depthReducer, incrementDepthReducer, orderBookReducer } from './public/orderBook';
-import { rangerReducer  } from './public/ranger/reducer';
 import { recentTradesReducer  } from './public/recentTrades';
 import { withdrawLimitsReducer  } from './public/withdrawLimits';
 import { apiKeysReducer } from './user/apiKeys';
@@ -67,7 +66,6 @@ export const publicReducer = combineReducers({
     orderBook: orderBookReducer,
     depth: depthReducer,
     incrementDepth: incrementDepthReducer,
-    ranger: rangerReducer,
     recentTrades: recentTradesReducer,
     p2p: p2pReducer,
     withdrawLimits: withdrawLimitsReducer,

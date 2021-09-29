@@ -15,7 +15,6 @@ import { KlineState, rootKlineFetchSaga } from './public/kline';
 import { MarketsState, rootMarketsSaga } from './public/markets';
 import { MemberLevelsState, rootMemberLevelsSaga } from './public/memberLevels';
 import { DepthIncrementState, DepthState, OrderBookState, rootOrderBookSaga } from './public/orderBook';
-import { RangerState } from './public/ranger/reducer';
 import { RecentTradesState, rootRecentTradesSaga } from './public/recentTrades';
 import { ApiKeysState } from './user/apiKeys';
 import { rootApiKeysSaga } from './user/apiKeys/sagas';
@@ -112,7 +111,6 @@ export interface RootState {
         markets: MarketsState;
         memberLevels: MemberLevelsState;
         orderBook: OrderBookState;
-        ranger: RangerState;
         recentTrades: RecentTradesState;
         rgl: GridLayoutState;
         p2p: P2PState;

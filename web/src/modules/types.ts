@@ -49,8 +49,6 @@ export interface MarketUpdateEvent {
     bids: Array<[number, number]>;
 }
 
-export type RangerEvent = TickerEvent | OrderEvent | MarketUpdateEvent;
-
 export interface CoreState {
     orders: OrdersState;
     orderBook: OrderBookState;
