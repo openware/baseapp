@@ -1,4 +1,4 @@
-import { MarketsState, TickerEvent } from './public/markets';
+import { MarketsState } from './public/markets';
 import { OrderBookState } from './public/orderBook';
 import { OrdersState } from './user/orders';
 

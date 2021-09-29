@@ -45,6 +45,7 @@ export const streamsBuilder = (withAuth: boolean, withP2P: boolean, market: Mark
             streams = [
                 (withAuth && isFinexEnabled() && 'balances'),
                 (withAuth && 'deposit_address'),
+                'global.tickers',
             ];
 
             break;
