@@ -18,3 +18,6 @@ export const selectSidebarState = (state: RootState): ColorThemeState['sideBarAc
 
 export const selectApplyWindowEnvsTriggerState = (state: RootState): ColorThemeState['applyWindowEnvsTrigger'] =>
     state.public.colorTheme.applyWindowEnvsTrigger;
+
+export const selectOrdersHideOtherPairsState = (state: RootState): ColorThemeState['ordersHideOtherPairs'] =>
+    state.public.colorTheme.ordersHideOtherPairs;

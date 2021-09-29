@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Form, Spinner } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,14 +14,17 @@ import {
     selectMarkets,
     selectOpenOrdersFetching,
     selectOpenOrdersList,
+    selectOrdersHideOtherPairsState,
+    toggleOpenOrdersPairsSwitcher,
 } from '../../modules';
 import { OrderCommon } from '../../modules/types';
 import { getTriggerSign } from './helpers';
 
 export const OpenOrdersComponent: React.FC = (): React.ReactElement => {
-    const [hideOtherPairs, setHideOtherPairs] = useState<boolean>(true);
     const { formatMessage } = useIntl();
     const dispatch = useDispatch();
+
+    const hideOtherPairs = useSelector(selectOrdersHideOtherPairsState);
     const currentMarket = useSelector(selectCurrentMarket);
     const list = useSelector(selectOpenOrdersList);
     const fetching = useSelector(selectOpenOrdersFetching);
@@ -108,7 +111,7 @@ export const OpenOrdersComponent: React.FC = (): React.ReactElement => {
 
     const handleToggleCheckbox = React.useCallback(event => {
         event.preventDefault();
-        setHideOtherPairs(!hideOtherPairs);
+        dispatch(toggleOpenOrdersPairsSwitcher(!hideOtherPairs));
     }, [hideOtherPairs]);
 
     const renderContent = useMemo(() => {

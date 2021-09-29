@@ -9,7 +9,6 @@ import {
     depthDataSnapshot,
     depthIncrementSubscribe,
     klinePush,
-    Market,
     marketsTickersData,
     p2pOffersUpdate,
     p2pOrdersDataWS,
@@ -22,6 +21,7 @@ import {
     selectLoadingAbilities,
     selectOpenOrdersList,
     selectOrderBookSequence,
+    selectOrdersHideOtherPairsState,
     selectUserFetching,
     selectUserLoggedIn,
     updateP2PWalletsDataByRanger,
@@ -39,7 +39,6 @@ import {
 } from './helpers';
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import { useLocation } from 'react-router-dom';
-import { OrderEvent } from 'src/modules/types';
 
 const WebSocketContext = React.createContext(null);
 
@@ -59,6 +58,7 @@ export default ({ children }) => {
     const previousSequence = useSelector(selectOrderBookSequence);
     const orders = useSelector(selectOpenOrdersList);
     const kline = useSelector(selectKline);
+    const openOrderHideOtherPairs = useSelector(selectOrdersHideOtherPairsState);
 
     useEffect(() => {
         if (incrementalOrderBook()) {
@@ -166,10 +166,10 @@ export default ({ children }) => {
     }, []);
 
     const updateOpenOrdersState = useCallback(event => {
-        if (currentMarket && event?.market === currentMarket.id) {
+        if (currentMarket && (event?.market === currentMarket.id || !openOrderHideOtherPairs)) {
             dispatch(userOpenOrdersUpdate(event));
         }
-    }, [currentMarket]);
+    }, [currentMarket, openOrderHideOtherPairs]);
 
     // handle websocket events
     useEffect(() => {
