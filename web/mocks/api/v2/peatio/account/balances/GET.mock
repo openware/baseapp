@@ -128,5 +128,11 @@ Access-Control-Allow-Credentials: true
         "balance":"1000.0",
         "account_type": "spot",
         "locked":"0.0"
+    },
+    {
+        "currency":"hbar",
+        "balance":"1000.0",
+        "account_type": "spot",
+        "locked":"0.0"
     }
 ]

@@ -519,6 +519,35 @@ Access-Control-Allow-Credentials: true
       ]
     },
     {
+      "id": "hbar",
+      "name": "HBAR",
+      "symbol": "ꭆ",
+      "type": "coin",
+      "price": "1000",
+      "precision": 8,
+      "networks": [
+        {
+          "id": 0,
+          "blockchain_key": "erc20",
+          "protocol": "erc20",
+          "currency_id": "hbar",
+          "deposit_fee": "0.0",
+          "min_deposit_amount": "3.6",
+          "withdraw_fee": "0.0",
+          "min_withdraw_amount": "3.6",
+          "withdraw_limit_24h": "0.0",
+          "withdraw_limit_72h": "0.0",
+          "deposit_enabled": true,
+          "withdrawal_enabled": true,
+          "base_factor": 100000000,
+          "explorer_transaction": "https://app.dragonglass.me/hedera/transactions/#{txid}",
+          "explorer_address": "https://app.dragonglass.me/hedera/accounts/#{address}",
+          "min_confirmations": 5,
+          "status": "enabled"
+        }
+      ]
+    },
+    {
       "id": "zar",
       "name": "ZAR",
       "symbol": "$",

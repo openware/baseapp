@@ -137,4 +137,4 @@ export const colors = {
 export const FIXED_VOL_PRECISION = 2;
 export const DEFAULT_PERCENTAGE_PRECISION = 2;
 export const CURRENCIES_DT = ['xrp'];
-export const CURRENCIES_MEMO = ['xlm', 'eos', 'luna', 'xem'];
+export const CURRENCIES_MEMO = ['xlm', 'eos', 'luna', 'xem', 'hbar'];
