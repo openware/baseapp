@@ -46,7 +46,7 @@ export const pixelsToGridUnits = (pixels: number, rowHeight: number, margin: num
 
 const getLayouts = () => {
     const rowHeight = 14.5;
-    const margin = 6;
+    const margin = 4.7;
 
     const orderHeight = 21;
     const minOrderBookHeight = 21;
@@ -66,7 +66,7 @@ const getLayouts = () => {
     const tradingChartHeight = gridHeight >= minGridHeight ?
         currentTradingChartHeight + margin * 0.67 : Math.floor(Math.max(currentTradingChartHeight, minTradingChartHeight));
     const openOrdersHeight = gridHeight >= minGridHeight ?
-        pixelsToGridUnits(gridHeight - gridUnitsToPixels(tradingChartHeight, rowHeight, margin), rowHeight, margin) + 2.1 :
+        pixelsToGridUnits(gridHeight - gridUnitsToPixels(tradingChartHeight, rowHeight, margin), rowHeight, margin) + 0.85 :
         minOpenOrdersHeight;
 
     const orderBookHeight = gridHeight >= minGridHeight ?
