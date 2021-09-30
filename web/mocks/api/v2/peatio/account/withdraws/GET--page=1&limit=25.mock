@@ -18,7 +18,7 @@ Total: 28
         "fee":"0.001",
         "blockchain_txid":"9206d219a8ccfb4fd777e3823283a28e43d5b2d5b3682bcb9b17364299540c03",
         "rid":"QVMUpgySfa5rg9Ah6iLtPJQoMPChdse6UH",
-        "state":"succeed",
+        "state":"under_review",
         "created_at":"2018-12-03T18:03:15+01:00",
         "updated_at":"2018-12-03T18:03:28+01:00",
         "completed_at":"2018-12-03T18:03:28+01:00",
