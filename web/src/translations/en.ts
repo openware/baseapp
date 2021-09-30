@@ -409,6 +409,8 @@ export const en = {
     'page.body.history.transfer.header.status': 'Status',
     'page.body.history.transfer.content.status.completed': 'Completed',
 
+    'page.body.history.quick': 'Quick Exchange History',
+
     'page.body.profile.header.account': 'Profile',
 
     'page.body.profile.tabs.security': 'Security',
