@@ -36,11 +36,7 @@ export const MarketsComponent = () => {
     ]), [formatMessage]);
 
     const formatPercentageValue = React.useCallback((value: string) => (
-        <React.Fragment>
-            {value?.charAt(0)}
-            {Decimal.format(value?.slice(1, -1), DEFAULT_PERCENTAGE_PRECISION, ',')}
-            %
-        </React.Fragment>
+        `${value?.charAt(0)}${Decimal.format(value?.slice(1, -1), DEFAULT_PERCENTAGE_PRECISION, ',')}%`
     ), []);
 
     const mapMarkets = React.useCallback(() => {
