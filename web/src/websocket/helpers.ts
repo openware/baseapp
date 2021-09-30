@@ -52,8 +52,6 @@ export const streamsBuilder = (withAuth: boolean, withP2P: boolean, market: Mark
         case 'trading':
             streams = [
                 (withAuth && isFinexEnabled() && 'balances'),
-                (withAuth && 'order'),
-                (withAuth && 'trade'),
                 ...(market ? marketStreams(market).channels : []),
                 'global.tickers',
             ];
@@ -64,14 +62,6 @@ export const streamsBuilder = (withAuth: boolean, withP2P: boolean, market: Mark
                 (withAuth && isFinexEnabled() && 'balances'),
                 'global.tickers',
             ];
-
-            break;
-        case 'orders':
-            streams = [ withAuth && 'order' ];
-
-            break;
-        case 'history':
-            streams = [ withAuth && 'trade' ];
 
             break;
         case 'p2p':
@@ -89,12 +79,16 @@ export const streamsBuilder = (withAuth: boolean, withP2P: boolean, market: Mark
             streams = [ 'global.tickers' ];
 
             break;
+        case 'orders':
+        case 'history':
         default:
             break;
     }
 
     streams = [
         ...streams,
+        (withAuth && 'order'),
+        (withAuth && 'trade'),
         (withP2P && withAuth && 'p2p'),
     ];
 
