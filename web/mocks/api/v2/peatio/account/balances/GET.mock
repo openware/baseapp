@@ -87,6 +87,16 @@ Access-Control-Allow-Credentials: true
         }
     },
     {
+        "currency":"hbar",
+        "balance":"1000",
+        "locked":"0",
+        "deposit_address": {
+            "currencies": ["hbar"],
+            "address": "0.0.475493?memo=110473757502141",
+            "state": "active"
+        }
+    },
+    {
         "currency":"krw",
         "balance":"548000",
         "locked":"2000"
