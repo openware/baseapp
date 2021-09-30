@@ -206,5 +206,23 @@ Access-Control-Allow-Credentials: true
     "withdrawal_enabled": true,
     "base_factor": 1000000,
     "precision": 8
+  },
+  {
+    "id": "hbar",
+    "icon_url": "https://assets.coingecko.com/coins/images/3688/small/mqTDGK7Q.png?1566256777",
+    "name": "HBAR",
+    "symbol": "ꭆ",
+    "explorer_transaction": "https://app.dragonglass.me/hedera/transactions/#{txid}",
+    "explorer_address": "https://app.dragonglass.me/hedera/accounts/#{address}",
+    "type": "coin",
+    "min_confirmations": 5,
+    "deposit_fee": "0.0",
+    "withdraw_fee": "58.9",
+    "withdraw_limit_24h": "100.0",
+    "withdraw_limit_72h": "200.0",
+    "deposit_enabled": true,
+    "withdrawal_enabled": true,
+    "base_factor": 1000000,
+    "precision": 8
   }
 ]
