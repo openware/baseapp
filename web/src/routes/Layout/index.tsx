@@ -274,7 +274,6 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         const { isShownExpSessionModal } = this.state;
         const desktopCls = classnames('container-fluid pg-layout', {
             'trading-layout': location.pathname.includes('/trading'),
-            'shared-layout': useSharedLayout,
         });
         const mobileCls = classnames('container-fluid pg-layout pg-layout--mobile', {
             'pg-layout--mobile-setup': location.pathname.includes('/setup'),
