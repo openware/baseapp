@@ -43,7 +43,7 @@ import { useLocation } from 'react-router-dom';
 const WebSocketContext = React.createContext(null);
 
 export default ({ children }) => {
-    const [ subscriptions, setSubscriptions ] = useState<string[]>([]);
+    const [ subscriptions, setSubscriptions ] = useState<string[]>(undefined);
     const [ socketUrl, setSocketUrl ] = useState<string>(null);
     const [ messages, setMessages ] = useState<object[]>([]);
 
@@ -79,15 +79,15 @@ export default ({ children }) => {
 
     // handle change subscriptions
     useEffect(() => {
-        if (!userLoading && !abilitiesLoading && subscriptions.length) {
+        if (!userLoading && !abilitiesLoading && typeof(subscriptions) !== 'undefined') {
             const streams = streamsBuilder(userLoggedIn, canReadP2P, currentMarket, location.pathname);
 
-            const subscribeStreams = streams.filter(i => !subscriptions.includes(i));
+            const subscribeStreams = streams.filter(i => !subscriptions?.includes(i));
             if (subscribeStreams.length) {
                 subscribe(subscribeStreams);
             }
 
-            const unsubscribeStreams = subscriptions.filter(i => !streams.includes(i) && !(isTradingPage(location.pathname) && i.includes('kline')));
+            const unsubscribeStreams = subscriptions?.filter(i => !streams.includes(i) && !(isTradingPage(location.pathname) && i.includes('kline')));
             if (unsubscribeStreams.length) {
                 unsubscribe(unsubscribeStreams);
             }
@@ -260,7 +260,6 @@ export default ({ children }) => {
                             case 'subscribed':
                             case 'unsubscribed':
                                 setSubscriptions(event.streams);
-
                                 return;
                             default:
                         }
