@@ -18,6 +18,7 @@ export const withdrawColorMapping = {
     failed: 'var(--system-red)',
     errored: 'var(--system-red)',
     confirming: '',
+    under_review: '',
 };
 
 export const offersColorMapping = {

@@ -349,7 +349,7 @@ export const en = {
     'page.body.openOrders.header.button.cancelAll': 'Cancel all',
 
     'page.body.history.deposit': 'Deposit History',
-    'page.body.history.deposit.header.txID': 'txID',
+    'page.body.history.deposit.header.txid': 'txID',
     'page.body.history.deposit.header.blockchain': 'Network',
     'page.body.history.deposit.header.date': 'Date',
     'page.body.history.deposit.header.currency': 'Currency',
@@ -387,6 +387,7 @@ export const en = {
     'page.body.history.withdraw.content.status.failed': 'Failed',
     'page.body.history.withdraw.content.status.confirming': 'Confirming',
     'page.body.history.withdraw.content.status.errored': 'Error',
+    'page.body.history.withdraw.content.status.under_review': 'Under Review',
 
     'page.body.history.trade': 'Trade History',
     'page.body.history.trade.header.id': 'ID',

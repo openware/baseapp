@@ -357,7 +357,7 @@ export const ru: LangType = {
     'page.body.openOrders.header.button.cancelAll': 'Отменить все',
 
     'page.body.history.deposit': 'История депозитов',
-    'page.body.history.deposit.header.txID': 'txID',
+    'page.body.history.deposit.header.txid': 'txID',
     'page.body.history.deposit.header.date': 'Дата',
     'page.body.history.deposit.header.blockchain': 'Network',
     'page.body.history.deposit.header.currency': 'Валюта',
@@ -395,6 +395,7 @@ export const ru: LangType = {
     'page.body.history.withdraw.content.status.failed': 'Неудачный',
     'page.body.history.withdraw.content.status.confirming': 'Подтверждается',
     'page.body.history.withdraw.content.status.errored': 'Ошибка',
+    'page.body.history.withdraw.content.status.under_review': 'Under Review',
 
     'page.body.history.transfer': 'История трансферов',
     'page.body.history.transfer.header.date': 'Дата',
