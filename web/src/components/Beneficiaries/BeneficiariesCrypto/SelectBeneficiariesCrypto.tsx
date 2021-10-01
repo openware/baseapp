@@ -128,7 +128,6 @@ export const SelectBeneficiariesCrypto: React.FunctionComponent<SelectBeneficiar
                                     </div>
                                 </OverlayTrigger>
                             }
-
                         </span>
                         <span className="item__right__delete" onClick={props.handleDeleteAddress(item)}>
                             <TrashBin></TrashBin>
