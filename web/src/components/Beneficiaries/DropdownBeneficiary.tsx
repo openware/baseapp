@@ -90,7 +90,7 @@ export const DropdownBeneficiary = (props: DropdownBeneficiaryProps) => {
         setSelected(elem.props);
     }, []);
 
-    const renderElem = useCallback((elem: DropdownElem, index: number) => {
+    const renderElem = useCallback((elem: DropdownElem | any, index: number) => {
         // @ts-ignore
         if (elem?.props?.isHidden && isMember) {
             return null;
@@ -100,6 +100,7 @@ export const DropdownBeneficiary = (props: DropdownBeneficiaryProps) => {
             <Dropdown.Item
                 key={index}
                 onSelect={() => handleSelect(elem, index)}
+                disabled={elem?.props?.disabled}
             >
                 <div>{elem}</div>
             </Dropdown.Item>

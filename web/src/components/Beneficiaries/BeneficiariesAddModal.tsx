@@ -364,7 +364,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [coinAddress]);
 
-    const handleChangenBlockchain = React.useCallback((type: string) => (index: number) => {
+    const handleChangeBlockchain = React.useCallback((type: string) => (index: number) => {
         const blockchainItem = currencyItem.networks[index];
         const item = {
             blockchainKey: blockchainItem.blockchain_key,
@@ -425,7 +425,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                 <DropdownBeneficiary
                     list={currencyItem?.networks?.map(renderDropdownItem(currencyItem.name, currencyItem.precision, currencyItem.price))}
                     selectedValue={coinBlockchainName}
-                    onSelect={handleChangenBlockchain('coin')}
+                    onSelect={handleChangeBlockchain('coin')}
                     placeholder={formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.blockchain.networks' })}
                     clear={false}
                 />
@@ -499,7 +499,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                 <DropdownBeneficiary
                     list={currencyItem?.networks?.map(renderDropdownItem(currencyItem.name, currencyItem.precision, currencyItem.price))}
                     selectedValue={coinBlockchainName}
-                    onSelect={handleChangenBlockchain('fiat')}
+                    onSelect={handleChangeBlockchain('fiat')}
                     placeholder={formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.fiat.networks' })}
                     clear={false}
                 />
