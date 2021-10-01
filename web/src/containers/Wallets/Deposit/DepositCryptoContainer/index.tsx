@@ -22,6 +22,7 @@ import {
     selectMemberLevels,
     selectUserInfo,
     User,
+    selectUserIsMember,
 } from '../../../../modules';
 import { WalletHistory } from '../../History';
 import { DEFAULT_WALLET } from '../../../../constants';
@@ -36,6 +37,7 @@ export const DepositCryptoContainer = React.memo(({selectedWalletIndex}: Deposit
     const history = useHistory();
     const dispatch = useDispatch();
 
+    const isMember: boolean = useSelector(selectUserIsMember);
     const wallets: Wallet[] = useSelector(selectWallets);
     const currencies: Currency[] = useSelector(selectCurrencies);
     const memberLevels = useSelector(selectMemberLevels);
@@ -83,9 +85,13 @@ export const DepositCryptoContainer = React.memo(({selectedWalletIndex}: Deposit
     const onCurrentTabChange = useCallback((index) => setCurrentTabIndex(index), [setCurrentTabIndex]);
 
     const renderTabs = useMemo(() => {
-        return currencyItem?.networks?.map(network => {
+        const tabs = currencyItem?.networks?.map(network => {
+            if (network?.status === 'hidden' && isMember) {
+                return {};
+            }
+
             return {
-                content: tab?.toUpperCase() === network.blockchain_key?.toUpperCase() ?
+                content: tab?.toUpperCase() === network.blockchain_key?.toUpperCase()  ?
                     <DepositCrypto
                         buttonLabel={buttonLabel}
                         copiableTextFieldText={translate('page.body.wallets.tabs.deposit.ccy.message.address')}
@@ -101,7 +107,9 @@ export const DepositCryptoContainer = React.memo(({selectedWalletIndex}: Deposit
                     /> : null,
                 label: network.protocol?.toUpperCase() || network.blockchain_key?.toUpperCase(),
             };
-        })
+        });
+
+        return tabs.filter(tab => Object.keys(tab).length);
     }, [currencyItem, tab, wallet])
 
     const renderWarningNoNetworks = useMemo(() => (
@@ -136,7 +144,7 @@ export const DepositCryptoContainer = React.memo(({selectedWalletIndex}: Deposit
                 wallet={wallets[selectedWalletIndex]}
                 handleClickTransfer={currency => history.push(`/wallets/transfer/${currency}`)}
             />
-            {currencyItem?.networks?.length && user.level > memberLevels?.deposit.minimum_level ?
+            {currencyItem?.networks?.length && user.level >= memberLevels?.deposit.minimum_level ?
                 <div className="cr-deposit-crypto-tabs">
                     <h3>{translate('page.body.wallets.tabs.deposit.ccy.details')}</h3>
                     <div className="cr-deposit-crypto-tabs__card">

@@ -23,7 +23,7 @@ Access-Control-Allow-Credentials: true
       "type": "coin",
       "price": "32000",
       "precision": 8,
-      "status": "hidden",
+      "status": "enabled",
       "networks": [
         {
           "id": 0,
@@ -61,7 +61,7 @@ Access-Control-Allow-Credentials: true
           "explorer_transaction": "https://testnet.blockchain.info/tx/#{txid}",
           "explorer_address": "https://testnet.blockchain.info/address/#{address}",
           "base_factor": 100000000,
-          "status": "disabled"
+          "status": "hidden"
         },
         {
           "id": 0,
@@ -246,6 +246,36 @@ Access-Control-Allow-Credentials: true
       "deposit_enabled": true,
       "withdrawal_enabled": true,
       "base_factor": 1,
+      "networks": [
+        {
+          "id": 0,
+          "blockchain_key": "fiat",
+          "protocol": "fiat",
+          "currency_id": "usd",
+          "deposit_enabled": true,
+          "withdrawal_enabled": true,
+          "deposit_fee": "0.0",
+          "min_deposit_amount": "0.01",
+          "withdraw_fee": "0.0",
+          "min_withdraw_amount": "0.0",
+          "base_factor": 1,
+          "status": "enabled"
+        },
+        {
+          "id": 1,
+          "blockchain_key": "fiat1",
+          "protocol": "fiat1",
+          "currency_id": "usd",
+          "deposit_enabled": true,
+          "withdrawal_enabled": true,
+          "deposit_fee": "0.0",
+          "min_deposit_amount": "0.01",
+          "withdraw_fee": "0.0",
+          "min_withdraw_amount": "0.0",
+          "base_factor": 1,
+          "status": "enabled"
+        }
+      ],
       "precision": 2
     },
     {

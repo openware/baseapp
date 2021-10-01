@@ -267,6 +267,7 @@ export const en = {
     'page.body.wallets.beneficiaries.dropdown.name': 'Name',
     'page.body.wallets.beneficiaries.dropdown.pending': 'Pending',
     'page.body.wallets.beneficiaries.dropdown.blockchain.networks': 'Blockchain network',
+    'page.body.wallets.beneficiaries.dropdown.fiat.networks': 'Select network',
     'page.body.wallets.beneficiaries.disabled': 'Disabled',
     'page.body.wallets.beneficiaries.addresses': 'Addresses',
     'page.body.wallets.beneficiaries.title.confirm.new.account': 'Confirm New Account',
