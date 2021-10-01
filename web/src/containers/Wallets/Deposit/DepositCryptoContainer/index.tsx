@@ -136,7 +136,7 @@ export const DepositCryptoContainer = React.memo(({selectedWalletIndex}: Deposit
                 wallet={wallets[selectedWalletIndex]}
                 handleClickTransfer={currency => history.push(`/wallets/transfer/${currency}`)}
             />
-            {currencyItem?.networks?.length && user.level > memberLevels?.deposit.minimum_level ?
+            {currencyItem?.networks?.length && user.level >= memberLevels?.deposit.minimum_level ?
                 <div className="cr-deposit-crypto-tabs">
                     <h3>{translate('page.body.wallets.tabs.deposit.ccy.details')}</h3>
                     <div className="cr-deposit-crypto-tabs__card">
