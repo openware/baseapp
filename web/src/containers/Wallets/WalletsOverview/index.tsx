@@ -123,8 +123,8 @@ const WalletsOverview: FC<Props> = (props: Props): ReactElement => {
                 p2pBalance,
                 p2pLocked,
             } = item;
-            const totalBalance = Number(spotBalance) + Number(spotLocked) + Number(p2pBalance) + Number(p2pLocked);
-            const estimatedValue = estimatePlatformValue(currency, currencies);
+            const totalBalance = Number(spotBalance || 0) + Number(spotLocked || 0) + Number(p2pBalance || 0) + Number(p2pLocked || 0);
+            const estimatedValue = estimatePlatformValue(currency, currencies, totalBalance);
 
             return [
                 <div key={index} className="cr-wallets-table__wallet">

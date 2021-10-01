@@ -133,10 +133,10 @@ export const estimateUnitValue = (targetCurrency: string, currentCurrency: strin
     return Decimal.format(estimated, targetCurrencyPrecision);
 };
 
-export const estimatePlatformValue = (currency: string, currencies: Currency[]) => {
+export const estimatePlatformValue = (currency: string, currencies: Currency[], totalBalance: number) => {
     const formattedPlatformCurrency = platformCurrency().toLowerCase();
     const formattedTargetCurrency = currency.toLowerCase();
-    const estimated = currencies.find(c => c.id === formattedTargetCurrency)?.price || 0;
+    const estimated = +(currencies.find(c => c.id === formattedTargetCurrency)?.price || 0) * totalBalance;
     const platformCurrencyPrecision = handleCCYPrecision(currencies, formattedPlatformCurrency, DEFAULT_FIAT_PRECISION);
 
     return Decimal.format(estimated, platformCurrencyPrecision);
