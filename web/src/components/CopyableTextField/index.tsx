@@ -5,7 +5,6 @@ import { copy } from '../../helpers';
 import { InputWithButton } from "src/components/InputWithButton";
 import { CopyIcon } from 'src/assets/images/CopyIcon';
 
-
 export interface CopyableTextFieldProps {
     /**
      * Text value that will be copied to the clipboard

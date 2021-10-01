@@ -5,7 +5,8 @@ import { injectIntl } from 'react-intl';
 import { compose } from 'redux';
 import { IntlProps } from 'src';
 import {
-    Beneficiaries, CustomInput, InputWithButton,
+    Beneficiaries,
+    InputWithButton,
     SummaryField,
     Tooltip
 } from "../../components";
@@ -310,7 +311,7 @@ class WithdrawComponent extends React.Component<Props, WithdrawState> {
     };
 
     private handleClickAllAmount = () => {
-        this.setState({ amount: this.props.balance })
+        this.setState({ amount: Decimal.format(this.props.balance, this.props.fixed)});
         this.handleChangeInputAmount(this.props.balance);
     }
 
