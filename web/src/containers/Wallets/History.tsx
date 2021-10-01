@@ -102,7 +102,7 @@ export class WalletTable extends React.Component<Props> {
 
     private getHeaders = (label: string) => [
         this.props.intl.formatMessage({ id: `page.body.history.${label}.header.date` }),
-        this.props.intl.formatMessage({ id: `page.body.history.${label}.header.txID` }),
+        this.props.intl.formatMessage({ id: `page.body.history.${label}.header.txid` }),
         this.props.intl.formatMessage({ id: `page.body.history.${label}.header.amount` }),
         this.props.intl.formatMessage({ id: `page.body.history.${label}.header.status` }),
     ];
