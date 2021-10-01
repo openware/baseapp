@@ -55,7 +55,13 @@ interface DispatchProps {
 
 type Props = HistoryProps & ReduxProps & DispatchProps & IntlProps;
 
-const defaultMarket = { market: '', price_precision: 0, amount_precision: 0, quote_unit: '', base_unit: '' };
+const defaultMarket = {
+    market: '',
+    price_precision: 0,
+    amount_precision: 0,
+    quote_unit: '',
+    base_unit: ''
+};
 
 class HistoryComponent extends React.Component<Props> {
     public componentDidMount() {
