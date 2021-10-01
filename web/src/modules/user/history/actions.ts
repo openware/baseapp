@@ -17,6 +17,7 @@ export interface HistoryFetchPayload {
     market?: string;
     time_from?: string;
     time_to?: string;
+    market_type?: string;
 }
 
 interface HistorySuccessPayload {

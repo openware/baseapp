@@ -40,6 +40,7 @@ export const tradesColorMapping = {
 
 export const transferColorMapping = {
     completed: 'var(--system-green)',
+    done: 'var(--system-green)',
 };
 
 export const stateColorMapping = {
