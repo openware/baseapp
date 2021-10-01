@@ -4,7 +4,6 @@ import * as React from 'react';
 import { Button, InputGroup } from 'react-bootstrap';
 import { CustomInput } from '../';
 import { MouseEventHandler } from "react";
-import { CopyIcon } from 'src/assets/images/CopyIcon';
 
 const InputWithButton = ({
     value,
@@ -61,7 +60,7 @@ const InputWithButton = ({
                                 disabled={disabled}
                                 className={buttonClassName || "cr-input-with-button"}
                             >
-                                <CopyIcon />
+                                {icon ? icon : null}
                                 {buttonText}
                             </Button>
                         </div>
