@@ -82,6 +82,10 @@ export const DropdownBeneficiary = (props: DropdownBeneficiaryProps) => {
     }, [props.selectedValue]);
 
     const handleSelect = useCallback((elem: DropdownElem | any, index: number) => {
+        if (elem.props?.disabled) {
+            return;
+        }
+
         onSelect && onSelect(index);
         setSelected(elem.props);
     }, []);
