@@ -62,7 +62,29 @@ export const SelectBeneficiariesCrypto: React.FunctionComponent<SelectBeneficiar
             );
     }, []);
 
+    const renderDropdownTipFiat = React.useCallback((data) => {
+            return (
+                <div className="pg-beneficiaries__dropdown__tip tip">
+                    <div className="tip__content">
+                        <div className="tip__content__block">
+                            <span className="tip__content__block__label">{formatMessage({ id: 'page.body.wallets.beneficiaries.addAddressModal.body.fiatFullName' })}</span>
+                            <span className="tip__content__block__value">{data?.full_name}</span>
+                        </div>
+                        <div className="tip__content__block">
+                            <span className="tip__content__block__label">{formatMessage({ id: 'page.body.wallets.beneficiaries.addAddressModal.body.fiatAccountNumber' })}</span>
+                            <span className="tip__content__block__value">{data?.account_number}</span>
+                        </div>
+                        <div className="tip__content__block">
+                            <span className="tip__content__block__label">{formatMessage({ id: 'page.body.wallets.beneficiaries.addAddressModal.body.fiatBankName' })}</span>
+                            <span className="tip__content__block__value">{data?.bank_name}</span>
+                        </div>
+                    </div>
+                </div>
+            );
+    }, []);
+
     const renderBeneficiaryItem = React.useCallback((item, index) => {
+        const type = currencyItem?.type;
         const isPending = item.state && item.state.toLowerCase() === 'pending';
         const itemClassName = classnames('pg-beneficiaries__dropdown__body__item', 'item', {
             'item--pending': isPending,
@@ -87,14 +109,26 @@ export const SelectBeneficiariesCrypto: React.FunctionComponent<SelectBeneficiar
                             </span>
                         ) : null}
                         <span className="item__right__tip">
-                            <OverlayTrigger
-                                placement="bottom"
-                                delay={{ show: 250, hide: 300 }}
-                                overlay={renderDropdownTipCrypto(item.name, item.data?.address, item.description)}>
-                                <div className="cr-withdraw__group__warning-tip">
-                                    <TipIcon />
-                                </div>
-                            </OverlayTrigger>
+                            {type === "fiat" ? 
+                                <OverlayTrigger
+                                    placement="bottom"
+                                    delay={{ show: 250, hide: 300 }}
+                                    overlay={renderDropdownTipFiat(item.data)}>
+                                    <div className="cr-withdraw__group__warning-tip">
+                                        <TipIcon />
+                                    </div>
+                                </OverlayTrigger>
+                                :
+                                <OverlayTrigger
+                                    placement="bottom"
+                                    delay={{ show: 250, hide: 300 }}
+                                    overlay={renderDropdownTipCrypto(item.name, item.data?.address, item.description)}>
+                                    <div className="cr-withdraw__group__warning-tip">
+                                        <TipIcon />
+                                    </div>
+                                </OverlayTrigger>
+                            }
+
                         </span>
                         <span className="item__right__delete" onClick={props.handleDeleteAddress(item)}>
                             <TrashBin></TrashBin>

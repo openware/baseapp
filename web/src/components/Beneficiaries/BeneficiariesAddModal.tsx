@@ -53,6 +53,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
     const [fiatFullName, setFiatFullName] = React.useState('');
     const [fiatAccountNumber, setFiatAccountNumber] = React.useState('');
     const [fiatBankName, setFiatBankName] = React.useState('');
+    const [fiatBlockchainName, setFiatBlockchainName] = React.useState(defaultSelected);
     const [fiatBankSwiftCode, setFiatBankSwiftCode] = React.useState('');
     const [fiatIntermediaryBankName, setFiatIntermediaryBankName] = React.useState('');
     const [fiatIntermediaryBankSwiftCode, setFiatIntermediaryBankSwiftCode] = React.useState('');
@@ -103,6 +104,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         setFiatName('');
         setFiatFullName('');
         setFiatBankName('');
+        setFiatBlockchainName(defaultSelected);
         setFiatBankSwiftCode('');
         setFiatIntermediaryBankName('');
         setFiatIntermediaryBankSwiftCode('');
@@ -362,17 +364,18 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [coinAddress]);
 
-    const handleChangenBlockchain = React.useCallback((index: number) => {
+    const handleChangenBlockchain = React.useCallback((type: string) => (index: number) => {
         const blockchainItem = currencyItem.networks[index];
-
-        setCoinBlockchainName({
+        const item = {
             blockchainKey: blockchainItem.blockchain_key,
             protocol: blockchainItem.protocol,
             name: currencyItem.name,
             id: currencyItem.id,
             fee: blockchainItem?.withdraw_fee,
             minWithdraw: blockchainItem.min_withdraw_amount,
-        });
+        };
+
+        type === 'fiat' ? setFiatBlockchainName(item) : setCoinBlockchainName(item);
     }, [currencyItem]);
 
     const renderDropdownItem = React.useCallback((name, fixed, price) => (item: BlockchainCurrencies, index) => {
@@ -422,7 +425,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                 <DropdownBeneficiary
                     list={currencyItem?.networks?.map(renderDropdownItem(currencyItem.name, currencyItem.precision, currencyItem.price))}
                     selectedValue={coinBlockchainName}
-                    onSelect={handleChangenBlockchain}
+                    onSelect={handleChangenBlockchain('coin')}
                     placeholder={formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.blockchain.networks' })}
                     clear={false}
                 />
@@ -464,6 +467,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         };
 
         const payload = {
+            blockchain_key: fiatBlockchainName.blockchainKey,
             currency: currency || '',
             name: fiatName,
             data: JSON.stringify(data),
@@ -492,6 +496,13 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                 {renderAddAddressModalBodyItem('fiatFullName')}
                 {renderAddAddressModalBodyItem('fiatAccountNumber')}
                 {renderAddAddressModalBodyItem('fiatBankName')}
+                <DropdownBeneficiary
+                    list={currencyItem?.networks?.map(renderDropdownItem(currencyItem.name, currencyItem.precision, currencyItem.price))}
+                    selectedValue={coinBlockchainName}
+                    onSelect={handleChangenBlockchain('fiat')}
+                    placeholder={formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.blockchain.networks' })}
+                    clear={false}
+                />
                 {renderAddAddressModalBodyItem('fiatBankSwiftCode', true)}
                 {renderAddAddressModalBodyItem('fiatIntermediaryBankName', true)}
                 {renderAddAddressModalBodyItem('fiatIntermediaryBankSwiftCode', true)}
