@@ -407,6 +407,12 @@ export const ru: LangType = {
     'page.body.history.transfer.content.status.completed': 'Completed',
 
     'page.body.history.quick': 'Quick Exchange History',
+    'page.body.history.quick.header.date': 'Date',
+    'page.body.history.quick.header.amountGive': 'Amount you give',
+    'page.body.history.quick.header.currencyGive': 'Currency you give',
+    'page.body.history.quick.header.amountReceive': 'Amount you receive',
+    'page.body.history.quick.header.currencyReceive': 'Currency you receive',
+    'page.body.history.quick.header.status': 'Status',
 
     'page.body.history.trade': 'История ордеров',
     'page.body.history.trade.header.id': 'ID',
