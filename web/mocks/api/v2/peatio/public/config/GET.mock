@@ -23,7 +23,7 @@ Access-Control-Allow-Credentials: true
       "type": "coin",
       "price": "32000",
       "precision": 8,
-      "status": "hidden",
+      "status": "enabled",
       "networks": [
         {
           "id": 0,
@@ -61,7 +61,7 @@ Access-Control-Allow-Credentials: true
           "explorer_transaction": "https://testnet.blockchain.info/tx/#{txid}",
           "explorer_address": "https://testnet.blockchain.info/address/#{address}",
           "base_factor": 100000000,
-          "status": "disabled"
+          "status": "hidden"
         },
         {
           "id": 0,
