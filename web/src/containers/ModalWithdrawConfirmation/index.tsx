@@ -8,10 +8,8 @@ import { Decimal, Modal, CodeVerification } from '../../components';
 import { HugeCloseIcon } from '../../assets/images/CloseIcon';
 import { LogoIcon } from '../../assets/images/LogoIcon';
 import { Modal as MobileModal } from '../../mobile/components/Modal';
-import { TipIcon } from '../../assets/images/TipIcon';
 import {
     Beneficiary,
-    BeneficiaryBank,
 } from 'src/modules';
 
 interface ModalWithdrawConfirmationProps {
@@ -23,6 +21,7 @@ interface ModalWithdrawConfirmationProps {
     type: "fiat" | "coin";
     currency: string;
     rid: string;
+    protocol?: string;
     isMobileDevice?: boolean;
     show: boolean;
     precision: number;
@@ -31,19 +30,11 @@ interface ModalWithdrawConfirmationProps {
     handleChangeCodeValue: (value: string) => void;
 }
 
-interface State {
-    isOpenTip: boolean;
-}
-
 type Props = ModalWithdrawConfirmationProps & IntlProps;
 
-class ModalWithdraw extends React.Component<Props, State> {
+class ModalWithdraw extends React.Component<Props> {
     constructor(props: Props) {
         super(props);
-
-        this.state = {
-            isOpenTip: false,
-        };
     }
 
     public componentWillUnmount() {
@@ -101,9 +92,7 @@ class ModalWithdraw extends React.Component<Props, State> {
     };
 
     private renderBody = () => {
-        const { amount, currency, precision, rid, total, fee, beneficiary } = this.props;
-        const { isOpenTip } = this.state;
-
+        const { amount, currency, precision, rid, total, fee, beneficiary, protocol } = this.props;
         const formattedCurrency = currency.toUpperCase();
 
         return (
@@ -118,7 +107,6 @@ class ModalWithdraw extends React.Component<Props, State> {
                     </span>
                     <div className="modal-body__withdraw-confirm-address-row bold-text">
                         {rid}
-                        <span className="tip-icon" onMouseOver={this.handleToggleTip} onMouseOut={this.handleToggleTip}><TipIcon/></span>
                     </div>
                 </div>
                 <div className="modal-body__withdraw-confirm-name">
@@ -129,7 +117,16 @@ class ModalWithdraw extends React.Component<Props, State> {
                         {beneficiary.name}
                     </div>
                 </div>
-                {isOpenTip && this.renderDropdownTipFiat(beneficiary)}
+                {beneficiary.protocol || protocol ?
+                    <div className="modal-body__withdraw-confirm-name">
+                        <span>
+                            {this.translate('page.body.wallets.withdraw.blockchain.network')}
+                        </span>
+                        <div className="modal-body__withdraw-confirm-address-row bold-text">
+                            {beneficiary.protocol?.toUpperCase() || protocol?.toUpperCase()}
+                        </div>
+                    </div>
+                : null}
                 <div className="modal-body__withdraw-confirm-inline">
                     <span>
                         {this.translate('page.body.wallets.tabs.withdraw.modal.amount')}
@@ -154,40 +151,6 @@ class ModalWithdraw extends React.Component<Props, State> {
                 </div>
             </div>
         );
-    };
-
-    private renderDropdownTipFiatDescription = (description: string) => {
-        return (
-            <div className="tip__content__block">
-                <span className="tip__content__block__label">{this.translate('page.body.wallets.beneficiaries.dropdown.fiat.description')}</span>
-                <span className="tip__content__block__value">{description}</span>
-            </div>
-        );
-    };
-
-    private renderDropdownTipFiat = (currentWithdrawalBeneficiary: Beneficiary) => currentWithdrawalBeneficiary ?
-        <div className="modal-body__withdraw-confirm__tip tip fiat-tip">
-            <div className="tip__content">
-                <div className="tip__content__block">
-                    <span className="tip__content__block__label">{this.translate('page.body.wallets.beneficiaries.dropdown.fiat.name')}</span>
-                    <span className="tip__content__block__value">{currentWithdrawalBeneficiary.name}</span>
-                </div>
-                {currentWithdrawalBeneficiary.description && this.renderDropdownTipFiatDescription(currentWithdrawalBeneficiary.description)}
-                <div className="tip__content__block">
-                    <span className="tip__content__block__label">{this.translate('page.body.wallets.beneficiaries.dropdown.fiat.account')}</span>
-                    <span className="tip__content__block__value">{(currentWithdrawalBeneficiary.data as BeneficiaryBank).account_number}</span>
-                </div>
-                <div className="tip__content__block">
-                    <span className="tip__content__block__label">{this.translate('page.body.wallets.beneficiaries.dropdown.fiat.bankOfBeneficiary')}</span>
-                    <span className="tip__content__block__value">{(currentWithdrawalBeneficiary.data as BeneficiaryBank).bank_name}</span>
-                </div>
-            </div>
-        </div> : null;
-
-    private handleToggleTip = () => {
-        this.setState(prevState => ({
-            isOpenTip: !prevState.isOpenTip,
-        }));
     };
 
     private handleEnterClick = e => {

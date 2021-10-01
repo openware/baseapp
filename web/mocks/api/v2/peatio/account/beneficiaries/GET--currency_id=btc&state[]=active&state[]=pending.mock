@@ -6,10 +6,10 @@ Access-Control-Max-Age: 3600
 Access-Control-Allow-Credentials: true
 
 [
-  {"id":9,"currency":"btc","blockchain_name":"Bitcoin chain","blockchain_key":"bitcoin","name":"Mom","description":null,"data":{"address":"1MM67SnmHrRcuRtbQunU2HUkembjxuzrgD"},"state":"active"},
-  {"id":10,"currency":"btc","blockchain_name":"Bitcoin disabled chain","blockchain_key":"bitcoin_disabled","name":"Pentagon","description":null,"data":{"address":"1MM67SnmHrRcuRtbQunU2HUkembjxuzrgD"},"state":"pending"},
-  {"id":11,"currency":"btc","blockchain_name":"Bitcoin1 test chain","blockchain_key":"bitcoin_test","name":"Mom2","description":null,"data":{"address":"1MM67SnmHrRcuRtbQunU2HUkembjxuzrgD"},"state":"pending"},
-  {"id":12,"currency":"btc","blockchain_name":"Bitcoin disabled chain","blockchain_key":"bitcoin_disabled","name":"Pentagon2","description":null,"data":{"address":"1MM67SnmHrRcuRtbQunU2HUkembjxuzrgD"},"state":"pending"},
-  {"id":13,"currency":"btc","blockchain_name":"Bitcoin1 test chain","blockchain_key":"bitcoin_test","name":"Mom3","description":null,"data":{"address":"1MM67SnmHrRcuRtbQunU2HUkembjxuzrgD"},"state":"pending"},
-  {"id":14,"currency":"btc","blockchain_name":"Bitcoin1 test chain","blockchain_key":"bitcoin_test","name":"Pentagon3","description":null,"data":{"address":"1MM67SnmHrRcuRtbQunU2HUkembjxuzrgD"},"state":"pending"}
+  {"id":9,"currency":"btc","blockchain_name":"Bitcoin chain","blockchain_key":"bitcoin","protocol": "electrum","name":"Mom","description":null,"data":{"address":"1MM67SnmHrRcuRtbQunU2HUkembjxuzrgD"},"state":"active"},
+  {"id":10,"currency":"btc","blockchain_name":"Bitcoin disabled chain","blockchain_key":"bitcoin_disabled","protocol": "electrum","name":"Pentagon","description":null,"data":{"address":"1MM67SnmHrRcuRtbQunU2HUkembjxuzrgD"},"state":"pending"},
+  {"id":11,"currency":"btc","blockchain_name":"Bitcoin1 test chain","blockchain_key":"bitcoin_test","protocol": "electrum","name":"Mom2","description":null,"data":{"address":"1MM67SnmHrRcuRtbQunU2HUkembjxuzrgD"},"state":"pending"},
+  {"id":12,"currency":"btc","blockchain_name":"Bitcoin disabled chain","blockchain_key":"bitcoin_disabled","protocol": "electrum","name":"Pentagon2","description":null,"data":{"address":"1MM67SnmHrRcuRtbQunU2HUkembjxuzrgD"},"state":"pending"},
+  {"id":13,"currency":"btc","blockchain_name":"Bitcoin1 test chain","blockchain_key":"bitcoin_test","protocol": "electrum","name":"Mom3","description":null,"data":{"address":"1MM67SnmHrRcuRtbQunU2HUkembjxuzrgD"},"state":"pending"},
+  {"id":14,"currency":"btc","blockchain_name":"Bitcoin1 test chain","blockchain_key":"bitcoin_test","protocol": "electrum","name":"Pentagon3","description":null,"data":{"address":"1MM67SnmHrRcuRtbQunU2HUkembjxuzrgD"},"state":"pending"}
 ]

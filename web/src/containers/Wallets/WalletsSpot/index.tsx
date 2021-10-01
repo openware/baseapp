@@ -280,6 +280,9 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
         } = this.state;
         const selectedCurrency = (wallets[selectedWalletIndex] || { currency: '' }).currency;
         const currencyType = (wallets[selectedWalletIndex] || { currency: '' }).type;
+        const currencyItem = (currencies && currencies.find(item => item.id === selectedCurrency));
+        const blockchainItem = currencyItem?.networks?.find(n => n.blockchain_key === beneficiary.blockchain_key);
+
         let confirmationAddress = '';
         let selectedWalletPrecision = DEFAULT_CCY_PRECISION;
 
@@ -334,6 +337,7 @@ class WalletsSpotComponent extends React.Component<Props, WalletsState> {
                     />
                     <ModalWithdrawConfirmation
                         beneficiary={beneficiary}
+                        protocol={blockchainItem?.protocol}
                         otpCode={otpCode}
                         show={withdrawConfirmModal}
                         type={currencyType}
