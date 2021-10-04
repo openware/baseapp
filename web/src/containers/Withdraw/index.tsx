@@ -77,7 +77,7 @@ class WithdrawComponent extends React.Component<Props, WithdrawState> {
     public componentWillReceiveProps(nextProps) {
         const { currency, withdrawDone } = this.props;
 
-        if ((nextProps && (nextProps.currency !== currency) || nextProps.withdrawDone && !withdrawDone)) {
+        if ((nextProps && (nextProps.currency !== currency)) || (nextProps.withdrawDone && !withdrawDone)) {
             this.clearFields(this.state.beneficiary);
         }
     }
