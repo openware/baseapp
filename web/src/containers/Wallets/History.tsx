@@ -203,6 +203,12 @@ export class WalletTable extends React.Component<Props> {
             </div>
         );
 
+        const underReview = (
+            <div className="pending">
+                <span className="label">{this.props.intl.formatMessage({ id: 'page.body.wallets.table.under_review' })}</span><PendingIcon />
+            </div>
+        );
+
         const statusMapping = {
             succeed: accepted,
             failed: rejected,
@@ -221,6 +227,7 @@ export class WalletTable extends React.Component<Props> {
             ),
             skipped: skipped,
             errored: <span className="rejected">{this.props.intl.formatMessage({ id: 'page.body.history.deposit.content.status.errored' })}</span>,
+            under_review: underReview 
         };
 
         return statusMapping[tx];
