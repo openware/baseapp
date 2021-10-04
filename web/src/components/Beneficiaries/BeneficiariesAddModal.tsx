@@ -140,7 +140,6 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         };
 
         dispatch(beneficiariesCreate(payload));
-        handleClearModalsInputs();
     }, [coinAddress, coinBeneficiaryName, coinDescription, currency, coinBlockchainName, coinDestinationTag, code2FA]);
 
     const getState = React.useCallback(key => {
