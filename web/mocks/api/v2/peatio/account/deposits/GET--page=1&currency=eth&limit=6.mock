@@ -1,0 +1,89 @@
+HTTP/2 200
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
+Access-Control-Max-Age: 3600
+Access-Control-Allow-Credentials: true
+
+[
+  {
+    "id": 26,
+    "currency": "eth",
+    "blockchain_key": "ethereum-rinkeby",
+    "protocol": "Rinkeby",
+    "warning": "Reminder: For the safety of your funds, please confirm again that the network you wish to use is ETH",
+    "amount": "0.12",
+    "fee": "0.0",
+    "txid": "0x556fccc11e38919b09bbc925958159a8862ad0b1a1f1a707ad3cbee6d5fff87e",
+    "confirmations": 16301,
+    "state": "errored",
+    "transfer_type": "crypto",
+    "created_at": "2021-10-01T15:03:14Z",
+    "completed_at": "2021-10-01T15:03:36Z",
+    "tid": "TIDDD38AD3ABC"
+  },
+  {
+    "id": 25,
+    "currency": "eth",
+    "blockchain_key": "ethereum-rinkeby",
+    "protocol": "Rinkeby",
+    "warning": "Reminder: For the safety of your funds, please confirm again that the network you wish to use is ETH",
+    "amount": "0.05",
+    "fee": "0.0",
+    "txid": "0x1079408fd3ec61be97fdef337029d631cc58a09b9da091838396975a79db2d14",
+    "confirmations": 16343,
+    "state": "collected",
+    "transfer_type": "crypto",
+    "created_at": "2021-10-01T14:52:49Z",
+    "completed_at": "2021-10-01T14:53:00Z",
+    "tid": "TID7EC92267BE"
+  },
+  {
+    "id": 24,
+    "currency": "eth",
+    "blockchain_key": "ethereum-rinkeby",
+    "protocol": "Rinkeby",
+    "warning": "Reminder: For the safety of your funds, please confirm again that the network you wish to use is ETH",
+    "amount": "0.22",
+    "fee": "0.0",
+    "txid": "0x2fc1db75f05c1afffda4af1f0112722e36cedfa47f239d0724674c0f5183dc68",
+    "confirmations": 16363,
+    "state": "collected",
+    "transfer_type": "crypto",
+    "created_at": "2021-10-01T14:47:51Z",
+    "completed_at": "2021-10-01T14:48:02Z",
+    "tid": "TID3234D829CC"
+  },
+  {
+    "id": 23,
+    "currency": "eth",
+    "blockchain_key": "ethereum-rinkeby",
+    "protocol": "Rinkeby",
+    "warning": "Reminder: For the safety of your funds, please confirm again that the network you wish to use is ETH",
+    "amount": "0.1",
+    "fee": "0.0",
+    "txid": "0x112ed0a82d5cb02df63d8b3ad958a9866d16aa487c850f2c0e835df1585e17a9",
+    "confirmations": 16494,
+    "state": "collected",
+    "transfer_type": "crypto",
+    "created_at": "2021-10-01T14:15:01Z",
+    "completed_at": "2021-10-01T14:15:12Z",
+    "tid": "TIDA0ACA978AA"
+  },
+  {
+    "id": 21,
+    "currency": "eth",
+    "blockchain_key": "ethereum-rinkeby",
+    "protocol": "Rinkeby",
+    "warning": "Reminder: For the safety of your funds, please confirm again that the network you wish to use is ETH",
+    "amount": "0.021",
+    "fee": "0.0",
+    "txid": "0xfac9a60dab1b83043952a464ba4655db5b90c432453f303c5c9111c8bb945de1",
+    "confirmations": 21878,
+    "state": "collected",
+    "transfer_type": "crypto",
+    "created_at": "2021-09-30T15:47:02Z",
+    "completed_at": "2021-09-30T15:47:13Z",
+    "tid": "TIDDEFCEA0B0F"
+  }
+]
