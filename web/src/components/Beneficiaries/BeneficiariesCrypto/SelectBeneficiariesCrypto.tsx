@@ -15,6 +15,12 @@ import { DEFAULT_FIAT_PRECISION } from '../../../constants';
 import { Decimal } from '../../../components';
 import { TipIcon } from '../../../assets/images/TipIcon';
 import { platformCurrency } from 'src/api';
+import {
+    getAddressWithoutTag,
+    getTag,
+    requiresMemoTag,
+    requiresDTTag,
+} from '../../../helpers/tagBasedAsset';
 
 interface SelectBeneficiariesCryptoProps {
     blockchainKey: string;
@@ -44,7 +50,16 @@ export const SelectBeneficiariesCrypto: React.FunctionComponent<SelectBeneficiar
         );
     }, []);
 
-    const renderDropdownTipCrypto = React.useCallback((address, beneficiaryName, description) => {
+    const renderDropdownTipCrypto = React.useCallback((currency, address, beneficiaryName, description, memo) => {
+            let textTagID = '';
+            if (requiresMemoTag(currency)) {
+                textTagID = 'page.body.wallets.beneficiaries.memo';
+            }
+
+            if (requiresDTTag(currency)) {
+                textTagID = 'page.body.wallets.beneficiaries.destinational.tag';
+            }
+
             return (
                 <div className="pg-beneficiaries__dropdown__tip tip">
                     <div className="tip__content">
@@ -52,6 +67,12 @@ export const SelectBeneficiariesCrypto: React.FunctionComponent<SelectBeneficiar
                             <span className="tip__content__block__label">{formatMessage({ id: 'page.body.wallets.beneficiaries.tipAddress' })}</span>
                             <span className="tip__content__block__value">{address}</span>
                         </div>
+                        {textTagID && <div className="tip__content__block">
+                            <span className="tip__content__block__label">
+                                {formatMessage({ id: textTagID })}
+                            </span>
+                            <span className="tip__content__block__value">{memo}</span>
+                        </div>}
                         <div className="tip__content__block">
                             <span className="tip__content__block__label">{formatMessage({ id: 'page.body.wallets.beneficiaries.tipName' })}</span>
                             <span className="tip__content__block__value">{beneficiaryName}</span>
@@ -90,6 +111,8 @@ export const SelectBeneficiariesCrypto: React.FunctionComponent<SelectBeneficiar
             'item--pending': isPending,
             'item--disabled': !blockchainItem?.withdrawal_enabled,
         });
+        const address = getAddressWithoutTag(item.data?.address);
+        const memo = getTag(item.data?.address);
 
         if (item.blockchain_key === blockchainKey) {
             return (
@@ -99,7 +122,7 @@ export const SelectBeneficiariesCrypto: React.FunctionComponent<SelectBeneficiar
                             {item.name}
                         </span>
                         <span className="item__left__address">
-                            {item.data?.address}
+                            {address}
                         </span>
                     </div>
                     <div className="item__right">
@@ -122,7 +145,7 @@ export const SelectBeneficiariesCrypto: React.FunctionComponent<SelectBeneficiar
                                 <OverlayTrigger
                                     placement="bottom"
                                     delay={{ show: 250, hide: 300 }}
-                                    overlay={renderDropdownTipCrypto(item.name, item.data?.address, item.description)}>
+                                    overlay={renderDropdownTipCrypto(item.currency, item.name, address, item.description, memo)}>
                                     <div className="cr-withdraw__group__warning-tip">
                                         <TipIcon />
                                     </div>

@@ -2,11 +2,11 @@ import * as React from 'react';
 import { CURRENCIES_DT, CURRENCIES_MEMO } from 'src/constants';
 
 export const requiresDTTag = (currency: string) => {
-    return React.useMemo(() => CURRENCIES_DT.includes(currency), [currency]);
+    return CURRENCIES_DT.includes(currency);
 };
 
 export const requiresMemoTag = (currency: string) => {
-    return React.useMemo(() => CURRENCIES_MEMO.includes(currency), [currency]);
+    return CURRENCIES_MEMO.includes(currency);
 };
 
 export const getTag = (value?: string) => {
