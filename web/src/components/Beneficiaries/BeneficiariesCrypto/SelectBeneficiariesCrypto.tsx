@@ -12,7 +12,7 @@ import {
 } from '../../../modules';
 import { TrashBin } from '../../../assets/images/TrashBin';
 import { DEFAULT_FIAT_PRECISION } from '../../../constants';
-import { Decimal, Tooltip  } from '../../../components';
+import { Decimal } from '../../../components';
 import { TipIcon } from '../../../assets/images/TipIcon';
 import { platformCurrency } from 'src/api';
 
