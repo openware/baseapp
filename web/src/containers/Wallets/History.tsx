@@ -133,7 +133,8 @@ export class WalletTable extends React.Component<Props> {
         return list.sort((a, b) => {
             return new Date(a) > new Date(b) ? -1 : 1;
         }).map(item => {
-            const blockchainLink = this.getBlockchainLink(currency, item.txid, item.rid);
+            const blockchainTxid = this.getBlockchainTxid(item);
+            const blockchainLink = this.getBlockchainLink(currency, item.blockchain_key, blockchainTxid, item.rid);
             const amount = 'amount' in item ? Number(item.amount) : Number(item.price) * Number(item.volume);
             const confirmations = type === 'deposits' && item.confirmations;
             const itemCurrency = currencies && currencies.find(cur => cur.id === currency);
@@ -143,9 +144,9 @@ export class WalletTable extends React.Component<Props> {
 
             return [
                 localeDate(item.created_at, 'shortDate'),
-                <div className="pg-history-elem__hide" key={item.txid || item.rid}>
+                <div className="pg-history-elem__hide" key={item.blockchain_txid || item.rid}>
                     <a href={blockchainLink} target="_blank" rel="noopener noreferrer">
-                        {item.txid || item.rid}
+                        {blockchainTxid || item.rid}
                     </a>
                     <LinkIcon className="pg-history-elem__link" />
                 </div>,
@@ -155,17 +156,22 @@ export class WalletTable extends React.Component<Props> {
         });
     };
 
-    private getBlockchainLink = (currency: string, txid: string, blockchainKey: string, rid?: string) => {
-        const { wallets } = this.props;
-        const currencyInfo = wallets?.find(wallet => wallet.currency === currency);
+    private getBlockchainTxid = historyItem => {
+        const { type } = this.props;
+        return type === 'deposits' ? historyItem.txid : historyItem.blockchain_txid;
+    };
+
+    private getBlockchainLink = (currency: string, blockchainKey: string, txid: string, rid?: string) => {
+        const { currencies } = this.props;
+        const currencyInfo = currencies.find(c => c.id === currency);
         const blockchainCurrency = currencyInfo?.networks?.find(blockchain_cur => blockchain_cur.blockchain_key === blockchainKey);
 
         if (currencyInfo) {
-            if (txid && blockchainCurrency?.explorerTransaction) {
-                return blockchainCurrency.explorerTransaction.replace('#{txid}', txid);
+            if (txid && blockchainCurrency?.explorer_transaction) {
+                return blockchainCurrency.explorer_transaction.replace('#{txid}', txid);
             }
-            if (rid && blockchainCurrency?.explorerAddress) {
-                return blockchainCurrency.explorerAddress.replace('#{address}', rid);
+            if (rid && blockchainCurrency?.explorer_address) {
+                return blockchainCurrency.explorer_address.replace('#{address}', rid);
             }
         }
 
