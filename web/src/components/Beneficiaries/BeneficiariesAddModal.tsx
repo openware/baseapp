@@ -367,7 +367,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
         const blockchainItem = currencyItem.networks[index];
         const item = {
             blockchainKey: blockchainItem.blockchain_key,
-            protocol: blockchainItem.protocol,
+            protocol: blockchainItem.protocol || '',
             name: currencyItem.name,
             id: currencyItem.id,
             fee: blockchainItem?.withdraw_fee,
@@ -497,7 +497,7 @@ const BeneficiariesAddModalComponent: React.FC<Props> = (props: Props) => {
                 {renderAddAddressModalBodyItem('fiatBankName')}
                 <DropdownBeneficiary
                     list={currencyItem?.networks?.map(renderDropdownItem(currencyItem.name, currencyItem.precision, currencyItem.price))}
-                    selectedValue={coinBlockchainName}
+                    selectedValue={fiatNetworkName}
                     onSelect={handleChangeBlockchain('fiat')}
                     placeholder={formatMessage({ id: 'page.body.wallets.beneficiaries.dropdown.fiat.networks' })}
                     clear={false}

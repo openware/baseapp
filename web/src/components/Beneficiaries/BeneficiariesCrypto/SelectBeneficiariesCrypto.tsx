@@ -153,7 +153,9 @@ export const SelectBeneficiariesCrypto: React.FunctionComponent<SelectBeneficiar
                     <div className="cr-withdraw-blockchain-item__group">
                         <div className="cr-withdraw-blockchain-item-block">
                             <h3 className={classTitle}>
-                                {blockchainItem?.protocol?.toUpperCase()}&nbsp;{formatMessage({ id: 'page.body.wallets.beneficiaries.addresses' })}
+                                {blockchainItem?.protocol ?
+                                    `${blockchainItem?.protocol?.toUpperCase()} ${formatMessage({ id: 'page.body.wallets.beneficiaries.addresses' })}`
+                                    : formatMessage({ id: 'page.body.wallets.beneficiaries.addresses' })}
                                 {!blockchainItem?.withdrawal_enabled && <span className="cr-withdraw-blockchain-item__blockchain_key__disabled-block">{formatMessage({ id: "page.body.wallets.beneficiaries.disabled" })}</span>}
                             </h3>
                             <div className="cr-withdraw-blockchain-item__withdraw">{currentBeneficiary?.blockchain_name} ({currencyItem?.id.toUpperCase()})</div>

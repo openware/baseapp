@@ -108,8 +108,8 @@ export const DropdownBeneficiary = (props: DropdownBeneficiaryProps) => {
     }, []);
 
     const renderSelectedItem = useMemo(() => {
-        if (selected.protocol && selected.name && selected.id) {
-            return <div><span>{selected.protocol.toUpperCase()}</span> {selected.name}({selected.id.toUpperCase()})</div>;
+        if (selected.name && selected.id) {
+            return <div><span>{selected.protocol?.toUpperCase()}</span> {selected.name}({selected.id.toUpperCase()})</div>;
         }
 
         return placeholder;
