@@ -85,8 +85,6 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
     const uniqueBlockchainKeysValues = React.useMemo(() => [...uniqueBlockchainKeys.values()], [uniqueBlockchainKeys]);
 
     React.useEffect(() => {
-        setAddressModalState(false);
-
         if (beneficiaries.length && beneficiaries[0].currency !== currency) {
             setWithdrawalBeneficiary(defaultBeneficiary);
             setCurrentTabIndex(0);
