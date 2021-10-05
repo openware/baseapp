@@ -4,6 +4,11 @@ import * as React from 'react';
 import { copy } from '../../helpers';
 import { InputWithButton } from "src/components/InputWithButton";
 import { CopyIcon } from 'src/assets/images/CopyIcon';
+// import { useReduxSelector } from '../../hooks';
+// import {
+//     selectMobileDeviceState,
+// } from '../../modules';
+// const isMobileDevice = useReduxSelector(selectMobileDeviceState);
 
 export interface CopyableTextFieldProps {
     /**
@@ -36,6 +41,7 @@ export interface CopyableTextFieldProps {
  * Text field component with ability to copy inner text.
  */
 class CopyableTextField extends React.Component<CopyableTextFieldProps> {
+
     public componentDidMount() {
         if (!this.props.fieldId) {
             throw new Error('CopyableTextField must contain `fieldId` prop');
@@ -65,9 +71,9 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
                 type="text"
                 disabled={disabled}
                 label={label}
-                buttonText={copyButtonText || 'Copy'}
+                buttonText={window.screen.width <= 768 ? "" : (copyButtonText || "Copy")}
                 buttonClassName="cr-copyable-text-field__button"
-                icon={<CopyIcon />}
+                icon={< CopyIcon />}
             />
         );
     }

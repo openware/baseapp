@@ -82,6 +82,8 @@
         border-top: 1px solid var(--divider-color-level-1);
         margin-top: 24px !important;
         padding-top: 24px;
+         
+
 
         .col-12 {
           padding: 0 !important;
@@ -131,8 +133,10 @@
       flex-direction: column !important;
 
       button {
-        margin-top: 24px;
-        margin-bottom: 24px;
+         @media (min-width: 768px){
+          margin-top: 24px;
+          margin-bottom: 24px;
+        }
         border-radius: 2px !important;
         padding: 3px 30px !important;
       }

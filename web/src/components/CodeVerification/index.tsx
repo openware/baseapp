@@ -78,10 +78,10 @@ const CodeVerification: FC<CodeVerificationProps> = (props: CodeVerificationProp
     };
 
     const renderPaste2FA = useMemo(() => {
-        return showPaste2FA ? 
+        return showPaste2FA ?
             <div className="pg-code-verification__paste" onClick={paste2FA}>
                 <PasteIcon />
-                {formatMessage({ id: 'page.body.profile.whitelisted.paste' })}
+                {!props.isMobile ? formatMessage({ id: 'page.body.profile.whitelisted.paste' }) : null}
             </div>
             : null;
     }, [showPaste2FA, paste2FA]);
