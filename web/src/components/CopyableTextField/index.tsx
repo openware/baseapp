@@ -4,11 +4,6 @@ import * as React from 'react';
 import { copy } from '../../helpers';
 import { InputWithButton } from "src/components/InputWithButton";
 import { CopyIcon } from 'src/assets/images/CopyIcon';
-// import { useReduxSelector } from '../../hooks';
-// import {
-//     selectMobileDeviceState,
-// } from '../../modules';
-// const isMobileDevice = useReduxSelector(selectMobileDeviceState);
 
 export interface CopyableTextFieldProps {
     /**
@@ -35,6 +30,7 @@ export interface CopyableTextFieldProps {
      */
     disabled?: boolean;
     label?: string;
+    isMobile?: boolean;
 }
 
 /**
@@ -56,6 +52,7 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
             fieldId,
             copyButtonText,
             label,
+            isMobile,
         } = this.props;
         const doCopy = () => copy(fieldId);
         const cx = classnames('cr-copyable-text-field', className);
@@ -71,7 +68,7 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
                 type="text"
                 disabled={disabled}
                 label={label}
-                buttonText={window.screen.width <= 768 ? "" : (copyButtonText || "Copy")}
+                buttonText={isMobile ? "" : (copyButtonText || "Copy")}
                 buttonClassName="cr-copyable-text-field__button"
                 icon={< CopyIcon />}
             />
