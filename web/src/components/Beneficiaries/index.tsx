@@ -30,6 +30,12 @@ import { TabPanel } from '../TabPanel';
 import { SelectBeneficiariesCrypto } from './BeneficiariesCrypto/SelectBeneficiariesCrypto';
 import { Button } from 'react-bootstrap';
 import { is2faValid } from 'src/helpers';
+import {
+    getAddressWithoutTag,
+    getTag,
+    requiresMemoTag,
+    requiresDTTag,
+} from '../../helpers/tagBasedAsset';
 import { CodeVerification, Modal } from '..';
 
 interface OwnProps {
@@ -222,6 +228,18 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
 
     const renderDropdownTipCrypto = React.useCallback((currentWithdrawalBeneficiary: Beneficiary) => {
         if (currentWithdrawalBeneficiary) {
+            const memo = getTag(currentWithdrawalBeneficiary.data.address);
+            const currency = currentWithdrawalBeneficiary.currency;
+
+            let textTagID = '';
+            if (requiresMemoTag(currentWithdrawalBeneficiary.currency)) {
+                textTagID = 'page.body.wallets.beneficiaries.memo';
+            }
+    
+            if (requiresDTTag(currentWithdrawalBeneficiary.currency)) {
+                textTagID = 'page.body.wallets.beneficiaries.destinational.tag';
+            }
+
             return (
                 <div className="pg-beneficiaries__dropdown__tip tip">
                     <div className="tip__content">
@@ -229,6 +247,10 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
                             <span className="tip__content__block__label">{formatMessage({ id: 'page.body.wallets.beneficiaries.tipAddress' })}</span>
                             <span className="tip__content__block__value">{currentWithdrawalBeneficiary.data.address}</span>
                         </div>
+                        {textTagID && <div className="tip__content__block">
+                            <span className="tip__content__block__label">{formatMessage({ id: textTagID })}</span>
+                            <span className="tip__content__block__value">{memo}</span>
+                        </div>}
                         <div className="tip__content__block">
                             <span className="tip__content__block__label">{formatMessage({ id: 'page.body.wallets.beneficiaries.tipName' })}</span>
                             <span className="tip__content__block__value">{currentWithdrawalBeneficiary.name}</span>
@@ -292,6 +314,7 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
 
     const renderAddressItem = React.useCallback((currentBeneficiary: Beneficiary) => {
         const isPending = currentBeneficiary.state && currentBeneficiary.state.toLowerCase() === 'pending';
+        const address = getAddressWithoutTag(currentWithdrawalBeneficiary.data?.address);
 
         if (type === 'fiat') {
             return (
@@ -326,7 +349,7 @@ const BeneficiariesComponent: React.FC<Props> = (props: Props) => {
                         </span>
                         <span className="select__left__address">
                             <span>
-                                {currentWithdrawalBeneficiary.data?.address}
+                                {address}
                             </span>
                         </span>
                         <span className="item__left__title">

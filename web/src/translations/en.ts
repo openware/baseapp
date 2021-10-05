@@ -320,6 +320,8 @@ export const en = {
     'page.body.wallets.beneficiaries.confirmationModal.body.button': 'Confirm',
 
     'page.body.wallets.beneficiaries.tipAddress': 'Address',
+    'page.body.wallets.beneficiaries.memo': 'Memo',
+    'page.body.wallets.beneficiaries.destinational.tag': 'Destination Tag',
     'page.body.wallets.beneficiaries.tipName': 'Name',
     'page.body.wallets.beneficiaries.tipDescription': 'Note',
 
