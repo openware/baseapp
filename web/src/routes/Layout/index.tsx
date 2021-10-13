@@ -187,8 +187,8 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
     public componentDidMount() {
         if (
             !(this.props.location.pathname.includes('/magic-link')
-            || this.props.location.pathname.includes('/maintenance')
-            || this.props.location.pathname.includes('/restriction'))
+                || this.props.location.pathname.includes('/maintenance')
+                || this.props.location.pathname.includes('/restriction'))
         ) {
             switch (this.props.platformAccessStatus) {
                 case 'restricted':
@@ -214,8 +214,8 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
     public componentWillReceiveProps(nextProps: LayoutProps) {
         if (
             !(nextProps.location.pathname.includes('/magic-link')
-            || nextProps.location.pathname.includes('/restriction')
-            || nextProps.location.pathname.includes('/maintenance'))
+                || nextProps.location.pathname.includes('/restriction')
+                || nextProps.location.pathname.includes('/maintenance'))
             || this.props.platformAccessStatus !== nextProps.platformAccessStatus
         ) {
             switch (nextProps.platformAccessStatus) {
@@ -260,7 +260,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         clearInterval(this.walletsFetchInterval);
     }
 
-    public translate = (key: string) => this.props.intl.formatMessage({id: key});
+    public translate = (key: string) => this.props.intl.formatMessage({ id: key });
 
     public render() {
         const {
@@ -274,6 +274,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
         const { isShownExpSessionModal } = this.state;
         const desktopCls = classnames('container-fluid pg-layout', {
             'trading-layout': location.pathname.includes('/trading'),
+            'shared-layout': useSharedLayout,
         });
         const mobileCls = classnames('container-fluid pg-layout pg-layout--mobile', {
             'pg-layout--mobile-setup': location.pathname.includes('/setup'),
@@ -365,7 +366,7 @@ class LayoutComponent extends React.Component<LayoutProps, LayoutState> {
                     <PrivateRoute loading={userLoading} isLogged={isLoggedIn} path="/p2p" component={P2POffersScreen} />
                     <Route path="**"><Redirect to="/trading/" /></Route>
                 </Switch>
-                {isLoggedIn && <WalletsFetch/>}
+                {isLoggedIn && <WalletsFetch />}
                 {isShownExpSessionModal && this.handleRenderExpiredSessionModal()}
             </div>
         );

@@ -1,11 +1,9 @@
 .pg-layout {
   background: var(--main-background-color);
   color: var(--secondary-contrast-cta-color);
-  min-height: calc(100vh - 95px);
   padding-left: 0;
   padding-right: 0;
 
-  /* padding-top: calc(var(--gap) * 1.3); */
 
   &--mobile {
     max-width: 100vw;
@@ -19,22 +17,23 @@
       padding-bottom: 0;
     }
   }
-}
+} 
 
 .shared-layout {
-  max-height: 94vh;
+  /* max-height: 94vh; */
+  min-height: 93vh;
   overflow: auto;
   scrollbar-width: none;
 }
 
-.shared-layout.trading-layout {
-  min-height: calc(94vh - 150px);
+ .shared-layout.trading-layout {
+  /* min-height: calc(94vh); */
 
   .pg-trading-wrap {
-    position: relative;
-    height: calc(100vh - 150px);
+    /* position: relative; */
+    /* height: calc(100vh - 150px); */
   }
-}
+} 
 
 .trading-layout {
   background: var(--main-background-color);
