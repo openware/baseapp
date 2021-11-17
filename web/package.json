@@ -59,6 +59,7 @@
         "react-scroll": "^1.8.1",
         "react-select": "^4.0.2",
         "react-string-format": "^0.0.6",
+        "react-use-websocket": "^2.7.1",
         "recharts": "^1.8.5",
         "redux": "^4.0.5",
         "redux-saga": "^1.1.3",

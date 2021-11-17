@@ -3,6 +3,7 @@ import {
     TOGGLE_CHART_REBUILD,
     TOGGLE_MARKET_SELECTOR,
     TOGGLE_MOBILE_DEVICE,
+    TOGGLE_ORDERS_PAIRS_SWITCHER,
     TOGGLE_SIDEBAR,
     TRIGGER_APPLY_WINDOW_ENVS,
 } from './constants';
@@ -34,13 +35,19 @@ export interface TriggerApplyWindowEnvs {
     type: string;
 }
 
+export interface ToggleOpenOrdersPairsSwitcher {
+    type: string;
+    payload: boolean;
+}
+
 export type UIActions =
     | ChangeColorThemeAction
     | ToggleChartRebuildAction
     | ToggleMarketSelectorAction
     | ToggleMobileDeviceAction
     | ToggleSidebarAction
-    | TriggerApplyWindowEnvs;
+    | TriggerApplyWindowEnvs
+    | ToggleOpenOrdersPairsSwitcher;
 
 export const toggleChartRebuild = (): ToggleChartRebuildAction => ({
     type: TOGGLE_CHART_REBUILD,
@@ -67,4 +74,9 @@ export const toggleSidebar = (payload: boolean): ToggleSidebarAction => ({
 
 export const triggerApplyWindowEnvs = (): TriggerApplyWindowEnvs => ({
     type: TRIGGER_APPLY_WINDOW_ENVS,
+});
+
+export const toggleOpenOrdersPairsSwitcher = (payload: boolean): ToggleOpenOrdersPairsSwitcher => ({
+    type: TOGGLE_ORDERS_PAIRS_SWITCHER,
+    payload,
 });

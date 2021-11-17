@@ -8,14 +8,13 @@ import { BlocklistAccessState, rootBlocklistAccessSaga } from './public/blocklis
 import { ConfigsState, rootConfigsSaga } from './public/configs';
 import { CurrenciesState } from './public/currencies';
 import { ErrorHandlerState, rootErrorHandlerSaga } from './public/errorHandler';
-import { ColorThemeState } from './public/globalSettings';
+import { GlobalSettingsState } from './public/globalSettings';
 import { GridLayoutState } from './public/gridLayout';
 import { LanguageState } from './public/i18n';
 import { KlineState, rootKlineFetchSaga } from './public/kline';
 import { MarketsState, rootMarketsSaga } from './public/markets';
 import { MemberLevelsState, rootMemberLevelsSaga } from './public/memberLevels';
 import { DepthIncrementState, DepthState, OrderBookState, rootOrderBookSaga } from './public/orderBook';
-import { RangerState } from './public/ranger/reducer';
 import { RecentTradesState, rootRecentTradesSaga } from './public/recentTrades';
 import { ApiKeysState } from './user/apiKeys';
 import { rootApiKeysSaga } from './user/apiKeys/sagas';
@@ -101,7 +100,7 @@ export interface RootState {
         alerts: AlertState;
         blockchains: BlockchainsState;
         blocklistAccess: BlocklistAccessState;
-        colorTheme: ColorThemeState;
+        globalSettings: GlobalSettingsState;
         configs: ConfigsState;
         currencies: CurrenciesState;
         depth: DepthState;
@@ -112,7 +111,6 @@ export interface RootState {
         markets: MarketsState;
         memberLevels: MemberLevelsState;
         orderBook: OrderBookState;
-        ranger: RangerState;
         recentTrades: RecentTradesState;
         rgl: GridLayoutState;
         p2p: P2PState;

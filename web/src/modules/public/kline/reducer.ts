@@ -5,6 +5,8 @@ import {
     KLINE_ERROR,
     KLINE_FETCH,
     KLINE_PUSH,
+    KLINE_SUBSCRIBE,
+    KLINE_UNSUBSCRIBE,
     KLINE_UPDATE_PERIOD,
     KLINE_UPDATE_TIME_RANGE,
 } from './constants';
@@ -14,6 +16,7 @@ export interface KlineState extends CommonState {
     last?: KlineEvent;
     marketId?: string;
     period?: string;
+    message?: string;
     loading: boolean;
     data: any;
     range: {
@@ -48,6 +51,7 @@ export const initialKlineState: KlineState = {
     last: undefined,
     marketId: undefined,
     period: undefined,
+    message: undefined,
     loading: false,
     data: [],
     range: {
@@ -58,6 +62,20 @@ export const initialKlineState: KlineState = {
 
 export const klineReducer = (state = initialKlineState, action: KlineActions): KlineState => {
     switch (action.type) {
+        case KLINE_SUBSCRIBE:
+            return {
+                ...state,
+                marketId: action.payload.marketId,
+                period: action.payload.period,
+                message: 'subscribe',
+            };
+        case KLINE_UNSUBSCRIBE:
+            return {
+                ...state,
+                marketId: action.payload.marketId,
+                period: action.payload.period,
+                message: 'unsubscribe',
+            };
         case KLINE_PUSH:
             const { kline, marketId, period } = action.payload;
 

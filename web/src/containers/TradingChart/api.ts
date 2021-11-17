@@ -10,7 +10,7 @@ import {
     klineUpdateTimeRange,
 } from '../../modules';
 import { Market } from '../../modules/public/markets';
-import { periodMinutesToString } from '../../modules/public/ranger/helpers';
+import { periodMinutesToString } from 'src/websocket/helpers';
 import { store } from '../../store';
 
 export const print = (...x) => window.console.log.apply(null, ['>>>> TC', ...x]);
@@ -159,7 +159,7 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
             const marketId: string = symbolInfo.ticker!;
             const periodString = periodMinutesToString(resolutionToSeconds(resolution));
 
-            tradingChart.props.subscribeKline(marketId, periodString);
+            tradingChart.props.subscribeKline({ marketId, period: periodString });
             tradingChart.currentKlineSubscription = {
                 marketId,
                 periodString,
@@ -168,7 +168,7 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
         unsubscribeBars: (subscribeUID: string) => {
             const { marketId, periodString } = tradingChart.currentKlineSubscription;
             if (marketId && periodString) {
-                tradingChart.props.unSubscribeKline(marketId, periodString);
+                tradingChart.props.unSubscribeKline({ marketId, period: periodString });
             }
             tradingChart.currentKlineSubscription = {};
         },

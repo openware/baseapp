@@ -13,7 +13,7 @@ export interface AbilitiesState {
 }
 
 export const initialAbilitiesState: AbilitiesState = {
-    loading: true,
+    loading: false,
     success: false,
     abilities: {},
 };
