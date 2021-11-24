@@ -17,6 +17,7 @@ export * from './getLanguageByCode';
 export * from './getOrderAPI';
 export * from './getStylesValueByKey';
 export * from './getTimestampPeriod';
+export * from './getStartTimestampPeriod';
 export * from './getTotalPrice';
 export * from './getUrlPart';
 export * from './getUserAgent';

@@ -47,6 +47,7 @@ export const defaultConfig: Config = {
     themeSwitcher: 'visible',
     peatio_platform_currency: 'usdt',
     useSharedLayout: 'false',
+    tvDefaultCandles: 20,
 };
 
 export const Cryptobase = {
@@ -95,3 +96,4 @@ export const barongUploadSizeMaxRange = Number(Cryptobase.config.barong_upload_s
 export const themeSwitcher = () => Cryptobase.config.themeSwitcher;
 export const platformCurrency = () => Cryptobase.config.peatio_platform_currency.toUpperCase();
 export const useSharedLayout = () => convertToBoolean(Cryptobase.config.useSharedLayout);
+export const tvDefaultCandles = () => Number(Cryptobase.config.tvDefaultCandles || 20);
