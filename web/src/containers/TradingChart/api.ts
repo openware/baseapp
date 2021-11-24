@@ -2,7 +2,7 @@ import axios from 'axios';
 import { TradingChartComponent } from '.';
 import { finexUrl, isFinexEnabled, tradeUrl } from '../../api/config';
 import { LibrarySymbolInfo } from '../../charting_library/datafeed-api';
-import { buildQueryString, getTimestampPeriod } from '../../helpers';
+import { buildQueryString, getStartTimestampPeriod, getTimestampPeriod } from '../../helpers';
 import {
     klineArrayToObject,
     KlineState,
@@ -119,10 +119,11 @@ export const dataFeedObject = (tradingChart: TradingChartComponent, markets: Mar
             onErrorCallback,
             firstDataRequest,
         ) => {
+            const rangeFrom = getStartTimestampPeriod(to, resolution);
             const url = makeHistoryUrl(
                 symbolInfo.ticker || symbolInfo.name.toLowerCase(),
                 resolutionToSeconds(resolution),
-                from,
+                rangeFrom,
                 to,
             );
 

@@ -45,6 +45,7 @@ declare global {
         navigations?: string;
         logo_icons?: string;
         fontFamily?: string;
+        tvDefaultCandles: number;
     }
 
     interface Window {
