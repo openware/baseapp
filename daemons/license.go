@@ -4,7 +4,6 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	sonic "github.com/openware/pkg/sonic/config"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -15,6 +14,7 @@ import (
 
 	jwtgo "github.com/dgrijalva/jwt-go"
 	"github.com/openware/kaigara/pkg/vault"
+	sonic "github.com/openware/pkg/sonic/config"
 )
 
 // LicenseResponse to store response from api
@@ -56,7 +56,7 @@ func LicenseRenewal(appName string, app *sonic.Runtime, vaultService *vault.Serv
 		for {
 			lic, err := getLicenseFromVault(appName, vaultService)
 			if err != nil {
-				log.Printf("ERR: LicenseRenewal: %s", err)
+				log.Printf("ERROR: LicenseRenewal: %s", err)
 				break
 			}
 
@@ -67,13 +67,13 @@ func LicenseRenewal(appName string, app *sonic.Runtime, vaultService *vault.Serv
 			}
 
 			if expire == 0 {
-				log.Println("LicenseRenewal: the license does not expire")
+				log.Println("INFO: LicenseRenewal: the license does not expire")
 				break
 			}
 
 			// Check to skip renewal (less than 75% of expire time)
 			if time.Now().Unix() < creation+((expire-creation)*75/100) {
-				log.Println("License renewal was skipped")
+				log.Println("INFO: LicenseRenewal: skipped")
 				break
 			}
 
@@ -82,7 +82,7 @@ func LicenseRenewal(appName string, app *sonic.Runtime, vaultService *vault.Serv
 				log.Println(err.Error())
 				break
 			}
-			log.Println("License was renewed")
+			log.Println("INFO: LicenseRenewal: renewed")
 
 			break
 		}
@@ -147,7 +147,7 @@ func CreateNewLicense(appName string, opendaxConfig *sonic.OpendaxConfig, vaultS
 	}
 	// Check for API error
 	if res.StatusCode != http.StatusCreated {
-		return fmt.Errorf("ERR: CreateNewLicense: Unexpected opx API response status %d", res.StatusCode)
+		return fmt.Errorf("ERROR: CreateNewLicense: Unexpected opx API response status %d", res.StatusCode)
 	}
 
 	license := LicenseResponse{}
@@ -179,7 +179,7 @@ func getPlatformIDFromVault(vaultService *vault.Service) (string, error) {
 	}
 
 	if result == nil {
-		return "", fmt.Errorf("ERR: getPlatformIDFromVault: kaigara config %s.%s.%s not found", app, scope, key)
+		return "", fmt.Errorf("ERROR: getPlatformIDFromVault: kaigara config %s.%s.%s not found", app, scope, key)
 	}
 
 	return result.(string), nil
@@ -216,7 +216,7 @@ func getLicenseFromVault(app string, vaultService *vault.Service) (string, error
 
 	lic, ok := licRaw.(string)
 	if !ok {
-		return "", fmt.Errorf("ERR: getLicenseFromVault: The license key is empty in Vault")
+		return "", fmt.Errorf("ERROR: getLicenseFromVault: The license key is empty in Vault")
 	}
 
 	return lic, nil
