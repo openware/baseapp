@@ -66,18 +66,19 @@ func FetchConfigurationPeriodic(peatioClient *peatio.Client, vaultService *vault
 	for {
 		platformID, err := getPlatformIDFromVault(vaultService)
 		if err != nil {
-			log.Printf("ERR: FetchMarkets: %v", err.Error())
+			log.Printf("ERROR: FetchMarkets: %v", err.Error())
 		} else {
 			if shouldRestart, err := fetchConfiguration(peatioClient, opendaxAddr, platformID); err == nil && shouldRestart {
 				go setFinexRestart(vaultService, time.Now().Unix())
 			}
 		}
-		<-time.After(5 * time.Minute)
+		<-time.After(15 * time.Minute)
 	}
 }
 func fetchConfiguration(peatioClient *peatio.Client, opendaxAddr, platformID string) (bool, error) {
 	url := fmt.Sprintf("%s/api/v2/opx/markets", opendaxAddr)
 	response, err := getResponse(url, platformID)
+	log.Printf("INFO: Started fetching configuration")
 
 	if err != nil {
 		return false, err
@@ -128,7 +129,7 @@ func getResponse(url string, platformID string) (*Response, error) {
 	}
 	// Check for API error
 	if resp.StatusCode != http.StatusOK {
-		log.Printf("ERROR: getResponse: Unexpected status: %d", resp.StatusCode)
+		log.Printf("ERROR: getResponse: Unexpected status: %d with contents: %s", resp.StatusCode, string(resBody))
 		return nil, errors.New(fmt.Sprintf("Unexpected status: %d", resp.StatusCode))
 	}
 
@@ -207,21 +208,25 @@ func createMarkets(peatioClient *peatio.Client, markets []MarketResponse) (shoul
 				log.Printf("ERROR: createMarkets: Can't create market with id %s. Error: %v. Errors: %v", market.ID, apiError.Error, apiError.Errors)
 			}
 		} else if res != nil {
-			shouldRestart = true
 			shouldSendRequest := false
 			marketParams := peatio.UpdateMarketParams{
-				ID:        res.ID,
-				EngineID:  strconv.Itoa(res.EngineID),
+				ID:              res.ID,
+				EngineID:        strconv.Itoa(res.EngineID),
+				MinPrice:        res.MinPrice,
+				MaxPrice:        res.MaxPrice,
+				MinAmount:       res.MinAmount,
+				AmountPrecision: int64(res.AmountPrecision),
+				PricePrecision:  int64(res.PricePrecision),
 			}
 
-			if (market.MinPrice >= res.MinPrice || market.MinAmount >= res.MinAmount) {
+			if market.MinPrice > res.MinPrice || market.MinAmount > res.MinAmount {
 				marketParams.MinPrice = market.MinPrice
 				marketParams.MaxPrice = market.MaxPrice
 				marketParams.MinAmount = market.MinAmount
 				shouldSendRequest = true
 			}
 
-			if (market.AmountPrecision != int64(res.AmountPrecision) || market.PricePrecision != int64(res.PricePrecision)) {
+			if market.AmountPrecision != int64(res.AmountPrecision) || market.PricePrecision != int64(res.PricePrecision) {
 				marketParams.AmountPrecision = market.AmountPrecision
 				marketParams.PricePrecision = market.PricePrecision
 				marketParams.MinPrice = market.MinPrice
@@ -230,11 +235,13 @@ func createMarkets(peatioClient *peatio.Client, markets []MarketResponse) (shoul
 				shouldSendRequest = true
 			}
 
-			if (shouldSendRequest) {
+			if shouldSendRequest {
 				_, apiError := peatioClient.UpdateMarket(marketParams)
+				log.Printf("INFO: createMarkets: updating: {\"from\": %+v, \"to\": %+v}", *res, marketParams)
 				if apiError != nil {
-					log.Printf("ERROR: createMarkets: Can't create market with id %s. Error: %v. Errors: %v",
-						market.ID, apiError.Error, apiError.Errors)
+					log.Printf("ERROR: createMarkets: Can't update market with id %s. Error: %v. Errors: %v", market.ID, apiError.Error, apiError.Errors)
+				} else {
+					shouldRestart = true
 				}
 			}
 		}
@@ -428,11 +435,16 @@ func GetXLNEnabledFromVault(vaultService *vault.Service) (bool, error) {
 		return false, err
 	}
 
+	if result == nil {
+		result = false
+	}
+
 	return result.(bool), nil
 }
 func setFinexRestart(vaultService *vault.Service, timestamp int64) error {
 	app := "finex"
 	scope := "private"
+	log.Printf("INFO: Finex should restart")
 
 	// Load secret
 	vaultService.LoadSecrets(app, scope)
@@ -466,7 +478,7 @@ func getFinexRestart(vaultService *vault.Service) (int64, error) {
 
 	finTimestamp, ok := finRaw.(int64)
 	if !ok {
-		return 0, fmt.Errorf("ERR: getFinexRestart: cannot convert value to unix timestamp: %v", finRaw)
+		return 0, fmt.Errorf("ERROR: getFinexRestart: cannot convert value to unix timestamp: %v", finRaw)
 	}
 
 	return finTimestamp, nil

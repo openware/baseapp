@@ -210,7 +210,7 @@ func FilesPaths(pattern string) ([]string, error) {
 		return nil, err
 	}
 
-	for i, _ := range matches {
+	for i := range matches {
 		matches[i] = strings.Replace(matches[i], fullPath, "", -1)
 	}
 

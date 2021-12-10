@@ -40,12 +40,18 @@ func TestPageModel(t *testing.T) {
 		Body:        "",
 	}
 
-	pages := []Page{h, c}
-	db.Create(pages)
+	pages1 := []Page{h, c}
+	db.Create(pages1)
 	p := &Page{}
 
 	hi := p.FindByPath("/hello")
 	ci := p.FindByPath("/contact")
+
+	pages := p.List()
+	pages2 := make([]Page, len(pages))
+	for i, page := range pages {
+		pages2[i] = *(page.(*Page))
+	}
 
 	require.NotNil(t, hi)
 	require.NotNil(t, ci)
@@ -53,6 +59,6 @@ func TestPageModel(t *testing.T) {
 	assertPagesEqual(t, &h, hi)
 	assertPagesEqual(t, &c, ci)
 
-	assertPagesSliceEqual(t, pages, p.List())
+	assertPagesSliceEqual(t, pages1, pages2)
 	assert.Nil(t, p.FindByPath("/terms"))
 }

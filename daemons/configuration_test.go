@@ -146,22 +146,22 @@ func TestFindCurrenciesInWallets(t *testing.T) {
 		{
 			ID: 1, Name: "BTC Deposit Wallet", Kind: "deposit",
 			Currencies: []string{"btc"}, Address: "address", Gateway: "opendax_cloud",
-			MaxBalance: "0.0", Balance: "0.0", BlockchainKey: blockchainKey, Status: "active",
+			MaxBalance: "0.0", Balance: map[string]interface{}{"btc": "0.0"}, BlockchainKey: blockchainKey, Status: "active",
 		},
 		{
 			ID: 1, Name: "BTC Hot Wallet", Kind: "hot",
 			Currencies: []string{"btc"}, Address: "address", Gateway: "opendax_cloud",
-			MaxBalance: "0.0", Balance: "0.0", BlockchainKey: blockchainKey, Status: "active",
+			MaxBalance: "0.0", Balance: map[string]interface{}{"btc": "0.0"}, BlockchainKey: blockchainKey, Status: "active",
 		},
 		{
 			ID: 1, Name: "ETH Deposit Wallet", Kind: "eth",
 			Currencies: []string{"eth", "link"}, Address: "address", Gateway: "opendax_cloud",
-			MaxBalance: "0.0", Balance: "0.0", BlockchainKey: blockchainKey, Status: "active",
+			MaxBalance: "0.0", Balance: map[string]interface{}{"eth": "0.0"}, BlockchainKey: blockchainKey, Status: "active",
 		},
 		{
 			ID: 1, Name: "ETH Hot Wallet", Kind: "hot",
 			Currencies: []string{"eth", "link"}, Address: "address", Gateway: "opendax_cloud",
-			MaxBalance: "0.0", Balance: "0.0", BlockchainKey: blockchainKey, Status: "active",
+			MaxBalance: "0.0", Balance: map[string]interface{}{"eth": "0.0"}, BlockchainKey: blockchainKey, Status: "active",
 		},
 	}
 
