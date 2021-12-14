@@ -186,7 +186,7 @@ export const QuickExchangeContainer = () => {
             const currentMarket = getMarket(market.id, markets);
 
             if (currentMarket) {
-                setType('buy');
+                setType('sell');
                 setMarket(market.id);
                 setBasePrecision(currentMarket.amount_precision);
                 setQuotePrecision(currentMarket.price_precision);
@@ -196,7 +196,7 @@ export const QuickExchangeContainer = () => {
             const currentMarket = getMarket(market.id, markets);
 
             if (currentMarket) {
-                setType('sell');
+                setType('buy');
                 setMarket(market.id);
                 setBasePrecision(currentMarket.price_precision);
                 setQuotePrecision(currentMarket.amount_precision);
@@ -295,7 +295,7 @@ export const QuickExchangeContainer = () => {
                 <DropdownComponent
                     className="cr-quick-exchange__body-currency-block-dropdown"
                     list={walletsQuoteList}
-                    selectedValue={quote.currency.toUpperCase()}
+                    selectedValue={quote.currency}
                     onSelect={handleChangeDropdownQuote}
                     placeholder={translate('page.body.quick.exchange.label.currency')}
                 />
