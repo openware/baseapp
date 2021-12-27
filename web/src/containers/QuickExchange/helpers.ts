@@ -59,9 +59,9 @@ const cleanPositiveFloatInput = (text: string) => {
     return cleanInput;
 };
 
-const getBaseAmount = (wallet: Wallet, value: string, marketPrice: string, prevBaseAmount: string, prevQuoteAmount: string) => {
+const getBaseAmount = (wallet: Wallet, value: string, marketPrice: string, prevBaseAmount: string, prevQuoteAmount: string, side: string) => {
     if (+value <= +wallet.balance) {
-        const quotePrice = Number(value || '0') * Number(marketPrice);
+        const quotePrice = side === 'sell' ? Number(value || '0') / Number(marketPrice) : Number(value || '0') * Number(marketPrice);
 
         return [value, String(quotePrice)];
     }
@@ -69,8 +69,8 @@ const getBaseAmount = (wallet: Wallet, value: string, marketPrice: string, prevB
     return [prevBaseAmount, prevQuoteAmount];
 };
 
-const getQuoteAmount = (wallet: Wallet, value: string, marketPrice: string, prevBaseAmount: string, prevQuoteAmount: string) => {
-    const baseValue = Number(value || '0') / Number(marketPrice);
+const getQuoteAmount = (wallet: Wallet, value: string, marketPrice: string, prevBaseAmount: string, prevQuoteAmount: string, side: string) => {
+    const baseValue = side === 'sell' ? Number(value || '0') * Number(marketPrice) : Number(value || '0') / Number(marketPrice);
 
     if (+wallet.balance >= baseValue) {
         return [String(baseValue), value];

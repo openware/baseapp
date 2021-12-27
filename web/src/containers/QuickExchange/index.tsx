@@ -119,8 +119,8 @@ export const QuickExchangeContainer = () => {
 
         if (walletBase && value.match(precisionRegExp(precision))) {
             const [baseAmount, quoteAmount] = key === 'base_value'
-                ? getBaseAmount(walletBase, value, marketPrice.price, base.amount, quote.amount)
-                : getQuoteAmount(walletBase, value, marketPrice.price, base.amount, quote.amount);
+                ? getBaseAmount(walletBase, value, marketPrice.price, base.amount, quote.amount, type)
+                : getQuoteAmount(walletBase, value, marketPrice.price, base.amount, quote.amount, type);
 
             const newBaseValue = {
                 ...base,
@@ -351,7 +351,7 @@ export const QuickExchangeContainer = () => {
         return (
             <div className="cr-quick-exchange__body-info">
                 <div className="cr-quick-exchange__body-info-price">
-                    {translate('page.body.quick.exchange.estimated_price')}: <span>~{marketPrice.price} {base.currency.toUpperCase()}</span>
+                    {translate('page.body.quick.exchange.estimated_price')}: <span>~{marketPrice.price} {currentSelectedMarket?.quote_unit?.toUpperCase()}</span>
                 </div>
                 <div className="cr-quick-exchange__body-info-warning">
                     <WarningIcon />
