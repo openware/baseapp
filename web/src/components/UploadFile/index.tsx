@@ -36,7 +36,7 @@ const UploadFileComponent: React.FC<Props> = ({
     id,
     isMobileDevice,
     uploadedFile,
-    accept = 'image/jpg,image/jpeg,image/png,.pdf',
+    accept = 'image/jpg,image/jpeg,image/png,image/heic,.pdf',
     handleUploadScan,
     fileSizeErrorMessage,
 }) => {
