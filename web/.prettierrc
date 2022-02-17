@@ -3,7 +3,7 @@
     "singleQuote": true,
     "overrides": [
         {
-            "files": ["**/*.css", "**/*.scss", "**/*.pcss", "**/*.html"],
+            "files": ["**/*.css", "**/*.scss", "**/*.pcss", "**/*.html", "**/*.ts", "**/*.tsx"],
             "options": {
                 "singleQuote": false,
                 "tabWidth": 4

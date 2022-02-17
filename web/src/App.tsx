@@ -2,14 +2,16 @@ import { createBrowserHistory } from 'history';
 import * as React from 'react';
 import * as ReactGA from 'react-ga';
 import { IntlProvider } from 'react-intl';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Router } from 'react-router';
-import { gaTrackerKey } from './api';
+import { gaTrackerKey, useSharedLayout } from './api';
 import { ErrorWrapper } from './containers';
 import { useSetMobileDevice } from './hooks';
 import * as mobileTranslations from './mobile/translations';
-import { selectCurrentLanguage, selectMobileDeviceState } from './modules';
+import { configsFetch, selectCurrentLanguage, selectMobileDeviceState } from './modules';
 import { languageMap } from './translations';
+import { SharedLayout } from './components';
+import WebSocketProvider from './websocket/WebSocket';
 
 const gaKey = gaTrackerKey();
 const browserHistory = createBrowserHistory();
@@ -31,6 +33,7 @@ const AlertsContainer = React.lazy(() => import('./containers/Alerts').then(({ A
 const CustomizationContainer = React.lazy(() =>
     import('./containers/Customization').then(({ Customization }) => ({ default: Customization }))
 );
+const P2PAlertsContainer = React.lazy(() => import('./containers/P2P/P2PAlerts').then(({ P2PAlerts }) => ({ default: P2PAlerts })));
 const HeaderContainer = React.lazy(() => import('./containers/Header').then(({ Header }) => ({ default: Header })));
 const SidebarContainer = React.lazy(() => import('./containers/Sidebar').then(({ Sidebar }) => ({ default: Sidebar })));
 const LayoutContainer = React.lazy(() => import('./routes').then(({ Layout }) => ({ default: Layout })));
@@ -46,6 +49,33 @@ const getTranslations = (lang: string, isMobileDevice: boolean) => {
     return languageMap[lang];
 };
 
+const Layout = () => {
+    const isMobileDevice = useSelector(selectMobileDeviceState);
+
+    if (browserHistory.location.pathname === '/setup' || !isMobileDevice) {
+        return (
+            <React.Fragment>
+                <SharedLayout>
+                    {browserHistory.location.pathname.includes('/trading') && <HeaderContainer />}
+                    <CustomizationContainer />
+                    <AlertsContainer />
+                    <P2PAlertsContainer />
+                    <LayoutContainer />
+                </SharedLayout>
+            </React.Fragment>
+        );
+    }
+
+    return (
+        <div className="pg-mobile-app">
+            <SharedLayout>
+                <AlertsContainer/>
+                <LayoutContainer/>
+            </SharedLayout>
+        </div>
+    );
+}
+
 const RenderDeviceContainers = () => {
     const isMobileDevice = useSelector(selectMobileDeviceState);
 
@@ -56,6 +86,7 @@ const RenderDeviceContainers = () => {
                 <SidebarContainer />
                 <CustomizationContainer />
                 <AlertsContainer />
+                <P2PAlertsContainer />
                 <LayoutContainer />
             </React.Fragment>
         );
@@ -72,6 +103,19 @@ const RenderDeviceContainers = () => {
 };
 
 export const App = () => {
+    const dispatch = useDispatch();
+
+    React.useEffect(() => {
+        dispatch(configsFetch());
+
+        const rootElement = document.documentElement;
+        const fontFamily = window.env?.fontFamily ? window.env?.fontFamily : `'IBM Plex Sans', sans-serif`;
+
+        if (rootElement) {
+            rootElement.style.setProperty('--font-family', fontFamily);
+        };
+    }, []);
+
     useSetMobileDevice();
     const lang = useSelector(selectCurrentLanguage);
     const isMobileDevice = useSelector(selectMobileDeviceState);
@@ -81,7 +125,9 @@ export const App = () => {
             <Router history={browserHistory}>
                 <ErrorWrapper>
                     <React.Suspense fallback={null}>
-                        <RenderDeviceContainers />
+                        <WebSocketProvider>
+                            {useSharedLayout() ? <Layout /> : <RenderDeviceContainers />}
+                        </WebSocketProvider>
                     </React.Suspense>
                 </ErrorWrapper>
             </Router>

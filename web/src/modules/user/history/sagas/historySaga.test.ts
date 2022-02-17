@@ -26,6 +26,7 @@ describe('CurrencyHistory', () => {
         {
             id:566,
             currency:'btc',
+            blockchain_key: '',
             amount:'0.99',
             fee:'0.0',
             txid:'4516e174e7f04fafd14026c22d2bc288695aaa96f4b44518aa86ac7e27fc2458',
@@ -37,6 +38,7 @@ describe('CurrencyHistory', () => {
         {
             id:393,
             currency:'btc',
+            blockchain_key: '',
             amount:'0.001',
             fee:'0.0',
             txid:'dd5024e99c92aaa8787ed8273c8a6b635388eb4624d9cc1f8e04313dce843180',
@@ -77,7 +79,7 @@ describe('CurrencyHistory', () => {
 
     it('should fetch currency deposit history for 1 page in success flow', async () => {
         mockHistory();
-        const promise = new Promise(resolve => {
+        const promise = new Promise<void>(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetchWithFirstPage.length) {
@@ -93,7 +95,7 @@ describe('CurrencyHistory', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise<void>(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

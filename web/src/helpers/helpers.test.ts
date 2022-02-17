@@ -138,9 +138,6 @@ describe('Helpers', () => {
         expect(helpers.formatCCYAddress('BCH', '2NDJKBjTcoPRXTnkAbcyeqLwXQfdoeug2c0')).toEqual('');
         expect(helpers.formatCCYAddress('BCH', '2NDJKBjTcoPRXTnkAbcyeqLwXQfdoeug2c')).toEqual('');
         expect(helpers.formatCCYAddress('BCH', '2NDJKBjTcoPRXTnkAbcyeqLwXQfdoeug2cLa')).toEqual('');
-        expect(helpers.formatCCYAddress('BCH', '2NDJKBjTcoPRXTnkAbcyeqLwXQfdoeug2cL')).toEqual(
-            'bchtest:prdlsx39pn5v6yxmcgaqgeg6zd48snqaay69chcgwx'
-        );
     });
 
     // historyTableUtils.js
@@ -463,6 +460,13 @@ describe('Helpers', () => {
 
         it('should return false if a value is not in array', () => {
             expect(helpers.hasDuplicates([1, 2, 3], 5)).toBeFalsy();
+        });
+    });
+
+    describe('Helpers', () => {
+        it('getCountdownDate', () => {
+            expect(helpers.getCountdownDate('2021-04-01T15:55:00.000Z')).toBe('00:00:00');
+            expect(helpers.getCountdownDate('2021-04-01T15:55:00.000Z', '5m')).toBe('00:00:00');
         });
     });
 });

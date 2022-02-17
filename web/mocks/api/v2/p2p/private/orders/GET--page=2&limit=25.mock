@@ -1,0 +1,39 @@
+HTTP/2 201
+access-control-allow-origin: *
+access-control-allow-methods: GET, POST, PUT, PATCH, DELETE
+access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
+Access-Control-Expose-Headers: total
+Total: 26
+
+[
+    {
+        "created_at": "02-06-2021 15:40",
+        "side": "buy",
+        "price":  "12.23",
+        "amount":  "1.05",
+        "counterparty": "King_Coin66",
+        "state": "completed",
+        "quote": "usd",
+        "base": "uah"
+    },
+    {
+        "created_at": "02-06-2021 15:40",
+        "side": "sell",
+        "price":  "22.34",
+        "amount":  "2.15",
+        "counterparty": "Qwerty123",
+        "state": "dispute",
+        "quote": "usd",
+        "base": "uah"
+    },
+    {
+        "created_at": "02-06-2021 15:40",
+        "side": "sell",
+        "price":  "7.44",
+        "amount":  "1.15",
+        "counterparty": "Qwerty123",
+        "state": "cancelled",
+        "quote": "usd",
+        "base": "uah"
+    }
+]

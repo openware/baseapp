@@ -16,7 +16,6 @@ import {
     truncateMiddle,
 } from '../../helpers';
 import {
-    currenciesFetch,
     Currency,
     fetchHistory,
     Market,
@@ -51,28 +50,31 @@ interface ReduxProps {
 }
 
 interface DispatchProps {
-    fetchCurrencies: typeof currenciesFetch;
     fetchHistory: typeof fetchHistory;
 }
 
 type Props = HistoryProps & ReduxProps & DispatchProps & IntlProps;
 
+const defaultMarket = {
+    market: '',
+    price_precision: 0,
+    amount_precision: 0,
+    quote_unit: '',
+    base_unit: ''
+};
+
 class HistoryComponent extends React.Component<Props> {
     public componentDidMount() {
-        const { currencies, type } = this.props;
-        this.props.fetchHistory({ page: 0, type, limit: 25 });
+        const { type } = this.props;
 
-        if (currencies.length === 0) {
-            this.props.fetchCurrencies();
-        }
-    }
+        const fetchParams = {
+            page: 0,
+            limit: 25,
+            type,
+            ...(type === 'quick_exchange' && { market_type: 'qe' }),
+        };
 
-    public componentWillReceiveProps(nextProps: Props) {
-        const { currencies } = this.props;
-
-        if (!currencies.length && nextProps.currencies.length) {
-            this.props.fetchCurrencies();
-        }
+        this.props.fetchHistory(fetchParams);
     }
 
     public render() {
@@ -120,6 +122,7 @@ class HistoryComponent extends React.Component<Props> {
             case 'deposits':
                 return [
                     this.props.intl.formatMessage({id: 'page.body.history.deposit.header.txid'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.deposit.header.blockchain'}),
                     this.props.intl.formatMessage({id: 'page.body.history.deposit.header.date'}),
                     this.props.intl.formatMessage({id: 'page.body.history.deposit.header.currency'}),
                     this.props.intl.formatMessage({id: 'page.body.history.deposit.header.amount'}),
@@ -128,6 +131,7 @@ class HistoryComponent extends React.Component<Props> {
             case 'withdraws':
                 return [
                     this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.address'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.blockchain'}),
                     this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.date'}),
                     this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.currency'}),
                     this.props.intl.formatMessage({id: 'page.body.history.withdraw.header.amount'}),
@@ -152,6 +156,15 @@ class HistoryComponent extends React.Component<Props> {
                     this.props.intl.formatMessage({id: 'page.body.history.transfer.header.toAccount'}),
                     this.props.intl.formatMessage({id: 'page.body.history.transfer.header.status'}),
                 ];
+            case 'quick_exchange':
+                return [
+                    this.props.intl.formatMessage({id: 'page.body.history.quick.header.date'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.quick.header.amountGive'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.quick.header.currencyGive'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.quick.header.amountReceive'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.quick.header.currencyReceive'}),
+                    this.props.intl.formatMessage({id: 'page.body.history.quick.header.status'}),
+                ];
           default:
               return [];
         }
@@ -174,11 +187,12 @@ class HistoryComponent extends React.Component<Props> {
         } = this.props;
         switch (type) {
             case 'deposits': {
-                const { amount, confirmations, created_at, currency, txid } = item;
-                const blockchainLink = this.getBlockchainLink(currency, txid);
+                const { amount, confirmations, created_at, currency, txid, blockchain_key, protocol } = item;
+                const blockchainLink = this.getBlockchainLink(currency, blockchain_key, txid);
                 const wallet = wallets.find(obj => obj.currency === currency);
                 const itemCurrency = currencies && currencies.find(cur => cur.id === currency);
-                const minConfirmations = itemCurrency && itemCurrency.min_confirmations;
+                const blockchainCurrency = itemCurrency?.networks?.find(blockchain_cur => blockchain_cur.blockchain_key === item.blockchain_key);
+                const minConfirmations = blockchainCurrency?.min_confirmations;
                 const state = (item.state === 'submitted' && confirmations !== undefined && minConfirmations !== undefined) ? (
                     `${confirmations}/${minConfirmations}`
                 ) : (
@@ -191,14 +205,15 @@ class HistoryComponent extends React.Component<Props> {
                             {truncateMiddle(txid, 30)}
                         </a>
                     </div>,
+                    protocol?.toUpperCase(),
                     localeDate(created_at, 'fullDate'),
-                    currency && currency.toUpperCase(),
+                    currency?.toUpperCase(),
                     wallet && Decimal.format(amount, wallet.fixed, ','),
                     <span style={{ color: setDepositStatusColor(item.state) }} key={txid}>{state}</span>,
                 ];
             }
             case 'withdraws': {
-                const { txid, created_at, currency, amount, fee, rid } = item;
+                const { txid, created_at, currency, amount, fee, rid, protocol } = item;
                 const state = intl.formatMessage({ id: `page.body.history.withdraw.content.status.${item.state}` });
                 const blockchainLink = this.getBlockchainLink(currency, txid, rid);
                 const wallet = wallets.find(obj => obj.currency === currency);
@@ -209,6 +224,7 @@ class HistoryComponent extends React.Component<Props> {
                             {truncateMiddle(txid || rid, 30)}
                         </a>
                     </div>,
+                    protocol?.toUpperCase(),
                     localeDate(created_at, 'fullDate'),
                     currency && currency.toUpperCase(),
                     wallet && Decimal.format(amount, wallet.fixed, ','),
@@ -248,21 +264,58 @@ class HistoryComponent extends React.Component<Props> {
                     <span style={{ color: setTransferStatusColor(item.status) }} key={id}>{status}</span>,
                 ];
             }
+            case 'quick_exchange': {
+                const { id, created_at, price, side, origin_volume, state, market } = item;
+                const marketToDisplay = marketsData.find(m => m.id === market) || defaultMarket;
+
+                let data;
+
+                if (side === 'buy') {
+                    data = {
+                        amountGive: price * origin_volume,
+                        amountReceive: origin_volume,
+                        givePrecision: marketToDisplay.price_precision,
+                        receivePrecision: marketToDisplay.amount_precision,
+                        currencyGive: marketToDisplay.quote_unit.toUpperCase(),
+                        currencyReceive: marketToDisplay.base_unit.toUpperCase(),
+                    }
+                } else {
+                    data = {
+                        amountGive: origin_volume,
+                        amountReceive: price * origin_volume,
+                        givePrecision: marketToDisplay.amount_precision,
+                        receivePrecision: marketToDisplay.price_precision,
+                        currencyGive: marketToDisplay.base_unit.toUpperCase(),
+                        currencyReceive: marketToDisplay.quote_unit.toUpperCase(),
+                    }
+                }
+
+                return [
+                    localeDate(created_at, 'fullDate'),
+                    <Decimal key={id} fixed={data.givePrecision} thousSep=",">{data.amountGive}</Decimal>,
+                    data.currencyGive,
+                    <Decimal key={id} fixed={data.receivePrecision} thousSep=",">{data.amountReceive}</Decimal>,
+                    data.currencyReceive,
+                    <span style={{ color: setTransferStatusColor(state) }} key={id}>{state}</span>,
+                ];
+            }
             default: {
                 return [];
             }
         }
     };
 
-    private getBlockchainLink = (currency: string, txid: string, rid?: string) => {
+    private getBlockchainLink = (currency: string, txid: string, blockchainKey: string, rid?: string) => {
         const { wallets } = this.props;
-        const currencyInfo = wallets && wallets.find(wallet => wallet.currency === currency);
+        const currencyInfo = wallets?.find(wallet => wallet.currency === currency);
+        const blockchainCurrency = currencyInfo?.networks?.find(blockchain_cur => blockchain_cur.blockchain_key === blockchainKey);
+
         if (currencyInfo) {
-            if (txid && currencyInfo.explorerTransaction) {
-                return currencyInfo.explorerTransaction.replace('#{txid}', txid);
+            if (txid && blockchainCurrency?.explorerTransaction) {
+                return blockchainCurrency.explorerTransaction.replace('#{txid}', txid);
             }
-            if (rid && currencyInfo.explorerAddress) {
-                return currencyInfo.explorerAddress.replace('#{address}', rid);
+            if (rid && blockchainCurrency?.explorerAddress) {
+                return blockchainCurrency.explorerAddress.replace('#{address}', rid);
             }
         }
 
@@ -286,7 +339,6 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 
 export const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
     dispatch => ({
-        fetchCurrencies: () => dispatch(currenciesFetch()),
         fetchHistory: params => dispatch(fetchHistory(params)),
     });
 

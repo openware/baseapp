@@ -1,10 +1,7 @@
 /* tslint:disable */
 import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
-import {
-    FormattedMessage,
-    injectIntl,
-} from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { TRIGGER_BUY_PRICE_MULT, TRIGGER_BUY_PRICE_ADJUSTED_TYPES } from '../../constants'
 import {
@@ -181,6 +178,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     asks={asks}
                     bids={bids}
                     disabled={executeLoading}
+                    marketId={currentMarket.id}
                     from={currentMarket.quote_unit}
                     availableBase={this.getAvailableValue(walletBase)}
                     availableQuote={this.getAvailableValue(walletQuote)}
@@ -193,6 +191,7 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
                     handleSendType={this.getOrderType}
                     currentMarketAskPrecision={currentMarket.amount_precision}
                     currentMarketBidPrecision={currentMarket.price_precision}
+                    orderTypes={this.formattedOrderTypes()}
                     width={this.state.width}
                     listenInputPrice={this.listenInputPrice}
                     listenInputTrigger={this.listenInputTrigger}
@@ -363,6 +362,11 @@ class OrderInsert extends React.PureComponent<Props, StoreProps> {
 
         return wallets.find(w => w.currency === currencyLower) as Wallet;
     }
+
+    private formattedOrderTypes = () => this.props.currentMarket?.features?.order_types.filter(ot => ot !== 'fok').map(ot => {
+        const result = ot.substring(0, 1)?.toUpperCase() + ot.substring(1);
+        return result.replace('_', '-');
+    });
 
     private getOrderType = (index: number, label: string) => {
         this.setState({

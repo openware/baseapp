@@ -1,0 +1,3 @@
+export const CONFIGS_FETCH = 'CONFIGS_FETCH';
+export const CONFIGS_DATA = 'CONFIGS_DATA';
+export const CONFIGS_ERROR = 'CONFIGS_ERROR';

@@ -1,0 +1,133 @@
+.pg-beneficiaries__dropdown__tip {
+  max-width: 300px;
+
+  .tip {
+    &__content {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+  
+      &__block {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: var(--email-form-padding);
+        width: 100%;
+  
+        &:last-child {
+          margin-bottom: 0;
+        }
+  
+        &__label {
+          color: var(--secondary-contrast-cta-color);
+          font-size: 10px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 12px;
+        }
+  
+        &__value {
+          color: var(--primary-text-color);
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 18px;
+          opacity: 0.8;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
+
+.cr-beneficiary-blockchain-item {
+  width: 100%;
+  min-width: 456px;
+
+  &:first-child {
+    margin-top: 38px;
+  }
+
+  .cr-withdraw__group__blockchain-item {
+    margin-bottom: 15px;
+
+    .cr-withdraw-blockchain-item__withdraw {
+      text-transform: capitalize;
+      color: var(--secondary-contrast-cta-color);
+      letter-spacing: 0.1px;
+      font-size: 14px;
+      line-height: 22px;
+    }
+
+    .cr-withdraw-blockchain-item__blockchain_key__disabled {
+      color: var(--system-red) !important;
+      display: flex;
+      align-items: center;
+  
+      &-block {
+        font-size: 10px;
+        line-height: 13px;
+        color: var(--system-red);
+        border-radius: 3px;
+        background: var(--system-red-level-1);
+        margin-left: 12px;
+        padding: 6px 8px;
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .pg-beneficiaries__dropdown__body {
+    &__group {
+      margin-bottom: 36px;
+      box-shadow: 0px 6px 12px var(--header-shadow-color-level-1);
+    
+      .item--disabled {
+        opacity: 0.48;
+      }
+    }
+
+    &__item {
+      background: var(--dropdown-background-color);
+      justify-content: space-between;
+      cursor: pointer;
+      height: 70px;
+
+      &:first-child {
+        border-top: 1px solid var(--divider-color-level-1);
+      }
+
+      &:hover {
+        transition: 0.2;
+        background: var(--dropdown-background-color-level-5);
+      }
+
+      .item__left {
+        display: flex;
+        flex-flow: column;
+        width: 270px;
+
+        &__title {
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 15px;
+          color: var(--primary-text-color);
+        }
+      }
+
+      .item__right {
+        display: flex;
+
+        &__tip {
+          display: flex;
+          align-items: center;
+        }
+
+        &__pending {
+          margin-right: 12px;
+        }
+      }
+    }
+  }
+}

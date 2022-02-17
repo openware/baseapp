@@ -1,5 +1,9 @@
 import { CommonError } from '../../types';
 import {
+    P2P_WALLETS_FETCH,
+    P2P_WALLETS_DATA,
+    P2P_WALLETS_ERROR,
+    P2P_WALLETS_DATA_WS,
     SET_MOBILE_WALLET_UI,
     WALLETS_ADDRESS_DATA,
     WALLETS_ADDRESS_DATA_WS,
@@ -13,8 +17,28 @@ import {
     WALLETS_WITHDRAW_CCY_DATA,
     WALLETS_WITHDRAW_CCY_ERROR,
     WALLETS_WITHDRAW_CCY_FETCH,
+    WALLETS_USER_WITHDRAWALS_ERROR,
+    WALLETS_USER_WITHDRAWALS_DATA,
+    WALLETS_USER_WITHDRAWALS_FETCH,
 } from './constants';
 import { Wallet, WalletAddress, WalletWithdrawCCY } from './types';
+
+export interface UserWithdrawalsFetch {
+    type: typeof WALLETS_USER_WITHDRAWALS_FETCH;
+}
+
+export interface UserWithdrawalsData {
+    type: typeof WALLETS_USER_WITHDRAWALS_DATA;
+    payload: {
+        last_24_hours: string;
+        last_1_month: string;
+    };
+}
+
+export interface UserWithdrawalsError {
+    type: typeof WALLETS_USER_WITHDRAWALS_ERROR;
+    error: CommonError;
+}
 
 export interface WalletsFetch {
     type: typeof WALLETS_FETCH;
@@ -46,6 +70,7 @@ export interface WalletsAddressFetch {
     type: typeof WALLETS_ADDRESS_FETCH;
     payload: {
         currency: string;
+        blockchain_key: string;
     };
 }
 
@@ -83,6 +108,28 @@ export interface SetMobileWalletUi {
     payload: string;
 }
 
+export interface P2PWalletsFetch {
+    type: typeof P2P_WALLETS_FETCH;
+}
+
+export interface P2PWalletsData {
+    type: typeof P2P_WALLETS_DATA;
+    payload: Wallet[];
+}
+
+export interface P2PWalletsError {
+    type: typeof P2P_WALLETS_ERROR;
+    error: CommonError;
+}
+
+export interface P2PWalletsDataByRanger {
+    type: typeof P2P_WALLETS_DATA_WS;
+    payload: {
+        ws: boolean;
+        balances;
+    };
+}
+
 export type WalletsAction = WalletsFetch
     | WalletsData
     | WalletsDataByRanger
@@ -95,7 +142,28 @@ export type WalletsAction = WalletsFetch
     | WalletsWithdrawCcyData
     | WalletsWithdrawCcyError
     | WalletsReset
-    | SetMobileWalletUi;
+    | SetMobileWalletUi
+    | P2PWalletsFetch
+    | P2PWalletsData
+    | P2PWalletsError
+    | P2PWalletsDataByRanger
+    | UserWithdrawalsFetch
+    | UserWithdrawalsData
+    | UserWithdrawalsError;
+
+export const userWithdrawalsFetch = (): UserWithdrawalsFetch => ({
+    type: WALLETS_USER_WITHDRAWALS_FETCH,
+});
+    
+export const userWithdrawalsData = (payload: UserWithdrawalsData['payload']): UserWithdrawalsData => ({
+    type: WALLETS_USER_WITHDRAWALS_DATA,
+    payload,
+});
+    
+export const userWithdrawalsError = (error: CommonError): UserWithdrawalsError => ({
+    type: WALLETS_USER_WITHDRAWALS_ERROR,
+    error,
+});
 
 export const walletsFetch = (): WalletsFetch => ({
     type: WALLETS_FETCH,
@@ -156,5 +224,24 @@ export const walletsReset = (): WalletsReset => ({
 
 export const setMobileWalletUi = (payload: SetMobileWalletUi['payload']): SetMobileWalletUi => ({
     type: SET_MOBILE_WALLET_UI,
+    payload,
+});
+
+export const p2pWalletsFetch = (): P2PWalletsFetch => ({
+    type: P2P_WALLETS_FETCH,
+});
+
+export const p2pWalletsData = (payload: P2PWalletsData['payload']): P2PWalletsData => ({
+    type: P2P_WALLETS_DATA,
+    payload,
+});
+
+export const p2pWalletsError = (error: CommonError): P2PWalletsError => ({
+    type: P2P_WALLETS_ERROR,
+    error,
+});
+
+export const updateP2PWalletsDataByRanger = (payload: P2PWalletsDataByRanger['payload']): P2PWalletsDataByRanger => ({
+    type: P2P_WALLETS_DATA_WS,
     payload,
 });

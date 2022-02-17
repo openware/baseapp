@@ -42,10 +42,10 @@ describe('Saga: configUpdateSaga', () => {
     it('should update config', async () => {
         const expectedActions = [
             configUpdate(fakeConfig),
-            configUpdateData(fakeConfig),
         ];
 
         mockConfigUpdate();
+
         const promise = new Promise<void>(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();

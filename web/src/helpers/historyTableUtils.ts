@@ -21,6 +21,12 @@ export const withdrawColorMapping = {
     confirming: '',
 };
 
+export const offersColorMapping = {
+    wait: 'var(--system-yellow)',
+    cancelled: 'var(--system-red)',
+    done: 'var(--system-green)',
+};
+
 export const tradesColorMapping = {
     sell: {
         color: 'var(--asks)',
@@ -34,7 +40,35 @@ export const tradesColorMapping = {
 
 export const transferColorMapping = {
     completed: 'var(--system-green)',
+    done: 'var(--system-green)',
 };
+
+export const stateColorMapping = {
+    dispute: {
+        color: 'var(--system-yellow)',
+        text: 'Dispute',
+    },
+    done: {
+        color: 'var(--bids)',
+        text: 'Completed',
+    },
+    cancelled: {
+        color: 'var(--asks)',
+        text: 'Cancelled',
+    },
+    autocancelled: {
+        color: 'var(--asks)',
+        text: 'Auto Cancelled',
+    },
+    wait: {
+        color: 'var(--system-yellow)',
+        text: 'Wait',
+    },
+    prepared: {
+        color: 'var(--system-yellow)',
+        text: 'Prepared',
+    },
+}
 
 export const setDepositStatusColor = (status: string): string => depositColorMapping[status];
 
@@ -43,3 +77,7 @@ export const setWithdrawStatusColor = (status: string): string => withdrawColorM
 export const setTradesType = (type: string) => tradesColorMapping[type] || { color: '', text: '' };
 
 export const setTransferStatusColor = (status: string): string => transferColorMapping[status];
+
+export const setOfferStatusColor = (status: string): string => offersColorMapping[status];
+
+export const setStateType = (status: string) => stateColorMapping[status] || {color: '', text: ''};

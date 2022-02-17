@@ -5,12 +5,13 @@ import { Decimal } from 'src/components';
 import { handleCCYPrecision } from 'src/helpers';
 import { DEFAULT_CCY_PRECISION, VALUATION_PRIMARY_CURRENCY, VALUATION_SECONDARY_CURRENCY } from '../../../constants';
 import { estimateUnitValue, estimateValue } from '../../../helpers/estimateValue';
-import { useCurrenciesFetch, useMarketsFetch, useMarketsTickersFetch, useWalletsFetch } from '../../../hooks';
+import { useMarketsFetch, useMarketsTickersFetch, useWalletsFetch } from '../../../hooks';
 import { selectCurrencies, selectMarkets, selectMarketTickers, selectWallets } from '../../../modules';
 
 const EstimatedValueMobile = React.memo(() => {
     const intl = useIntl();
-    const wallets = useSelector(selectWallets);
+
+    const wallets = useSelector(selectWallets) || [];
     const markets = useSelector(selectMarkets);
     const currencies = useSelector(selectCurrencies);
     const tickers = useSelector(selectMarketTickers);
@@ -21,7 +22,6 @@ const EstimatedValueMobile = React.memo(() => {
 
     useWalletsFetch();
     useMarketsFetch();
-    useCurrenciesFetch();
     useMarketsTickersFetch();
 
     return (

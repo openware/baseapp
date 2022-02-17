@@ -13,6 +13,8 @@ import {
 import { stdTimezoneOffset } from '../../helpers';
 import {
     KlineState,
+    klineSubscribe,
+    klineUnsubscribe,
     klineUpdatePeriod,
     klineUpdateTimeRange,
     Market,
@@ -27,11 +29,7 @@ import {
     selectMarketTickers,
     selectMobileDeviceState,
 } from '../../modules';
-import {
-    rangerSubscribeKlineMarket,
-    rangerUnsubscribeKlineMarket,
-} from '../../modules/public/ranger';
-import { periodStringToMinutes } from '../../modules/public/ranger/helpers';
+import { periodStringToMinutes } from 'src/websocket/helpers';
 import {
     CurrentKlineSubscription,
     dataFeedObject,
@@ -55,8 +53,8 @@ interface ReduxProps {
 }
 
 interface DispatchProps {
-    subscribeKline: typeof rangerSubscribeKlineMarket;
-    unSubscribeKline: typeof rangerUnsubscribeKlineMarket;
+    subscribeKline: typeof klineSubscribe;
+    unSubscribeKline: typeof klineUnsubscribe;
     klineUpdateTimeRange: typeof klineUpdateTimeRange;
     klineUpdatePeriod: typeof klineUpdatePeriod;
 }
@@ -211,15 +209,36 @@ export class TradingChartComponent extends React.PureComponent<Props> {
 
     private updateChart = (currentMarket: Market) => {
         if (this.tvWidget) {
-            this.tvWidget.onChartReady(() => {
-                this.tvWidget!.activeChart().setSymbol(currentMarket.id, () => {
-                    print('Symbol set', currentMarket.id);
+            let symbolSet = false;
+            const UPDATE_TIMEOUT = 3000;
+
+            const callUpdateChart = () => {
+                return new Promise((resolve, reject) => {
+                    this.tvWidget.onChartReady(() => {
+                        this.tvWidget!.activeChart().setSymbol(currentMarket.id, () => {
+                            symbolSet = true;
+                            resolve('Symbol set');
+                        });
+                    });
+
+                    setTimeout(() => {
+                        resolve('Symbol failed to set');
+                    }, UPDATE_TIMEOUT);
                 });
+            };
+
+            callUpdateChart().then(res => {
+                print(res, currentMarket.id);
+
+                if  (!symbolSet) {
+                    print('Rebuild chart', currentMarket.id);
+                    this.handleRebuildChart(currentMarket);
+                }
             });
         }
     };
 
-    private handleRebuildChart = () => {
+    private handleRebuildChart = (nextMarket?: Market) => {
         const {
             colorTheme,
             currentMarket,
@@ -233,7 +252,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
                 window.console.log(`TradingChart unmount failed (Rebuild chart): ${error}`);
             }
 
-            this.setChart(markets, currentMarket, colorTheme);
+            this.setChart(markets, nextMarket || currentMarket, colorTheme);
         }
     };
 
@@ -255,8 +274,8 @@ const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
 
 const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
     klineUpdateTimeRange: payload => dispatch(klineUpdateTimeRange(payload)),
-    subscribeKline: (marketId: string, periodString: string) => dispatch(rangerSubscribeKlineMarket(marketId, periodString)),
-    unSubscribeKline: (marketId: string, periodString: string) => dispatch(rangerUnsubscribeKlineMarket(marketId, periodString)),
+    subscribeKline: payload => dispatch(klineSubscribe(payload)),
+    unSubscribeKline: payload => dispatch(klineUnsubscribe(payload)),
     klineUpdatePeriod: payload => dispatch(klineUpdatePeriod(payload)),
 });
 

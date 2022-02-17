@@ -1,10 +1,66 @@
+
 .cr-deposit-crypto {
   background: transparent;
   color: var(--table-text-color);
   display: flex;
   flex-direction: column;
   font-size: var(--font-size);
-  padding: calc(var(--gap) * 3);
+  margin-top: 12px;
+  min-width: 530px;
+  width: 50%;
+
+  &__warning {
+    display: flex;
+    margin-top: 12px;
+
+    p {
+      color: var(--secondary-contrast-cta-color);
+      font-size: 16px;
+      letter-spacing: 0.1px;
+      line-height: 24px;
+      margin-left: 12px;
+    }
+  }
+
+  &__disabled {
+    align-items: center;
+    display: flex;
+    font-size: 16px;
+    font-weight: 600;
+    justify-content: center;
+    letter-spacing: 0.15px;
+    line-height: 24px;
+    margin-top: 48px;
+    min-width: 530px;
+
+    &-wrapper {
+      text-align: center;
+      width: 310px;
+    }
+  }
+
+  &__currency {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    line-height: 18px;
+    margin-top: 36px;
+  }
+
+  &__hint {
+    font-size: 16px;
+    letter-spacing: 0.1px;
+    line-height: 24px;
+
+    &-title {
+      color: var(--primary-text-color);
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 22px;
+      margin-bottom: 12px;
+      margin-top: 36px;
+    }
+  }
 
   div:nth-child(1) {
     display: flex;
@@ -13,16 +69,16 @@
 
   &__create {
     align-items: center;
-    justify-content: center !important;
     padding-top: calc(var(--gap) * 2);
   }
 
   .cr-deposit-info {
     background-color: inherit;
-    font-size: calc(var(--gap) * 2.3);
-    line-height: 25px;
-    margin-bottom: calc(var(--gap) * 3);
-    width: 56%;
+    color: var(--secondary-contrast-cta-color);
+    font-size: 16px;
+    letter-spacing: 0.1px;
+    line-height: 24px;
+    margin-bottom: 12px;
   }
 
   &__block {
@@ -34,6 +90,26 @@
 
     .cr-deposit-crypto__copyable {
       width: 100%;
+
+      &-area {
+        background: var(--input-background-color);
+        border: none;
+        border-radius: 4px;
+      }
+
+      .custom-input {
+        label {
+          font-weight: bold;
+          left: unset;
+          margin-top: -20px;
+          padding: 0;
+        }
+      }
+
+      .form-control {
+        font-size: 12px;
+        height: 48px;
+      }
     }
 
     .pg-metamask {
@@ -57,12 +133,14 @@
     }
 
     .custom-input {
-      width: calc(100% - 110px);
+      width: calc(100% - 100px);
     }
 
-    .input-group-append > button {
-      border-radius: 2px;
-      width: 110px;
+    .input-group-append > button,
+    .input-group-append > .btn {
+      background-color: var(--primary-cta-color);
+      border-radius: 4px;
+      width: 100px;
     }
 
     &-title {
@@ -97,7 +175,9 @@
         background: inherit;
         padding: calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) calc(var(--gap) * 0.83) var(--gap);
 
-        input {
+        input,
+        input:active,
+        input:focus {
           background: unset;
           color: var(--input-background-color);
         }
@@ -106,18 +186,36 @@
   }
 
   .qr-code {
-    margin-left: calc(var(--gap) * 3);
-    margin-top: calc(var(--gap) * 3);
+    margin-left: 48px;
+  }
+}
 
-    svg {
-      border: 1px solid var(--primary-text-color);
-    }
+@media screen and (max-width: 1024px) {
+  .cr-deposit-crypto {
+    min-width: unset;
+    width: 100%;
   }
 }
 
 @media screen and (max-width: 768px) {
   .cr-deposit-crypto {
     padding: 0;
+
+    &__warning {
+      padding: 0 14px;
+    }
+
+    &__currency {
+      padding: 0 14px;
+    }
+
+    &__hint {
+      padding: 0 14px;
+
+      &-title {
+        padding: 0 14px;
+      }
+    }
 
     .cr-deposit-info {
       text-align: center;

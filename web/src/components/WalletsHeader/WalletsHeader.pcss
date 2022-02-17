@@ -1,0 +1,66 @@
+.cr-wallets-header {
+  background: var(--body-background-color);
+  border-radius: 3px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &__search {
+    .cr-search {
+      width: max-content;
+      border: 1px solid var(--input-border-color);
+      background: var(--input-background-color);
+      padding: 0 0 0 4px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      margin: 0;
+
+      input {
+        font-size: 16px;
+        letter-spacing: 0.1px;
+        padding: 5px 8px;
+        width: 132px;
+        background: var(--input-background-color);
+      }
+
+      &__cancel {
+        display: none;
+      }
+    }
+  }
+
+  &__checkbox {
+
+    .custom-control {
+      padding-left: 0;
+
+      &-label {
+        align-items: center;
+        color: var(--secondary-contrast-cta-color);
+        display: flex;
+
+        &::before, &::after {
+          height: 20px;
+          top: unset;
+          left: 0;
+          width: 20px;
+          min-width: 20px;
+        }
+
+        &::before {
+          position: static;
+          margin-right: 5px;
+        }
+      }
+
+      &-input {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}

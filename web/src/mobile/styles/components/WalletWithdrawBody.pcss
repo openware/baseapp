@@ -15,6 +15,23 @@
 
   .custom-input {
     position: relative;
+    flex-grow: 1;
+
+    input {
+      height: 48px !important;
+    }
+
+    label {
+      background: var(--body-background-color);
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 0.06em;
+      left: 0;
+      margin-top: -18px;
+      padding: 0;
+      position: absolute;
+    }
   }
 
   .pg-blur-withdraw {
@@ -78,6 +95,9 @@
   }
   .cr-mobile-modal__block, .beneficiaries-confirmation-modal {
     background: var(--body-background-color);
+  }
+  .beneficiaries-confirmation-modal {
+    padding: 0 14px;
   }
   .cr-email-form__button-wrapper {
     min-height: auto;
@@ -178,6 +198,10 @@
 
     &__body {
       height: calc(100vh - 56px);
+
+      .cr-email-form__group {
+        margin-bottom: 24px;
+      }
     }
   }
 }

@@ -21,6 +21,21 @@
   }
 }
 
+.shared-layout {
+  max-height: 94vh;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.shared-layout.trading-layout {
+  min-height: calc(94vh - 150px);
+
+  .pg-trading-wrap {
+    position: relative;
+    height: calc(100vh - 150px);
+  }
+}
+
 .trading-layout {
   background: var(--main-background-color);
 }

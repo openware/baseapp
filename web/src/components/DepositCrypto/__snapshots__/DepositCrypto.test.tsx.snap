@@ -30,13 +30,15 @@ exports[`DepositCrypto should match snapshot 1`] = `
     error="error123"
     handleGenerateAddress={[MockFunction]}
     handleOnCopy={[MockFunction]}
+    network="erc-20"
     text="text123"
     wallet={
       Object {
+        "account_type": "",
         "currency": "eth",
-        "fee": 0,
         "fixed": 0,
         "name": "",
+        "networks": Array [],
         "type": "coin",
       }
     }

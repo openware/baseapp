@@ -22,7 +22,18 @@ Access-Control-Allow-Credentials: true
         "digits":5,
         "type":"significant_digits"
       }
-    ]
+    ],
+    "features": {
+      "order_types": [
+        "fok",
+        "limit",
+        "market",
+        "stop_loss",
+        "stop_limit",
+        "take_profit",
+        "take_limit"
+      ]
+    }
   },
   {
     "id":"ethbtc",
@@ -69,7 +80,14 @@ Access-Control-Allow-Credentials: true
           }
         ]
       }
-    ]
+    ],
+    "features": {
+      "order_types": [
+        "market",
+        "limit",
+        "fok"
+      ]
+    }
   },
   {
     "id":"btcusd",
@@ -108,6 +126,15 @@ Access-Control-Allow-Credentials: true
         ],
         "type":"custom_price_steps"
       }
-    ]
+    ],
+    "features": {
+      "order_types": [
+        "stop_loss",
+        "stop_limit",
+        "market",
+        "limit",
+        "fok"
+      ]
+    }
   }
 ]

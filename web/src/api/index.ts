@@ -4,7 +4,7 @@ import { JsonBody, makeRequest } from './requestBuilder';
 export * from './config';
 
 export interface RequestOptions {
-    apiVersion: 'applogic' | 'peatio' | 'barong' | 'finex' | 'sonic';
+    apiVersion: 'applogic' | 'peatio' | 'barong' | 'finex' | 'sonic' | 'p2p';
     withHeaders?: boolean;
     headers?: any;
 }
@@ -63,10 +63,11 @@ export const API: ApiWrapper = {
             config
         ),
 
-    delete: (config: RequestOptions) => async (url: string) =>
+    delete: (config: RequestOptions) => async (url: string, body?: JsonBody) =>
         makeRequest(
             {
                 method: 'delete',
+                body,
                 url,
             },
             config

@@ -152,14 +152,16 @@ export const InternalTransferComponent = () => {
                         className={balanceError}
                     >
                         {translate('page.body.internal.transfer.account.balance')}
-                        {wallet && wallet.balance && currency !== '' ? (
-                            <Decimal fixed={wallet ? wallet.fixed : 0} thousSep=",">
-                                {wallet.balance.toString()}
-                            </Decimal>
-                        ) : 0} {currency}
-                        {(wallet && wallet.balance && +wallet.balance < +amount) ? (
-                            translate('page.body.internal.transfer.insufficient.balance')
-                        ) : null}
+                        <div className="cr-internal-transfer__group--balance-value">
+                            {wallet && wallet.balance && currency !== '' ? (
+                                <Decimal fixed={wallet ? wallet.fixed : 0} thousSep=",">
+                                    {wallet.balance.toString()}
+                                </Decimal>
+                            ) : 0} {currency}
+                            {(wallet && wallet.balance && +wallet.balance < +amount) ? (
+                                translate('page.body.internal.transfer.insufficient.balance')
+                            ) : null}
+                        </div>
                     </div>
                 </div>
                 <InternalTransferInput

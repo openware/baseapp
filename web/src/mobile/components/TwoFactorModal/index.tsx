@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { CustomInput } from '../../../components/CustomInput';
 import { Modal } from '../../components/Modal';
+import { is2faValid } from 'src/helpers';
 
 export const TwoFactorModalComponent = props => {
     const [code2FA, setCode2FA] = React.useState('');
@@ -44,23 +45,19 @@ export const TwoFactorModalComponent = props => {
         );
     };
 
-    const renderModalFooter = () => {
-        const isValid2FA = code2FA.match('^[0-9]{6}$');
-
-        return (
-            <div className="pg-exchange-modal-submit-footer">
-                <Button
-                    block={true}
-                    disabled={!isValid2FA}
-                    onClick={() => handleToggle2FA(true)}
-                    size="lg"
-                    variant="primary"
-                >
-                    {intl.formatMessage({id: 'page.mobile.twoFactorModal.send'})}
-                </Button>
-            </div>
-        );
-    };
+    const renderModalFooter = () => (
+        <div className="pg-exchange-modal-submit-footer">
+            <Button
+                block={true}
+                disabled={!is2faValid(code2FA)}
+                onClick={() => handleToggle2FA(true)}
+                size="lg"
+                variant="primary"
+            >
+                {intl.formatMessage({id: 'page.mobile.twoFactorModal.send'})}
+            </Button>
+        </div>
+    );
 
     return (
         <div className="cr-mobile-two-fa-modal">

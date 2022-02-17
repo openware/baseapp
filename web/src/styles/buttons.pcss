@@ -100,3 +100,59 @@
   box-shadow: none;
   color: var(--button-asks-text-color-active);
 }
+
+.btn-outline-primary {
+  border-color: var(--button-outline-primary-cta-border-color);
+  color: var(--button-outline-primary-cta-text-color);
+  font-weight: var(--button-font-weight);
+  transition: 0.2s;
+
+  &:hover {
+    border-color: var(--button-outline-primary-cta-background-color-hover);
+    background-color: var(--button-outline-primary-cta-background-color-hover);
+    color: var(--button-outline-primary-cta-text-color-hover);
+    transition: 0.2s;
+  }
+
+  &:focus {
+    box-shadow: none;
+  }
+
+  &:active{
+    background: var(--outline-button-primary-cta-background-color-active);
+    border-color: var(--outline-button-primary-cta-background-color-active);
+    box-shadow: none;
+    color: var(--button-outline-primary-cta-text-color-active);
+  }
+
+  &:disabled {
+    color: var(--button-outline-primary-cta-text-color-disabled);
+    cursor: not-allowed;
+  }
+}
+
+.btn-secondary {
+  background: var(--button-secondary-cta-background-color);
+  color: var(--button-secondary-cta-text-color);
+  border: none;
+
+  &:hover {
+    background: var(--button-secondary-cta-background-color-hover) !important;
+    border: none !important;
+    color: var(--button-secondary-cta-text-color-hover);
+    transition: 0.2s;
+  }
+
+  &:active, &:focus {
+    background-color: var(--button-secondary-cta-background-color-active) !important;
+    color: var(--button-secondary-cta-text-color-active) !important;
+    border: none !important;
+    box-shadow: none !important;
+    transition: 0.2s;
+  }
+
+  &:disabled {
+    color: var(--button-secondary-cta-text-color-disabled);
+    cursor: not-allowed;
+  }
+}

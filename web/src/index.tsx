@@ -10,8 +10,7 @@ import { sentryEnabled } from './api/config';
 import { App } from './App';
 import './index.pcss';
 import { rootSaga } from './modules';
-import { rangerSagas } from './modules/public/ranger';
-import { rangerMiddleware, sagaMiddleware, store } from './store';
+import { sagaMiddleware, store } from './store';
 
 import '@openware/react-components/build/index.css';
 
@@ -29,7 +28,6 @@ if (!Intl.RelativeTimeFormat) {
 }
 
 sagaMiddleware.run(rootSaga);
-rangerMiddleware.run(rangerSagas);
 
 export type IntlProps = WrappedComponentProps;
 

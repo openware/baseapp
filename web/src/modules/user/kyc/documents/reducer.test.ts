@@ -5,10 +5,6 @@ import { documentsReducer, initialDocumentsState } from './reducer';
 describe('Documents reducer', () => {
     const payloadFormData = new FormData();
 
-    const confirmDocumentsResponse = {
-        message: 'Success',
-    };
-
     const error: CommonError = {
         code: 500,
         message: ['Server error'],
@@ -19,15 +15,15 @@ describe('Documents reducer', () => {
             ...initialDocumentsState,
             loading: true,
         };
-        expect(documentsReducer(initialDocumentsState, actions.sendDocuments(payloadFormData))).toEqual(expectedState);
+        expect(documentsReducer(initialDocumentsState, actions.sendDocuments({front_side: payloadFormData, selfie: payloadFormData}))).toEqual(expectedState);
     });
 
     it('should handle SEND_DOCUMENTS_DATA', () => {
         const expectedState = {
             ...initialDocumentsState,
-            success: confirmDocumentsResponse.message,
+            success: true,
         };
-        expect(documentsReducer(initialDocumentsState, actions.sendDocumentsData(confirmDocumentsResponse))).toEqual(expectedState);
+        expect(documentsReducer(initialDocumentsState, actions.sendDocumentsData())).toEqual(expectedState);
     });
 
     it('should handle SEND_DOCUMENTS_ERROR', () => {

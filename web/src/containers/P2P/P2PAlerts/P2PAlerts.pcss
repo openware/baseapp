@@ -1,0 +1,73 @@
+.pg-p2p-alert {
+  position: fixed;
+  right: calc(var(--gap) * 2);
+  top: calc(var(--gap) * 8);
+  z-index: 100000;
+
+  &__item {
+    margin-bottom: 24px;
+    background: var(--dropdown-background-color);
+    border-radius: 3px;
+
+    &__header {
+      border-bottom: 1px solid var(--divider-color);
+      padding: 10px 12px;
+      display: flex;
+      justify-content: space-between;
+
+      &-text {
+        font-weight: bold;
+        font-size: 10px;
+        line-height: 13px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--primary-text-color);
+      }
+
+      svg {
+        cursor: pointer;
+      }
+    }
+
+    &__body {
+      display: flex;
+      justify-content: flex-start;
+      padding: 17px 12px;
+
+      .icon {
+        margin-right: 12px;
+      }
+
+      .right-icon {
+        height: 12px;
+        margin-left: 6px;
+
+        path {
+          fill: var(--system-yellow); 
+        }
+      }
+
+      &-col {
+        display: flex;
+        flex-direction: column;
+
+        span {
+          font-size: 14px;
+          letter-spacing: 0.1px;
+          color: var(--primary-text-color);
+        }
+
+        .link {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          cursor: pointer;
+          font-weight: 600;
+          font-size: 14px;
+          letter-spacing: 0.04em;
+          color: var(--system-yellow); 
+        }
+      }
+    }
+  }
+}

@@ -41,51 +41,27 @@
   &__form-content {
     box-sizing: border-box;
     padding: var(--email-form-padding);
+  }
 
-    .custom-control {
-      &-input {
-        &:checked ~ .custom-control-label {
-          &::before {
-            background-color: var(--input-checkbox-background-color-active);
-            border-color: var(--input-border-color-active);
-            transition: 0.2s;
-          }
-        }
+  .custom-input {
+    input {
+      border: 2px solid var(--input-border-color);
+    }
 
-        &:focus ~ .custom-control-label {
-          &::before {
-            border-color: var(--input-border-color-active);
-            box-shadow: 0 0 0 0.2rem var(--input-checkbox-shadow-color-active);
-          }
-        }
-      }
+    label {
+      font-size: 10px;
+      font-weight: bold;
+      margin: 0;
+      position: static;
+      padding: 0;
+      text-transform: uppercase;
+    }
 
-      &-label {
-        display: flex;
-        flex-direction: row;
-        font-size: calc(var(--gap) * 2.35);
-        justify-content: space-around;
-        width: 83%;
+    .input-group-lg {
+      margin-top: 4px;
 
-        &::before {
-          background-color: var(--input-background-color);
-          border-color: var(--input-border-color);
-          height: 18px;
-          margin-right: calc(var(--gap) * 3);
-          top: 0;
-          transition: 0.2s;
-          width: 18px;
-        }
-
-        &::after {
-          height: 18px;
-          top: 0;
-          width: 18px;
-        }
-
-        &:hover {
-          cursor: pointer;
-        }
+      .form-control-lg {
+        height: 48px;
       }
     }
   }
@@ -119,6 +95,11 @@
 
   &__button-wrapper {
     background: transparent;
+    padding: 12px 0;
+
+    button {
+      min-height: 40px;
+    }
   }
 
   &__button-wrapper--empty {

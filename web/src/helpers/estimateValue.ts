@@ -1,6 +1,7 @@
 // eslint-disable
+import { platformCurrency } from 'src/api';
 import { Decimal } from '../components/Decimal';
-import { DEFAULT_CCY_PRECISION } from '../constants';
+import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION } from '../constants';
 import {
     Currency,
     Market,
@@ -38,7 +39,7 @@ const getWalletTotal = (wallet: Wallet): number => {
 
 export const estimateWithMarket = (targetCurrency: string, walletCurrency: string, walletTotal: number, currencies: Currency[], markets: Market[], marketTickers: MarketTicker): number => {
     const formattedTargetCurrency = targetCurrency.toLowerCase();
-    const formattedWalletCurrency = walletCurrency.toLowerCase();
+    const formattedWalletCurrency = walletCurrency?.toLowerCase();
     const market = findMarket(formattedTargetCurrency, formattedWalletCurrency, markets);
     const marketTicker = findMarketTicker((market && market.id) || '', marketTickers);
     const targetCurrencyPrecision = handleCCYPrecision(currencies, formattedTargetCurrency, DEFAULT_CCY_PRECISION);
@@ -65,7 +66,7 @@ export const estimateWithMarket = (targetCurrency: string, walletCurrency: strin
 const estimateWithoutMarket = (targetCurrency: string, walletCurrency: string, walletTotal: number, currencies: Currency[], markets: Market[], marketTickers: MarketTicker): number => {
     const secondaryCurrencies: string[] = [];
     const formattedTargetCurrency = targetCurrency.toLowerCase();
-    const formattedWalletCurrency = walletCurrency.toLowerCase();
+    const formattedWalletCurrency = walletCurrency?.toLowerCase();
 
     for (const market of markets) {
         if (market.base_unit === formattedTargetCurrency) {
@@ -105,7 +106,7 @@ export const estimateValue = (targetCurrency: string, currencies: Currency[], wa
 
     if (wallets && wallets.length) {
         for (const wallet of wallets) {
-            const formattedWalletCurrency = wallet.currency.toLowerCase();
+            const formattedWalletCurrency = wallet.currency?.toLowerCase();
 
             if (formattedWalletCurrency === formattedTargetCurrency) {
                 const walletTotal = (Number(wallet.balance) || 0) + (Number(wallet.locked) || 0);
@@ -130,6 +131,15 @@ export const estimateUnitValue = (targetCurrency: string, currentCurrency: strin
     const targetCurrencyPrecision = handleCCYPrecision(currencies, formattedTargetCurrency, DEFAULT_CCY_PRECISION);
 
     return Decimal.format(estimated, targetCurrencyPrecision);
+};
+
+export const estimatePlatformValue = (currency: string, currencies: Currency[], totalBalance: number) => {
+    const formattedPlatformCurrency = platformCurrency().toLowerCase();
+    const formattedTargetCurrency = currency.toLowerCase();
+    const estimated = +(currencies.find(c => c.id === formattedTargetCurrency)?.price || 0) * totalBalance;
+    const platformCurrencyPrecision = handleCCYPrecision(currencies, formattedPlatformCurrency, DEFAULT_FIAT_PRECISION);
+
+    return Decimal.format(estimated, platformCurrencyPrecision);
 };
 
 export const findPrecision = (unit: string, markets: Market[]) => {

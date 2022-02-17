@@ -27,3 +27,6 @@ export const selectUserFetching = (state: RootState): boolean =>
 
 export const selectUserDataChange = (state: RootState): boolean | undefined =>
     state.user.profile.userData.success;
+
+export const selectUserIsMember = (state: RootState): boolean =>
+    state.user.profile.userData.user.role !== 'admin' && state.user.profile.userData.user.role !== 'superadmin'

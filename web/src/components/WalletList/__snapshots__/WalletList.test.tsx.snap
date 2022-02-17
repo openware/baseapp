@@ -15,16 +15,18 @@ exports[`WalletList should render 1`] = `
     }
   >
     <Component
+      account_type=""
       active={true}
       balance="456"
+      currencies={Array []}
       currency="BTC"
-      explorerAddress="https://testnet.blockchain.info/address/#{address}"
-      explorerTransaction="https://testnet.blockchain.info/tx/#{txid}"
-      fee={0.123}
       fixed={8}
       key="0"
       locked="1"
+      markets={Array []}
       name="Bitcoin"
+      networks={Array []}
+      tickers={Object {}}
       type="fiat"
     />
   </li>
@@ -39,14 +41,18 @@ exports[`WalletList should render 1`] = `
     }
   >
     <Component
+      account_type=""
       active={false}
       balance="456"
+      currencies={Array []}
       currency="USD"
-      fee={0.123}
       fixed={8}
       key="1"
       locked="100"
+      markets={Array []}
       name="United states Dollar"
+      networks={Array []}
+      tickers={Object {}}
       type="coin"
     />
   </li>
@@ -61,14 +67,18 @@ exports[`WalletList should render 1`] = `
     }
   >
     <Component
+      account_type=""
       active={false}
       balance="2"
+      currencies={Array []}
       currency="BTC"
-      fee={0.3}
       fixed={8}
       key="2"
       locked="0.4"
+      markets={Array []}
       name="Bitcoin - 2"
+      networks={Array []}
+      tickers={Object {}}
       type="fiat"
     />
   </li>

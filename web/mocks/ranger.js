@@ -31,6 +31,18 @@ const balancesMock = (ws) => () => {
     sendEvent(ws, "balances", Helpers.getBalances());
 };
 
+const p2pOrdersMock = (ws, state) => () => {
+    sendEvent(ws, `p2p`, Helpers.getP2POrder(state));
+};
+
+const p2pOffersMock = (ws, state) => () => {
+    sendEvent(ws, `p2p`, Helpers.getP2POffer(state));
+};
+
+const p2pPublicOffersMock = (ws, state) => () => {
+    sendEvent(ws, `p2p.event`, Helpers.getP2POffer(state));
+};
+
 /*
     Example: ["btcusd.update",{"asks":[["1000.0","0.1"]],"bids":[]}]
 */
@@ -223,14 +235,24 @@ class RangerMock {
         this.subscribe(ws, Helpers.getStreamsFromUrl(request.url));
         ws.timers.push(setInterval(tickersMock(ws, this.markets), 3000));
         ws.timers.push(setInterval(balancesMock(ws), 3000));
+        ws.timers.push(setInterval(p2pOrdersMock(ws, 'approved'), 3000));
+        ws.timers.push(setInterval(p2pOrdersMock(ws, 'cancelled'), 30000));
+        ws.timers.push(setInterval(p2pOffersMock(ws, 'cancelled'), 30000));
+        ws.timers.push(setInterval(p2pOffersMock(ws, 'created'), 30000));
+        ws.timers.push(setInterval(p2pOffersMock(ws, 'updated'), 30000)); 
+        ws.timers.push(setInterval(p2pPublicOffersMock(ws, 'cancelled'), 30000));
+        ws.timers.push(setInterval(p2pPublicOffersMock(ws, 'created'), 30000));
+        ws.timers.push(setInterval(p2pPublicOffersMock(ws, 'updated'), 30000));    
+
         this.markets.forEach((name) => {
-            let { baseUnit, quoteUnit, marketId } = Helpers.getMarketInfos(name);
+            let { marketId } = Helpers.getMarketInfos(name);
             ws.timers.push(setInterval(orderBookIncrementMock(ws, marketId), 200));
             ws.timers.push(setInterval(orderBookUpdateMock(ws, marketId), 2000));
             ws.timers.push(setInterval(matchedTradesMock(ws, marketId), 10000));
             ws.timers.push(setInterval(klinesMock(ws, marketId), 2500));
         });
-        ws.timers.push(setTimeout(() => {sendEvent(ws, "deposit_address", { address: "a4E49HU6CTHyYMmsYt3F1ar1q5W89t3hfQ?dt=1", currencies:["xrp"], type:"create" })}, 15000));
+        ws.timers.push(setTimeout(() => {sendEvent(ws, "deposit_address", { address: "0x00eec1e95026faf0412d7a29b94d514d31446141", currencies:["ltc"], blockchain_key:"erc20", type:"create" })}, 3000));
+        ws.timers.push(setTimeout(() => {sendEvent(ws, "deposit_address", { address: "0x00eec1e95026faf0412d7a29b94d514d314461231", currencies:["ltc"], blockchain_key:"trc20", type:"create" })}, 4000));
     }
     closeConnection() {
         console.log('Ranger: connection closed');

@@ -9,31 +9,28 @@ describe('walletsList reducer', () => {
             balance: '0',
             currency: 'btc',
             name: 'Bitcoin',
-            explorerAddress: 'https://testnet.blockchain.info/address/#{address}',
-            explorerTransaction: 'https://testnet.blockchain.info/tx/#{txid}',
-            fee: 0,
             type: 'coin',
+            account_type: 'spot',
             fixed: 8,
+            networks: [],
         },
         {
             balance: '0',
             currency: 'bch',
             name: 'Bitcoin Cash',
-            explorerAddress: 'https://www.blocktrail.com/tBCC/address/#{address}',
-            explorerTransaction: 'https://www.blocktrail.com/tBCC/tx/#{txid}',
-            fee: 0,
             type: 'coin',
+            account_type: 'spot',
             fixed: 8,
+            networks: [],
         },
         {
             balance: '0',
             currency: 'eth',
             name: 'Ethereum',
-            explorerAddress: 'https://rinkeby.etherscan.io/address/#{address}',
-            explorerTransaction: 'https://rinkeby.etherscan.io/tx/#{txid}',
-            fee: 0,
             type: 'coin',
+            account_type: 'p2p',
             fixed: 8,
+            networks: [],
         },
     ];
 
@@ -51,6 +48,7 @@ describe('walletsList reducer', () => {
 
     const addressFetchPayload = {
         currency: 'btc',
+        blockchain_key: 'bitcoin',
     };
 
     it('should handle WALLETS_FETCH', () => {
@@ -61,6 +59,15 @@ describe('walletsList reducer', () => {
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
                 timestamp: Math.floor(Date.now() / 1000),
+            },
+            p2pWallets: {
+                list: [],
+                loading: false,
+            },
+            userWithdrawals: {
+                last_1_month: '',
+                last_24_hours: '',
+                loading: false,
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsFetch())).toEqual(expectedState);
@@ -73,6 +80,15 @@ describe('walletsList reducer', () => {
                 loading: false,
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
+            },
+            p2pWallets: {
+                list: [],
+                loading: false,
+            },
+            userWithdrawals: {
+                last_1_month: '',
+                last_24_hours: '',
+                loading: false,
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsData(wallets))).toEqual(expectedState);
@@ -87,6 +103,15 @@ describe('walletsList reducer', () => {
                 error: error,
                 mobileWalletChosen: '',
             },
+            p2pWallets: {
+                list: [],
+                loading: false,
+            },
+            userWithdrawals: {
+                last_1_month: '',
+                last_24_hours: '',
+                loading: false,
+            },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsError(error))).toEqual(expectedState);
     });
@@ -100,6 +125,15 @@ describe('walletsList reducer', () => {
                 mobileWalletChosen: '',
                 timestamp: Math.floor(Date.now() / 1000),
             },
+            p2pWallets: {
+                list: [],
+                loading: false,
+            },
+            userWithdrawals: {
+                last_1_month: '',
+                last_24_hours: '',
+                loading: false,
+            },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsAddressFetch(addressFetchPayload))).toEqual(expectedState);
     });
@@ -112,12 +146,22 @@ describe('walletsList reducer', () => {
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
             },
+            p2pWallets: {
+                list: [],
+                loading: false,
+            },
+            userWithdrawals: {
+                last_24_hours: '',
+                last_1_month: '',
+                loading: false,
+            }
         };
 
         const addressDataPayload: WalletAddress = {
             currencies: ['btc', 'tbtc'],
             address: 'address',
             state: 'active',
+            blockchain_key: "bitcoin",
         };
 
         const updatedWallets: Wallet[] = [
@@ -125,36 +169,33 @@ describe('walletsList reducer', () => {
                 balance: '0',
                 currency: 'btc',
                 name: 'Bitcoin',
-                explorerAddress: 'https://testnet.blockchain.info/address/#{address}',
-                explorerTransaction: 'https://testnet.blockchain.info/tx/#{txid}',
-                fee: 0,
                 type: 'coin',
+                account_type: 'spot',
                 fixed: 8,
-                deposit_address: {
+                deposit_addresses: [{
                     currencies: ['btc', 'tbtc'],
                     address: 'address',
-                    state: 'active',
-                },
+                    blockchain_key: 'bitcoin',
+                }],
+                networks: [],
             },
             {
                 balance: '0',
                 currency: 'bch',
                 name: 'Bitcoin Cash',
-                explorerAddress: 'https://www.blocktrail.com/tBCC/address/#{address}',
-                explorerTransaction: 'https://www.blocktrail.com/tBCC/tx/#{txid}',
-                fee: 0,
                 type: 'coin',
+                account_type: 'spot',
                 fixed: 8,
+                networks: [],
             },
             {
                 balance: '0',
                 currency: 'eth',
                 name: 'Ethereum',
-                explorerAddress: 'https://rinkeby.etherscan.io/address/#{address}',
-                explorerTransaction: 'https://rinkeby.etherscan.io/tx/#{txid}',
-                fee: 0,
+                account_type: 'p2p',
                 type: 'coin',
                 fixed: 8,
+                networks: [],
             },
         ];
 
@@ -164,6 +205,15 @@ describe('walletsList reducer', () => {
                 loading: false,
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
+            },
+            p2pWallets: {
+                list: [],
+                loading: false,
+            },
+            userWithdrawals: {
+                last_1_month: '',
+                last_24_hours: '',
+                loading: false,
             },
          };
         expect(walletsReducer(initialState, actions.walletsAddressData(addressDataPayload))).toEqual(expectedState);
@@ -178,6 +228,15 @@ describe('walletsList reducer', () => {
                 error: error,
                 mobileWalletChosen: '',
             },
+            p2pWallets: {
+                list: [],
+                loading: false,
+            },
+            userWithdrawals: {
+                last_1_month: '',
+                last_24_hours: '',
+                loading: false,
+            },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsAddressError(error))).toEqual(expectedState);
     });
@@ -189,6 +248,15 @@ describe('walletsList reducer', () => {
                 loading: true,
                 withdrawSuccess: false,
                 mobileWalletChosen: '',
+            },
+            p2pWallets: {
+                list: [],
+                loading: false,
+            },
+            userWithdrawals: {
+                last_1_month: '',
+                last_24_hours: '',
+                loading: false,
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsWithdrawCcyFetch(withdrawCcyFetchPayload))).toEqual(expectedState);
@@ -202,6 +270,15 @@ describe('walletsList reducer', () => {
                 withdrawSuccess: true,
                 mobileWalletChosen: '',
             },
+            p2pWallets: {
+                list: [],
+                loading: false,
+            },
+            userWithdrawals: {
+                last_1_month: '',
+                last_24_hours: '',
+                loading: false,
+            },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsWithdrawCcyData())).toEqual(expectedState);
     });
@@ -214,6 +291,15 @@ describe('walletsList reducer', () => {
                 withdrawSuccess: false,
                 error: error,
                 mobileWalletChosen: '',
+            },
+            p2pWallets: {
+                list: [],
+                loading: false,
+            },
+            userWithdrawals: {
+                last_1_month: '',
+                last_24_hours: '',
+                loading: false,
             },
          };
         expect(walletsReducer(initialWalletsState, actions.walletsWithdrawCcyError(error))).toEqual(expectedState);

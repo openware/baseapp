@@ -56,11 +56,11 @@ const Helpers = {
         const getLockedValue = (value, precision) => (Math.random() / 10 + +value).toFixed(precision);
 
         return {
-            "bch":  [getBalanceValue("10.12", 8), getLockedValue("0.001", 8)],
-            "btc": [getBalanceValue("0.21026373", 8), getLockedValue("0.0001", 8)],
-            "dash": [getBalanceValue("5", 6), getLockedValue("0.0005", 6)],
-            "eth": [getBalanceValue("5", 6), getLockedValue("0.0002", 6)],
-            "usd":  [getBalanceValue("1000", 2), getLockedValue("100", 2)]
+            "bch":  [getBalanceValue("10.12", 8), getLockedValue("0.001", 8), 'spot'],
+            "btc": [getBalanceValue("0.21026373", 8), getLockedValue("0.0001", 8), 'spot'],
+            "dash": [getBalanceValue("5", 6), getLockedValue("0.0005", 6), 'spot'],
+            "eth": [getBalanceValue("5", 6), getLockedValue("0.0002", 6), 'spot'],
+            "usd":  [getBalanceValue("1000", 2), getLockedValue("100", 2), 'p2p']
         }
     },
     getDepth: (sequence) => {
@@ -120,7 +120,169 @@ const Helpers = {
             "sequence": sequence,
         }
     },
-    getStreamsFromUrl: (url) => url.replace("/", "").split(/[&?]stream=/).filter(stream => stream.length > 0),
+    getP2POrder: (state) => {
+        const array = [82030, 1, 2, 3];
+        const states = ['done', 'wait', 'prepared', 'cancelled', 'dispute'];
+
+        return {
+            "event": `p2p_order.${state}`,
+            "payload": {
+                "id": array[Math.floor(Math.random() * array.length)],
+                "user_uid":"ID787E383938",
+                "base":"usdt",
+                "quote":"usd",
+                "side":"sell",
+                "price":"1",
+                "origin_amount":"6",
+                "available_amount":"6",
+                "min_order_amount":"10",
+                "max_order_amount":"100",
+                "time_limit":10,
+                "state": states[Math.floor(Math.random() * states.length)],
+                "payment_methods":null,
+                "offer": {
+                    "id": 8,
+                    "uid": "IDD9046D42A4",
+                    "base": "ngnt",
+                    "quote": "ngn",
+                    "side": "buy",
+                    "price": "123",
+                    "origin_amount": "12",
+                    "available_amount": "12",
+                    "min_order_amount": "1",
+                    "max_order_amount": "2",
+                    "time_limit": 900,
+                    "state": "wait",
+                    "description": "asd",
+                    "reply": "",
+                    "payment_methods": [
+                        {
+                            "id": 24,
+                            "user_uid": "IDD9046D42A4",
+                            "payment_method_id": 6,
+                            "data": {
+                                "card_number": "1312123123123123"
+                            },
+                            "created_at": "2021-04-16T14:12:46.547Z",
+                            "updated_at": "2021-04-16T14:12:46.547Z",
+                            "payment_method": {
+                                "id": 6,
+                                "type": "Bank Transfer",
+                                "name": "Mono transfer",
+                                "options": {
+                                    "card_number": {
+                                        "name": "Card Number",
+                                        "type": "short_answer",
+                                        "required": true,
+                                        "description": "Your card number"
+                                    }
+                                },
+                                "enabled": true,
+                                "created_at": "2021-04-16T10:49:57.13Z",
+                                "updated_at": "2021-04-16T10:49:57.13Z"
+                            }
+                        },
+                         {
+                            "id": 25,
+                            "user_uid": "IDD9046D42A4",
+                            "payment_method_id": 7,
+                            "data": {
+                                "card_number": "1312123123123123",
+                                "account_name": "Boss"
+                            },
+                            "created_at": "2021-04-16T14:12:46.547Z",
+                            "updated_at": "2021-04-16T14:12:46.547Z",
+                            "payment_method": {
+                                "id": 6,
+                                "type": "Bank Transfer",
+                                "name": "PrivatBank",
+                                "options": {
+                                    "card_number": {
+                                        "name": "Card Number",
+                                        "type": "short_answer",
+                                        "required": true,
+                                        "description": "Your card number"
+                                    }
+                                },
+                                "enabled": true,
+                                "created_at": "2021-04-16T10:49:57.13Z",
+                                "updated_at": "2021-04-16T10:49:57.13Z"
+                            }
+                        }
+                    ],
+                    "user": {
+                        "user_uid": "IDD9046D42A4",
+                        "user_user": "email",
+                        "user_nickname": "kek",
+                        "offers_count": 1
+                    },
+                    "created_at": "2021-04-16T14:42:10.167Z",
+                    "updated_at": "2021-04-16T14:42:10.167Z"
+                }
+            }
+        }
+    },
+    getP2POffer: (state) => {
+        const states = ['done', 'wait', 'cancelled'];
+        const ids = [1, 2, 8, 10];
+
+        return {
+            "event": `p2p_offer.${state}`,
+            "payload": {
+                "id": ids[Math.floor(Math.random() * ids.length)],
+                "uid": "IDD9046D42A4",
+                "base": "usdt",
+                "quote": "ngn",
+                "side": "buy",
+                "price": "27",
+                "origin_amount": "12",
+                "available_amount": "10",
+                "min_order_amount": "1",
+                "max_order_amount": "2",
+                "time_limit": 900,
+                "state": states[Math.floor(Math.random() * states.length)],
+                "description": "asd",
+                "reply": "",
+                "payment_methods": [
+                    {
+                        "id": 24,
+                        "user_uid": "IDD9046D42A4",
+                        "payment_method_id": 6,
+                        "data": {
+                            "card_number": "1312123123123123"
+                        },
+                        "created_at": "2021-04-16T14:12:46.547Z",
+                        "updated_at": "2021-04-16T14:12:46.547Z",
+                        "payment_method": {
+                            "id": 6,
+                            "type": "Bank Transfer",
+                            "name": "Mono transfer",
+                            "options": {
+                                "card_number": {
+                                    "name": "Card Number",
+                                    "type": "short_answer",
+                                    "required": true,
+                                    "description": "Your card number"
+                                }
+                            },
+                            "enabled": true,
+                            "created_at": "2021-04-16T10:49:57.13Z",
+                            "updated_at": "2021-04-16T10:49:57.13Z"
+                        }
+                    }
+                ],
+                "user": {
+                    "user_uid": "IDD9046D42A4",
+                    "user_user": "maker@openware.com",
+                    "user_nickname": "maker",
+                    "offers_count": 4
+                },
+                "created_at": "2021-04-16T14:42:10.167Z",
+                "updated_at": "2021-04-20T08:01:52.539Z"
+            }
+        }
+    },
+    getStreamsFromUrl: (url) => url.replace("/", "").split(/[&?]stream=/).filter(stream => stream.length > 0 && stream !== 'api/v2/ranger/public/' && stream !== 'api/v2/ranger/private' && stream !== 'api/v2/ranger/private/'),
     unique: (list) => list.filter((value, index, self) => self.indexOf(value) === index)
 }
 

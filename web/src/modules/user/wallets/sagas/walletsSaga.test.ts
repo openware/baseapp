@@ -32,34 +32,41 @@ describe('Module: Wallets', () => {
             currency: 'eth',
             balance: '0',
             locked: '0',
+            account_type: 'spot',
             deposit_address: {
                 currencies: ['eth', 'trst'],
                 address: '0x00eec1e95026faf0412d7a29b94d514d31446141',
                 state: 'active',
+                blockchain_key: 'erc20',
             },
         },
         {
             currency: 'fth',
             balance:'0',
+            account_type: 'p2p',
             locked:'0',
         },
         {
             currency: 'gmt',
             balance:'0',
+            account_type: 'spot',
             locked:'0',
         },
         {
             currency: 'ksys',
+            account_type: 'spot',
             balance:'0',
             locked:'0',
         },
         {
             currency: 'kyn',
             balance:'0',
+            account_type: 'spot',
             locked:'0',
         },
         {
             currency: 'usd',
+            account_type: 'spot',
             balance:'0',
             locked:'0',
         },
@@ -83,6 +90,7 @@ describe('Module: Wallets', () => {
             withdrawal_enabled: true,
             base_factor:1000000000000000000,
             precision:3,
+            networks: [],
         },
         {
             id:'ksys',
@@ -101,6 +109,7 @@ describe('Module: Wallets', () => {
             withdrawal_enabled: true,
             base_factor:100000000000000000,
             precision:8,
+            networks: [],
         },
         {
             id:'usd',
@@ -119,6 +128,7 @@ describe('Module: Wallets', () => {
             withdrawal_enabled: true,
             base_factor:1,
             precision:2,
+            networks: [],
         },
         {
             id:'eth',
@@ -137,6 +147,7 @@ describe('Module: Wallets', () => {
             withdrawal_enabled: true,
             base_factor:1000000000000000000,
             precision:8,
+            networks: [],
         },
         {
             id:'fth',
@@ -155,6 +166,7 @@ describe('Module: Wallets', () => {
             withdrawal_enabled: true,
             base_factor:1,
             precision:2,
+            networks: [],
         },
         {
             id:'trst',
@@ -174,6 +186,7 @@ describe('Module: Wallets', () => {
             base_factor:1000000,
             precision:8,
             icon_url:'https://i0.wp.com/www.coinstaker.com/wp-content/uploads/2017/04/WETRUST.png?zoom=2.625\u0026w=1080\u0026ssl=1',
+            networks: [],
         },
         {
             id:'kyn',
@@ -192,6 +205,7 @@ describe('Module: Wallets', () => {
             withdrawal_enabled: true,
             base_factor:1000000,
             precision:8,
+            networks: [],
         },
     ];
 
@@ -201,6 +215,7 @@ describe('Module: Wallets', () => {
         if (!walletInfo) {
             walletInfo = {
                 currency: currencyInfo.id,
+                account_type: '',
             };
         }
 
@@ -213,6 +228,7 @@ describe('Module: Wallets', () => {
             type: currencyInfo?.type,
             fixed: currencyInfo?.precision,
             iconUrl: currencyInfo.icon_url,
+            networks: [],
         });
     });
 
@@ -221,7 +237,7 @@ describe('Module: Wallets', () => {
         mockAxios.onGet('/public/currencies').reply(200, fakeCurrencies);
     };
 
-    const expectedActionsFetch = [walletsFetch(), walletsData(fakeWallets)];
+    const expectedActionsFetch = [walletsFetch()];
     const expectedActionsError = [
         walletsFetch(),
         sendError({
@@ -235,7 +251,7 @@ describe('Module: Wallets', () => {
 
     it('should fetch wallets in success flow', async () => {
         mockWallets();
-        const promise = new Promise(resolve => {
+        const promise = new Promise<void>(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -252,7 +268,7 @@ describe('Module: Wallets', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise<void>(resolve => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

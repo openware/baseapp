@@ -1,9 +1,14 @@
 import React, { useCallback } from 'react';
-import { Wallet } from '../../modules';
+import { Wallet, Currency, Ticker, Market } from '../../modules';
 import { WalletItem } from '../WalletItem';
 export interface WalletListProps {
     walletItems: Wallet[];
     activeIndex: number;
+    currencies: Currency[];
+    tickers:{
+        [key: string]: Ticker,
+    }
+    markets: Market[];
     /**
      * Callback function which is invoked whenever wallet item is clicked
      */
@@ -29,6 +34,9 @@ export const WalletList: React.FC<WalletListProps> = ({
     onActiveIndexChange,
     activeIndex,
     walletItems,
+    currencies,
+    markets,
+    tickers,
 }) => {
     const handleClick = useCallback(
         (i: number, p: Wallet) => {
@@ -47,6 +55,9 @@ export const WalletList: React.FC<WalletListProps> = ({
             {walletItems.map((p: Wallet, i: number) => (
                 <li key={i} style={style} onClick={() => handleClick(i, p)}>
                     <WalletItem
+                        currencies={currencies}
+                        tickers={tickers}
+                        markets={markets}
                         key={i}
                         {...{
                             ...p,

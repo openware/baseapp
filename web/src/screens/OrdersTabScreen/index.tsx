@@ -15,24 +15,17 @@ import {
     resetOrdersHistory,
     RootState,
     selectOrdersHistory,
-    selectUserLoggedIn,
 } from '../../modules';
-import {RangerConnectFetch, rangerConnectFetch} from '../../modules/public/ranger';
-import {RangerState} from '../../modules/public/ranger/reducer';
-import {selectRanger} from '../../modules/public/ranger/selectors';
 import { OrderCommon } from '../../modules/types';
 
 interface ReduxProps {
     list: OrderCommon[];
-    rangerState: RangerState;
-    userLoggedIn: boolean;
 }
 
 interface DispatchProps {
     marketsFetch: typeof marketsFetch;
     ordersCancelAll: typeof ordersCancelAllFetch;
     resetOrdersHistory: typeof resetOrdersHistory;
-    rangerConnect: typeof rangerConnectFetch;
 }
 
 type Props = ReduxProps & DispatchProps & IntlProps;
@@ -48,17 +41,8 @@ class Orders extends React.PureComponent<Props, State> {
     public tabMapping = ['open', 'all'];
 
     public componentDidMount() {
-        const {
-            rangerState: {connected},
-            userLoggedIn,
-        } = this.props;
-
         setDocumentTitle('Orders');
         this.props.marketsFetch();
-
-        if (!connected) {
-            this.props.rangerConnect({withAuth: userLoggedIn});
-        }
     }
 
     public componentWillUnmount() {
@@ -121,8 +105,6 @@ class Orders extends React.PureComponent<Props, State> {
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
     list: selectOrdersHistory(state),
-    rangerState: selectRanger(state),
-    userLoggedIn: selectUserLoggedIn(state),
 });
 
 const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
@@ -130,7 +112,6 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
         marketsFetch: () => dispatch(marketsFetch()),
         ordersCancelAll: () => dispatch(ordersCancelAllFetch()),
         resetOrdersHistory: () => dispatch(resetOrdersHistory()),
-        rangerConnect: (payload: RangerConnectFetch['payload']) => dispatch(rangerConnectFetch(payload)),
     });
 
 export const OrdersTabScreen = compose(

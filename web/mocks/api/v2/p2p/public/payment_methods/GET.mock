@@ -1,0 +1,38 @@
+HTTP/2 200
+Content-Type: application/json; charset=utf-8
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, DELETE, PUT, PATCH, OPTIONS, HEAD
+Access-Control-Max-Age: 3600
+Access-Control-Allow-Credentials: true
+
+[
+  {
+    "id": 1,
+    "type": "Bank Transfer",
+    "name": "Yellow Bank",
+    "logo": "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEYSURBVHgBzZOxS0JRFMZ/9xL0IsFXS1LDC2oqqKE2MWqplhyK2qSpqRpqsC0KnKIhcApapC3qD4iajMYG2zVdopZ6gqKTV+8TnPShzzf4m87hfnx851yOMOKr+zXEjQATb+QF6kIMx9e+Gs00/WFLH0w0psQnfDMa6vQQnQuzNR9u9elchvuPZ3o2WpicpVgpk3x/JDgS4G7vDGs8ROIl1VbvOppdLVH4/+XzO0vy7QnLDNFzIifV1AyxpU2nPo5ss5s692ZkGgGssYlmukqJoDHqzSidzZB4be5kJbfIdfSQ9dvTttquv18v3w3XREeRHWLLG05d+Pvh4OGqo1bfmsIHBu9EZGMum/7JS6nUiS7wiA4ilLqsA3JpQ8llTi7NAAAAAElFTkSuQmCC",
+    "options": {
+      "dropdown_name": {
+        "description": "description",
+        "name": "dropdown name",
+        "options": [
+            "Kasikon Bank",
+            "K-Bank",
+            "Monobank"
+        ],
+        "type": "dropdown",
+        "required": true
+      }
+    },
+    "created_at": "2021-09-23T14:30:55.13Z",
+    "enabled": true
+  },
+  {
+    "id": 2,
+    "type": "Bank Transfer",
+    "name": "Monobank",
+    "enabled": true,
+    "created_at": "2021-08-12T13:20:48.227Z",
+    "updated_at": "2021-09-23T14:30:58.616Z"
+  }
+]

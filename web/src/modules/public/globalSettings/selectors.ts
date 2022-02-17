@@ -1,20 +1,23 @@
 import { RootState } from '../../../modules';
-import { ColorThemeState } from './reducer';
+import { GlobalSettingsState } from './reducer';
 
-export const selectCurrentColorTheme = (state: RootState): ColorThemeState['color'] =>
-    state.public.colorTheme.color;
+export const selectCurrentColorTheme = (state: RootState): GlobalSettingsState['color'] =>
+    state.public.globalSettings.color;
 
-export const selectChartRebuildState = (state: RootState): ColorThemeState['chartRebuild'] =>
-    state.public.colorTheme.chartRebuild;
+export const selectChartRebuildState = (state: RootState): GlobalSettingsState['chartRebuild'] =>
+    state.public.globalSettings.chartRebuild;
 
-export const selectMarketSelectorState = (state: RootState): ColorThemeState['marketSelectorActive'] =>
-    state.public.colorTheme.marketSelectorActive;
+export const selectMarketSelectorState = (state: RootState): GlobalSettingsState['marketSelectorActive'] =>
+    state.public.globalSettings.marketSelectorActive;
 
-export const selectMobileDeviceState = (state: RootState): ColorThemeState['isMobileDevice'] =>
-    state.public.colorTheme.isMobileDevice;
+export const selectMobileDeviceState = (state: RootState): GlobalSettingsState['isMobileDevice'] =>
+    state.public.globalSettings.isMobileDevice;
 
-export const selectSidebarState = (state: RootState): ColorThemeState['sideBarActive'] =>
-    state.public.colorTheme.sideBarActive;
+export const selectSidebarState = (state: RootState): GlobalSettingsState['sideBarActive'] =>
+    state.public.globalSettings.sideBarActive;
 
-export const selectApplyWindowEnvsTriggerState = (state: RootState): ColorThemeState['applyWindowEnvsTrigger'] =>
-    state.public.colorTheme.applyWindowEnvsTrigger;
+export const selectApplyWindowEnvsTriggerState = (state: RootState): GlobalSettingsState['applyWindowEnvsTrigger'] =>
+    state.public.globalSettings.applyWindowEnvsTrigger;
+
+export const selectOrdersHideOtherPairsState = (state: RootState): GlobalSettingsState['ordersHideOtherPairs'] =>
+    state.public.globalSettings.ordersHideOtherPairs;

@@ -6,7 +6,6 @@ import { Decimal, TickerTable } from '../../components';
 import {
     useMarketsFetch,
     useMarketsTickersFetch,
-    useRangerConnectFetch,
 } from '../../hooks';
 import {
     Market,
@@ -29,7 +28,6 @@ const defaultTicker = {
 const MarketsTableComponent = props => {
     useMarketsFetch();
     useMarketsTickersFetch();
-    useRangerConnectFetch();
     const history = useHistory();
     const dispatch = useDispatch();
     const markets = useSelector(selectMarkets);

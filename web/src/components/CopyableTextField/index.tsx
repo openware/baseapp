@@ -1,10 +1,9 @@
 import '@openware/cryptofont';
 import classnames from 'classnames';
 import * as React from 'react';
-import { Button, InputGroup } from 'react-bootstrap';
-import { CustomInput } from '../';
 import { copy } from '../../helpers';
-
+import { InputWithButton } from "src/components/InputWithButton";
+import { CopyIcon } from 'src/assets/images/CopyIcon';
 
 export interface CopyableTextFieldProps {
     /**
@@ -56,31 +55,20 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
         const cx = classnames('cr-copyable-text-field', className);
 
         return (
-            <div className={cx}>
-                <InputGroup>
-                    <CustomInput
-                        id={String(fieldId)}
-                        readOnly={true}
-                        inputValue={value}
-                        handleClick={doCopy}
-                        type="text"
-                        isDisabled={disabled}
-                        label={label || ''}
-                        defaultLabel={label || ''}
-                        placeholder={label || ''}
-                    />
-                    <InputGroup.Append>
-                        <Button
-                            onClick={doCopy}
-                            disabled={disabled}
-                            size="lg"
-                            variant="primary"
-                        >
-                            {copyButtonText ? copyButtonText : 'Copy'}
-                        </Button>
-                    </InputGroup.Append>
-                </InputGroup>
-            </div>
+            <InputWithButton
+                value={value}
+                className={cx}
+                fieldId={fieldId}
+                readOnly
+                handleClickInput={doCopy}
+                handleClickButton={doCopy}
+                type="text"
+                disabled={disabled}
+                label={label}
+                buttonText={copyButtonText || 'Copy'}
+                buttonClassName="cr-copyable-text-field__button"
+                icon={<CopyIcon />}
+            />
         );
     }
 }
