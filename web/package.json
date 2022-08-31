@@ -35,7 +35,7 @@
         "immutability-helper": "^3.0.0",
         "js-yaml": "^3.12.0",
         "moment": "^2.23.0",
-        "moment-timezone": "^0.5.23",
+        "moment-timezone": "^0.5.35",
         "multicoin-address-validator": "^0.5.2",
         "node-sass": "6.0.1",
         "postcss-cli": "^6.1.3",
