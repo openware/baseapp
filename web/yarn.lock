@@ -1281,9 +1281,9 @@
     react-docgen-typescript "^1.20.5"
     react-virtualized "9.22.2"
 
-"@openware/react-opendax@^0.1.37":
+"@openware/react-opendax@0.1.37":
   version "0.1.37"
-  resolved "https://registry.npmjs.org/@openware/react-opendax/-/react-opendax-0.1.37.tgz#b5f9cc5416c4adb9d1a31a50da74371633d8e186"
+  resolved "https://registry.yarnpkg.com/@openware/react-opendax/-/react-opendax-0.1.37.tgz#b5f9cc5416c4adb9d1a31a50da74371633d8e186"
   integrity sha512-kzFBY8ZU9mn4t/zEW3sk48PVFF+VRtL4v2xbBQ6h9EDyhkjaEDOHv006SHX7xPpBFjp+PNaLtZ7YJc7RlgcnEw==
   dependencies:
     "@headlessui/react" "^1.2.0"
@@ -13107,9 +13107,9 @@ shebang-regex@^3.0.0:
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
 shell-quote@^1.6.1:
-  version "1.7.2"
-  resolved "https://registry.npmjs.org/shell-quote/-/shell-quote-1.7.2.tgz#67a7d02c76c9da24f99d20808fcaded0e0e04be2"
-  integrity sha512-mRz/m/JVscCrkMyPqHc/bczi3OQHkLTqXHEFu0zDhK/qfv3UcOA4SVmRCLmos4bhjr9ekVQubj/R7waKapmiQg==
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/shell-quote/-/shell-quote-1.8.0.tgz#20d078d0eaf71d54f43bd2ba14a1b5b9bfa5c8ba"
+  integrity sha512-QHsz8GgQIGKlRi24yFc6a6lN69Idnx634w49ay6+jA5yFh7a1UY+4Rp6HPx/L/1zcEDPEij8cIsiqR6bQsE5VQ==
 
 shellwords@^0.1.1:
   version "0.1.1"
