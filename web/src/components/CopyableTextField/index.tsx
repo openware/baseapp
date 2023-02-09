@@ -30,12 +30,14 @@ export interface CopyableTextFieldProps {
      */
     disabled?: boolean;
     label?: string;
+    isMobile?: boolean;
 }
 
 /**
  * Text field component with ability to copy inner text.
  */
 class CopyableTextField extends React.Component<CopyableTextFieldProps> {
+
     public componentDidMount() {
         if (!this.props.fieldId) {
             throw new Error('CopyableTextField must contain `fieldId` prop');
@@ -50,6 +52,7 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
             fieldId,
             copyButtonText,
             label,
+            isMobile,
         } = this.props;
         const doCopy = () => copy(fieldId);
         const cx = classnames('cr-copyable-text-field', className);
@@ -65,9 +68,9 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
                 type="text"
                 disabled={disabled}
                 label={label}
-                buttonText={copyButtonText || 'Copy'}
+                buttonText={isMobile ? "" : (copyButtonText || "Copy")}
                 buttonClassName="cr-copyable-text-field__button"
-                icon={<CopyIcon />}
+                icon={< CopyIcon />}
             />
         );
     }

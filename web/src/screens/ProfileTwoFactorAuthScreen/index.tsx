@@ -185,6 +185,7 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                       value={secret}
                       fieldId="secret-2fa"
                       label=""
+                      isMobile={this.props.isMobileDevice}
                     />
                     }
                 </fieldset>
