@@ -25,6 +25,7 @@ exports[`Order should match snapshot 1`] = `
               from="btc"
               handleAmountChange={[Function]}
               handleChangeAmountByButton={[Function]}
+              marketId="BTCUSD"
               onSubmit={[Function]}
               orderTypes={
                 Array [
@@ -100,6 +101,7 @@ exports[`Order should match snapshot 1`] = `
               from="btc"
               handleAmountChange={[Function]}
               handleChangeAmountByButton={[Function]}
+              marketId="BTCUSD"
               onSubmit={[Function]}
               orderTypes={
                 Array [
