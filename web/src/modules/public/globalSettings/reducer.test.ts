@@ -1,27 +1,33 @@
-import * as actions from './actions';
-import { changeColorThemeReducer, initialChangeColorThemeState } from './reducer';
+import * as actions from "./actions";
+import { changeGlobalSettingsReducer, initialChangeGlobalSettingsState } from "./reducer";
 
-describe('Change color theme reducer', () => {
-    it('should handle CHANGE_COLOR_THEME', () => {
+describe("Change color theme reducer", () => {
+    it("should handle CHANGE_COLOR_THEME", () => {
         let expectedState = {
-            color: 'light',
+            color: "light",
             chartRebuild: false,
             sideBarActive: false,
             marketSelectorActive: false,
             isMobileDevice: false,
             applyWindowEnvsTrigger: false,
+            ordersHideOtherPairs: true,
         };
-        expect(changeColorThemeReducer(initialChangeColorThemeState, actions.changeColorTheme('light'))).toEqual(expectedState);
-        expect(localStorage.getItem('colorTheme')).toEqual('light');
+        expect(
+            changeGlobalSettingsReducer(initialChangeGlobalSettingsState, actions.changeColorTheme("light"))
+        ).toEqual(expectedState);
+        expect(localStorage.getItem("colorTheme")).toEqual("light");
         expectedState = {
-            color: 'dark',
+            color: "dark",
             chartRebuild: false,
             sideBarActive: false,
             marketSelectorActive: false,
             isMobileDevice: false,
             applyWindowEnvsTrigger: false,
+            ordersHideOtherPairs: true,
         };
-        expect(changeColorThemeReducer(initialChangeColorThemeState, actions.changeColorTheme('dark'))).toEqual(expectedState);
-        expect(localStorage.getItem('colorTheme')).toEqual('dark');
+        expect(changeGlobalSettingsReducer(initialChangeGlobalSettingsState, actions.changeColorTheme("dark"))).toEqual(
+            expectedState
+        );
+        expect(localStorage.getItem("colorTheme")).toEqual("dark");
     });
 });
