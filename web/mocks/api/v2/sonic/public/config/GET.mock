@@ -12,7 +12,7 @@ Access-Control-Allow-Credentials: true
     "rangerReconnectPeriod": "1",
     "msAlertDisplayTime": "5000",
     "incrementalOrderBook": true,
-    "finex": true,
+    "finex": false,
     "isResizable": false,
     "isDraggable": false,
     "languages": [
