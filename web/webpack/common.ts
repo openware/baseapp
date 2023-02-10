@@ -30,7 +30,7 @@ const config: webpack.Configuration = {
             chunks: ['common', 'bundle', 'styles'],
         }),
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-        new LodashModuleReplacementPlugin({ shorthands: true, flattening: true }),
+        new LodashModuleReplacementPlugin({ shorthands: true, flattening: true, paths: true }),
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash].css',
             chunkFilename: '[id].[contenthash].css',
