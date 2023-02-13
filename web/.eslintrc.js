@@ -14,8 +14,8 @@ module.exports = {
         ecmaFeatures: {
             jsx: true,
         },
-        project: './tsconfig.json',
-        tsconfigRootDir: './',
+        project: 'tsconfig.json',
+        tsconfigRootDir: __dirname,
     },
     plugins: ['@typescript-eslint', 'import'],
     rules: {
@@ -58,7 +58,7 @@ module.exports = {
             // enable the rule specifically for TypeScript files
             files: ['*.ts', '*.tsx'],
             rules: {
-                indent: [2, 4]
+                indent: [2, 4],
                 //   "@typescript-eslint/explicit-function-return-type": ["error", { "allowExpressions": true, "allowTypedFunctionExpressions": true, "allowHigherOrderFunctions": true }],
             },
         },
@@ -71,6 +71,7 @@ module.exports = {
             typescript: {},
             node: {
                 extensions: ['.js', '.jsx', '.ts', '.tsx'],
+                moduleDirectory: ['.', 'node_modules'],
             },
         },
     },

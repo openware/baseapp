@@ -9,7 +9,7 @@
         "moduleResolution": "node",
         "sourceMap": true,
         "allowJs": true,
-        "baseUrl": "./",
+        "baseUrl": ".",
         "strict": false,
         "paths": {
             "lib/*": ["src/lib/*"],
@@ -21,6 +21,7 @@
         "noImplicitAny": false,
         "typeRoots": ["./node_modules/@types"]
     },
+    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".d.ts"],
     "exclude": [
         "node_modules",
         "public",
@@ -29,7 +30,6 @@
         "scripts",
         "spec",
         "jest.config.js",
-        "webpack",
         "./src/*.test.*",
         "./src/charting_library"
     ]

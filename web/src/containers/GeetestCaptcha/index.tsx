@@ -12,7 +12,7 @@ import {
     selectCurrentLanguage,
 } from '../../modules';
 
-import initGeetest = require("../../helpers/geetest.js")
+import initGeetest from "../../helpers/geetest.js"
 
 interface OwnProps {
     shouldCaptchaReset?: boolean;
