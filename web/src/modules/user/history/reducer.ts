@@ -12,14 +12,20 @@ import {
 import { WalletHistoryList } from './types';
 
 export interface HistoryState {
-    list: WalletHistoryList;
+    deposits: WalletHistoryList;
+    withdraws: WalletHistoryList;
+    trades: WalletHistoryList;
+    transfers: WalletHistoryList;
     fetching: boolean;
     page: number;
     nextPageExists: boolean;
 }
 
 const initialState: HistoryState = {
-    list: [],
+    deposits: [],
+    withdraws: [],
+    trades: [],
+    transfers: [],
     fetching: false,
     page: 0,
     nextPageExists: false,
@@ -31,12 +37,18 @@ export const historyReducer = (state = initialState, action: HistoryActions) => 
         case HISTORY_FETCH:
             return { ...state, fetching: true };
         case HISTORY_DATA:
+            const { type } = action.payload;
+            const list = sliceArray(action.payload.list, defaultStorageLimit());
+
             return {
-                ...state,
-                list: sliceArray(action.payload.list, defaultStorageLimit()),
+                ...initialState,
                 fetching: false,
                 page: action.payload.page,
                 nextPageExists: action.payload.nextPageExists,
+                ...(type === 'deposits' && { deposits: list }),
+                ...(type === 'withdraws' && { withdraws: list }),
+                ...(type === 'trades' && { trades: list }),
+                ...(type === 'transfers' && { transfers: list }),
             };
         case HISTORY_ERROR: {
             return {
@@ -54,7 +66,7 @@ export const historyReducer = (state = initialState, action: HistoryActions) => 
             let list = [...action.payload];
             list = getUnique(list, 'id');
 
-            return { ...state, list: sliceArray(list, defaultStorageLimit()) };
+            return { ...state, trades: sliceArray(list, defaultStorageLimit()) };
         }
         default:
             return state;

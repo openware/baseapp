@@ -42,7 +42,7 @@ export function* historySaga(action: HistoryFetch) {
             updatedData = sliceArray(data, defaultStorageLimit());
         }
 
-        yield put(successHistory({ list: updatedData, page, nextPageExists }));
+        yield put(successHistory({ list: updatedData, page, nextPageExists, type }));
     } catch (error) {
         yield put(sendError({
             error,
