@@ -109,7 +109,7 @@ const TradingWrapper = props => {
             },
         ];
 
-        return data.map((child: GridChildInterface) => (
+        return data.map((child) => (
             <div key={child.i}>
                 <GridItem>{child.render ? child.render() : `Child Body ${child.i}`}</GridItem>
             </div>
@@ -156,7 +156,7 @@ class Trading extends React.Component<Props, StateProps> {
         this.props.setCurrentPrice(undefined);
     }
 
-    public componentWillReceiveProps(nextProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps) {
         const {
             history,
             markets,

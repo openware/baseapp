@@ -12,7 +12,7 @@ import {
     selectCurrentLanguage,
 } from '../../modules';
 
-import initGeetest = require("../../helpers/geetest.js")
+import initGeetest from "../../helpers/geetest.js"
 
 interface OwnProps {
     shouldCaptchaReset?: boolean;
@@ -44,7 +44,7 @@ class GeetestCaptchaComponent extends React.Component<Props> {
         this.props.geetestCaptchaFetch();
     }
 
-    public componentWillReceiveProps(next: Props) {
+    public UNSAFE_componentWillReceiveProps(next: Props) {
         if (this.props.geetestCaptchaKeys !== next.geetestCaptchaKeys && next.geetestCaptchaKeys !== undefined) {
             const {
                 geetestCaptchaKeys,

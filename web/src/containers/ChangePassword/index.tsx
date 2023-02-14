@@ -35,7 +35,7 @@ class ChangePasswordComponent extends React.Component<Props, ChangePasswordState
         };
     }
 
-    public componentWillReceiveProps(next: ChangePasswordProps) {
+    public UNSAFE_componentWillReceiveProps(next: ChangePasswordProps) {
         if (!this.props.success && next.success) {
             this.handleCancel();
         }

@@ -74,7 +74,7 @@ class WithdrawComponent extends React.Component<Props, WithdrawState> {
         total: '',
     };
 
-    public componentWillReceiveProps(nextProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps) {
         const { currency, withdrawDone } = this.props;
 
         if ((nextProps && (nextProps.currency !== currency)) || (nextProps.withdrawDone && !withdrawDone)) {

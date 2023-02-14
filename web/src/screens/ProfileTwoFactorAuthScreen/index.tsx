@@ -54,7 +54,7 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
         }
     }
 
-    public componentWillReceiveProps(next: Props) {
+    public UNSAFE_componentWillReceiveProps(next: Props) {
         if (!this.props.success && next.success) {
             this.handleNavigateToProfile();
         }

@@ -67,7 +67,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
 
     private datafeed = dataFeedObject(this, this.props.markets);
 
-    public componentWillReceiveProps(next: Props) {
+    public UNSAFE_componentWillReceiveProps(next: Props) {
         if (next.currentMarket && next.colorTheme && next.colorTheme !== this.props.colorTheme) {
             this.setChart(next.markets, next.currentMarket, next.colorTheme);
         }

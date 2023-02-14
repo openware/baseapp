@@ -75,7 +75,7 @@ export class CombinedOrderBook extends React.PureComponent<CombinedOrderBookProp
         }
     }
 
-    public componentWillReceiveProps(next: CombinedOrderBookProps) {
+    public UNSAFE_componentWillReceiveProps(next: CombinedOrderBookProps) {
         const scroll = document.getElementsByClassName('cr-order-book')[0];
 
         if (next.isLarge !== this.props.isLarge && !next.isLarge && scroll) {

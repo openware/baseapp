@@ -46,7 +46,7 @@ class Landing extends React.Component<Props> {
         }
     }
 
-    public componentWillReceiveProps(next: Props) {
+    public UNSAFE_componentWillReceiveProps(next: Props) {
         if (next.colorTheme === 'light') {
             toggleColorTheme('dark');
         }
