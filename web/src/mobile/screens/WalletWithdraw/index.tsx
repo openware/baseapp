@@ -6,15 +6,14 @@ import { useWalletsFetch } from '../../../hooks';
 import { selectWallets } from '../../../modules/user/wallets';
 import { Subheader, WalletBanner, WalletHeader, WalletWithdrawBody } from '../../components';
 
-
 const defaultWallet = { name: '', currency: '', balance: '', type: '', address: '', fee: '' };
 
 const WalletWithdraw: React.FC = () => {
-    const { currency = '' } = useParams();
+    const { currency = '' } = useParams<{ currency: string }>();
     const intl = useIntl();
     const history = useHistory();
     const wallets = useSelector(selectWallets) || [];
-    const wallet = wallets.find(item => item.currency === currency) || defaultWallet;
+    const wallet = wallets.find((item) => item.currency === currency) || defaultWallet;
 
     useWalletsFetch();
 
@@ -25,13 +24,11 @@ const WalletWithdraw: React.FC = () => {
                 backTitle={intl.formatMessage({ id: 'page.body.wallets.balance' })}
                 onGoBack={() => history.push(`/wallets/${currency}/history`)}
             />
-            <WalletHeader currency={wallet.currency} name={wallet.name}/>
+            <WalletHeader currency={wallet.currency} name={wallet.name} />
             <WalletBanner wallet={wallet} />
-            <WalletWithdrawBody wallet={wallet}/>
+            <WalletWithdrawBody wallet={wallet} />
         </div>
     );
 };
 
-export {
-    WalletWithdraw,
-};
+export { WalletWithdraw };

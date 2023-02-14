@@ -22,7 +22,7 @@ class Restricted extends React.Component<Props> {
         }
     }
 
-    public componentWillReceiveProps(nextProps: Props) {
+    public UNSAFE_componentWillReceiveProps(nextProps: Props) {
         if (!this.props.status.length && nextProps.status.length && nextProps.status !== 'restricted') {
             this.props.history.replace('/');
         }

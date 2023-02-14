@@ -23,6 +23,7 @@
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".d.ts"],
     "exclude": [
+        "build",
         "node_modules",
         "public",
         "mocks",
@@ -30,7 +31,7 @@
         "scripts",
         "spec",
         "jest.config.js",
-        "./src/*.test.*",
+        "./src/**/*.test.*",
         "./src/charting_library"
     ]
 }

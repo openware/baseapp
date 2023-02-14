@@ -1,46 +1,38 @@
-import webpack from 'webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import path from 'path';
 import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
+import path from 'path';
+// eslint-disable-next-line import/order
+import { Configuration, EnvironmentPlugin, IgnorePlugin, ProvidePlugin } from 'webpack';
 
-import { AppConfig } from './config';
 import alias from './alias.js';
+import { AppConfig } from './config';
 
 const rootDir = path.resolve(__dirname, '..');
 const BUILD_DIR = path.resolve(rootDir, 'public');
 
-const config: webpack.Configuration = {
+const config: Configuration = {
     entry: {
         bundle: [path.resolve(rootDir, 'src/index.tsx')],
     },
     output: {
         path: BUILD_DIR,
-        filename: '[name].js',
-        globalObject: 'this',
+        filename: '[path][name].js',
         publicPath: '/',
     },
     plugins: [
-        new webpack.EnvironmentPlugin({
+        new EnvironmentPlugin({
             envType: 'dev',
         }),
-        new HtmlWebpackPlugin({
-            template: path.resolve(rootDir, 'src/app/template.html'),
-            hash: true,
-            chunks: ['common', 'bundle', 'styles'],
+        new IgnorePlugin({
+            resourceRegExp: /^\.\/locale$/,
+            contextRegExp: /moment$/,
         }),
-        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
         new LodashModuleReplacementPlugin({ shorthands: true, flattening: true, paths: true }),
-        new MiniCssExtractPlugin({
-            filename: '[name].[contenthash].css',
-            chunkFilename: '[id].[contenthash].css',
+        new ProvidePlugin({
+            Buffer: ['buffer', 'Buffer'],
         }),
     ],
     optimization: {
         usedExports: false,
-        moduleIds: 'hashed',
-        namedModules: true,
-        namedChunks: true,
         splitChunks: {
             cacheGroups: {
                 styles: {

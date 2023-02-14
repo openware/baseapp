@@ -65,7 +65,7 @@ export const defaultResponse: Partial<AxiosError['response']> = {
     },
 };
 
-export const formatError = (responseError: AxiosError) => {
+export const formatError = (responseError) => {
     const response = responseError.response || defaultResponse;
     const errors = (response.data && (response.data.errors || [response.data.error])) || [];
 

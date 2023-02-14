@@ -47,7 +47,7 @@ module.exports = {
         '@typescript-eslint/no-useless-constructor': 'error',
         'import/no-default-export': 'error',
         'import/named': 'off',
-        'import/order': ['error', { groups: ['external', 'builtin'], 'newlines-between': 'always-and-inside-groups' }],
+        'import/order': ['error', { groups: ['external', 'builtin'] }],
         'import/first': 'error',
         'no-console': ['error', { allow: ['warn', 'error'] }],
         'react/prop-types': 'off',

@@ -1,70 +1,72 @@
-import { ExtendedAPIPlugin, DefinePlugin } from "webpack";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import merge from "webpack-merge";
-import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin";
-import path from "path";
-import CopyWebpackPlugin from "copy-webpack-plugin";
-const WebpackObfuscator = require("webpack-obfuscator");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+// eslint-disable-next-line import/order
+import path from 'path';
+import { DefinePlugin } from 'webpack';
+// eslint-disable-next-line import/no-named-as-default
+import merge from 'webpack-merge';
+import WebpackObfuscator from 'webpack-obfuscator';
+import commonConfig from './common';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-const rootDir = path.resolve(__dirname, "..");
-const BUILD_DIR = path.resolve(rootDir, "build");
+const rootDir = path.resolve(__dirname, '..');
+const BUILD_DIR = path.resolve(rootDir, 'build');
 
-import commonConfig from "./common";
-
-const domain = process.env.BUILD_DOMAIN ? process.env.BUILD_DOMAIN.split(",") : [];
+const domain = process.env.BUILD_DOMAIN ? process.env.BUILD_DOMAIN.split(',') : [];
 
 const plugins = [
-    new ExtendedAPIPlugin(),
-    new DefinePlugin({ "process.env.BUILD_EXPIRE": JSON.stringify(process.env.BUILD_EXPIRE) }),
-    new OptimizeCssAssetsPlugin({
-        assetNameRegExp: /\.css$/g,
-        cssProcessor: require("cssnano"),
-        cssProcessorPluginOptions: {
-            preset: ["default", { discardComments: { removeAll: true } }],
-        },
-        canPrint: false,
+    new DefinePlugin({ 'process.env.BUILD_EXPIRE': JSON.stringify(process.env.BUILD_EXPIRE) }),
+    new HtmlWebpackPlugin({
+        template: path.resolve(rootDir, 'src/app/template.html'),
+        hash: true,
+        chunks: ['common', 'bundle', 'styles'],
+    }),
+    new MiniCssExtractPlugin({
+        filename: '[name].[contenthash].css',
+        chunkFilename: '[id].[contenthash].css',
     }),
     new CopyWebpackPlugin({
-        patterns: [{ from: "public" }],
+        patterns: [{ from: 'public' }],
     }),
     new WebpackObfuscator({ rotateStringArray: true, domainLock: domain }),
 ];
 
-if (process.env.ANALYZE === "1") {
+if (process.env.ANALYZE === '1') {
     plugins.push(new BundleAnalyzerPlugin());
 }
 
 const config = merge(commonConfig, {
-    mode: "production",
+    mode: 'production',
     output: {
         path: BUILD_DIR,
-        filename: "[name].[hash].js",
-        globalObject: "this",
-        publicPath: "/",
+        filename: '[name].[contenthash].js',
+        publicPath: '/',
     },
     optimization: {
         usedExports: false,
-        minimize: true,
+        minimizer: [new CssMinimizerPlugin()],
     },
     plugins,
     module: {
         rules: [
             {
                 test: /\.(css|sass|scss|pcss)$/,
-                use: ["style-loader", MiniCssExtractPlugin.loader, "css-loader", "sass-loader", "postcss-loader"],
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader', 'postcss-loader'],
             },
             {
                 test: /\.(tsx|ts)?$/,
                 use: [
                     {
-                        loader: "thread-loader",
+                        loader: 'thread-loader',
                         options: {
                             poolTimeout: 2000,
                         },
                     },
                     {
-                        loader: "ts-loader",
+                        loader: 'ts-loader',
                         options: {
                             transpileOnly: true,
                             happyPackMode: true,
@@ -77,9 +79,9 @@ const config = merge(commonConfig, {
                 test: /\.(woff|woff2|eot|ttf|otf)$/i,
                 use: [
                     {
-                        loader: "file-loader",
+                        loader: 'file-loader',
                         options: {
-                            outputPath: "fonts",
+                            outputPath: 'fonts',
                         },
                     },
                 ],
@@ -87,7 +89,7 @@ const config = merge(commonConfig, {
             {
                 test: /\.(js)?$/,
                 exclude: /node_modules/,
-                enforce: "post",
+                enforce: 'post',
                 use: {
                     loader: WebpackObfuscator.loader,
                     options: {

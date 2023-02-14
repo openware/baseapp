@@ -109,7 +109,7 @@ export const DepositCryptoContainer = React.memo(({selectedWalletIndex}: Deposit
             };
         });
 
-        return tabs.filter(tab => Object.keys(tab).length);
+        return tabs?.filter(tab => Object.keys(tab).length);
     }, [currencyItem, tab, wallet])
 
     const renderWarningNoNetworks = useMemo(() => (

@@ -2,9 +2,9 @@ import React from "react";
 import { IntlProvider } from "react-intl";
 import { Provider } from "react-redux";
 /* eslint-disable-next-line */
-import { Router } from 'react-router';
-import { createStore } from "redux";
 import { createBrowserHistory } from "history";
+import { Router } from "react-router";
+import { createStore } from "redux";
 
 import { rootReducer } from "src/modules";
 import { languageMap } from "src/translations";
@@ -14,7 +14,7 @@ const store = createStore(rootReducer);
 
 const locale = "en";
 
-export const TestComponentWrapper: React.FC = ({ children }) => {
+export const TestComponentWrapper: React.FC = ({ children }: { children: React.ReactNode }) => {
     return (
         <Router history={browserHistory}>
             <IntlProvider {...{ locale }} defaultLocale={locale} messages={languageMap[locale]}>

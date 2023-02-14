@@ -38,12 +38,6 @@ interface DispatchProps {
     fetchAlert: typeof alertPush;
 }
 
-interface OnChangeEvent {
-    target: {
-        value: string;
-    };
-}
-
 interface DocumentsState {
     documentsType: string;
     issuedDate: string;
@@ -163,7 +157,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                         <fieldset className={issuedDateFocusedClass}>
                             <div className="custom-input">
                                 {issuedDate && <label>{this.translate('page.body.kyc.documents.issuedDate')}</label>}
-                                <div className="input-group input-group-lg">
+                                <div className="input-group input-group-lg group-input">
                                     <MaskInput
                                         maskString="00/00/0000"
                                         mask="00/00/0000"
@@ -171,8 +165,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                                         onFocus={this.handleFieldFocus('issuedDate')}
                                         onBlur={this.handleFieldFocus('issuedDate')}
                                         value={issuedDate}
-                                        className="group-input"
-                                        placeholder={this.translate('page.body.kyc.documents.issuedDate.placeholder')}
+                                        defaultValue={this.translate('page.body.kyc.documents.issuedDate.placeholder')}
                                     />
                                 </div>
                             </div>
@@ -180,7 +173,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                         <fieldset className={expireDateFocusedClass}>
                             <div className="custom-input">
                                 {expireDate && <label>{this.translate('page.body.kyc.documents.expiryDate')}</label>}
-                                <div className="input-group input-group-lg">
+                                <div className="input-group input-group-lg group-input">
                                     <MaskInput
                                         maskString="00/00/0000"
                                         mask="00/00/0000"
@@ -188,8 +181,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                                         onFocus={this.handleFieldFocus('expireDate')}
                                         onBlur={this.handleFieldFocus('expireDate')}
                                         value={expireDate}
-                                        className="group-input"
-                                        placeholder={this.translate('page.body.kyc.documents.expiryDate.placeholder')}
+                                        defaultValue={this.translate('page.body.kyc.documents.expiryDate.placeholder')}
                                     />
                                 </div>
                             </div>
@@ -308,13 +300,13 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         };
     };
 
-    private handleChangeIssuedDate = (e: OnChangeEvent) => {
+    private handleChangeIssuedDate = (e) => {
         this.setState({
             issuedDate: formatDate(e.target.value),
         });
     };
 
-    private handleChangeExpiration = (e: OnChangeEvent) => {
+    private handleChangeExpiration = (e) => {
         this.setState({
             expireDate: formatDate(e.target.value),
         });

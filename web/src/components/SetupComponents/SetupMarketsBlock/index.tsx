@@ -35,7 +35,7 @@ export class SetupMarketsBlock extends React.Component<SetupMarketBlockProps, Se
         this.props.fetchMarkets();
     }
 
-    public componentWillReceiveProps(nextProps: SetupMarketBlockProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: SetupMarketBlockProps) {
         if (!this.state.availableMarkets.length && !this.props.marketsList.length && nextProps.marketsList.length) {
             this.setState({
                 availableMarkets: this.getAllMarketsNames(nextProps.marketsList),

@@ -89,7 +89,7 @@ class ProfileSecurityComponent extends React.Component<Props, State> {
         this.props.labelFetch();
     }
 
-    public componentWillReceiveProps(next: Props) {
+    public UNSAFE_componentWillReceiveProps(next: Props) {
         if (next.passwordChangeSuccess) {
             this.setState({ showChangeModal: false });
         }

@@ -55,7 +55,7 @@ class MagicLinkScreen extends React.Component<MagicLinkProps, MagicLinkState> {
         }
     }
 
-    public componentWillReceiveProps(nextProps: MagicLinkProps) {
+    public UNSAFE_componentWillReceiveProps(nextProps: MagicLinkProps) {
         if (!this.props.success && nextProps.success) {
             this.props.history.replace('/');
         }
