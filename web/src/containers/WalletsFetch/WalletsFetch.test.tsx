@@ -24,7 +24,6 @@ describe('WalletsFetch component', () => {
     });
     it('should render', () => {
         expect(wrapper).toBeDefined();
-
     });
 
     it('should match snapshot', () => {

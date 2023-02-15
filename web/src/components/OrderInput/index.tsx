@@ -90,13 +90,21 @@ export const OrderInput: React.FunctionComponent<OrderInputProps> = React.memo((
         value,
     } = props;
 
-    const fieldsetFocusedClass = React.useMemo(() => cr('cr-order-input__fieldset', {
-        'cr-order-input__fieldset cr-order-input__fieldset--focused': isFocused,
-    }), [isFocused]);
+    const fieldsetFocusedClass = React.useMemo(
+        () =>
+            cr('cr-order-input__fieldset', {
+                'cr-order-input__fieldset cr-order-input__fieldset--focused': isFocused,
+            }),
+        [isFocused],
+    );
 
-    const cryptoIconClass = React.useMemo(() => cr('cr-order-input__crypto-icon',{
-        'cr-order-input__fieldset--focused': isFocused,
-    }), [isFocused]);
+    const cryptoIconClass = React.useMemo(
+        () =>
+            cr('cr-order-input__crypto-icon', {
+                'cr-order-input__fieldset--focused': isFocused,
+            }),
+        [isFocused],
+    );
 
     return (
         <div className={cr('cr-order-input', className)}>
@@ -115,7 +123,11 @@ export const OrderInput: React.FunctionComponent<OrderInputProps> = React.memo((
                 />
             </fieldset>
             <div className={cryptoIconClass}>
-                { showAllButton && <span className="cr-order-input__crypto-icon-all" onClick={handleClickAllButton}>{allButtonText}</span> }
+                {showAllButton && (
+                    <span className="cr-order-input__crypto-icon-all" onClick={handleClickAllButton}>
+                        {allButtonText}
+                    </span>
+                )}
                 {currency.toUpperCase()}
             </div>
         </div>

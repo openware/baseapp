@@ -27,7 +27,7 @@ describe('Module: Generate 2fa QR', () => {
         message: ['Server error'],
     };
 
-    const fakeCredentials =  {
+    const fakeCredentials = {
         data: {
             barcode: 'barcode',
             url: 'test_url',
@@ -38,10 +38,7 @@ describe('Module: Generate 2fa QR', () => {
         mockAxios.onPost('/resource/otp/generate_qrcode').reply(200, fakeCredentials);
     };
 
-    const expectedActionsFetch = [
-        generate2faQRFetch(),
-        generate2faQRData(fakeCredentials.data),
-    ];
+    const expectedActionsFetch = [generate2faQRFetch(), generate2faQRData(fakeCredentials.data)];
 
     const expectedActionsError = [
         generate2faQRFetch(),
@@ -56,7 +53,7 @@ describe('Module: Generate 2fa QR', () => {
 
     it('should change password in success flow', async () => {
         mockGenerate2faQR();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -73,7 +70,7 @@ describe('Module: Generate 2fa QR', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

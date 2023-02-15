@@ -14,12 +14,14 @@ export function* p2pHighestPriceSaga(action: P2PHighestPriceFetch) {
 
         yield put(p2pHighestPriceData(data));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: p2pHighestPriceError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: p2pHighestPriceError,
+                },
+            }),
+        );
     }
 }

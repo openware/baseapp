@@ -1,23 +1,23 @@
-import { CommonError } from "src/modules/types";
+import { CommonError } from 'src/modules/types';
 import {
-    P2P_ORDERS_UPDATE_DATA,
-    P2P_ORDERS_UPDATE_ERROR,
-    P2P_ORDERS_UPDATE_FETCH,
+    P2P_ORDERS_APPEND,
     P2P_ORDERS_CREATE_DATA,
     P2P_ORDERS_CREATE_ERROR,
     P2P_ORDERS_CREATE_FETCH,
-    P2P_TRADES_HISTORY_DATA,
-    P2P_TRADES_HISTORY_ERROR,
-    P2P_TRADES_HISTORY_FETCH,
+    P2P_ORDERS_UPDATE,
+    P2P_ORDERS_UPDATE_DATA,
+    P2P_ORDERS_UPDATE_ERROR,
+    P2P_ORDERS_UPDATE_FETCH,
     P2P_ORDER_DATA,
     P2P_ORDER_ERROR,
     P2P_ORDER_FETCH,
-    P2P_ORDERS_UPDATE,
-    P2P_ORDERS_APPEND,
     P2P_ORDER_RESET_SUCCESS,
     P2P_REMOVE_ORDER_ALERT,
-} from "./constants";
-import { P2POrderCreate, P2POrder } from "./types";
+    P2P_TRADES_HISTORY_DATA,
+    P2P_TRADES_HISTORY_ERROR,
+    P2P_TRADES_HISTORY_FETCH,
+} from './constants';
+import { P2POrder, P2POrderCreate } from './types';
 
 export interface P2POrdersCreateFetch {
     type: typeof P2P_ORDERS_CREATE_FETCH;
@@ -47,7 +47,7 @@ export interface P2PTradesHistoryData {
     payload: {
         list: P2POrder[];
         total: number;
-    }
+    };
 }
 
 export interface P2PTradesHistoryError {
@@ -109,11 +109,11 @@ export interface P2POrderRemoveAlert {
     type: typeof P2P_REMOVE_ORDER_ALERT;
     payload: {
         list: P2POrder[];
-    }
+    };
 }
 
 export type P2POrdersActions =
-    P2POrdersCreateFetch
+    | P2POrdersCreateFetch
     | P2POrdersCreateData
     | P2POrdersCreateError
     | P2PTradesHistoryFetch

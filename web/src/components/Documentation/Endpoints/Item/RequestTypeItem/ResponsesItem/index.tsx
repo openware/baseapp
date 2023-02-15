@@ -13,14 +13,20 @@ export const ResponsesItem: React.FC<ItemInterface> = (props: ItemInterface) => 
 
     const getTableHeaders = React.useCallback(() => {
         return [
-            intl.formatMessage({ id: 'page.documentation.endpoints.requestTypeItem.responses.table.header.code' }),
-            intl.formatMessage({ id: 'page.documentation.endpoints.requestTypeItem.responses.table.header.description' }),
-            intl.formatMessage({ id: 'page.documentation.endpoints.requestTypeItem.responses.table.header.schema' }),
+            intl.formatMessage({
+                id: 'page.documentation.endpoints.requestTypeItem.responses.table.header.code',
+            }),
+            intl.formatMessage({
+                id: 'page.documentation.endpoints.requestTypeItem.responses.table.header.description',
+            }),
+            intl.formatMessage({
+                id: 'page.documentation.endpoints.requestTypeItem.responses.table.header.schema',
+            }),
         ];
     }, [intl]);
 
     const getTableData = React.useCallback(() => {
-        return Object.keys(item.responses).map(key => {
+        return Object.keys(item.responses).map((key) => {
             const response = item.responses[key];
             const getFormattedSchema = () => {
                 if (response?.schema?.type === 'array') {
@@ -50,26 +56,25 @@ export const ResponsesItem: React.FC<ItemInterface> = (props: ItemInterface) => 
                         </Link>
                     );
                 } else {
-                    return intl.formatMessage({ id: 'page.documentation.endpoints.requestTypeItem.responses.table.data.noSchema' });
+                    return intl.formatMessage({
+                        id: 'page.documentation.endpoints.requestTypeItem.responses.table.data.noSchema',
+                    });
                 }
             };
 
-            return [
-                key,
-                response.description,
-                getFormattedSchema(),
-            ];
+            return [key, response.description, getFormattedSchema()];
         });
     }, [item.responses, intl]);
 
     if (item.responses && Object.keys(item.responses).length) {
         return (
             <React.Fragment>
-                <h5>{intl.formatMessage({ id: 'page.documentation.endpoints.requestTypeItem.responses.title' })}</h5>
-                <Table
-                    header={getTableHeaders()}
-                    data={getTableData()}
-                />
+                <h5>
+                    {intl.formatMessage({
+                        id: 'page.documentation.endpoints.requestTypeItem.responses.title',
+                    })}
+                </h5>
+                <Table header={getTableHeaders()} data={getTableData()} />
             </React.Fragment>
         );
     }

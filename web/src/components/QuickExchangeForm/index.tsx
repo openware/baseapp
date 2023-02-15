@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { CustomInput } from '../';
-import { cleanPositiveFloatInput, precisionRegExp } from '../../helpers';
+import { cleanPositiveFloatInput } from '../../helpers';
 
 interface QuickExchangeFormProps {
     field: string;
@@ -19,10 +19,14 @@ export const QuickExchangeForm = (props: QuickExchangeFormProps) => {
 
     const translate = useCallback((id: string) => formatMessage({ id: id }), [formatMessage]);
 
-    const focusedClass = useMemo(() => classnames('cr-email-form__group', {
-        'cr-email-form__group--focused': inputFocused,
-        'cr-email-form__group--amount': props.field === 'amount',
-    }), [inputFocused, props.field]);
+    const focusedClass = useMemo(
+        () =>
+            classnames('cr-email-form__group', {
+                'cr-email-form__group--focused': inputFocused,
+                'cr-email-form__group--amount': props.field === 'amount',
+            }),
+        [inputFocused, props.field],
+    );
 
     useEffect(() => {
         if (typeof props.value !== 'undefined') {
@@ -30,11 +34,14 @@ export const QuickExchangeForm = (props: QuickExchangeFormProps) => {
         }
     }, [props.value]);
 
-    const handleChange = useCallback((value: string) => {
-        const convertedValue = cleanPositiveFloatInput(value);
+    const handleChange = useCallback(
+        (value: string) => {
+            const convertedValue = cleanPositiveFloatInput(value);
 
-        props.handleChangeInput(convertedValue);
-    }, [props]);
+            props.handleChangeInput(convertedValue);
+        },
+        [props],
+    );
 
     return (
         <div key={props.field} className={focusedClass}>

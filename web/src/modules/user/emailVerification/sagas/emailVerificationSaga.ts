@@ -11,14 +11,16 @@ export function* emailVerificationSaga(action: EmailVerificationFetch) {
     try {
         yield call(API.post(sessionsConfig), '/identity/users/email/generate_code', action.payload);
         yield put(emailVerificationData());
-        yield put(alertPush({message: ['success.message.sent'], type: 'success'}));
+        yield put(alertPush({ message: ['success.message.sent'], type: 'success' }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: emailVerificationError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: emailVerificationError,
+                },
+            }),
+        );
     }
 }

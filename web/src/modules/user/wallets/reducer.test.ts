@@ -69,7 +69,7 @@ describe('walletsList reducer', () => {
                 last_24_hours: '',
                 loading: false,
             },
-         };
+        };
         expect(walletsReducer(initialWalletsState, actions.walletsFetch())).toEqual(expectedState);
     });
 
@@ -90,7 +90,7 @@ describe('walletsList reducer', () => {
                 last_24_hours: '',
                 loading: false,
             },
-         };
+        };
         expect(walletsReducer(initialWalletsState, actions.walletsData(wallets))).toEqual(expectedState);
     });
 
@@ -112,7 +112,7 @@ describe('walletsList reducer', () => {
                 last_24_hours: '',
                 loading: false,
             },
-         };
+        };
         expect(walletsReducer(initialWalletsState, actions.walletsError(error))).toEqual(expectedState);
     });
 
@@ -134,8 +134,10 @@ describe('walletsList reducer', () => {
                 last_24_hours: '',
                 loading: false,
             },
-         };
-        expect(walletsReducer(initialWalletsState, actions.walletsAddressFetch(addressFetchPayload))).toEqual(expectedState);
+        };
+        expect(walletsReducer(initialWalletsState, actions.walletsAddressFetch(addressFetchPayload))).toEqual(
+            expectedState,
+        );
     });
 
     it('should handle WALLETS_ADDRESS_DATA', () => {
@@ -154,14 +156,14 @@ describe('walletsList reducer', () => {
                 last_24_hours: '',
                 last_1_month: '',
                 loading: false,
-            }
+            },
         };
 
         const addressDataPayload: WalletAddress = {
             currencies: ['btc', 'tbtc'],
             address: 'address',
             state: 'active',
-            blockchain_key: "bitcoin",
+            blockchain_key: 'bitcoin',
         };
 
         const updatedWallets: Wallet[] = [
@@ -172,11 +174,13 @@ describe('walletsList reducer', () => {
                 type: 'coin',
                 account_type: 'spot',
                 fixed: 8,
-                deposit_addresses: [{
-                    currencies: ['btc', 'tbtc'],
-                    address: 'address',
-                    blockchain_key: 'bitcoin',
-                }],
+                deposit_addresses: [
+                    {
+                        currencies: ['btc', 'tbtc'],
+                        address: 'address',
+                        blockchain_key: 'bitcoin',
+                    },
+                ],
                 networks: [],
             },
             {
@@ -215,7 +219,7 @@ describe('walletsList reducer', () => {
                 last_24_hours: '',
                 loading: false,
             },
-         };
+        };
         expect(walletsReducer(initialState, actions.walletsAddressData(addressDataPayload))).toEqual(expectedState);
     });
 
@@ -237,7 +241,7 @@ describe('walletsList reducer', () => {
                 last_24_hours: '',
                 loading: false,
             },
-         };
+        };
         expect(walletsReducer(initialWalletsState, actions.walletsAddressError(error))).toEqual(expectedState);
     });
 
@@ -258,8 +262,10 @@ describe('walletsList reducer', () => {
                 last_24_hours: '',
                 loading: false,
             },
-         };
-        expect(walletsReducer(initialWalletsState, actions.walletsWithdrawCcyFetch(withdrawCcyFetchPayload))).toEqual(expectedState);
+        };
+        expect(walletsReducer(initialWalletsState, actions.walletsWithdrawCcyFetch(withdrawCcyFetchPayload))).toEqual(
+            expectedState,
+        );
     });
 
     it('should handle WALLETS_WITHDRAW_CCY_DATA', () => {
@@ -279,7 +285,7 @@ describe('walletsList reducer', () => {
                 last_24_hours: '',
                 loading: false,
             },
-         };
+        };
         expect(walletsReducer(initialWalletsState, actions.walletsWithdrawCcyData())).toEqual(expectedState);
     });
 
@@ -301,7 +307,7 @@ describe('walletsList reducer', () => {
                 last_24_hours: '',
                 loading: false,
             },
-         };
+        };
         expect(walletsReducer(initialWalletsState, actions.walletsWithdrawCcyError(error))).toEqual(expectedState);
     });
 });

@@ -24,27 +24,33 @@ const CreateOfferStepThree: FC<Props> = (props: Props): ReactElement => {
 
     const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
 
-    const descFocusClass = useMemo(() => (
-        classnames('cr-email-form__group', {
-            'cr-email-form__group--focused': descFocused,
-        })
-    ), [descFocused]);
+    const descFocusClass = useMemo(
+        () =>
+            classnames('cr-email-form__group', {
+                'cr-email-form__group--focused': descFocused,
+            }),
+        [descFocused],
+    );
 
-    const replyFocusClass = useMemo(() => (
-        classnames('cr-create-offer__group', {
-            'cr-create-offer--focused': replyFocused,
-        })
-    ), [replyFocused]);
+    const replyFocusClass = useMemo(
+        () =>
+            classnames('cr-create-offer__group', {
+                'cr-create-offer--focused': replyFocused,
+            }),
+        [replyFocused],
+    );
 
     return (
         <div className="cr-create-offer">
             <div className="form-padding">
                 <div className="cr-create-offer__input">
-                    <div className="cr-create-offer__dp-label">{translate('page.body.p2p.create.offer.description')}</div>
+                    <div className="cr-create-offer__dp-label">
+                        {translate('page.body.p2p.create.offer.description')}
+                    </div>
                     <div className={descFocusClass}>
                         <Form.Control
                             placeholder={translate('page.body.p2p.create.offer.description.placeholder')}
-                            onChange={e => props.handleSetDescription(e.target.value)}
+                            onChange={(e) => props.handleSetDescription(e.target.value)}
                             value={description}
                             onFocus={() => setDescFocused(!descFocused)}
                             className="cr-create-offer__textarea"
@@ -55,11 +61,13 @@ const CreateOfferStepThree: FC<Props> = (props: Props): ReactElement => {
                     </div>
                 </div>
                 <div className="cr-create-offer__input">
-                    <div className="cr-create-offer__dp-label">{translate('page.body.p2p.create.offer.replyMessage')}</div>
+                    <div className="cr-create-offer__dp-label">
+                        {translate('page.body.p2p.create.offer.replyMessage')}
+                    </div>
                     <div className={replyFocusClass}>
                         <Form.Control
                             placeholder={translate('page.body.p2p.create.offer.replyMessage.placeholder')}
-                            onChange={e => props.handleSetReplyMessage(e.target.value)}
+                            onChange={(e) => props.handleSetReplyMessage(e.target.value)}
                             value={replyMessage}
                             onFocus={() => setReplytFocused(!replyFocused)}
                             className="cr-create-offer__textarea"
@@ -69,19 +77,11 @@ const CreateOfferStepThree: FC<Props> = (props: Props): ReactElement => {
                     </div>
                 </div>
                 <div className="cr-create-offer__btn-wrapper__grid">
-                    <Button
-                        onClick={() => props.handleChangeStep(1)}
-                        size="lg"
-                        variant="secondary"
-                    >
+                    <Button onClick={() => props.handleChangeStep(1)} size="lg" variant="secondary">
                         <ArrowLeftIcon className="icon-left" />
                         <span>{translate('page.body.p2p.create.offer.back')}</span>
                     </Button>
-                    <Button
-                        onClick={props.handleSubmit}
-                        size="lg"
-                        variant="primary"
-                    >
+                    <Button onClick={props.handleSubmit} size="lg" variant="primary">
                         {translate('page.body.p2p.create.offer.create_order').toUpperCase()}
                     </Button>
                 </div>
@@ -90,6 +90,4 @@ const CreateOfferStepThree: FC<Props> = (props: Props): ReactElement => {
     );
 };
 
-export {
-    CreateOfferStepThree,
-};
+export { CreateOfferStepThree };

@@ -30,7 +30,7 @@ const getAPI = () => {
         finex: finexUrl(),
         sonic: `${hostUrl}/api/v2/sonic`,
         p2p: p2pUrl(),
-    }
+    };
 };
 
 const buildRequest = (request: Request, configData: RequestOptions) => {

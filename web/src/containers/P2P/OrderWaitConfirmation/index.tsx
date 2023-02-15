@@ -20,7 +20,11 @@ const OrderWaitConfirmation: FC<Props> = (props: Props): ReactElement => {
     useEffect(() => {
         if (order) {
             const timer = setTimeout(() => {
-                setTimeLeft(getCountdownDate(order.state === 'prepared' ? order.first_approve_expire_at : order.second_approve_expire_at));
+                setTimeLeft(
+                    getCountdownDate(
+                        order.state === 'prepared' ? order.first_approve_expire_at : order.second_approve_expire_at,
+                    ),
+                );
             }, 1000);
 
             return () => {
@@ -34,19 +38,34 @@ const OrderWaitConfirmation: FC<Props> = (props: Props): ReactElement => {
     return (
         <div className="cr-confirm-order">
             <div className="cr-confirm-order__block">
-                <span className="bold-36">{translate(`page.body.p2p.order.transfer.wait.payment.confirmation.${order?.state}`)}</span>
-                <span className="description">{translate(`page.body.p2p.order.transfer.wait.payment.confirmation.${order?.state}.desc`, order && { time: secondToMinutes(order?.offer?.time_limit) })}</span>
+                <span className="bold-36">
+                    {translate(`page.body.p2p.order.transfer.wait.payment.confirmation.${order?.state}`)}
+                </span>
+                <span className="description">
+                    {translate(
+                        `page.body.p2p.order.transfer.wait.payment.confirmation.${order?.state}.desc`,
+                        order && { time: secondToMinutes(order?.offer?.time_limit) },
+                    )}
+                </span>
             </div>
             <div className="cr-confirm-order__block cr-confirm-order__block-tall">
                 <div className="cr-confirm-order__block--row">
-                    <span className="huge-text">{translate(`page.body.p2p.order.transfer.wait.payment.confirmation.timer.${order?.state}`)}</span>
+                    <span className="huge-text">
+                        {translate(`page.body.p2p.order.transfer.wait.payment.confirmation.timer.${order?.state}`)}
+                    </span>
                     <span className="ticker">{timeLeft}</span>
                 </div>
-                {(!isTaker && order?.state === 'prepared' && order?.side === 'buy') || (order?.state === 'prepared' && order?.side === 'sell') && (
-                    <div className="cr-confirm-order__block--row">
-                        <span>{translate(`page.body.p2p.order.transfer.wait.payment.confirmation.warning.${order?.state}`, order && { time: secondToMinutes(order?.offer?.time_limit) })}</span>
-                    </div>
-                )}
+                {(!isTaker && order?.state === 'prepared' && order?.side === 'buy') ||
+                    (order?.state === 'prepared' && order?.side === 'sell' && (
+                        <div className="cr-confirm-order__block--row">
+                            <span>
+                                {translate(
+                                    `page.body.p2p.order.transfer.wait.payment.confirmation.warning.${order?.state}`,
+                                    order && { time: secondToMinutes(order?.offer?.time_limit) },
+                                )}
+                            </span>
+                        </div>
+                    ))}
             </div>
             {((isTaker && order?.state === 'wait') || (!isTaker && order?.side === 'sell')) && (
                 <div className="cr-confirm-order__btn-wrapper__grid">
@@ -54,8 +73,7 @@ const OrderWaitConfirmation: FC<Props> = (props: Props): ReactElement => {
                         onClick={() => window.console.log('logDispute')}
                         size="lg"
                         variant="primary"
-                        disabled={timeLeft !== '00:00:00'}
-                    >
+                        disabled={timeLeft !== '00:00:00'}>
                         {translate('page.body.p2p.order.transfer.wait.payment.confirmation.logDispute')}
                     </Button>
                 </div>
@@ -64,6 +82,4 @@ const OrderWaitConfirmation: FC<Props> = (props: Props): ReactElement => {
     );
 };
 
-export {
-    OrderWaitConfirmation,
-};
+export { OrderWaitConfirmation };

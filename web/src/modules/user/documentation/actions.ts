@@ -1,9 +1,5 @@
 import { CommonError } from '../../types';
-import {
-    DOC_TRADE_USER_API_DATA,
-    DOC_TRADE_USER_API_ERROR,
-    DOC_TRADE_USER_API_FETCH,
-} from './constants';
+import { DOC_TRADE_USER_API_DATA, DOC_TRADE_USER_API_ERROR, DOC_TRADE_USER_API_FETCH } from './constants';
 import { DocTradeUserApiDataInterface } from './types';
 
 export interface DocTradeUserApiFetch {
@@ -20,10 +16,7 @@ export interface DocTradeUserApiError {
     payload: CommonError;
 }
 
-export type DocumentationAction =
-    DocTradeUserApiFetch
-    | DocTradeUserApiData
-    | DocTradeUserApiError;
+export type DocumentationAction = DocTradeUserApiFetch | DocTradeUserApiData | DocTradeUserApiError;
 
 export const docTradeUserApiFetch = (): DocTradeUserApiFetch => ({
     type: DOC_TRADE_USER_API_FETCH,

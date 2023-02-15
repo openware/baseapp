@@ -1,10 +1,10 @@
-import * as Sentry from "@sentry/browser";
-import { applyMiddleware, compose, createStore } from "redux";
-import createSagaMiddleware from "redux-saga";
-import createSentryMiddleware from "redux-sentry-middleware";
+import * as Sentry from '@sentry/browser';
+import { applyMiddleware, compose, createStore } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import createSentryMiddleware from 'redux-sentry-middleware';
 
-import { sentryEnabled } from "./api/config";
-import { rootReducer } from "./modules";
+import { sentryEnabled } from './api/config';
+import { rootReducer } from './modules';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -13,9 +13,7 @@ const composeEnhancer: typeof compose = (window as any).__REDUX_DEVTOOLS_EXTENSI
 
 const sentryMiddleware = sentryEnabled ? createSentryMiddleware(Sentry, {}) : undefined;
 
-const store = rootReducer && createStore(
-    rootReducer,
-    composeEnhancer(applyMiddleware(sagaMiddleware, sentryMiddleware))
-);
+const store =
+    rootReducer && createStore(rootReducer, composeEnhancer(applyMiddleware(sagaMiddleware, sentryMiddleware)));
 
 export { store, sagaMiddleware };

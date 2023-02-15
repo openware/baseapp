@@ -110,7 +110,7 @@ describe('Markets & Tickers sagas', () => {
     it('should fetch markets', async () => {
         const expectedActions = [marketsFetch(), marketsData(fakeMarkets), setCurrentMarketIfUnset(fakeMarkets[0])];
         mockMarkets();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {
@@ -139,7 +139,7 @@ describe('Markets & Tickers sagas', () => {
                 },
             }),
         ];
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {
@@ -157,7 +157,7 @@ describe('Markets & Tickers sagas', () => {
         mockTickers();
 
         const expectedActions = [marketsTickersFetch(), marketsTickersData(marketsTickersList)];
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {
@@ -187,7 +187,7 @@ describe('Markets & Tickers sagas', () => {
                 },
             }),
         ];
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {

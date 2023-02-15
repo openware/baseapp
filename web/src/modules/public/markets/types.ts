@@ -19,7 +19,7 @@ export type MarketFilter = MarketFilterSignificantDigit | MarketFilterCustomStep
 
 export type MarketFeature = {
     order_types: string[];
-}
+};
 
 export interface Market {
     id: MarketId;

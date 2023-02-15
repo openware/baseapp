@@ -7,10 +7,12 @@ describe('Abilities actions', () => {
     });
 
     it('should check abilitiesData action creator', () => {
-        const payload = [{
-            read: [ 'Order', 'Trade', 'Member', 'Account', 'PaymentAddress' ],
-            update: [ 'Order' ],
-        }];
+        const payload = [
+            {
+                read: ['Order', 'Trade', 'Member', 'Account', 'PaymentAddress'],
+                update: ['Order'],
+            },
+        ];
 
         const expectedAction = { type: 'abilities/DATA', payload };
         expect(actions.abilitiesData(payload)).toEqual(expectedAction);

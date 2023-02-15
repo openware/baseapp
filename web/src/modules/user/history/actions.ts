@@ -56,14 +56,7 @@ export interface HistoryPush {
     payload: PrivateTradeEvent;
 }
 
-export type HistoryActions =
-    HistoryFetch
-    | HistoryData
-    | HistoryError
-    | HistoryReset
-    | HistoryPush
-    | HistoryPushFinish;
-
+export type HistoryActions = HistoryFetch | HistoryData | HistoryError | HistoryReset | HistoryPush | HistoryPushFinish;
 
 export const fetchHistory = (payload: HistoryFetchPayload): HistoryFetch => ({
     type: HISTORY_FETCH,

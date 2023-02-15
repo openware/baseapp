@@ -11,10 +11,12 @@ describe('Abilities reducer', () => {
     });
 
     it('should handle ABILITIES_DATA', () => {
-        const abilitiesResponse = [{
-            read: ['Order', 'Trade', 'Member', 'Account', 'PaymentAddress'],
-            update: ['Order'],
-        }];
+        const abilitiesResponse = [
+            {
+                read: ['Order', 'Trade', 'Member', 'Account', 'PaymentAddress'],
+                update: ['Order'],
+            },
+        ];
         const abilities = {
             read: ['Order', 'Trade', 'Member', 'Account', 'PaymentAddress'],
             update: ['Order'],
@@ -25,10 +27,9 @@ describe('Abilities reducer', () => {
             success: true,
             abilities,
         };
-        expect(abilitiesReducer(
-            initialAbilitiesState,
-            actions.abilitiesData(abilitiesResponse),
-        )).toEqual(expectedState);
+        expect(abilitiesReducer(initialAbilitiesState, actions.abilitiesData(abilitiesResponse))).toEqual(
+            expectedState,
+        );
     });
 
     it('should handle ABILITIES_ERROR', () => {

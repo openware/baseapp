@@ -12,12 +12,14 @@ export function* withdrawLimitsSaga(action: WithdrawLimitsFetch) {
         const withdrawLimits = yield call(API.get(withdrawOption), '/public/withdraw_limits');
         yield put(withdrawLimitsData(withdrawLimits));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: withdrawLimitsError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: withdrawLimitsError,
+                },
+            }),
+        );
     }
 }

@@ -3,10 +3,10 @@ import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { compose } from 'redux';
 import { IntlProps } from '../../';
+import { LinkIcon } from '../../assets/images/LinkIcon';
 import { History, Pagination } from '../../components';
 import { Decimal } from '../../components/Decimal';
 import { localeDate } from '../../helpers';
-import { LinkIcon } from '../../assets/images/LinkIcon';
 import {
     Currency,
     fetchHistory,
@@ -25,8 +25,8 @@ import {
     WalletHistoryList,
 } from '../../modules';
 import { FailIcon } from './FailIcon';
-import { SucceedIcon } from './SucceedIcon';
 import { PendingIcon } from './PendingIcon';
+import { SucceedIcon } from './SucceedIcon';
 
 export interface HistoryProps {
     label: string;
@@ -67,7 +67,12 @@ export class WalletTable extends React.Component<Props> {
 
         if (nextProps.currency !== currency || nextProps.type !== type) {
             this.props.resetHistory();
-            this.props.fetchHistory({ page: 0, currency: nextProps.currency, type, limit: rowsPerPage });
+            this.props.fetchHistory({
+                page: 0,
+                currency: nextProps.currency,
+                type,
+                limit: rowsPerPage,
+            });
         }
     }
 
@@ -117,54 +122,55 @@ export class WalletTable extends React.Component<Props> {
         this.props.fetchHistory({ page: Number(page) + 1, currency, type, limit: rowsPerPage });
     };
 
-    private retrieveData = list => {
-        const {
-            currency,
-            currencies,
-            type,
-            wallets,
-        } = this.props;
-        const { fixed } = wallets.find(w => w.currency === currency) || { fixed: 8 };
+    private retrieveData = (list) => {
+        const { currency, currencies, type, wallets } = this.props;
+        const { fixed } = wallets.find((w) => w.currency === currency) || { fixed: 8 };
 
         if (!list.length) {
             return [[]];
         }
 
-        return list.sort((a, b) => {
-            return new Date(a) > new Date(b) ? -1 : 1;
-        }).map(item => {
-            const blockchainTxid = this.getBlockchainTxid(item);
-            const blockchainLink = this.getBlockchainLink(currency, item.blockchain_key, blockchainTxid, item.rid);
-            const amount = 'amount' in item ? Number(item.amount) : Number(item.price) * Number(item.volume);
-            const confirmations = type === 'deposits' && item.confirmations;
-            const itemCurrency = currencies && currencies.find(cur => cur.id === currency);
-            const blockchainCurrency = itemCurrency?.networks?.find(blockchain_cur => blockchain_cur.blockchain_key === item.blockchain_key);
-            const minConfirmations = blockchainCurrency?.min_confirmations;
-            const state = 'state' in item ? this.formatTxState(item.state, confirmations, minConfirmations) : '';
+        return list
+            .sort((a, b) => {
+                return new Date(a) > new Date(b) ? -1 : 1;
+            })
+            .map((item) => {
+                const blockchainTxid = this.getBlockchainTxid(item);
+                const blockchainLink = this.getBlockchainLink(currency, item.blockchain_key, blockchainTxid, item.rid);
+                const amount = 'amount' in item ? Number(item.amount) : Number(item.price) * Number(item.volume);
+                const confirmations = type === 'deposits' && item.confirmations;
+                const itemCurrency = currencies && currencies.find((cur) => cur.id === currency);
+                const blockchainCurrency = itemCurrency?.networks?.find(
+                    (blockchain_cur) => blockchain_cur.blockchain_key === item.blockchain_key,
+                );
+                const minConfirmations = blockchainCurrency?.min_confirmations;
+                const state = 'state' in item ? this.formatTxState(item.state, confirmations, minConfirmations) : '';
 
-            return [
-                localeDate(item.created_at, 'shortDate'),
-                <div className="pg-history-elem__hide" key={item.blockchain_txid || item.rid}>
-                    <a href={blockchainLink} target="_blank" rel="noopener noreferrer">
-                        {blockchainTxid || item.rid}
-                    </a>
-                    <LinkIcon className="pg-history-elem__link" />
-                </div>,
-                Decimal.format(amount, fixed, ','),
-                state,
-            ];
-        });
+                return [
+                    localeDate(item.created_at, 'shortDate'),
+                    <div className="pg-history-elem__hide" key={item.blockchain_txid || item.rid}>
+                        <a href={blockchainLink} target="_blank" rel="noopener noreferrer">
+                            {blockchainTxid || item.rid}
+                        </a>
+                        <LinkIcon className="pg-history-elem__link" />
+                    </div>,
+                    Decimal.format(amount, fixed, ','),
+                    state,
+                ];
+            });
     };
 
-    private getBlockchainTxid = historyItem => {
+    private getBlockchainTxid = (historyItem) => {
         const { type } = this.props;
         return type === 'deposits' ? historyItem.txid : historyItem.blockchain_txid;
     };
 
     private getBlockchainLink = (currency: string, blockchainKey: string, txid: string, rid?: string) => {
         const { currencies } = this.props;
-        const currencyInfo = currencies.find(c => c.id === currency);
-        const blockchainCurrency = currencyInfo?.networks?.find(blockchain_cur => blockchain_cur.blockchain_key === blockchainKey);
+        const currencyInfo = currencies.find((c) => c.id === currency);
+        const blockchainCurrency = currencyInfo?.networks?.find(
+            (blockchain_cur) => blockchain_cur.blockchain_key === blockchainKey,
+        );
 
         if (currencyInfo) {
             if (txid && blockchainCurrency?.explorer_transaction) {
@@ -181,37 +187,55 @@ export class WalletTable extends React.Component<Props> {
     private formatTxState = (tx: string, confirmations?: number | string, minConfirmations?: number) => {
         const accepted = (
             <div className="accepted">
-                <span className="label">{this.props.intl.formatMessage({ id: 'page.body.wallets.table.accepted' })}</span><SucceedIcon />
+                <span className="label">
+                    {this.props.intl.formatMessage({ id: 'page.body.wallets.table.accepted' })}
+                </span>
+                <SucceedIcon />
             </div>
         );
 
         const rejected = (
             <div className="rejected">
-                <span className="label">{this.props.intl.formatMessage({ id: 'page.body.wallets.table.rejected' })}</span><FailIcon />
+                <span className="label">
+                    {this.props.intl.formatMessage({ id: 'page.body.wallets.table.rejected' })}
+                </span>
+                <FailIcon />
             </div>
         );
 
         const pending = (
             <div className="pending">
-                <span className="label">{this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' })}</span><PendingIcon />
+                <span className="label">
+                    {this.props.intl.formatMessage({ id: 'page.body.wallets.table.pending' })}
+                </span>
+                <PendingIcon />
             </div>
         );
 
         const confirming = (
             <div className="pending">
-                <span className="label">{this.props.intl.formatMessage({ id: 'page.body.wallets.table.confirming' })}</span><PendingIcon />
+                <span className="label">
+                    {this.props.intl.formatMessage({ id: 'page.body.wallets.table.confirming' })}
+                </span>
+                <PendingIcon />
             </div>
         );
 
         const skipped = (
             <div className="rejected">
-                <span className="label">{this.props.intl.formatMessage({ id: 'page.body.wallets.table.skipped' })}</span><FailIcon />
+                <span className="label">
+                    {this.props.intl.formatMessage({ id: 'page.body.wallets.table.skipped' })}
+                </span>
+                <FailIcon />
             </div>
         );
 
         const underReview = (
             <div className="pending">
-                <span className="label">{this.props.intl.formatMessage({ id: 'page.body.wallets.table.under_review' })}</span><PendingIcon />
+                <span className="label">
+                    {this.props.intl.formatMessage({ id: 'page.body.wallets.table.under_review' })}
+                </span>
+                <PendingIcon />
             </div>
         );
 
@@ -226,20 +250,24 @@ export class WalletTable extends React.Component<Props> {
             fee_processing: pending,
             prepared: pending,
             confirming: confirming,
-            submitted: (minConfirmations && confirmations && confirmations !== 'N/A') ? (
-                `${confirmations}/${minConfirmations}`
-            ) : (
-                pending
-            ),
+            submitted:
+                minConfirmations && confirmations && confirmations !== 'N/A'
+                    ? `${confirmations}/${minConfirmations}`
+                    : pending,
             skipped: skipped,
-            errored: <span className="rejected">{this.props.intl.formatMessage({ id: 'page.body.history.deposit.content.status.errored' })}</span>,
-            under_review: underReview 
+            errored: (
+                <span className="rejected">
+                    {this.props.intl.formatMessage({
+                        id: 'page.body.history.deposit.content.status.errored',
+                    })}
+                </span>
+            ),
+            under_review: underReview,
         };
 
         return statusMapping[tx];
     };
 }
-
 
 export const mapStateToProps = (state: RootState): ReduxProps => ({
     currencies: selectCurrencies(state),
@@ -253,13 +281,9 @@ export const mapStateToProps = (state: RootState): ReduxProps => ({
     withdrawSuccess: selectWithdrawSuccess(state),
 });
 
-export const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        fetchHistory: params => dispatch(fetchHistory(params)),
-        resetHistory: () => dispatch(resetHistory()),
-    });
+export const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+    fetchHistory: (params) => dispatch(fetchHistory(params)),
+    resetHistory: () => dispatch(resetHistory()),
+});
 
-export const WalletHistory = compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  injectIntl,
-)(WalletTable) as any;
+export const WalletHistory = compose(connect(mapStateToProps, mapDispatchToProps), injectIntl)(WalletTable) as any;

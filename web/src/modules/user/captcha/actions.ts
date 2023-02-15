@@ -55,7 +55,7 @@ export interface ResetCaptchaState {
 }
 
 export type GeetestCaptchaAction =
-    GeetestCaptchaData
+    | GeetestCaptchaData
     | GeetestCaptchaError
     | GeetestCaptchaFetch
     | GeetestCaptchaSuccess

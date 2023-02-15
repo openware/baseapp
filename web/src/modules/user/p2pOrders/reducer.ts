@@ -1,27 +1,27 @@
-import { defaultStorageLimit } from "src/api";
-import { sliceArray } from "src/helpers";
-import { CommonError } from "src/modules/types";
-import { insertIfNotExisted, insertOrUpdate } from "./helpers";
-import { P2POrdersActions } from "./actions";
+import { defaultStorageLimit } from 'src/api';
+import { sliceArray } from 'src/helpers';
+import { CommonError } from 'src/modules/types';
+import { P2POrdersActions } from './actions';
 import {
-    P2P_ORDER_DATA,
-    P2P_ORDER_ERROR,
-    P2P_ORDER_FETCH,
-    P2P_ORDERS_UPDATE_DATA,
-    P2P_ORDERS_UPDATE_ERROR,
-    P2P_ORDERS_UPDATE_FETCH,
+    P2P_ORDERS_APPEND,
     P2P_ORDERS_CREATE_DATA,
     P2P_ORDERS_CREATE_ERROR,
     P2P_ORDERS_CREATE_FETCH,
+    P2P_ORDERS_UPDATE,
+    P2P_ORDERS_UPDATE_DATA,
+    P2P_ORDERS_UPDATE_ERROR,
+    P2P_ORDERS_UPDATE_FETCH,
+    P2P_ORDER_DATA,
+    P2P_ORDER_ERROR,
+    P2P_ORDER_FETCH,
+    P2P_ORDER_RESET_SUCCESS,
+    P2P_REMOVE_ORDER_ALERT,
     P2P_TRADES_HISTORY_DATA,
     P2P_TRADES_HISTORY_ERROR,
     P2P_TRADES_HISTORY_FETCH,
-    P2P_ORDERS_UPDATE,
-    P2P_ORDERS_APPEND,
-    P2P_ORDER_RESET_SUCCESS,
-    P2P_REMOVE_ORDER_ALERT,
-} from "./constants";
-import { P2POrder } from "./types";
+} from './constants';
+import { insertIfNotExisted, insertOrUpdate } from './helpers';
+import { P2POrder } from './types';
 
 export interface P2POrdersState {
     order: {
@@ -35,7 +35,7 @@ export interface P2POrdersState {
         page: number;
         total: number;
         list: P2POrder[];
-       
+
         fetching: boolean;
         success: boolean;
         error?: CommonError;
@@ -120,7 +120,7 @@ const p2pOrdersWebsocketReducer = (state: P2POrdersState, action: P2POrdersActio
         case P2P_ORDERS_APPEND:
             const tradesHistoryAppendState = {
                 ...state.tradesHistory,
-                list: sliceArray(insertIfNotExisted(state.tradesHistory.list, action.payload), defaultStorageLimit())
+                list: sliceArray(insertIfNotExisted(state.tradesHistory.list, action.payload), defaultStorageLimit()),
             };
 
             return {

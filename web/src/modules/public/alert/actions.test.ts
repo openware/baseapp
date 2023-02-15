@@ -47,7 +47,7 @@ describe('Alert actions', () => {
 
     it('should check alertDelete action creator', () => {
         const expectedAction = {
-              type: 'alert/ALERT_DELETE',
+            type: 'alert/ALERT_DELETE',
         };
 
         expect(actions.alertDelete()).toEqual(expectedAction);

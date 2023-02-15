@@ -21,12 +21,7 @@ import {
     selectApiKeysNextPageExists,
 } from '../../../modules/user/apiKeys/selectors';
 import { AddIcon } from '../../assets/images/AddIcon';
-import {
-    ApiKeysItem,
-    CreatedApiKeyModal,
-    Subheader,
-    TwoFactorModal,
-} from '../../components';
+import { ApiKeysItem, CreatedApiKeyModal, Subheader, TwoFactorModal } from '../../components';
 
 const ProfileApiKeysMobileScreenComponent: React.FC = () => {
     const [itemToUpdate, setItemToUpdate] = React.useState<ApiKeyDataInterface | undefined>();
@@ -38,7 +33,7 @@ const ProfileApiKeysMobileScreenComponent: React.FC = () => {
     const intl = useIntl();
     const history = useHistory();
     const apiKeys = useSelector(selectApiKeys);
-    const apiKeysModal= useSelector(selectApiKeysModal) || { action: '' };
+    const apiKeysModal = useSelector(selectApiKeysModal) || { action: '' };
     const user = useSelector(selectUserInfo);
     const firstElemIndex = useSelector((state: RootState) => selectApiKeysFirstElemIndex(state, 4));
     const lastElemIndex = useSelector((state: RootState) => selectApiKeysLastElemIndex(state, 4));
@@ -105,8 +100,8 @@ const ProfileApiKeysMobileScreenComponent: React.FC = () => {
         setCurrentAction('');
     };
 
-    const handleSetApiKeyProcess = (actionToSet, item?: ApiKeyDataInterface ) => {
-        setShow2FAModal(state => !state);
+    const handleSetApiKeyProcess = (actionToSet, item?: ApiKeyDataInterface) => {
+        setShow2FAModal((state) => !state);
 
         switch (actionToSet) {
             case 'create':
@@ -134,17 +129,16 @@ const ProfileApiKeysMobileScreenComponent: React.FC = () => {
 
     return (
         <React.Fragment>
-          <Subheader
-            title={intl.formatMessage({ id: 'page.mobile.profile.apiKeys.title' })}
-            backTitle={intl.formatMessage({ id: 'page.body.profile.header.account' })}
-            onGoBack={() => history.push('/profile')}
-          />
+            <Subheader
+                title={intl.formatMessage({ id: 'page.mobile.profile.apiKeys.title' })}
+                backTitle={intl.formatMessage({ id: 'page.body.profile.header.account' })}
+                onGoBack={() => history.push('/profile')}
+            />
             <div className="pg-mobile-profile-api-keys-screen">
                 {user.otp ? (
                     <div
                         className="pg-mobile-profile-api-keys-screen__create"
-                        onClick={() => handleSetApiKeyProcess('create')}
-                    >
+                        onClick={() => handleSetApiKeyProcess('create')}>
                         <AddIcon />
                     </div>
                 ) : null}
@@ -156,8 +150,8 @@ const ProfileApiKeysMobileScreenComponent: React.FC = () => {
                                     key={index}
                                     index={index}
                                     item={apiKey}
-                                    handleUpdateKey={item => handleSetApiKeyProcess('update', item)}
-                                    handleDeleteKey={item => handleSetApiKeyProcess('delete', item)}
+                                    handleUpdateKey={(item) => handleSetApiKeyProcess('update', item)}
+                                    handleDeleteKey={(item) => handleSetApiKeyProcess('delete', item)}
                                 />
                             ))}
                             <Pagination
@@ -170,7 +164,7 @@ const ProfileApiKeysMobileScreenComponent: React.FC = () => {
                             />
                         </React.Fragment>
                     ) : (
-                        <span className="no-data">{intl.formatMessage({id: 'page.noDataToShow'})}</span>
+                        <span className="no-data">{intl.formatMessage({ id: 'page.noDataToShow' })}</span>
                     )}
                 </div>
                 <CreatedApiKeyModal
@@ -178,10 +172,7 @@ const ProfileApiKeysMobileScreenComponent: React.FC = () => {
                     closeCreatedApiKeyModal={() => setShowCreatedApiKeyModal(false)}
                     apiKey={(apiKeysModal as any).apiKey}
                 />
-                <TwoFactorModal
-                    showModal={show2FAModal}
-                    handleToggle2FA={handleTriggerAction}
-                />
+                <TwoFactorModal showModal={show2FAModal} handleToggle2FA={handleTriggerAction} />
             </div>
         </React.Fragment>
     );

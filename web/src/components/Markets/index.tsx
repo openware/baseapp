@@ -52,7 +52,7 @@ export const Markets = (props: MarketsProps) => {
 
             return (row[0] as string).toLowerCase().includes(searchKey.toLowerCase());
         },
-        [searchKey]
+        [searchKey],
     );
 
     const renderChange = React.useCallback((cell: string) => {
@@ -74,7 +74,7 @@ export const Markets = (props: MarketsProps) => {
 
             return isChangeValue ? renderChange(cell as string) : cell;
         },
-        [renderChange]
+        [renderChange],
     );
 
     const filterType = React.useCallback(
@@ -83,7 +83,7 @@ export const Markets = (props: MarketsProps) => {
 
             return (item[typeIndex] as string).includes(key);
         },
-        [props.headers]
+        [props.headers],
     );
 
     const createUniqueCurrencies = React.useCallback((currencies: string[], market: string) => {
@@ -98,7 +98,7 @@ export const Markets = (props: MarketsProps) => {
             name: currency,
             filter: filterType('Pair', currency),
         }),
-        [filterType]
+        [filterType],
     );
 
     const getFilters = React.useCallback(() => {
@@ -122,7 +122,7 @@ export const Markets = (props: MarketsProps) => {
     }, [createUniqueCurrencies, filterType, transformCurrencyToFilter, data, filters]);
 
     const getTableData = React.useMemo(() => {
-        const fd = data.filter(w => (w[0] as string).toLowerCase().includes(searchKey.toLowerCase()));
+        const fd = data.filter((w) => (w[0] as string).toLowerCase().includes(searchKey.toLowerCase()));
 
         return fd.map((row) => row.map(mapRows));
     }, [data, mapRows, searchKey]);

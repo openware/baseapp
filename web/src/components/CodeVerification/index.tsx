@@ -17,16 +17,7 @@ export interface CodeVerificationProps {
 }
 
 const CodeVerification: FC<CodeVerificationProps> = (props: CodeVerificationProps): ReactElement => {
-    const {
-        code,
-        codeLength,
-        inputMode,
-        onSubmit,
-        placeholder,
-        showPaste2FA = true,
-        type,
-        message,
-    } = props;
+    const { code, codeLength, inputMode, onSubmit, placeholder, showPaste2FA = true, type, message } = props;
 
     const { formatMessage } = useIntl();
 
@@ -59,7 +50,7 @@ const CodeVerification: FC<CodeVerificationProps> = (props: CodeVerificationProp
         });
     }, [code]);
 
-    const onCodeChange = e => {
+    const onCodeChange = (e) => {
         if (e.target.value.length <= codeLength && (e.target.value.match(/^[0-9\b]+$/) || e.target.value === '')) {
             props.onChange(e.target.value);
         }
@@ -79,12 +70,12 @@ const CodeVerification: FC<CodeVerificationProps> = (props: CodeVerificationProp
 
     const renderPaste2FA = useMemo(() => {
         const buttonText = !props.isMobile ? formatMessage({ id: 'page.body.profile.whitelisted.paste' }) : null;
-        return showPaste2FA ?
+        return showPaste2FA ? (
             <div className="pg-code-verification__paste" onClick={paste2FA}>
                 <PasteIcon />
                 {buttonText}
             </div>
-            : null;
+        ) : null;
     }, [showPaste2FA, paste2FA]);
 
     return (
@@ -94,9 +85,7 @@ const CodeVerification: FC<CodeVerificationProps> = (props: CodeVerificationProp
             </div>
             <div className="pg-code-verification__block">
                 <div className="pg-code-verification__block__content">
-                    <div className="pg-code-verification__wrapper">
-                        {getCodeBlocks}
-                    </div>
+                    <div className="pg-code-verification__wrapper">{getCodeBlocks}</div>
                     <div className="pg-code-verification__input">
                         <input
                             autoFocus={true}
@@ -114,6 +103,4 @@ const CodeVerification: FC<CodeVerificationProps> = (props: CodeVerificationProp
     );
 };
 
-export {
-    CodeVerification,
-}
+export { CodeVerification };

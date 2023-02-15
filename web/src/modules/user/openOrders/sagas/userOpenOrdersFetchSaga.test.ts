@@ -24,15 +24,15 @@ describe('Open Orders Fetch', () => {
     });
 
     const fakeMarket: Market = {
-        id:'ethusd',
-        name:'ETH/USD',
-        base_unit:'eth',
-        quote_unit:'usd',
-        min_price:'0.0',
-        max_price:'0.0',
-        min_amount:'0.0',
-        amount_precision:4,
-        price_precision:4,
+        id: 'ethusd',
+        name: 'ETH/USD',
+        base_unit: 'eth',
+        quote_unit: 'usd',
+        min_price: '0.0',
+        max_price: '0.0',
+        min_amount: '0.0',
+        amount_precision: 4,
+        price_precision: 4,
     };
 
     const fakeOpenOrders: OrderCommon[] = [
@@ -75,9 +75,7 @@ describe('Open Orders Fetch', () => {
         mockAxios.onGet(`/market/orders?market=ethusd&state=wait`).reply(200, fakeOpenOrders);
     };
 
-    const expectedActionsFetch = [
-        userOpenOrdersFetch(fakeFetchPayload),
-    ];
+    const expectedActionsFetch = [userOpenOrdersFetch(fakeFetchPayload)];
     const expectedActionsError = [
         userOpenOrdersFetch(fakeFetchPayload),
         sendError({
@@ -91,7 +89,7 @@ describe('Open Orders Fetch', () => {
 
     it('should fetch open orders', async () => {
         mockGetOpenOrders();
-        const promise = new Promise<void>(resolve => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -107,7 +105,7 @@ describe('Open Orders Fetch', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise<void>(resolve => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

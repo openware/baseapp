@@ -44,7 +44,7 @@ describe('configReducer', () => {
             loading: false,
             success: false,
             error: error,
-         };
+        };
         expect(configUpdateReducer(initialConfigUpdateState, actions.configUpdateError(error))).toEqual(expectedState);
     });
 });

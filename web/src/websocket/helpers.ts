@@ -3,24 +3,16 @@ import { DEFAULT_TRADING_VIEW_INTERVAL } from 'src/constants';
 import { Market, Ticker, TickerEvent } from 'src/modules/public/markets';
 
 export const baseUrl = (withAuth: boolean) => `${rangerUrl()}/${withAuth ? 'private' : 'public'}`;
-export const isTradingPage = route => route?.split('/')[1] === 'trading';
-export const generateSocketURI = (withAuth: boolean, s: string[]) => `${baseUrl(withAuth)}/?stream=${s.sort().join('&stream=')}`;
+export const isTradingPage = (route) => route?.split('/')[1] === 'trading';
+export const generateSocketURI = (withAuth: boolean, s: string[]) =>
+    `${baseUrl(withAuth)}/?stream=${s.sort().join('&stream=')}`;
 
 export const formatTicker = (events: { [pair: string]: TickerEvent }): { [pair: string]: Ticker } => {
     const tickers = {};
     for (const market in events) {
         if (events.hasOwnProperty(market)) {
             const event: TickerEvent = events[market];
-            const {
-                amount,
-                avg_price,
-                high,
-                last,
-                low,
-                open,
-                price_change_percent,
-                volume,
-            } = event;
+            const { amount, avg_price, high, last, low, open, price_change_percent, volume } = event;
             tickers[market] = {
                 amount,
                 avg_price,
@@ -42,41 +34,31 @@ export const streamsBuilder = (withAuth: boolean, withP2P: boolean, market: Mark
 
     switch (route.split('/')[1]) {
         case 'wallets':
-            streams = [
-                (withAuth && isFinexEnabled() && 'balances'),
-                (withAuth && 'deposit_address'),
-                'global.tickers',
-            ];
+            streams = [withAuth && isFinexEnabled() && 'balances', withAuth && 'deposit_address', 'global.tickers'];
 
             break;
         case 'trading':
             streams = [
-                (withAuth && isFinexEnabled() && 'balances'),
+                withAuth && isFinexEnabled() && 'balances',
                 ...(market ? marketStreams(market).channels : []),
                 'global.tickers',
             ];
 
             break;
         case 'quick-exchange':
-            streams = [
-                (withAuth && isFinexEnabled() && 'balances'),
-                'global.tickers',
-            ];
+            streams = [withAuth && isFinexEnabled() && 'balances', 'global.tickers'];
 
             break;
         case 'p2p':
-            streams = [
-                withAuth && isFinexEnabled() && 'balances',
-                (withP2P && 'p2p.event'),
-            ];
+            streams = [withAuth && isFinexEnabled() && 'balances', withP2P && 'p2p.event'];
 
             break;
         case 'internal-transfer':
-            streams = [ withAuth && isFinexEnabled() && 'balances' ];
+            streams = [withAuth && isFinexEnabled() && 'balances'];
 
             break;
         case '':
-            streams = [ 'global.tickers' ];
+            streams = ['global.tickers'];
 
             break;
         case 'orders':
@@ -85,14 +67,9 @@ export const streamsBuilder = (withAuth: boolean, withP2P: boolean, market: Mark
             break;
     }
 
-    streams = [
-        ...streams,
-        (withAuth && 'order'),
-        (withAuth && 'trade'),
-        (withP2P && withAuth && 'p2p'),
-    ];
+    streams = [...streams, withAuth && 'order', withAuth && 'trade', withP2P && withAuth && 'p2p'];
 
-    return streams.filter(i => !!i);
+    return streams.filter((i) => !!i);
 };
 
 export const periodsMapNumber: { [pair: string]: number } = {
@@ -125,33 +102,25 @@ export const periodsMapString: { [pair: number]: string } = {
     10080: '1w',
 };
 
-export const periodStringToMinutes = (period: string): number => periodsMapNumber[period] || +DEFAULT_TRADING_VIEW_INTERVAL;
-export const periodMinutesToString = (period: number): string => periodsMapString[period] || periodsMapString[+DEFAULT_TRADING_VIEW_INTERVAL];
+export const periodStringToMinutes = (period: string): number =>
+    periodsMapNumber[period] || +DEFAULT_TRADING_VIEW_INTERVAL;
+export const periodMinutesToString = (period: number): string =>
+    periodsMapString[period] || periodsMapString[+DEFAULT_TRADING_VIEW_INTERVAL];
 
 export const marketKlineStreams = (marketId: string, periodString: string) => ({
-    channels: [
-        `${marketId}.kline-${periodString}`,
-    ],
+    channels: [`${marketId}.kline-${periodString}`],
 });
 
 export const marketStreams = (market: Market) => {
-    const channels = [
-        `${market.id}.trades`,
-    ];
+    const channels = [`${market.id}.trades`];
 
     if (incrementalOrderBook()) {
         return {
-            channels: [
-                ...channels,
-                `${market.id}.ob-inc`,
-            ],
+            channels: [...channels, `${market.id}.ob-inc`],
         };
     }
 
     return {
-        channels: [
-            ...channels,
-            `${market.id}.update`,
-        ],
+        channels: [...channels, `${market.id}.update`],
     };
 };

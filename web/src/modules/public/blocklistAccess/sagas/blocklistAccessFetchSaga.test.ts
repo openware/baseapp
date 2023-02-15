@@ -34,13 +34,10 @@ describe('blacklistAccessFetchSaga test', () => {
     };
 
     it('should send access token', async () => {
-        const expectedActions = [
-            sendAccessToken({ whitelink_token: '' }),
-            sendAccessTokenData(),
-        ];
+        const expectedActions = [sendAccessToken({ whitelink_token: '' }), sendAccessTokenData()];
         mockRequest();
 
-        const promise = new Promise<void>(resolve => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {
@@ -53,7 +50,6 @@ describe('blacklistAccessFetchSaga test', () => {
 
         return promise;
     });
-
 
     it('should trigger an error', async () => {
         const expectedActions = [
@@ -68,7 +64,7 @@ describe('blacklistAccessFetchSaga test', () => {
         ];
         mockNetworkError(mockAxios);
 
-        const promise = new Promise<void>(resolve => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {

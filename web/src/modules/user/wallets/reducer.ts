@@ -15,12 +15,12 @@ import {
     WALLETS_ERROR,
     WALLETS_FETCH,
     WALLETS_RESET,
-    WALLETS_WITHDRAW_CCY_DATA,
-    WALLETS_WITHDRAW_CCY_ERROR,
-    WALLETS_WITHDRAW_CCY_FETCH,
     WALLETS_USER_WITHDRAWALS_DATA,
     WALLETS_USER_WITHDRAWALS_ERROR,
     WALLETS_USER_WITHDRAWALS_FETCH,
+    WALLETS_WITHDRAW_CCY_DATA,
+    WALLETS_WITHDRAW_CCY_ERROR,
+    WALLETS_WITHDRAW_CCY_FETCH,
 } from './constants';
 import { Wallet, WalletAddress } from './types';
 
@@ -45,7 +45,7 @@ export interface WalletsState {
         loading: boolean;
         timestamp?: number;
         error?: CommonError;
-    }
+    };
 }
 
 export const initialWalletsState: WalletsState = {
@@ -63,33 +63,37 @@ export const initialWalletsState: WalletsState = {
         last_24_hours: '',
         last_1_month: '',
         loading: false,
-    }
+    },
 };
 
 const getUpdatedWalletsList = (list: Wallet[], payload: WalletAddress) => {
     if (list.length && payload.currencies?.length) {
-        return list.map(wallet => {
+        return list.map((wallet) => {
             if (payload.currencies.includes(wallet.currency)) {
                 let depositAddresses: WalletAddress[] = [];
                 let depositAddress: WalletAddress = null;
-                const walletDepositAddressExist = wallet.deposit_addresses?.findIndex(item => item.blockchain_key === payload.blockchain_key) !== -1;
+                const walletDepositAddressExist =
+                    wallet.deposit_addresses?.findIndex((item) => item.blockchain_key === payload.blockchain_key) !==
+                    -1;
 
                 if (payload.blockchain_key && !walletDepositAddressExist) {
-                    const newDepositAddress = [{
-                        address: payload.address,
-                        currencies: payload.currencies,
-                        blockchain_key: payload.blockchain_key,
-                    }];
+                    const newDepositAddress = [
+                        {
+                            address: payload.address,
+                            currencies: payload.currencies,
+                            blockchain_key: payload.blockchain_key,
+                        },
+                    ];
 
                     depositAddresses = [...wallet.deposit_addresses, ...newDepositAddress];
                 } else if (wallet.deposit_addresses && wallet.deposit_addresses.length && walletDepositAddressExist) {
-                    depositAddresses = wallet.deposit_addresses.map(address => {
+                    depositAddresses = wallet.deposit_addresses.map((address) => {
                         if (address.blockchain_key === payload.blockchain_key) {
                             depositAddress = {
                                 address: payload.address,
                                 currencies: payload.currencies,
                                 blockchain_key: payload.blockchain_key,
-                            }
+                            };
 
                             if (payload.state) {
                                 depositAddress = {
@@ -100,15 +104,17 @@ const getUpdatedWalletsList = (list: Wallet[], payload: WalletAddress) => {
 
                             return depositAddress;
                         }
-    
+
                         return address;
                     });
                 } else {
-                    depositAddresses = [{
-                        address: payload.address,
-                        currencies: payload.currencies,
-                        blockchain_key: payload.blockchain_key,
-                    }];
+                    depositAddresses = [
+                        {
+                            address: payload.address,
+                            currencies: payload.currencies,
+                            blockchain_key: payload.blockchain_key,
+                        },
+                    ];
                 }
 
                 return {
@@ -125,15 +131,15 @@ const getUpdatedWalletsList = (list: Wallet[], payload: WalletAddress) => {
 };
 
 const updatedList = (wallets: Wallet[], balances: any) => {
-    return wallets.map(wallet => {
+    return wallets.map((wallet) => {
         let updatedWallet = wallet;
         const payloadCurrencies = Object.keys(balances);
 
         if (payloadCurrencies.length) {
-            payloadCurrencies.some(value => {
+            payloadCurrencies.some((value) => {
                 const targetWallet = balances[value];
 
-                if (value === wallet.currency && (targetWallet && targetWallet[2] === wallet.account_type)) {
+                if (value === wallet.currency && targetWallet && targetWallet[2] === wallet.account_type) {
                     updatedWallet = {
                         ...updatedWallet,
                         balance: targetWallet[0] ? targetWallet[0] : updatedWallet.balance,
@@ -230,7 +236,10 @@ const walletsListReducer = (state: WalletsState['wallets'], action: WalletsActio
     }
 };
 
-const p2pWalletsListReducer = (state: WalletsState['p2pWallets'], action: WalletsAction): WalletsState['p2pWallets'] => {
+const p2pWalletsListReducer = (
+    state: WalletsState['p2pWallets'],
+    action: WalletsAction,
+): WalletsState['p2pWallets'] => {
     switch (action.type) {
         case P2P_WALLETS_FETCH:
             return {
@@ -263,7 +272,10 @@ const p2pWalletsListReducer = (state: WalletsState['p2pWallets'], action: Wallet
     }
 };
 
-const userWithdrawalsReducer = (state: WalletsState['userWithdrawals'], action: WalletsAction): WalletsState['userWithdrawals'] => {
+const userWithdrawalsReducer = (
+    state: WalletsState['userWithdrawals'],
+    action: WalletsAction,
+): WalletsState['userWithdrawals'] => {
     switch (action.type) {
         case WALLETS_USER_WITHDRAWALS_FETCH:
             return {
@@ -287,7 +299,7 @@ const userWithdrawalsReducer = (state: WalletsState['userWithdrawals'], action: 
         default:
             return state;
     }
-}
+};
 
 export const walletsReducer = (state = initialWalletsState, action: WalletsAction): WalletsState => {
     switch (action.type) {
@@ -327,7 +339,7 @@ export const walletsReducer = (state = initialWalletsState, action: WalletsActio
             return {
                 ...state,
                 userWithdrawals: userWithdrawalsReducer(userWithdrawalsState, action),
-            }
+            };
         case WALLETS_RESET:
             return {
                 ...state,

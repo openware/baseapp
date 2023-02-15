@@ -9,28 +9,23 @@ import { IntlProps } from '../../';
 import { Logo } from '../../components';
 import { MarketsTable } from '../../containers';
 import { toggleColorTheme } from '../../helpers';
-import {
-    RootState,
-    selectCurrentColorTheme,
-    selectUserLoggedIn,
-} from '../../modules';
-import { CustomizationSettingsInterface, LogoInterface } from '../../themes';
+import { RootState, selectCurrentColorTheme, selectUserLoggedIn } from '../../modules';
 
-import FeaturesExchangeIcon from 'src/assets/images/landing/features/Exchange.svg';
-import FeaturesTypesIcon from 'src/assets/images/landing/features/Types.svg';
-import FeaturesCustomizeIcon from 'src/assets/images/landing/features/Customize.svg';
-import FeaturesSecurityIcon from 'src/assets/images/landing/features/Security.svg';
-import FeaturesCommunityIcon from 'src/assets/images/landing/features/Community.svg';
 import FeaturesAPIIcon from 'src/assets/images/landing/features/API.svg';
+import FeaturesCommunityIcon from 'src/assets/images/landing/features/Community.svg';
+import FeaturesCustomizeIcon from 'src/assets/images/landing/features/Customize.svg';
+import FeaturesExchangeIcon from 'src/assets/images/landing/features/Exchange.svg';
+import FeaturesSecurityIcon from 'src/assets/images/landing/features/Security.svg';
+import FeaturesTypesIcon from 'src/assets/images/landing/features/Types.svg';
 
-import TelegramIcon from 'src/assets/images/landing/social/Telegram.svg';
+import CoinMarketIcon from 'src/assets/images/landing/social/CoinMarket.svg';
+import FacebookIcon from 'src/assets/images/landing/social/Facebook.svg';
 import LinkedInIcon from 'src/assets/images/landing/social/LinkedIn.svg';
+import MediumIcon from 'src/assets/images/landing/social/Medium.svg';
+import RedditIcon from 'src/assets/images/landing/social/Reddit.svg';
+import TelegramIcon from 'src/assets/images/landing/social/Telegram.svg';
 import TwitterIcon from 'src/assets/images/landing/social/Twitter.svg';
 import YouTubeIcon from 'src/assets/images/landing/social/YouTube.svg';
-import RedditIcon from 'src/assets/images/landing/social/Reddit.svg';
-import FacebookIcon from 'src/assets/images/landing/social/Facebook.svg';
-import MediumIcon from 'src/assets/images/landing/social/Medium.svg';
-import CoinMarketIcon from 'src/assets/images/landing/social/CoinMarket.svg';
 
 interface ReduxProps {
     isLoggedIn: boolean;
@@ -275,5 +270,5 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
 export const LandingScreen = compose(
     injectIntl,
     withRouter,
-    connect(mapStateToProps, null)
+    connect(mapStateToProps, null),
 )(Landing) as React.ComponentClass;

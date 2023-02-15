@@ -13,8 +13,10 @@ describe('blacklistCountryReducer', () => {
             ...initialBlocklistAccessState,
             loading: true,
             error: false,
-         };
-        expect(blocklistAccessReducer(initialBlocklistAccessState, actions.sendAccessToken({ whitelink_token: '' }))).toEqual(expectedState);
+        };
+        expect(
+            blocklistAccessReducer(initialBlocklistAccessState, actions.sendAccessToken({ whitelink_token: '' })),
+        ).toEqual(expectedState);
     });
 
     it('should handle SEND_BLOCKLIST_ACCESS_TOKEN_DATA', () => {
@@ -23,8 +25,10 @@ describe('blacklistCountryReducer', () => {
             loading: false,
             success: true,
             status: '',
-         };
-        expect(blocklistAccessReducer(initialBlocklistAccessState, actions.sendAccessTokenData())).toEqual(expectedState);
+        };
+        expect(blocklistAccessReducer(initialBlocklistAccessState, actions.sendAccessTokenData())).toEqual(
+            expectedState,
+        );
     });
 
     it('should handle SEND_BLOCKLIST_ACCESS_TOKEN_ERROR', () => {
@@ -33,7 +37,9 @@ describe('blacklistCountryReducer', () => {
             loading: false,
             error: true,
         };
-        expect(blocklistAccessReducer(initialBlocklistAccessState, actions.sendAccessTokenError(error))).toEqual(expectedState);
+        expect(blocklistAccessReducer(initialBlocklistAccessState, actions.sendAccessTokenError(error))).toEqual(
+            expectedState,
+        );
     });
 
     it('should handle SET_BLOCKLIST_STATUS', () => {
@@ -44,6 +50,8 @@ describe('blacklistCountryReducer', () => {
             ...initialBlocklistAccessState,
             status: payload.status,
         };
-        expect(blocklistAccessReducer(initialBlocklistAccessState, actions.setBlocklistStatus(payload))).toEqual(expectedState);
+        expect(blocklistAccessReducer(initialBlocklistAccessState, actions.setBlocklistStatus(payload))).toEqual(
+            expectedState,
+        );
     });
 });

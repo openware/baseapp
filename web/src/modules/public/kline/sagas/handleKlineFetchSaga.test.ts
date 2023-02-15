@@ -60,16 +60,20 @@ describe('Kline', () => {
     };
 
     const mockKline = () => {
-        mockAxios.onGet(`/public/markets/${fakePayload.market}/k-line?period=${fakePayload.resolution}&` +
-        `time_from=${getTimestampPeriod(fakePayload.from, fakePayload.resolution)}&` +
-        `time_to=${getTimestampPeriod(fakePayload.to, fakePayload.resolution)}`).reply(200, fakeResponse);
+        mockAxios
+            .onGet(
+                `/public/markets/${fakePayload.market}/k-line?period=${fakePayload.resolution}&` +
+                    `time_from=${getTimestampPeriod(fakePayload.from, fakePayload.resolution)}&` +
+                    `time_to=${getTimestampPeriod(fakePayload.to, fakePayload.resolution)}`,
+            )
+            .reply(200, fakeResponse);
     };
 
     it('should fetch kline in success flow', async () => {
         mockKline();
 
         const expectedActions = [klineFetch(fakePayload), klineData(fakeResponseData)];
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {
@@ -96,7 +100,7 @@ describe('Kline', () => {
                 },
             }),
         ];
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

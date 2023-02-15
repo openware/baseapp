@@ -115,7 +115,7 @@ describe('Helpers', () => {
     // emailValidation.js
     it('Rendering correct regular expression for email validation', () => {
         expect(helpers.EMAIL_REGEX).toEqual(
-            /^(?:[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+\.)*[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@(?:(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!\.)){0,61}[a-zA-Z0-9]?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!$)){0,61}[a-zA-Z0-9]?)|(?:\[(?:(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\]))$/
+            /^(?:[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+\.)*[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@(?:(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!\.)){0,61}[a-zA-Z0-9]?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!$)){0,61}[a-zA-Z0-9]?)|(?:\[(?:(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\]))$/,
         );
     });
 
@@ -132,7 +132,7 @@ describe('Helpers', () => {
     it('Should right format BCH address', () => {
         expect(helpers.formatCCYAddress('BTC', '')).toEqual('');
         expect(helpers.formatCCYAddress('BTC', '2NDJKBjTcoPRXTnkAbcyeqLwXQfdoeug2cL')).toEqual(
-            '2NDJKBjTcoPRXTnkAbcyeqLwXQfdoeug2cL'
+            '2NDJKBjTcoPRXTnkAbcyeqLwXQfdoeug2cL',
         );
         expect(helpers.formatCCYAddress('BCH', '')).toEqual('');
         expect(helpers.formatCCYAddress('BCH', '2NDJKBjTcoPRXTnkAbcyeqLwXQfdoeug2c0')).toEqual('');
@@ -335,16 +335,13 @@ describe('Helpers', () => {
         expect(helpers.getHistorySagaParam({ page: 0, limit: 10, type: 'withdraws' })).toBe('page=1&limit=10');
         expect(helpers.getHistorySagaParam({ page: 0, limit: 5, type: 'trades' })).toBe('page=1&limit=5');
         expect(helpers.getHistorySagaParam({ page: 0, currency: 'btc', type: 'deposits', limit: 6 })).toBe(
-            'page=1&currency=btc&limit=6'
+            'page=1&currency=btc&limit=6',
         );
         expect(helpers.getHistorySagaParam({ page: 0, currency: 'btc', type: 'withdraws', limit: 25 })).toBe(
-            'page=1&currency=btc&limit=25'
+            'page=1&currency=btc&limit=25',
         );
         expect(helpers.getHistorySagaParam({ page: 0, limit: 25, type: 'trades', market: 'btcusd' })).toBe(
-            'page=1&limit=25&market=btcusd'
-        );
-        expect(helpers.getHistorySagaParam({ page: 0, limit: 25, type: 'trades', time_from: '1557878400' })).toBe(
-            'page=1&limit=25&time_from=1557878400'
+            'page=1&limit=25&market=btcusd',
         );
         expect(
             helpers.getHistorySagaParam({
@@ -352,8 +349,16 @@ describe('Helpers', () => {
                 limit: 25,
                 type: 'trades',
                 time_from: '1557878400',
+            }),
+        ).toBe('page=1&limit=25&time_from=1557878400');
+        expect(
+            helpers.getHistorySagaParam({
+                page: 0,
+                limit: 25,
+                type: 'trades',
+                time_from: '1557878400',
                 time_to: '1557964799',
-            })
+            }),
         ).toBe('page=1&limit=25&time_from=1557878400&time_to=1557964799');
         expect(
             helpers.getHistorySagaParam({
@@ -363,7 +368,7 @@ describe('Helpers', () => {
                 market: 'btcusd',
                 time_from: '1557878400',
                 time_to: '1557964799',
-            })
+            }),
         ).toBe('page=1&limit=25&market=btcusd&time_from=1557878400&time_to=1557964799');
         expect(
             helpers.getHistorySagaParam({
@@ -372,7 +377,7 @@ describe('Helpers', () => {
                 type: 'trades',
                 time_from: '1557878400',
                 time_to: '1557964799',
-            })
+            }),
         ).toBe('page=1&limit=25&time_from=1557878400&time_to=1557964799');
     });
 
@@ -380,27 +385,27 @@ describe('Helpers', () => {
     it('Should return correct params', () => {
         expect(
             helpers.getUserAgent(
-                'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
-            )
+                'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
+            ),
         ).toBe('Chrome 71 Linux x86_64');
         expect(
             helpers.getUserAgent(
-                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
-            )
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
+            ),
         ).toBe('Chrome 71 Windows 10');
         expect(
             helpers.getUserAgent(
-                'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/73.0.3683.86 Chrome/73.0.3683.86 Safari/537.36'
-            )
+                'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/73.0.3683.86 Chrome/73.0.3683.86 Safari/537.36',
+            ),
         ).toBe('Chromium 73 Ubuntu ');
         expect(helpers.getUserAgent('PostmanRuntime/7.6.0')).toBe('PostmanRuntime/7.6.0');
         expect(
             helpers.getUserAgent(
-                'Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10.4; en; rv:1.9.0.19) Gecko/2011091218 Camino/2.0.9 (like Firefox/3.0.19)'
-            )
+                'Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10.4; en; rv:1.9.0.19) Gecko/2011091218 Camino/2.0.9 (like Firefox/3.0.19)',
+            ),
         ).toBe('Camino 2 Mac OS 10.4');
         expect(helpers.getUserAgent('Mozilla/4.0 (compatible; MSIE 5.0; Windows 95) Opera 6.01 [en]')).toBe(
-            'Opera 6 Windows 95'
+            'Opera 6 Windows 95',
         );
     });
 

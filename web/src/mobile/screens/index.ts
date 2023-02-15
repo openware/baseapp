@@ -2,7 +2,6 @@ export * from './ChangeForgottenPasswordScreen';
 export * from './ConfirmScreen';
 export * from './EmailVerificationScreen';
 export * from './ForgotPassword';
-export * from './ForgotPassword';
 export * from './Landing';
 export * from './Orders';
 export * from './Profile';

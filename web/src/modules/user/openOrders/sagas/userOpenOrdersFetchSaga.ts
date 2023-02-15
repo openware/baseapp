@@ -18,12 +18,14 @@ export function* userOpenOrdersFetchSaga(action: UserOpenOrdersFetch) {
         const list = yield call(API.get(ordersOptions), `/market/orders?${buildQueryString(payload)}`);
         yield put(userOpenOrdersData(list));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: userOpenOrdersError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: userOpenOrdersError,
+                },
+            }),
+        );
     }
 }

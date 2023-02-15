@@ -14,7 +14,7 @@ export const EmailVerificationMobileScreen: React.FC = () => {
                 isOpen={true}
                 onClose={() => history.push('/trading')}
                 title={intl.formatMessage({ id: 'page.header.signUp.modal.header' })}>
-                <EmailVerificationScreen/>
+                <EmailVerificationScreen />
             </Modal>
         </div>
     );

@@ -95,7 +95,10 @@ describe('P2P actions', () => {
     };
 
     it('should check offersFetch action creator', () => {
-        const expectedAction = { type: P2P_OFFERS_FETCH, payload: { page: 0, limit: 25, side: 'buy', base: '', quote: '' } };
+        const expectedAction = {
+            type: P2P_OFFERS_FETCH,
+            payload: { page: 0, limit: 25, side: 'buy', base: '', quote: '' },
+        };
         expect(actions.offersFetch({ page: 0, limit: 25, side: 'buy', base: '', quote: '' })).toEqual(expectedAction);
     });
 

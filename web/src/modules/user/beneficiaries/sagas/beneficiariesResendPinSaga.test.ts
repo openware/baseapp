@@ -56,7 +56,7 @@ describe('Beneficiaries resend pin', () => {
     it('should resend pin beneficiaries success flow', async () => {
         mockBeneficiariesResendPin();
 
-        const promise = new Promise<void>(resolve => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedBeneficiariesResendPinSuccess.length) {
@@ -72,7 +72,7 @@ describe('Beneficiaries resend pin', () => {
 
     it('should handle resend pin beneficiaries error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise<void>(resolve => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedBeneficiariesResendPinError.length) {

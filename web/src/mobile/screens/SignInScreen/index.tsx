@@ -7,7 +7,6 @@ import { selectSignInRequire2FA } from '../../../modules/user/auth';
 import { SignInScreen } from '../../../screens/SignInScreen';
 import { Modal } from '../../components';
 
-
 const SignInMobileScreen: React.FC = () => {
     const require2FA = useSelector(selectSignInRequire2FA);
     const history = useHistory();
@@ -18,18 +17,18 @@ const SignInMobileScreen: React.FC = () => {
         'cr-mobile-kyc': require2FA,
     });
 
-    return <div className={className}>
-        <Modal
-            isOpen={true}
-            onClose={() => history.push('/trading')}
-            onBack={() => !require2FA && history.push('/signup')}
-            backTitle={intl.formatMessage({ id: 'page.body.landing.header.button3' })}
-            title={intl.formatMessage(title)}>
-            <SignInScreen/>
-        </Modal>
-    </div>;
+    return (
+        <div className={className}>
+            <Modal
+                isOpen={true}
+                onClose={() => history.push('/trading')}
+                onBack={() => !require2FA && history.push('/signup')}
+                backTitle={intl.formatMessage({ id: 'page.body.landing.header.button3' })}
+                title={intl.formatMessage(title)}>
+                <SignInScreen />
+            </Modal>
+        </div>
+    );
 };
 
-export {
-    SignInMobileScreen,
-};
+export { SignInMobileScreen };

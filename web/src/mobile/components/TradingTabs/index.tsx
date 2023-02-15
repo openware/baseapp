@@ -21,26 +21,22 @@ const TradingTabsComponent: React.FC = () => {
     const renderTabs = () => [
         {
             content: currentTabIndex === 0 ? <CreateOrder currentOrderTypeIndex={currentOrderType} /> : null,
-            label: intl.formatMessage({id: 'page.mobile.tradingTabs.label.createOrder'}),
+            label: intl.formatMessage({ id: 'page.mobile.tradingTabs.label.createOrder' }),
         },
         {
             content: currentTabIndex === 1 ? <Charts redirectToCreateOrder={redirectToCreateOrder} /> : null,
-            label: intl.formatMessage({id: 'page.mobile.tradingTabs.label.charts'}),
+            label: intl.formatMessage({ id: 'page.mobile.tradingTabs.label.charts' }),
         },
         {
             content: currentTabIndex === 2 ? <Orders withDropdownSelect /> : null,
-            label: intl.formatMessage({id: 'page.mobile.tradingTabs.label.orders'}),
+            label: intl.formatMessage({ id: 'page.mobile.tradingTabs.label.orders' }),
             disabled: !userLoggedIn,
         },
     ];
 
     return (
         <div className="pg-mobile-trading-tabs">
-            <TabPanel
-                panels={renderTabs()}
-                currentTabIndex={currentTabIndex}
-                onCurrentTabChange={setCurrentTabIndex}
-            />
+            <TabPanel panels={renderTabs()} currentTabIndex={currentTabIndex} onCurrentTabChange={setCurrentTabIndex} />
         </div>
     );
 };

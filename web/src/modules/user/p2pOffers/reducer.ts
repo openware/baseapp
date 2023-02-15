@@ -1,24 +1,24 @@
 import { defaultStorageLimit } from 'src/api';
 import { sliceArray } from 'src/helpers';
 import { Offer } from 'src/modules';
-import { insertOrUpdate } from './helpers';
 import { CommonError } from '../../types';
 import { OfferNestedOrders, P2POffersActions } from './actions';
 import {
+    P2P_CANCEL_OFFER_DATA,
+    P2P_CANCEL_OFFER_ERROR,
+    P2P_CANCEL_OFFER_FETCH,
     P2P_CREATE_OFFER_DATA,
     P2P_CREATE_OFFER_ERROR,
     P2P_CREATE_OFFER_FETCH,
-    P2P_USER_OFFER_ORDERS_DATA,
-    P2P_USER_OFFER_ORDERS_ERROR,
-    P2P_USER_OFFER_ORDERS_FETCH,
     P2P_USER_OFFERS_DATA,
     P2P_USER_OFFERS_ERROR,
     P2P_USER_OFFERS_FETCH,
     P2P_USER_OFFERS_UPDATE,
-    P2P_CANCEL_OFFER_DATA,
-    P2P_CANCEL_OFFER_ERROR,
-    P2P_CANCEL_OFFER_FETCH,
+    P2P_USER_OFFER_ORDERS_DATA,
+    P2P_USER_OFFER_ORDERS_ERROR,
+    P2P_USER_OFFER_ORDERS_FETCH,
 } from './constants';
+import { insertOrUpdate } from './helpers';
 
 export interface P2POffersState {
     createOffer: {
@@ -93,7 +93,7 @@ export const offersFetchReducer = (state: P2POffersState['offers'], action: P2PO
                 list: sliceArray(action.payload.list, defaultStorageLimit()),
                 total: action.payload.total,
                 fetching: false,
-                success: true,                
+                success: true,
             };
         case P2P_USER_OFFERS_UPDATE:
             return {

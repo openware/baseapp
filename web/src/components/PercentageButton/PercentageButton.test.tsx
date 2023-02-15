@@ -22,11 +22,11 @@ describe('Close Button', () => {
     });
 
     it('should render', () => {
-       expect(wrapper).toMatchSnapshot();
+        expect(wrapper).toMatchSnapshot();
     });
 
     it('should call onClick callback', () => {
-       wrapper.find('.cr-button-percentage-100').simulate('click');
-       expect(onClickSpy.calledOnce).toBeTruthy();
+        wrapper.find('.cr-button-percentage-100').simulate('click');
+        expect(onClickSpy.calledOnce).toBeTruthy();
     });
 });

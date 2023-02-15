@@ -52,7 +52,6 @@ const ifUserIsLoggedIn = () => {
     return true;
 };
 
-
 export const defaultUser = {
     username: '',
     email: '',
@@ -98,7 +97,7 @@ const passwordChangeReducer = (state: ProfileState['passwordChange'], action: Pr
                 error: undefined,
             };
         case PROFILE_CHANGE_PASSWORD_ERROR:
-            return  {
+            return {
                 ...state,
                 error: action.error,
             };

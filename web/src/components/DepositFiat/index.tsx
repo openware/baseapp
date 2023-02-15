@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-
 export interface DepositFiatProps {
     /**
      * Sets helper description
@@ -14,8 +13,7 @@ export interface DepositFiatProps {
     uid: string;
 }
 
-
-const bankData = uid => [
+const bankData = (uid) => [
     {
         key: <FormattedMessage id="page.body.wallets.tabs.deposit.fiat.bankName" />,
         value: 'Diamant Bank',
@@ -43,11 +41,7 @@ const bankData = uid => [
  * deposit
  */
 const DepositFiat: React.FunctionComponent<DepositFiatProps> = (props: DepositFiatProps) => {
-    const {
-        description,
-        title,
-        uid,
-    } = props;
+    const { description, title, uid } = props;
 
     const renderDetails = (detail, index: number) => {
         return (
@@ -67,6 +61,4 @@ const DepositFiat: React.FunctionComponent<DepositFiatProps> = (props: DepositFi
     );
 };
 
-export {
-    DepositFiat,
-};
+export { DepositFiat };

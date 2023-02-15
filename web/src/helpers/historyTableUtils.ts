@@ -67,7 +67,7 @@ export const stateColorMapping = {
         color: 'var(--system-yellow)',
         text: 'Prepared',
     },
-}
+};
 
 export const setDepositStatusColor = (status: string): string => depositColorMapping[status];
 
@@ -79,4 +79,4 @@ export const setTransferStatusColor = (status: string): string => transferColorM
 
 export const setOfferStatusColor = (status: string): string => offersColorMapping[status];
 
-export const setStateType = (status: string) => stateColorMapping[status] || {color: '', text: ''};
+export const setStateType = (status: string) => stateColorMapping[status] || { color: '', text: '' };

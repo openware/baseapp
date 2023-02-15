@@ -10,11 +10,7 @@ export const DocumentationEndpoints: React.FC = () => {
         return (
             <div className="pg-documentation-item pg-documentation-endpoints" id="endpoints">
                 {Object.keys(documentation?.paths).map((key, index) => (
-                    <DocumentationEndpointsItem
-                        key={key}
-                        title={key}
-                        item={documentation?.paths[key]}
-                    />
+                    <DocumentationEndpointsItem key={key} title={key} item={documentation?.paths[key]} />
                 ))}
             </div>
         );

@@ -17,7 +17,7 @@ export const getCountdownDate = (expirationDate, plusTime?) => {
     const timeNow = new Date().getTime();
     let timeToExpire = countdownDate - timeNow;
     if (plusTime === '5m') {
-        timeToExpire = countdownDate - timeNow + (5 * 60 * 1000);
+        timeToExpire = countdownDate - timeNow + 5 * 60 * 1000;
     }
     const hours = Math.floor(timeToExpire / (1000 * 60 * 60));
     const minutes = Math.floor((timeToExpire % (1000 * 60 * 60)) / (1000 * 60));

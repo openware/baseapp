@@ -7,13 +7,7 @@ import { useHistory } from 'react-router';
 import { CustomInput, PasswordStrengthMeter } from '../';
 import { isUsernameEnabled } from '../../api';
 import { captchaType, passwordMinEntropy } from '../../api/config';
-import {
-    EMAIL_REGEX,
-    ERROR_LONG_USERNAME,
-    ERROR_SHORT_USERNAME,
-    PASSWORD_REGEX,
-    USERNAME_REGEX,
-} from '../../helpers';
+import { EMAIL_REGEX, ERROR_LONG_USERNAME, ERROR_SHORT_USERNAME, PASSWORD_REGEX, USERNAME_REGEX } from '../../helpers';
 import { GeetestCaptchaResponse } from '../../modules';
 import { selectMobileDeviceState } from '../../modules/public/globalSettings';
 
@@ -127,9 +121,14 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
     const disableButton = React.useMemo((): boolean => {
         const captchaTypeValue = captchaType();
 
-        if (!hasConfirmed || isLoading || !email.match(EMAIL_REGEX) || !password || !confirmPassword ||
-            (isUsernameEnabled() && !username.match(USERNAME_REGEX))) {
-
+        if (
+            !hasConfirmed ||
+            isLoading ||
+            !email.match(EMAIL_REGEX) ||
+            !password ||
+            !confirmPassword ||
+            (isUsernameEnabled() && !username.match(USERNAME_REGEX))
+        ) {
             return true;
         }
 
@@ -225,7 +224,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
                 handleSubmitForm();
             }
         },
-        [handleSubmitForm, isValidForm, validateForm]
+        [handleSubmitForm, isValidForm, validateForm],
     );
 
     const handleEnterPress = React.useCallback(
@@ -236,7 +235,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
                 handleClick();
             }
         },
-        [handleClick]
+        [handleClick],
     );
 
     const renderUsernameError = (nick: string) => {
@@ -283,8 +282,8 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
                         <div
                             className={cr('cr-sign-up-form__group', {
                                 'cr-sign-up-form__group--focused': usernameFocused,
-                                'cr-sign-up-form__group--errored': username.length &&
-                                !usernameFocused && !username.match(USERNAME_REGEX),
+                                'cr-sign-up-form__group--errored':
+                                    username.length && !usernameFocused && !username.match(USERNAME_REGEX),
                             })}>
                             <CustomInput
                                 type="text"
@@ -299,9 +298,7 @@ const SignUpFormComponent: React.FC<SignUpFormProps> = ({
                                 autoFocus={!isMobileDevice}
                             />
                             {!username.match(USERNAME_REGEX) && !usernameFocused && username.length ? (
-                                <div className="cr-sign-up-form__error">
-                                    {renderUsernameError(username)}
-                                </div>
+                                <div className="cr-sign-up-form__error">{renderUsernameError(username)}</div>
                             ) : null}
                         </div>
                     ) : null}

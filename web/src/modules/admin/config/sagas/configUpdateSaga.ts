@@ -1,7 +1,7 @@
 import { call, put } from 'redux-saga/effects';
 import { sendError } from '../../../';
-import { getCsrfToken } from '../../../../helpers';
 import { API, RequestOptions } from '../../../../api';
+import { getCsrfToken } from '../../../../helpers';
 import { ConfigUpdate, configUpdateData, configUpdateError } from '../actions';
 
 const configUpdateOptions = (csrfToken?: string): RequestOptions => {
@@ -23,12 +23,14 @@ export function* configUpdateSaga(action: ConfigUpdate) {
         yield call(API.put(configUpdateOptions(getCsrfToken())), `/admin/${action.payload.component}/secret`, payload);
         yield put(configUpdateData(action.payload));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: configUpdateError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: configUpdateError,
+                },
+            }),
+        );
     }
 }

@@ -1,8 +1,8 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { rootSaga, sendError } from '../../..';
+import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { CommonError } from '../../../types';
 import { p2pCurrenciesData, p2pCurrenciesError, p2pCurrenciesFetch } from '../actions';
 import { P2PCurrency } from '../types';
@@ -45,10 +45,7 @@ describe('P2P Currencies Fetch', () => {
         message: ['Server error'],
     };
 
-    const expectedP2PCurrenciesActionsFetch = [
-        p2pCurrenciesFetch(),
-        p2pCurrenciesData(fakeP2PCurrenciesArray),
-    ];
+    const expectedP2PCurrenciesActionsFetch = [p2pCurrenciesFetch(), p2pCurrenciesData(fakeP2PCurrenciesArray)];
 
     const expectedP2PCurrenciesActionsError = [
         p2pCurrenciesFetch(),
@@ -63,7 +60,7 @@ describe('P2P Currencies Fetch', () => {
 
     it('should fetch p2pCurrencies in success flow', async () => {
         mockP2PCurrencies();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedP2PCurrenciesActionsFetch.length) {
@@ -79,7 +76,7 @@ describe('P2P Currencies Fetch', () => {
 
     it('should trigger fetch p2pCurrencies error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedP2PCurrenciesActionsError.length) {

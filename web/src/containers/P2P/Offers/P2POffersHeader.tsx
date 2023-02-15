@@ -22,15 +22,7 @@ export const P2POffersHeader: FC<Props> = (props: Props): ReactElement => {
     const { formatMessage } = useIntl();
     const history = useHistory();
 
-    const {
-        onClickSideTab,
-        paymentsList,
-        setPayment,
-        side,
-        fiatCurrencies,
-        setFiatCurrency,
-        fiatCurrency,
-    } = props;
+    const { onClickSideTab, paymentsList, setPayment, side, fiatCurrencies, setFiatCurrency, fiatCurrency } = props;
 
     const onCreateClick = React.useCallback(() => {
         history.push('/create-offer');
@@ -43,47 +35,44 @@ export const P2POffersHeader: FC<Props> = (props: Props): ReactElement => {
                     <Button
                         onClick={() => onClickSideTab('buy')}
                         size="lg"
-                        variant={side === 'buy' ? 'success' : 'outline-success'}
-                    >
+                        variant={side === 'buy' ? 'success' : 'outline-success'}>
                         {formatMessage({ id: 'page.body.p2p.tabs.buy' })}
                     </Button>
                     <Button
                         onClick={() => onClickSideTab('sell')}
                         size="lg"
-                        variant={side === 'sell' ? 'danger' : 'outline-danger'}
-
-                    >
+                        variant={side === 'sell' ? 'danger' : 'outline-danger'}>
                         {formatMessage({ id: 'page.body.p2p.tabs.sell' })}
                     </Button>
                 </div>
                 {fiatCurrencies.length > 1 && (
                     <div className="cr-p2p-header__dp">
-                        <div className="cr-p2p-header__dp-label">{formatMessage({ id: 'page.body.p2p.dropdown.fiat' })}</div>
+                        <div className="cr-p2p-header__dp-label">
+                            {formatMessage({ id: 'page.body.p2p.dropdown.fiat' })}
+                        </div>
                         <DropdownComponent
                             className="cr-p2p-header__dp-dropdown"
                             list={fiatCurrencies}
-                            onSelect={value => setFiatCurrency(fiatCurrencies[value])}
+                            onSelect={(value) => setFiatCurrency(fiatCurrencies[value])}
                             placeholder={fiatCurrency}
                         />
                     </div>
                 )}
                 <div className="cr-p2p-header__dp">
-                    <div className="cr-p2p-header__dp-label">{formatMessage({ id: 'page.body.p2p.dropdown.payments' })}</div>
+                    <div className="cr-p2p-header__dp-label">
+                        {formatMessage({ id: 'page.body.p2p.dropdown.payments' })}
+                    </div>
                     <DropdownComponent
                         className="cr-p2p-header__dp-dropdown"
                         list={paymentsList}
-                        onSelect={value => setPayment(paymentsList[value])}
+                        onSelect={(value) => setPayment(paymentsList[value])}
                     />
                 </div>
             </div>
             <div className="cr-p2p-header__action">
-                <Button
-                    onClick={onCreateClick}
-                    size="lg"
-                    variant="primary"
-                >
+                <Button onClick={onCreateClick} size="lg" variant="primary">
                     <span>{formatMessage({ id: 'page.body.p2p.tabs.create' })}</span>
-                    <PlusIcon className="icon"/>
+                    <PlusIcon className="icon" />
                 </Button>
             </div>
         </div>

@@ -9,17 +9,17 @@ import {
     MARKETS_TICKERS_ERROR,
     MARKETS_TICKERS_FETCH,
     MARKETS_TICKERS_PUSH,
-    MARKET_PRICE_FETCH,
     MARKET_PRICE_DATA,
     MARKET_PRICE_ERROR,
+    MARKET_PRICE_FETCH,
 } from './constants';
-import { Market, Ticker, TickerEvent, MarketPriceInterface } from './types';
+import { Market, MarketPriceInterface, Ticker, TickerEvent } from './types';
 
 export interface MarketsFetch {
     type: typeof MARKETS_FETCH;
     payload?: {
         type: string;
-    }
+    };
 }
 
 export interface MarketsData {
@@ -84,7 +84,7 @@ export interface MarketPriceError {
 }
 
 export type MarketsAction =
-    MarketsFetch
+    | MarketsFetch
     | MarketsData
     | MarketsError
     | MarketsTickersFetch
@@ -111,17 +111,15 @@ export const marketsError = (error: CommonError): MarketsError => ({
     error,
 });
 
-export const setCurrentMarket =
-    (payload: SetCurrentMarket['payload']): SetCurrentMarket => ({
-        type: MARKETS_SET_CURRENT_MARKET,
-        payload,
-    });
+export const setCurrentMarket = (payload: SetCurrentMarket['payload']): SetCurrentMarket => ({
+    type: MARKETS_SET_CURRENT_MARKET,
+    payload,
+});
 
-export const setCurrentMarketIfUnset =
-    (payload: SetCurrentMarketIfUnset['payload']): SetCurrentMarketIfUnset => ({
-        type: MARKETS_SET_CURRENT_MARKET_IFUNSET,
-        payload,
-    });
+export const setCurrentMarketIfUnset = (payload: SetCurrentMarketIfUnset['payload']): SetCurrentMarketIfUnset => ({
+    type: MARKETS_SET_CURRENT_MARKET_IFUNSET,
+    payload,
+});
 
 export const marketsTickersFetch = (): MarketsTickersFetch => ({
     type: MARKETS_TICKERS_FETCH,

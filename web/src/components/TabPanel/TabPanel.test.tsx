@@ -37,8 +37,7 @@ const defaultProps: TabPanelProps = {
     currentTabIndex: 0,
 };
 
-const setup = (props: Partial<TabPanelProps> = {}) =>
-    shallow(<TabPanel {...{ ...defaultProps, ...props }} />);
+const setup = (props: Partial<TabPanelProps> = {}) => shallow(<TabPanel {...{ ...defaultProps, ...props }} />);
 
 describe('TabPanel', () => {
     let wrapper: ShallowWrapper;
@@ -84,9 +83,7 @@ describe('TabPanel', () => {
         wrapper = setup({
             panels: [
                 {
-                    content: (
-                        <p>Deposit</p>
-                    ),
+                    content: <p>Deposit</p>,
                     disabled: true,
                     label: 'Deposit',
                 },
@@ -101,9 +98,7 @@ describe('TabPanel', () => {
         wrapper = setup({
             panels: [
                 {
-                    content: (
-                        <p>Deposit</p>
-                    ),
+                    content: <p>Deposit</p>,
                     hidden: true,
                     label: 'Deposit',
                 },

@@ -8,7 +8,7 @@ import {
     UserOfferOrdersFetch,
     userOffersData,
     userOffersError,
-    UserOffersFetch
+    UserOffersFetch,
 } from '../actions';
 
 const config: RequestOptions = {
@@ -22,13 +22,15 @@ export function* userOffersSaga(action: UserOffersFetch) {
 
         yield put(userOffersData({ list: data, total: headers.total }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: userOffersError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: userOffersError,
+                },
+            }),
+        );
     }
 }
 
@@ -38,12 +40,14 @@ export function* userOfferOrdersSaga(action: UserOfferOrdersFetch) {
 
         yield put(userOfferOrdersData(data));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: userOfferOrdersError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: userOfferOrdersError,
+                },
+            }),
+        );
     }
 }

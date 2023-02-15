@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { ChevronIcon } from '../../assets/images/ChevronIcon';
 import { convertToString } from '../../helpers';
@@ -44,7 +44,6 @@ export interface DropdownComponentProps {
     selectedValue?: string;
 }
 
-
 /**
  *  Cryptobase Dropdown that overrides default dropdown with list of options.
  */
@@ -56,9 +55,13 @@ export const DropdownComponent = (props: DropdownComponentProps) => {
     const { list, className, placeholder, clear, iconsList, onSelect } = props;
     const defaultPlaceholder = list[0];
 
-    const cx = useMemo(() => classnames('cr-dropdown', className, {
-        'cr-dropdown--default': selected === placeholder,
-    }), [selected, placeholder, className]);
+    const cx = useMemo(
+        () =>
+            classnames('cr-dropdown', className, {
+                'cr-dropdown--default': selected === placeholder,
+            }),
+        [selected, placeholder, className],
+    );
 
     useEffect(() => {
         if (clear !== false) {
@@ -76,22 +79,32 @@ export const DropdownComponent = (props: DropdownComponentProps) => {
         }
     }, [iconsList, props.selectedValue]);
 
-    const handleSelect = useCallback((elem: DropdownElem, index: number) => {
-        onSelect && onSelect(index);
-        setSelected(convertToString(elem));
-        iconsList && setSelectedIcon(iconsList[index]);
-    }, [iconsList, onSelect]);
+    const handleSelect = useCallback(
+        (elem: DropdownElem, index: number) => {
+            onSelect && onSelect(index);
+            setSelected(convertToString(elem));
+            iconsList && setSelectedIcon(iconsList[index]);
+        },
+        [iconsList, onSelect],
+    );
 
-    const renderElem = useCallback((elem: DropdownElem, index: number) => {
-        return  (
-            <Dropdown.Item
-                key={index}
-                onSelect={() => handleSelect(elem, index)}
-            >
-                {iconsList ? <div>{iconsList[index]}{elem}</div> : elem}
-            </Dropdown.Item>
-        );
-    }, [iconsList, handleSelect]);
+    const renderElem = useCallback(
+        (elem: DropdownElem, index: number) => {
+            return (
+                <Dropdown.Item key={index} onSelect={() => handleSelect(elem, index)}>
+                    {iconsList ? (
+                        <div>
+                            {iconsList[index]}
+                            {elem}
+                        </div>
+                    ) : (
+                        elem
+                    )}
+                </Dropdown.Item>
+            );
+        },
+        [iconsList, handleSelect],
+    );
 
     useEffect(() => {
         if (clear !== false) {
@@ -102,7 +115,14 @@ export const DropdownComponent = (props: DropdownComponentProps) => {
 
     const renderSelectedItem = useMemo(() => {
         if (selected) {
-            return iconsList ? <div>{selectedIcon}{selected}</div> : selected;
+            return iconsList ? (
+                <div>
+                    {selectedIcon}
+                    {selected}
+                </div>
+            ) : (
+                selected
+            );
         }
 
         return placeholder;
@@ -115,9 +135,7 @@ export const DropdownComponent = (props: DropdownComponentProps) => {
                     {renderSelectedItem}
                     <ChevronIcon className="cr-dropdown__arrow" />
                 </Dropdown.Toggle>
-                <Dropdown.Menu>
-                    {list.map(renderElem)}
-                </Dropdown.Menu>
+                <Dropdown.Menu>{list.map(renderElem)}</Dropdown.Menu>
             </Dropdown>
         </div>
     );

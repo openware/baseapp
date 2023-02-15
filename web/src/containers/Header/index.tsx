@@ -68,7 +68,7 @@ class Head extends React.Component<Props> {
         return (
             <header className={`pg-header`}>
                 <div className={`pg-container pg-header__content ${tradingCls}`}>
-                    {!useSharedLayout() &&
+                    {!useSharedLayout() && (
                         <>
                             <div
                                 className={`pg-sidebar__toggler ${mobileWallet && 'pg-sidebar__toggler-mobile'}`}
@@ -81,7 +81,7 @@ class Head extends React.Component<Props> {
                                 <Logo />
                             </div>
                         </>
-                    }
+                    )}
                     {this.renderMarketToggler()}
                     <div className="pg-header__location">
                         {mobileWallet ? <span>{mobileWallet}</span> : <span>{location.pathname.split('/')[1]}</span>}
@@ -167,5 +167,5 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispa
 export const Header = compose(
     injectIntl,
     withRouter,
-    connect(mapStateToProps, mapDispatchToProps)
+    connect(mapStateToProps, mapDispatchToProps),
 )(Head) as React.ComponentClass;

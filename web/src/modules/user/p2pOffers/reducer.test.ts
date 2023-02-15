@@ -1,7 +1,7 @@
 import { Offer } from 'src/modules';
 import { CommonError } from '../../types';
 import * as actions from './actions';
-import { p2pOffersReducer, initialP2POffersState } from './reducer';
+import { initialP2POffersState, p2pOffersReducer } from './reducer';
 
 describe('User P2P Offers reducer', () => {
     const fakeOffersArray: Offer[] = [
@@ -81,7 +81,9 @@ describe('User P2P Offers reducer', () => {
             },
         };
 
-        expect(p2pOffersReducer(initialP2POffersState, actions.userOffersFetch({ page: 0, limit: 1, state: '' }))).toEqual(expectedState);
+        expect(
+            p2pOffersReducer(initialP2POffersState, actions.userOffersFetch({ page: 0, limit: 1, state: '' })),
+        ).toEqual(expectedState);
     });
 
     it('should handle userOffersData', () => {
@@ -95,9 +97,11 @@ describe('User P2P Offers reducer', () => {
                 page: 0,
                 total: 2,
             },
-         };
+        };
 
-        expect(p2pOffersReducer(initialP2POffersState, actions.userOffersData({ list: fakeOffersArray, total: 2 }))).toEqual(expectedState);
+        expect(
+            p2pOffersReducer(initialP2POffersState, actions.userOffersData({ list: fakeOffersArray, total: 2 })),
+        ).toEqual(expectedState);
     });
 
     it('should handle userOffersError', () => {
@@ -126,7 +130,9 @@ describe('User P2P Offers reducer', () => {
             },
         };
 
-        expect(p2pOffersReducer(initialP2POffersState, actions.createOffer(fakeCreateOfferPayload))).toEqual(expectedState);
+        expect(p2pOffersReducer(initialP2POffersState, actions.createOffer(fakeCreateOfferPayload))).toEqual(
+            expectedState,
+        );
     });
 
     it('should handle createOfferData', () => {
@@ -137,7 +143,7 @@ describe('User P2P Offers reducer', () => {
                 loading: false,
                 success: true,
             },
-         };
+        };
 
         expect(p2pOffersReducer(initialP2POffersState, actions.createOfferData())).toEqual(expectedState);
     });
@@ -166,7 +172,9 @@ describe('User P2P Offers reducer', () => {
             },
         };
 
-        expect(p2pOffersReducer(initialP2POffersState, actions.cancelOffer(fakeOfferCancelPayload))).toEqual(expectedState);
+        expect(p2pOffersReducer(initialP2POffersState, actions.cancelOffer(fakeOfferCancelPayload))).toEqual(
+            expectedState,
+        );
     });
 
     it('should handle cancelOfferData', () => {
@@ -178,9 +186,11 @@ describe('User P2P Offers reducer', () => {
                 loading: false,
                 success: true,
             },
-         };
+        };
 
-        expect(p2pOffersReducer(initialP2POffersState, actions.cancelOfferData(fakeOffersArray))).toEqual(expectedState);
+        expect(p2pOffersReducer(initialP2POffersState, actions.cancelOfferData(fakeOffersArray))).toEqual(
+            expectedState,
+        );
     });
 
     it('should handle cancelOfferError', () => {

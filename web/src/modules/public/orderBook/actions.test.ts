@@ -94,8 +94,15 @@ describe('Orderbook/MarketDepth actions', () => {
 
     it('should check depthData action creator', () => {
         const fakeDepth = {
-            asks: [['0.99', '1'], ['0.98', '20']],
-            bids: [['0.50', '0.041'], ['0.49', '0.5'], ['0.26', '25']],
+            asks: [
+                ['0.99', '1'],
+                ['0.98', '20'],
+            ],
+            bids: [
+                ['0.50', '0.041'],
+                ['0.49', '0.5'],
+                ['0.26', '25'],
+            ],
             loading: false,
         };
         const expectedAction = { type: DEPTH_DATA, payload: fakeDepth };
@@ -105,8 +112,15 @@ describe('Orderbook/MarketDepth actions', () => {
     it('should check depthDataSnapshot action creator', () => {
         const fakeDepth = {
             sequence: 13,
-            asks: [['0.99', '1'], ['0.98', '20']],
-            bids: [['0.50', '0.041'], ['0.49', '0.5'], ['0.26', '25']],
+            asks: [
+                ['0.99', '1'],
+                ['0.98', '20'],
+            ],
+            bids: [
+                ['0.50', '0.041'],
+                ['0.49', '0.5'],
+                ['0.26', '25'],
+            ],
             loading: false,
         };
         const expectedAction = { type: DEPTH_DATA_SNAPSHOT, payload: fakeDepth };

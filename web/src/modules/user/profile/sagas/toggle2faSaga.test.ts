@@ -27,7 +27,7 @@ describe('Module: Toggle 2fa', () => {
         message: ['Server error'],
     };
 
-    const fakeCredentials =  {
+    const fakeCredentials = {
         code: 'code',
         enable: true,
     };
@@ -36,11 +36,7 @@ describe('Module: Toggle 2fa', () => {
         mockAxios.onPost('/resource/otp/enable').reply(200);
     };
 
-    const expectedActionsFetch = [
-        toggle2faFetch(fakeCredentials),
-        toggle2faData(),
-        toggleUser2fa(),
-    ];
+    const expectedActionsFetch = [toggle2faFetch(fakeCredentials), toggle2faData(), toggleUser2fa()];
 
     const expectedActionsError = [
         toggle2faFetch(fakeCredentials),
@@ -55,7 +51,7 @@ describe('Module: Toggle 2fa', () => {
 
     it('should change password in success flow', async () => {
         mockToggle2fa();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -72,7 +68,7 @@ describe('Module: Toggle 2fa', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

@@ -48,7 +48,7 @@ const handleRemoveExponent = (value: DecimalProps['children']) => {
         }
 
         // eslint-disable-next-line
-        return result + str.replace(/^\-/,'');
+        return result + str.replace(/^\-/, '');
     }
 
     power -= str.length;
@@ -99,7 +99,9 @@ class Decimal extends React.Component<DecimalProps> {
         }
 
         if (fmtVal !== '' && fmtVal !== 0) {
-            result = handleRemoveExponent(Number(`${Math.floor(Number(`${handleRemoveExponent(fmtVal)}e${precision}`))}e-${precision}`));
+            result = handleRemoveExponent(
+                Number(`${Math.floor(Number(`${handleRemoveExponent(fmtVal)}e${precision}`))}e-${precision}`),
+            );
         }
 
         if (result.indexOf('.') === -1 && precision > 0) {
@@ -115,11 +117,21 @@ class Decimal extends React.Component<DecimalProps> {
         return isPositive ? result : `-${result}`;
     }
 
-    public static getNumberBeforeDot(value: DecimalProps['children'], fixed: number, thousSep?: string, floatSep?: string) {
+    public static getNumberBeforeDot(
+        value: DecimalProps['children'],
+        fixed: number,
+        thousSep?: string,
+        floatSep?: string,
+    ) {
         return Decimal.format(value, 0, thousSep, floatSep);
     }
 
-    public static getNumberAfterDot(value: DecimalProps['children'], fixed: number, thousSep?: string, floatSep?: string) {
+    public static getNumberAfterDot(
+        value: DecimalProps['children'],
+        fixed: number,
+        thousSep?: string,
+        floatSep?: string,
+    ) {
         if (fixed === 0) {
             return;
         }
@@ -135,27 +147,31 @@ class Decimal extends React.Component<DecimalProps> {
     }
 
     public render() {
-        const {
-            children,
-            fixed,
-            prevValue,
-            thousSep,
-            floatSep,
-        } = this.props;
+        const { children, fixed, prevValue, thousSep, floatSep } = this.props;
 
         if (prevValue) {
             return this.highlightNumbers(children, prevValue, fixed, thousSep, floatSep);
         } else {
             return (
                 <React.Fragment>
-                    <span style={{ color: this.props.color }}>{Decimal.getNumberBeforeDot(children, fixed, thousSep, floatSep)}</span>
-                    <span style={{ color: this.props.color }} className="cr-decimal__opacity">{Decimal.getNumberAfterDot(children, fixed)}</span>
+                    <span style={{ color: this.props.color }}>
+                        {Decimal.getNumberBeforeDot(children, fixed, thousSep, floatSep)}
+                    </span>
+                    <span style={{ color: this.props.color }} className="cr-decimal__opacity">
+                        {Decimal.getNumberAfterDot(children, fixed)}
+                    </span>
                 </React.Fragment>
             );
         }
     }
 
-    private highlightNumbers = (value: DecimalProps['children'], prevValue: DecimalProps['children'], fixed: number, thousSep?: string, floatSep?: string) => {
+    private highlightNumbers = (
+        value: DecimalProps['children'],
+        prevValue: DecimalProps['children'],
+        fixed: number,
+        thousSep?: string,
+        floatSep?: string,
+    ) => {
         let val = Decimal.format(value, fixed, thousSep, floatSep);
         let prev = Decimal.format(prevValue, fixed, thousSep, floatSep);
         let highlighted = '';
@@ -168,14 +184,13 @@ class Decimal extends React.Component<DecimalProps> {
 
         return (
             <React.Fragment>
-                <span style={{ color: this.props.color }} className="cr-decimal__opacity">{val}</span>
+                <span style={{ color: this.props.color }} className="cr-decimal__opacity">
+                    {val}
+                </span>
                 <span style={{ color: this.props.color }}>{highlighted}</span>
             </React.Fragment>
         );
     };
 }
 
-export {
-    Decimal,
-    formatWithSeparators,
-};
+export { Decimal, formatWithSeparators };

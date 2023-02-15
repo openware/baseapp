@@ -57,10 +57,7 @@ describe('Orders', () => {
         message: ['Server error'],
     };
 
-    const expectedActionsSuccess = [
-        orderExecuteFetch(order),
-        orderExecuteData(),
-    ];
+    const expectedActionsSuccess = [orderExecuteFetch(order), orderExecuteData()];
 
     const expectedActionsError = [
         orderExecuteFetch(order),
@@ -75,7 +72,7 @@ describe('Orders', () => {
 
     it('should execute order', async () => {
         mockOrderExecute();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsSuccess.length) {
@@ -91,7 +88,7 @@ describe('Orders', () => {
 
     it('should handle order execute error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

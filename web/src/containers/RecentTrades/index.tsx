@@ -1,8 +1,6 @@
 import classnames from 'classnames';
 import * as React from 'react';
-import {
-    injectIntl,
-} from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { compose } from 'redux';
 import { IntlProps } from '../../';
@@ -54,12 +52,7 @@ class RecentTradesComponent extends React.Component<RecentTradesProps, State> {
     }
 
     public shouldComponentUpdate(nextProps: RecentTradesProps, nextState: State) {
-        const {
-            recentTrades,
-            isMobileDevice,
-            currentMarket,
-            userLoggedIn,
-        } = this.props;
+        const { recentTrades, isMobileDevice, currentMarket, userLoggedIn } = this.props;
         const { tab, index, disable } = this.state;
 
         return (
@@ -75,44 +68,45 @@ class RecentTradesComponent extends React.Component<RecentTradesProps, State> {
 
     public render() {
         const className = classnames({
-            'cr-table__noData' : !this.props.recentTrades.length,
+            'cr-table__noData': !this.props.recentTrades.length,
         });
 
         const cn = classnames('pg-recent-trades', {
-            'pg-recent-trades-unlogged' : !this.props.userLoggedIn,
+            'pg-recent-trades-unlogged': !this.props.userLoggedIn,
         });
 
         return (
-          <div className={className}>
-            <div className={cn}>
-                {this.renderContent()}
+            <div className={className}>
+                <div className={cn}>{this.renderContent()}</div>
             </div>
-          </div>
         );
     }
 
     private renderContent = () => {
         const { isMobileDevice, recentTrades } = this.props;
 
-        return this.props.userLoggedIn ?
-        (
+        return this.props.userLoggedIn ? (
             <TabPanel
                 panels={this.renderTabs()}
                 onTabChange={this.handleMakeRequest}
-                optionalHead={this.props.intl.formatMessage({ id: 'page.body.trade.header.recentTrades' })}
+                optionalHead={this.props.intl.formatMessage({
+                    id: 'page.body.trade.header.recentTrades',
+                })}
                 currentTabIndex={this.state.index}
                 isDropdown={isMobileDevice}
             />
-        ) :
-        (
+        ) : (
             <div>
                 <div className="cr-table-header__content">
-                    <div className="cr-title-component">{this.props.intl.formatMessage({id: 'page.body.trade.header.recentTrades'})}</div>
+                    <div className="cr-title-component">
+                        {this.props.intl.formatMessage({
+                            id: 'page.body.trade.header.recentTrades',
+                        })}
+                    </div>
                 </div>
-                <RecentTradesMarket recentTrades={recentTrades}/>
+                <RecentTradesMarket recentTrades={recentTrades} />
             </div>
         );
-
     };
 
     private renderTabs = () => {
@@ -151,9 +145,9 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     isMobileDevice: selectMobileDeviceState(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
-    tradesFetch: market => dispatch(recentTradesFetch(market)),
-    setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+    tradesFetch: (market) => dispatch(recentTradesFetch(market)),
+    setCurrentPrice: (payload) => dispatch(setCurrentPrice(payload)),
     resetHistory: () => dispatch(resetHistory()),
 });
 

@@ -1,12 +1,5 @@
-import {
-    AxiosError,
-    AxiosRequestConfig,
-    AxiosResponse,
-} from 'axios';
-import {
-    defaultResponse,
-    formatError,
-} from '../requestBuilder';
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { defaultResponse, formatError } from '../requestBuilder';
 
 describe('Request Builder', () => {
     it('should return correct defaultResponse', () => {

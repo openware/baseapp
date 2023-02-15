@@ -1,25 +1,17 @@
 import { History } from 'history';
-import { AvatarIcon } from 'src/assets/images/NavBarIcons';
 import * as React from 'react';
-import {
-    injectIntl,
-} from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { AvatarIcon } from 'src/assets/images/NavBarIcons';
 import { IntlProps } from '../../';
 import { isUsernameEnabled } from '../../api';
-import {
-    entropyPasswordFetch,
-    RootState,
-    selectCurrentPasswordEntropy,
-    selectUserInfo,
-    User,
-} from '../../modules';
+import { entropyPasswordFetch, RootState, selectCurrentPasswordEntropy, selectUserInfo, User } from '../../modules';
 import {
     changePasswordFetch,
+    changePasswordReset,
     selectChangePasswordSuccess,
     toggle2faFetch,
-    changePasswordReset,
 } from '../../modules/user/profile';
 
 interface ReduxProps {
@@ -86,12 +78,10 @@ class ProfileAuthDetailsComponent extends React.Component<Props, State> {
                 <div className="pg-profile-page__box-header pg-profile-page__left-col__basic__info-row">
                     <div className="pg-profile-page__left-col__basic__info-row__flex">
                         <div className="pg-profile-page__details-avatar">
-                            <AvatarIcon fillColor="var(--icons)"/>
+                            <AvatarIcon fillColor="var(--icons)" />
                         </div>
                         <div className="pg-profile-page__details-user">
-                            {isUsernameEnabled() ? (
-                                <h2>{user.username}</h2>
-                            ) : null }
+                            {isUsernameEnabled() ? <h2>{user.username}</h2> : null}
                             <span>{user.email}</span>
                             <p>UID: {user.uid}</p>
                         </div>
@@ -108,18 +98,18 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     currentPasswordEntropy: selectCurrentPasswordEntropy(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
     changePassword: ({ old_password, new_password, confirm_password }) =>
         dispatch(changePasswordFetch({ old_password, new_password, confirm_password })),
     toggle2fa: ({ code, enable }) => dispatch(toggle2faFetch({ code, enable })),
-    fetchCurrentPasswordEntropy: payload => dispatch(entropyPasswordFetch(payload)),
+    fetchCurrentPasswordEntropy: (payload) => dispatch(entropyPasswordFetch(payload)),
     changePasswordReset: () => dispatch(changePasswordReset()),
 });
 
-const ProfileAuthDetailsConnected = injectIntl(connect(mapStateToProps, mapDispatchToProps)(ProfileAuthDetailsComponent));
+const ProfileAuthDetailsConnected = injectIntl(
+    connect(mapStateToProps, mapDispatchToProps)(ProfileAuthDetailsComponent),
+);
 // tslint:disable-next-line:no-any
 const ProfileAuthDetails = withRouter(ProfileAuthDetailsConnected as any);
 
-export {
-    ProfileAuthDetails,
-};
+export { ProfileAuthDetails };

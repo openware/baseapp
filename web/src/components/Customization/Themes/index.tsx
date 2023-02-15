@@ -4,16 +4,15 @@ import { SettingsIcon } from '../../../assets/images/customization/SettingsIcon'
 import { DropdownComponent, TabPanel } from '../../../components';
 import { applyCustomizationSettingsColors } from '../../../helpers';
 import {
-    AVAILABLE_THEME_PRESETS,
     AVAILABLE_COLOR_TITLES,
+    AVAILABLE_THEME_PRESETS,
     CustomizationSettingsInterface,
     ThemeColorTitleInterface,
 } from '../../../themes';
 import { ColorSettings } from './ColorSettings';
 
-export const handleConvertColorCode = (value: string, fromRGB?: boolean) => (
-    fromRGB ? `--grb-${value.slice(2)}` :  `--${value.slice(6)}`
-);
+export const handleConvertColorCode = (value: string, fromRGB?: boolean) =>
+    fromRGB ? `--grb-${value.slice(2)}` : `--${value.slice(6)}`;
 
 interface OwnProps {
     colorTheme: string;
@@ -98,13 +97,18 @@ export class CustomizationThemes extends React.Component<Props, State> {
         const grbItemKey = handleConvertColorCode(item.key);
 
         return (
-            <div key={index} className="pg-customization-themes__colors__item" onClick={e => this.handleSetColorSettingsItem(item)}>
+            <div
+                key={index}
+                className="pg-customization-themes__colors__item"
+                onClick={(e) => this.handleSetColorSettingsItem(item)}>
                 <div className="pg-customization-themes__colors__item__content">
                     <span
                         className="pg-customization-themes__colors__item__content__circle"
-                        style={{backgroundColor: `var(${grbItemKey})`}}
+                        style={{ backgroundColor: `var(${grbItemKey})` }}
                     />
-                    <span className="pg-customization-themes__colors__item__content__title">{translate(item.title)}</span>
+                    <span className="pg-customization-themes__colors__item__content__title">
+                        {translate(item.title)}
+                    </span>
                 </div>
                 <div className="pg-customization-themes__colors__item__settings-icon">
                     <SettingsIcon />
@@ -178,7 +182,7 @@ export class CustomizationThemes extends React.Component<Props, State> {
     private handleGetThemesTitlesList = () => {
         const { translate } = this.props;
 
-        return AVAILABLE_THEME_PRESETS.map(item => translate(item.title));
+        return AVAILABLE_THEME_PRESETS.map((item) => translate(item.title));
     };
 
     private handleSetColorSettingsItem = (item?: ThemeColorTitleInterface) => {
@@ -193,14 +197,14 @@ export class CustomizationThemes extends React.Component<Props, State> {
 
     private handleChangeCurrentTheme = (index: number) => {
         const { handleTriggerChartRebuild } = this.props;
-        const { title, ...themeToSet } = AVAILABLE_THEME_PRESETS[index];        
+        const { title, ...themeToSet } = AVAILABLE_THEME_PRESETS[index];
         const settingsToSet = {
             ...themeToSet,
             theme_colors: {
                 dark: themeToSet.theme_colors.dark,
                 light: themeToSet.theme_colors.light,
-            }
-        }
+            },
+        };
 
         this.handleSetCurrentTheme(index);
         applyCustomizationSettingsColors(settingsToSet, handleTriggerChartRebuild);
@@ -213,15 +217,18 @@ export class CustomizationThemes extends React.Component<Props, State> {
     };
 
     private handleGetDefaultTheme = (): number => {
-        const settingsFromConfig: CustomizationSettingsInterface | undefined =
-            window.env?.palette ? JSON.parse(window.env.palette) : undefined;
+        const settingsFromConfig: CustomizationSettingsInterface | undefined = window.env?.palette
+            ? JSON.parse(window.env.palette)
+            : undefined;
 
-        const themeIndexToSet = AVAILABLE_THEME_PRESETS.findIndex(theme => theme.theme_id === settingsFromConfig?.theme_id);
+        const themeIndexToSet = AVAILABLE_THEME_PRESETS.findIndex(
+            (theme) => theme.theme_id === settingsFromConfig?.theme_id,
+        );
 
         if (themeIndexToSet > 0) {
             return themeIndexToSet;
-        }        
+        }
 
         return 0;
-    }
+    };
 }

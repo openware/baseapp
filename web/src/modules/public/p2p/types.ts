@@ -1,4 +1,4 @@
-import { UserPaymentMethod } from "src/modules";
+import { UserPaymentMethod } from 'src/modules';
 
 export interface Offer {
     id: number;

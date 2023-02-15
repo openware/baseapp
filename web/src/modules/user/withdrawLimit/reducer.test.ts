@@ -5,11 +5,11 @@ import { WithdrawLimit } from './types';
 
 describe('withdrawLimitList reducer', () => {
     const withdrawLimit: WithdrawLimit = {
-            limit: 3,
-            period: 48,
-            withdrawal_amount: 0.3,
-            currency: 'btc',
-        };
+        limit: 3,
+        period: 48,
+        withdrawal_amount: 0.3,
+        currency: 'btc',
+    };
 
     const error: CommonError = {
         code: 500,
@@ -26,7 +26,7 @@ describe('withdrawLimitList reducer', () => {
             },
             loading: true,
             success: false,
-         };
+        };
         expect(withdrawLimitReducer(initialWithdrawLimitState, actions.withdrawLimitFetch())).toEqual(expectedState);
     });
 
@@ -35,8 +35,10 @@ describe('withdrawLimitList reducer', () => {
             data: withdrawLimit,
             loading: false,
             success: true,
-         };
-        expect(withdrawLimitReducer(initialWithdrawLimitState, actions.withdrawLimitData(withdrawLimit))).toEqual(expectedState);
+        };
+        expect(withdrawLimitReducer(initialWithdrawLimitState, actions.withdrawLimitData(withdrawLimit))).toEqual(
+            expectedState,
+        );
     });
 
     it('should handle WITHDRAW_LIMIT_ERROR', () => {
@@ -50,7 +52,9 @@ describe('withdrawLimitList reducer', () => {
             loading: false,
             success: false,
             error: error,
-         };
-        expect(withdrawLimitReducer(initialWithdrawLimitState, actions.withdrawLimitError(error))).toEqual(expectedState);
+        };
+        expect(withdrawLimitReducer(initialWithdrawLimitState, actions.withdrawLimitError(error))).toEqual(
+            expectedState,
+        );
     });
 });

@@ -63,7 +63,8 @@ export interface VerifyPhoneError {
     error: CommonError;
 }
 
-export type PhoneAction = SendCodeFetch
+export type PhoneAction =
+    | SendCodeFetch
     | SendCodeData
     | SendCodeError
     | VerifyPhoneFetch

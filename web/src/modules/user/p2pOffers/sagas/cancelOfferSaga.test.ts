@@ -1,10 +1,10 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import cancelSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { rootSaga, sendError } from '../../..';
+import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { CommonError } from '../../../types';
-import { cancelOfferError, cancelOffer } from '../actions';
+import { cancelOffer, cancelOfferError } from '../actions';
 
 describe('P2P CancelOffer', () => {
     let store: MockStoreEnhanced;
@@ -35,9 +35,7 @@ describe('P2P CancelOffer', () => {
         message: ['Server error'],
     };
 
-    const expectedP2PCancelOfferActionsFetch = [
-        cancelOffer(fakeCancelOfferPayload),
-    ];
+    const expectedP2PCancelOfferActionsFetch = [cancelOffer(fakeCancelOfferPayload)];
 
     const expectedP2PCancelOfferActionsError = [
         cancelOffer(fakeCancelOfferPayload),
@@ -52,7 +50,7 @@ describe('P2P CancelOffer', () => {
 
     it('should fetch cancelOffer in success flow', async () => {
         mockP2PCancelOffer();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedP2PCancelOfferActionsFetch.length) {
@@ -68,7 +66,7 @@ describe('P2P CancelOffer', () => {
 
     it('should trigger fetch cancelOffer error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedP2PCancelOfferActionsError.length) {

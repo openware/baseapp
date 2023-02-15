@@ -1,12 +1,8 @@
 {
-    "jsxBracketSameLine": true,
+    "bracketSameLine": true,
     "singleQuote": true,
     "printWidth": 120,
     "trailingComma": "all",
     "tabWidth": 4,
-    "endOfLine": "auto",
-    "semi": true,
-    "tslintIntegration": true,
-    "stylelintIntegration": true,
-    "ignorePath": ".gitignore"
+    "semi": true
 }

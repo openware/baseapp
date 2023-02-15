@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { incrementalOrderBook, isFinexEnabled } from 'src/api'
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import useWebSocket, { ReadyState } from 'react-use-websocket';
+import { incrementalOrderBook, isFinexEnabled } from 'src/api';
 import { CanCan } from 'src/containers';
 import {
     alertPush,
@@ -30,22 +32,14 @@ import {
     userOrdersHistoryRangerData,
     walletsAddressDataWS,
 } from '../modules';
-import {
-    formatTicker,
-    generateSocketURI,
-    isTradingPage,
-    marketKlineStreams,
-    streamsBuilder,
-} from './helpers';
-import useWebSocket, { ReadyState } from "react-use-websocket";
-import { useLocation } from 'react-router-dom';
+import { formatTicker, generateSocketURI, isTradingPage, marketKlineStreams, streamsBuilder } from './helpers';
 
 const WebSocketContext = React.createContext(null);
 
 export default ({ children }) => {
-    const [ subscriptions, setSubscriptions ] = useState<string[]>(undefined);
-    const [ socketUrl, setSocketUrl ] = useState<string>(null);
-    const [ messages, setMessages ] = useState<object[]>([]);
+    const [subscriptions, setSubscriptions] = useState<string[]>(undefined);
+    const [socketUrl, setSocketUrl] = useState<string>(null);
+    const [messages, setMessages] = useState<object[]>([]);
 
     const dispatch = useDispatch();
     const location = useLocation();
@@ -79,15 +73,17 @@ export default ({ children }) => {
 
     // handle change subscriptions
     useEffect(() => {
-        if (!userLoading && !abilitiesLoading && typeof(subscriptions) !== 'undefined') {
+        if (!userLoading && !abilitiesLoading && typeof subscriptions !== 'undefined') {
             const streams = streamsBuilder(userLoggedIn, canReadP2P, currentMarket, location.pathname);
 
-            const subscribeStreams = streams.filter(i => !subscriptions?.includes(i));
+            const subscribeStreams = streams.filter((i) => !subscriptions?.includes(i));
             if (subscribeStreams.length) {
                 subscribe(subscribeStreams);
             }
 
-            const unsubscribeStreams = subscriptions?.filter(i => !streams.includes(i) && !(isTradingPage(location.pathname) && i.includes('kline')));
+            const unsubscribeStreams = subscriptions?.filter(
+                (i) => !streams.includes(i) && !(isTradingPage(location.pathname) && i.includes('kline')),
+            );
             if (unsubscribeStreams.length) {
                 unsubscribe(unsubscribeStreams);
             }
@@ -111,12 +107,7 @@ export default ({ children }) => {
     }, [kline.period, kline.marketId, kline.message, kline.loading]);
 
     // handle main websocket events
-    const {
-        sendJsonMessage,
-        lastJsonMessage,
-        readyState,
-        getWebSocket,
-    } = useWebSocket(socketUrl, {
+    const { sendJsonMessage, lastJsonMessage, readyState, getWebSocket } = useWebSocket(socketUrl, {
         onOpen: () => {
             window.console.log('WebSocket connection opened');
 
@@ -127,9 +118,9 @@ export default ({ children }) => {
             setMessages([]);
         },
         onClose: () => {
-            window.console.log("WebSocket connection closed");
+            window.console.log('WebSocket connection closed');
         },
-        onError: error => {
+        onError: (error) => {
             window.console.log(`WebSocket error ${error}`);
             window.console.dir(error);
         },
@@ -144,18 +135,21 @@ export default ({ children }) => {
             for (const m of messages) {
                 sendJsonMessage(m);
             }
-    
+
             setMessages([]);
         }
     }, [messages]);
 
-    const postMessage = useCallback(data => {
-        if (readyState === ReadyState.OPEN) {
-            sendJsonMessage(data);
-        } else {
-            setMessages(messages => [ ...messages, data]);
-        }
-    }, [readyState, messages]);
+    const postMessage = useCallback(
+        (data) => {
+            if (readyState === ReadyState.OPEN) {
+                sendJsonMessage(data);
+            } else {
+                setMessages((messages) => [...messages, data]);
+            }
+        },
+        [readyState, messages],
+    );
 
     const subscribe = useCallback((streams: string[]) => {
         postMessage({ event: 'subscribe', streams });
@@ -165,11 +159,14 @@ export default ({ children }) => {
         postMessage({ event: 'unsubscribe', streams });
     }, []);
 
-    const updateOpenOrdersState = useCallback(event => {
-        if (currentMarket && (event?.market === currentMarket.id || !openOrderHideOtherPairs)) {
-            dispatch(userOpenOrdersUpdate(event));
-        }
-    }, [currentMarket, openOrderHideOtherPairs]);
+    const updateOpenOrdersState = useCallback(
+        (event) => {
+            if (currentMarket && (event?.market === currentMarket.id || !openOrderHideOtherPairs)) {
+                dispatch(userOpenOrdersUpdate(event));
+            }
+        },
+        [currentMarket, openOrderHideOtherPairs],
+    );
 
     // handle websocket events
     useEffect(() => {
@@ -210,7 +207,9 @@ export default ({ children }) => {
                             return;
                         }
                         if (previousSequence + 1 !== event.sequence) {
-                            window.console.log(`Bad sequence detected in incremental orderbook previous: ${previousSequence}, event: ${event.sequence}`);
+                            window.console.log(
+                                `Bad sequence detected in incremental orderbook previous: ${previousSequence}, event: ${event.sequence}`,
+                            );
 
                             return;
                         }
@@ -272,17 +271,34 @@ export default ({ children }) => {
                             switch (event.state) {
                                 case 'wait':
                                 case 'pending':
-                                    const updatedOrder = orders.length && orders.find(order => event.uuid && order.uuid === event.uuid);
+                                    const updatedOrder =
+                                        orders.length &&
+                                        orders.find((order) => event.uuid && order.uuid === event.uuid);
                                     if (!updatedOrder) {
-                                        dispatch(alertPush({ message: ['success.order.created'], type: 'success'}));
+                                        dispatch(
+                                            alertPush({
+                                                message: ['success.order.created'],
+                                                type: 'success',
+                                            }),
+                                        );
                                     }
                                     break;
                                 case 'done':
-                                    dispatch(alertPush({ message: ['success.order.done'], type: 'success'}));
+                                    dispatch(
+                                        alertPush({
+                                            message: ['success.order.done'],
+                                            type: 'success',
+                                        }),
+                                    );
                                     break;
                                 case 'reject':
                                 case 'execution_reject':
-                                    dispatch(alertPush({ message: ['error.order.rejected'], type: 'error'}));
+                                    dispatch(
+                                        alertPush({
+                                            message: ['error.order.rejected'],
+                                            type: 'error',
+                                        }),
+                                    );
                                     break;
                                 default:
                                     break;
@@ -350,11 +366,7 @@ export default ({ children }) => {
         }
     }, [lastJsonMessage]);
 
-    return (
-        <WebSocketContext.Provider value={getWebSocket()}>
-            {children}
-        </WebSocketContext.Provider>
-    )
-}
+    return <WebSocketContext.Provider value={getWebSocket()}>{children}</WebSocketContext.Provider>;
+};
 
-export { WebSocketContext }
+export { WebSocketContext };

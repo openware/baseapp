@@ -4,7 +4,7 @@ import { FilterPrice, PriceValidation } from './';
 export const countMinValidPriceStep = (price: number | string, digits: number) => {
     const clearPrice = String(+price);
     const priceParts = clearPrice.split('.');
-    let indexOfDot = (priceParts[1]) ? clearPrice.indexOf('.') : priceParts[0].length;
+    let indexOfDot = priceParts[1] ? clearPrice.indexOf('.') : priceParts[0].length;
 
     if (priceParts[0] === '0') {
         indexOfDot -= 1;
@@ -13,20 +13,21 @@ export const countMinValidPriceStep = (price: number | string, digits: number) =
     let minValidPrice = 10 ** (indexOfDot - digits);
 
     if (minValidPrice < 1) {
-        minValidPrice = +(minValidPrice.toFixed(digits - indexOfDot));
+        minValidPrice = +minValidPrice.toFixed(digits - indexOfDot);
     }
 
     return minValidPrice;
 };
 
 export const countSignificantDigits = (value: number | string) => {
-    if (value === 0) { return 0; }
+    if (value === 0) {
+        return 0;
+    }
 
     return Number(value)
-      .toExponential()
-      .replace(/e[+\-0-9]*$/, '')  // remove exponential notation
-      .replace( /^0\.?0*|\./, '')   // remove decimal point and leading zeros
-      .length;
+        .toExponential()
+        .replace(/e[+\-0-9]*$/, '') // remove exponential notation
+        .replace(/^0\.?0*|\./, '').length; // remove decimal point and leading zeros
 };
 
 export class FilterPriceSignificantDigit implements FilterPrice {

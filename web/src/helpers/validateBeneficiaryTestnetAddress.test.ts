@@ -45,10 +45,16 @@ describe('Unsported Coin', () => {
 describe('Not Exact Match Test', () => {
     it('validate not exact match address', () => {
         const coinAddressValidator = validateBeneficiaryTestnetAddress.cryptocurrency('btc', false);
-        expect(coinAddressValidator.test('tb1qnjf0v63jyryrkqdml29f2hdz9m0n6l5ypkq7x5m 2MyhTqkLXs4K9PhRN4HeRuZJNZTYYCvJpNw')).toBeTruthy();
-        expect(coinAddressValidator.test(`
+        expect(
+            coinAddressValidator.test(
+                'tb1qnjf0v63jyryrkqdml29f2hdz9m0n6l5ypkq7x5m 2MyhTqkLXs4K9PhRN4HeRuZJNZTYYCvJpNw',
+            ),
+        ).toBeTruthy();
+        expect(
+            coinAddressValidator.test(`
             mfWxJ45yp2SFn7UciZyNpvDKrzbhyfKrY8
             mkkJGguo6Yu3oh1RMGxJF5JDmU58Tew5jy
-        `)).toBeTruthy();
+        `),
+        ).toBeTruthy();
     });
 });

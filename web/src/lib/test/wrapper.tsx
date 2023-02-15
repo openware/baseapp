@@ -1,18 +1,18 @@
-import React from "react";
-import { IntlProvider } from "react-intl";
-import { Provider } from "react-redux";
+import React from 'react';
+import { IntlProvider } from 'react-intl';
+import { Provider } from 'react-redux';
 /* eslint-disable-next-line */
-import { createBrowserHistory } from "history";
-import { Router } from "react-router";
-import { createStore } from "redux";
+import { createBrowserHistory } from 'history';
+import { Router } from 'react-router';
+import { createStore } from 'redux';
 
-import { rootReducer } from "src/modules";
-import { languageMap } from "src/translations";
+import { rootReducer } from 'src/modules';
+import { languageMap } from 'src/translations';
 
 const browserHistory = createBrowserHistory();
 const store = createStore(rootReducer);
 
-const locale = "en";
+const locale = 'en';
 
 export const TestComponentWrapper: React.FC = ({ children }: { children: React.ReactNode }) => {
     return (

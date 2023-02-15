@@ -14,16 +14,12 @@ const SubheaderComponent = (props: Props) => {
                 <ArrowIcon />
                 <span className="cr-mobile-subheader__back-item">{props.backTitle}</span>
             </div>
-            <div className="cr-mobile-subheader__title">
-                {props.title}
-            </div>
-            <div className="cr-mobile-subheader__close"/>
+            <div className="cr-mobile-subheader__title">{props.title}</div>
+            <div className="cr-mobile-subheader__close" />
         </div>
     );
 };
 
 const Subheader = React.memo(SubheaderComponent);
 
-export {
-    Subheader,
-};
+export { Subheader };

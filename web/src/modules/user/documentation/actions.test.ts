@@ -1,9 +1,5 @@
 import * as actions from './actions';
-import {
-    DOC_TRADE_USER_API_DATA,
-    DOC_TRADE_USER_API_ERROR,
-    DOC_TRADE_USER_API_FETCH,
-} from './constants';
+import { DOC_TRADE_USER_API_DATA, DOC_TRADE_USER_API_ERROR, DOC_TRADE_USER_API_FETCH } from './constants';
 import { DocTradeUserApiDataInterface } from './types';
 
 describe('Documentation actions', () => {
@@ -22,9 +18,7 @@ describe('Documentation actions', () => {
             version: '2.6.0-89e3acd',
         },
         swagger: '2.0',
-        produces: [
-            'application/json',
-        ],
+        produces: ['application/json'],
         securityDefinitions: {
             Bearer: {
                 type: 'apiKey',

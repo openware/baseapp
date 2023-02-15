@@ -16,9 +16,7 @@ export class SetupInfoBlock extends React.Component<SetupInfoBlockProps> {
                 <div className="setup-info-block__logo">
                     <img src={logo} alt="platform-logo" />
                 </div>
-                <div className="setup-info-block__title">
-                    {title}
-                </div>
+                <div className="setup-info-block__title">{title}</div>
                 {this.renderDescription()}
             </div>
         );
@@ -28,11 +26,7 @@ export class SetupInfoBlock extends React.Component<SetupInfoBlockProps> {
         const { description } = this.props;
 
         if (description) {
-            return (
-                <div className="setup-info-block__description">
-                    {description}
-                </div>
-            );
+            return <div className="setup-info-block__description">{description}</div>;
         }
 
         return null;

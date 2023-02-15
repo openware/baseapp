@@ -30,7 +30,8 @@ describe('User activity', () => {
                 id: 1,
                 user_id: 1,
                 user_ip: '195.214.197.210',
-                user_agent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
+                user_agent:
+                    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
                 topic: 'session',
                 action: 'login',
                 result: 'succeed',
@@ -80,7 +81,7 @@ describe('User activity', () => {
         it('should fetch user activity for 1 page in success flow', async () => {
             mockUserActivityFetch();
 
-            const promise = new Promise(resolve => {
+            const promise = new Promise((resolve) => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     if (actions.length === expectedActionsFetchWithFirstPage.length) {
@@ -96,7 +97,7 @@ describe('User activity', () => {
 
         it('should handle user activity error', async () => {
             mockNetworkError(mockAxios);
-            const promise = new Promise(resolve => {
+            const promise = new Promise((resolve) => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     if (actions.length === expectedActionsError.length) {

@@ -9,7 +9,7 @@ import { MarketDepthsComponent, TradingChart } from '../index';
 export const Charts: FC = (): ReactElement => {
     const intl = useIntl();
     const currentMarket = useSelector(selectCurrentMarket);
-    const [ currentTabIndex, setCurrentTabIndex ] = useState(0);
+    const [currentTabIndex, setCurrentTabIndex] = useState(0);
 
     const renderTabs = () => [
         {
@@ -18,7 +18,7 @@ export const Charts: FC = (): ReactElement => {
         },
         {
             content: currentTabIndex === 1 ? <MarketDepthsComponent /> : null,
-            label: intl.formatMessage( { id: 'page.body.charts.tabs.depth' }),
+            label: intl.formatMessage({ id: 'page.body.charts.tabs.depth' }),
         },
     ];
 

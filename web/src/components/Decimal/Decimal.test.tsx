@@ -175,7 +175,11 @@ describe('Decimal', () => {
     });
 
     it('should handle prevValue prop', () => {
-        const wrapper = setup({ fixed: 5, prevValue: '125.1234123', children: '123.32030200230000' });
+        const wrapper = setup({
+            fixed: 5,
+            prevValue: '125.1234123',
+            children: '123.32030200230000',
+        });
         const spans = wrapper.find('span');
         expect(spans.length).toEqual(2);
         // first span - non-ighlighted
@@ -187,7 +191,12 @@ describe('Decimal', () => {
     });
 
     it('should handle thousands separator formatted prevValue prop', () => {
-        const wrapper = setup({ fixed: 2, prevValue: '123456.12', children: '123456.14', thousSep: ',' });
+        const wrapper = setup({
+            fixed: 2,
+            prevValue: '123456.12',
+            children: '123456.14',
+            thousSep: ',',
+        });
         const spans = wrapper.find('span');
         expect(spans.length).toEqual(2);
         // first span - non-ighlighted
@@ -199,7 +208,13 @@ describe('Decimal', () => {
     });
 
     it('should handle separators formatted prevValue prop', () => {
-        const wrapper = setup({ fixed: 4, prevValue: '12345678.1234', children: '12346789.1234', thousSep: ' ', floatSep: ',' });
+        const wrapper = setup({
+            fixed: 4,
+            prevValue: '12345678.1234',
+            children: '12346789.1234',
+            thousSep: ' ',
+            floatSep: ',',
+        });
         const spans = wrapper.find('span');
         expect(spans.length).toEqual(2);
         // first span - non-ighlighted

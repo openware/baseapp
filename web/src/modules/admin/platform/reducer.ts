@@ -1,10 +1,6 @@
 import { CommonError, CommonState } from '../../types';
 import { PlatformCreateAction } from './actions';
-import {
-    PLATFORM_CREATE,
-    PLATFORM_CREATE_DATA,
-    PLATFORM_CREATE_ERROR,
-} from './constants';
+import { PLATFORM_CREATE, PLATFORM_CREATE_DATA, PLATFORM_CREATE_ERROR } from './constants';
 
 export interface PlatformCreateState extends CommonState {
     loading: boolean;

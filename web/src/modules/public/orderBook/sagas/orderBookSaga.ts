@@ -17,12 +17,14 @@ export function* orderBookSaga(action: OrderBookFetch) {
         const orderBook = yield call(API.get(orderBookOptions), `/public/markets/${market.id}/order-book`);
         yield put(orderBookData(orderBook));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'console',
-            extraOptions: {
-                actionError: orderBookError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'console',
+                extraOptions: {
+                    actionError: orderBookError,
+                },
+            }),
+        );
     }
 }

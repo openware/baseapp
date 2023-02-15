@@ -12,12 +12,14 @@ export function* p2pPaymentMethodsSaga() {
         const data = yield call(API.get(config), '/public/payment_methods');
         yield put(p2pPaymentMethodsData(data));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: p2pPaymentMethodsError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: p2pPaymentMethodsError,
+                },
+            }),
+        );
     }
 }

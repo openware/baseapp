@@ -6,7 +6,7 @@ export interface Props {
     text?: string;
 }
 
-export const Blur: React.FC<Props> = props => {
+export const Blur: React.FC<Props> = (props) => {
     const { text, className } = props;
 
     return (

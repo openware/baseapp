@@ -1,18 +1,9 @@
 import * as React from 'react';
 import { Spinner } from 'react-bootstrap';
-import {
-    connect,
-    MapDispatchToPropsFunction,
-    MapStateToProps,
-} from 'react-redux';
+import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import { RouterProps, withRouter } from 'react-router';
 import { compose } from 'redux';
-import {
-    RootState,
-    selectBlocklistAccessLoading,
-    selectBlocklistAccessSuccess,
-    sendAccessToken,
-} from '../../modules';
+import { RootState, selectBlocklistAccessLoading, selectBlocklistAccessSuccess, sendAccessToken } from '../../modules';
 
 interface LocationProps extends RouterProps {
     location: {
@@ -76,13 +67,13 @@ class MagicLinkScreen extends React.Component<MagicLinkProps, MagicLinkState> {
     }
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
     success: selectBlocklistAccessLoading(state),
     loading: selectBlocklistAccessSuccess(state),
 });
 
-const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
-    sendAccessToken: payload => dispatch(sendAccessToken(payload)),
+const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+    sendAccessToken: (payload) => dispatch(sendAccessToken(payload)),
 });
 
 export const MagicLink = compose(

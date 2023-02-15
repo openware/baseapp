@@ -26,11 +26,11 @@ export const DoubleDropdownSelector: React.FunctionComponent<Props> = (props: Pr
     const intl = useIntl();
 
     React.useEffect(() => {
-        setArrayTo(typesArray.filter(i => i !== to));
+        setArrayTo(typesArray.filter((i) => i !== to));
     }, [to, typesArray]);
 
     React.useEffect(() => {
-        setArrayFrom(typesArray.filter(i => i !== from));
+        setArrayFrom(typesArray.filter((i) => i !== from));
     }, [from, typesArray]);
 
     const handleClickSwap = React.useCallback(() => {
@@ -38,26 +38,34 @@ export const DoubleDropdownSelector: React.FunctionComponent<Props> = (props: Pr
         props.handleSelectTo(from);
     }, [from, to, props.handleSelectFrom, props.handleSelectTo]);
 
-    const handleSelectFrom = React.useCallback((index: number) => {
-        props.handleSelectFrom(arrayFrom[index]);
+    const handleSelectFrom = React.useCallback(
+        (index: number) => {
+            props.handleSelectFrom(arrayFrom[index]);
 
-        if (arrayFrom[index] === to) {
-            props.handleSelectTo(arrayTo[0]);
-        }
-    }, [arrayFrom, arrayTo, to, props.handleSelectFrom, props.handleSelectTo]);
+            if (arrayFrom[index] === to) {
+                props.handleSelectTo(arrayTo[0]);
+            }
+        },
+        [arrayFrom, arrayTo, to, props.handleSelectFrom, props.handleSelectTo],
+    );
 
-    const handleSelectTo = React.useCallback((index: number) => {
-        props.handleSelectTo(arrayTo[index]);
+    const handleSelectTo = React.useCallback(
+        (index: number) => {
+            props.handleSelectTo(arrayTo[index]);
 
-        if (arrayTo[index] === from) {
-            props.handleSelectFrom(arrayFrom[0]);
-        }
-    }, [arrayFrom, arrayTo, to, props.handleSelectFrom, props.handleSelectTo]);
+            if (arrayTo[index] === from) {
+                props.handleSelectFrom(arrayFrom[0]);
+            }
+        },
+        [arrayFrom, arrayTo, to, props.handleSelectFrom, props.handleSelectTo],
+    );
 
     return (
         <div className="cr-double-dp-selector">
             <div className="cr-double-dp-selector__group">
-                <div className="cr-double-dp-selector__group-label">{labelFrom || intl.formatMessage({ id: 'page.body.wallets.transfers.from' })}</div>
+                <div className="cr-double-dp-selector__group-label">
+                    {labelFrom || intl.formatMessage({ id: 'page.body.wallets.transfers.from' })}
+                </div>
                 <DropdownComponent
                     className="cr-double-dp-selector__group-dropdown"
                     list={arrayFrom}
@@ -66,10 +74,12 @@ export const DoubleDropdownSelector: React.FunctionComponent<Props> = (props: Pr
                 />
             </div>
             <div className="cr-double-dp-selector__swap" onClick={handleClickSwap}>
-                <ChangeIcon className="icon"/>
+                <ChangeIcon className="icon" />
             </div>
             <div className="cr-double-dp-selector__group">
-                <div className="cr-double-dp-selector__group-label">{labelTo || intl.formatMessage({ id: 'page.body.wallets.transfers.to' })}</div>
+                <div className="cr-double-dp-selector__group-label">
+                    {labelTo || intl.formatMessage({ id: 'page.body.wallets.transfers.to' })}
+                </div>
                 <DropdownComponent
                     className="cr-double-dp-selector__group-dropdown"
                     list={arrayTo}

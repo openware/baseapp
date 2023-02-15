@@ -1,11 +1,11 @@
 import {
-    PAYMENT_METHOD_LIST,
-    PAYMENT_METHOD_LIST_FETCH,
     PAYMENT_METHOD_CREATE,
     PAYMENT_METHOD_CREATE_FETCH,
     PAYMENT_METHOD_DELETE,
     PAYMENT_METHOD_DELETE_FETCH,
     PAYMENT_METHOD_ERROR,
+    PAYMENT_METHOD_LIST,
+    PAYMENT_METHOD_LIST_FETCH,
     PAYMENT_METHOD_MODAL,
     PAYMENT_METHOD_UPDATE,
     PAYMENT_METHOD_UPDATE_FETCH,
@@ -68,7 +68,8 @@ export interface PaymentMethodModal {
     payload: PaymentMethodState['modal'];
 }
 
-export type PaymentMethodAction = PaymentMethodDeleteFetch
+export type PaymentMethodAction =
+    | PaymentMethodDeleteFetch
     | PaymentMethodDelete
     | PaymentMethodError
     | PaymentMethodModal

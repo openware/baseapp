@@ -15,12 +15,14 @@ export function* p2pTradesHistorySaga(action: P2PTradesHistoryFetch) {
 
         yield put(p2pTradesHistoryData({ list: data, total: headers.total }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: p2pTradesHistoryError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: p2pTradesHistoryError,
+                },
+            }),
+        );
     }
 }

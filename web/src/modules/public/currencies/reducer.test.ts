@@ -34,6 +34,8 @@ describe('Currencies reducer', () => {
             ...initialCurrenciesState,
             list: fakeCurrencies,
         };
-        expect(currenciesReducer(initialCurrenciesState, actions.currenciesData(fakeCurrencies))).toEqual(expectedState);
+        expect(currenciesReducer(initialCurrenciesState, actions.currenciesData(fakeCurrencies))).toEqual(
+            expectedState,
+        );
     });
 });

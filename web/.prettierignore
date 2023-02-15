@@ -1,0 +1,8 @@
+/build
+/__mocks__
+/public
+/spec
+/src/charting_library
+**/*.*
+!**/*.ts
+!**/*.tsx

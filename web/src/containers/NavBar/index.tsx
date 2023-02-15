@@ -1,19 +1,11 @@
 import * as React from 'react';
-import {
-    connect,
-    MapDispatchToPropsFunction,
-    MapStateToProps,
-} from 'react-redux';
+import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import { compose } from 'redux';
 import { themeSwitcher } from '../../api/config';
 import { Moon } from '../../assets/images/Moon';
 import { Sun } from '../../assets/images/Sun';
 import { colors } from '../../constants';
-import {
-    changeColorTheme,
-    RootState,
-    selectCurrentColorTheme,
-} from '../../modules';
+import { changeColorTheme, RootState, selectCurrentColorTheme } from '../../modules';
 
 export interface ReduxProps {
     colorTheme: string;
@@ -43,8 +35,9 @@ class NavBarComponent extends React.Component<Props> {
                     <div className="pg-navbar__header-settings__switcher">
                         <div
                             className="pg-navbar__header-settings__switcher__items"
-                            onClick={e => this.handleChangeCurrentStyleMode(colorTheme === 'light' ? 'dark' : 'light')}
-                        >
+                            onClick={(e) =>
+                                this.handleChangeCurrentStyleMode(colorTheme === 'light' ? 'dark' : 'light')
+                            }>
                             {this.getLightDarkMode()}
                         </div>
                     </div>
@@ -60,10 +53,10 @@ class NavBarComponent extends React.Component<Props> {
             return (
                 <React.Fragment>
                     <div className="switcher-item">
-                        <Sun fillColor={colors.light.navbar.sun}/>
+                        <Sun fillColor={colors.light.navbar.sun} />
                     </div>
                     <div className="switcher-item switcher-item--active">
-                        <Moon fillColor={colors.light.navbar.moon}/>
+                        <Moon fillColor={colors.light.navbar.moon} />
                     </div>
                 </React.Fragment>
             );
@@ -72,10 +65,10 @@ class NavBarComponent extends React.Component<Props> {
         return (
             <React.Fragment>
                 <div className="switcher-item switcher-item--active">
-                    <Sun fillColor={colors.dark.navbar.sun}/>
+                    <Sun fillColor={colors.dark.navbar.sun} />
                 </div>
                 <div className="switcher-item">
-                    <Moon fillColor={colors.dark.navbar.moon}/>
+                    <Moon fillColor={colors.dark.navbar.moon} />
                 </div>
             </React.Fragment>
         );
@@ -86,16 +79,12 @@ class NavBarComponent extends React.Component<Props> {
     };
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> =
-    (state: RootState): ReduxProps => ({
-        colorTheme: selectCurrentColorTheme(state),
-    });
+const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state: RootState): ReduxProps => ({
+    colorTheme: selectCurrentColorTheme(state),
+});
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        changeColorTheme: payload => dispatch(changeColorTheme(payload)),
-    });
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+    changeColorTheme: (payload) => dispatch(changeColorTheme(payload)),
+});
 
-export const NavBar = compose(
-    connect(mapStateToProps, mapDispatchToProps),
-)(NavBarComponent) as any;
+export const NavBar = compose(connect(mapStateToProps, mapDispatchToProps))(NavBarComponent) as any;

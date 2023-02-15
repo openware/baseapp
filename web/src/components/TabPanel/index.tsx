@@ -96,7 +96,7 @@ export const TabPanel: React.FC<TabPanelProps> = ({
                 }
             }
         },
-        [onCurrentTabChange, onTabChange]
+        [onCurrentTabChange, onTabChange],
     );
 
     const handleOrderTypeChange = React.useCallback(
@@ -107,7 +107,7 @@ export const TabPanel: React.FC<TabPanelProps> = ({
 
             createOnTabChangeHandler(activeIndex, panels[activeIndex])();
         },
-        [createOnTabChangeHandler, dropdownLabels, panels]
+        [createOnTabChangeHandler, dropdownLabels, panels],
     );
 
     const renderTabPanel = React.useCallback(
@@ -133,7 +133,7 @@ export const TabPanel: React.FC<TabPanelProps> = ({
                 </div>
             );
         },
-        [createOnTabChangeHandler, currentTabIndex]
+        [createOnTabChangeHandler, currentTabIndex],
     );
 
     const tabPanelRender = React.useCallback(() => {
@@ -169,7 +169,7 @@ export const TabPanel: React.FC<TabPanelProps> = ({
                 </div>
             );
         },
-        [currentTabIndex, hideMode]
+        [currentTabIndex, hideMode],
     );
 
     const contents = React.useMemo(
@@ -177,7 +177,7 @@ export const TabPanel: React.FC<TabPanelProps> = ({
             hideMode === HideMode.hide
                 ? panels.map(renderTabContent)
                 : panels.filter((panel, index) => index === currentTabIndex).map(renderTabContent),
-        [currentTabIndex, hideMode, panels, renderTabContent]
+        [currentTabIndex, hideMode, panels, renderTabContent],
     );
 
     return (

@@ -1,9 +1,5 @@
 import * as React from 'react';
-import {
-    useDepthFetch,
-    useMarketsFetch,
-    useMarketsTickersFetch,
-} from '../../../hooks';
+import { useDepthFetch, useMarketsFetch, useMarketsTickersFetch } from '../../../hooks';
 import { CurrentMarketInfo, TradingTabs } from '../../components';
 
 const TradingComponent: React.FC = () => {

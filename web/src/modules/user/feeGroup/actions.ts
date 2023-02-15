@@ -16,9 +16,7 @@ export interface FeeGroupError {
     error: CommonError;
 }
 
-export type FeeGroupAction = FeeGroupFetch
-    | FeeGroupData
-    | FeeGroupError;
+export type FeeGroupAction = FeeGroupFetch | FeeGroupData | FeeGroupError;
 
 export const feeGroupFetch = (): FeeGroupFetch => ({
     type: FEE_GROUP_FETCH,

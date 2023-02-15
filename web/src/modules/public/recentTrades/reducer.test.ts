@@ -138,7 +138,6 @@ describe('recentTrade reducer', () => {
             lastTrade: extendTradeWithPriceChange(fakeTrades[0], fakeTrades[1]),
         });
         Cryptobase.config.storage.defaultStorageLimit = initialLimit;
-
     });
 
     it('supports recentTradesPush', () => {
@@ -147,7 +146,9 @@ describe('recentTrade reducer', () => {
             list: [trade],
             lastTrade: extendTradeWithPriceChange(trade),
         };
-        expect(recentTradesReducer(initialState, recentTradesPush({ trades: fakeTradeEvents, market: 'bchbtc' }))).toEqual({
+        expect(
+            recentTradesReducer(initialState, recentTradesPush({ trades: fakeTradeEvents, market: 'bchbtc' })),
+        ).toEqual({
             loading: false,
             list: fakeTradesAdjusted.concat(trade),
             lastTrade: extendTradeWithPriceChange(fakeTradesAdjusted[0], fakeTradesAdjusted[1]),
@@ -176,13 +177,14 @@ describe('recentTrade reducer', () => {
         };
         const initialLimit = defaultStorageLimit();
         Cryptobase.config.storage.defaultStorageLimit = 2;
-        expect(recentTradesReducer(initialState, recentTradesPush({ trades: fakeTradeEvents, market: 'bchbtc' }))).toEqual({
+        expect(
+            recentTradesReducer(initialState, recentTradesPush({ trades: fakeTradeEvents, market: 'bchbtc' })),
+        ).toEqual({
             loading: false,
             list: fakeTradesAdjusted,
             lastTrade: extendTradeWithPriceChange(fakeTradesAdjusted[0], fakeTradesAdjusted[1]),
         });
         Cryptobase.config.storage.defaultStorageLimit = initialLimit;
-
     });
 
     it('supports recentTradesError', () => {

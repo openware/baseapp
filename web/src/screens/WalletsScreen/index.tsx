@@ -34,9 +34,9 @@ export const WalletsScreen: FC = (): ReactElement => {
 
     useEffect(() => {
         if (wallets.length && currencies.length && p2pWallets.length) {
-            const merged = currencies.map(cur => {
-                const spotWallet = wallets.find(i => i.currency === cur.id);
-                const p2pWallet = p2pWallets.find(i => i.currency === cur.id);
+            const merged = currencies.map((cur) => {
+                const spotWallet = wallets.find((i) => i.currency === cur.id);
+                const p2pWallet = p2pWallets.find((i) => i.currency === cur.id);
 
                 return {
                     ...spotWallet,
@@ -68,16 +68,22 @@ export const WalletsScreen: FC = (): ReactElement => {
     }, [routeTab, tabMapping]);
 
     const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
-    const onCurrentTabChange = useCallback((index: number) => {
-        setCurrentTabIndex(index);
-        history.push(`/wallets/${tabMapping[index]}`);
-    }, [tabMapping]);
+    const onCurrentTabChange = useCallback(
+        (index: number) => {
+            setCurrentTabIndex(index);
+            history.push(`/wallets/${tabMapping[index]}`);
+        },
+        [tabMapping],
+    );
 
-    const onTabChange = useCallback((index: number) => {
-        if (tab !== tabMapping[index]) {
-            setTab(tabMapping[index]);
-        }
-    }, [tabMapping]);
+    const onTabChange = useCallback(
+        (index: number) => {
+            if (tab !== tabMapping[index]) {
+                setTab(tabMapping[index]);
+            }
+        },
+        [tabMapping],
+    );
 
     const renderTabs = React.useCallback(() => {
         const isP2PEnabled = CanCan.checkAbilityByAction('read', 'P2P', abilities);
@@ -88,7 +94,12 @@ export const WalletsScreen: FC = (): ReactElement => {
             },
             {
                 content: currentTabIndex === 3 ? <WalletsTransfer currency={currency} /> : null,
-                label: <div><ChangeIcon className="icon" />{translate('page.body.wallets.tab.transfer')}</div>,
+                label: (
+                    <div>
+                        <ChangeIcon className="icon" />
+                        {translate('page.body.wallets.tab.transfer')}
+                    </div>
+                ),
             },
         ];
 
@@ -98,7 +109,7 @@ export const WalletsScreen: FC = (): ReactElement => {
                 label: translate('page.body.wallets.tab.overview'),
             },
             {
-                content: currentTabIndex === 1 ? <WalletsSpot currency={currency} action={action}/> : null,
+                content: currentTabIndex === 1 ? <WalletsSpot currency={currency} action={action} /> : null,
                 label: translate('page.body.wallets.tab.spot'),
             },
             ...(isP2PEnabled ? p2pTabs : []),
@@ -119,6 +130,5 @@ export const WalletsScreen: FC = (): ReactElement => {
                 </div>
             </div>
         </React.Fragment>
-
     );
 };

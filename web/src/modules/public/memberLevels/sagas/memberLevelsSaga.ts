@@ -12,12 +12,14 @@ export function* memberLevelsSaga(action: MemberLevelsFetch) {
         const data = yield call(API.get(requestOptions), '/public/member-levels');
         yield put(memberLevelsData(data));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: memberLevelsError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: memberLevelsError,
+                },
+            }),
+        );
     }
 }

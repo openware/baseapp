@@ -16,12 +16,14 @@ export function* walletsAddressSaga(action: WalletsAddressFetch) {
         const { address, currencies, state, blockchain_key } = yield call(API.get(walletsAddressOptions), url);
         yield put(walletsAddressData({ address, currencies, state, blockchain_key }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: walletsAddressError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: walletsAddressError,
+                },
+            }),
+        );
     }
 }

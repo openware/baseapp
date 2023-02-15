@@ -2,9 +2,9 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     paymentMethodListFetch,
-    selectShouldFetchPaymentMethods,
     selectPaymentMethodLoading,
     selectPaymentMethodSuccess,
+    selectShouldFetchPaymentMethods,
     selectUserLoggedIn,
 } from '../modules';
 

@@ -1,9 +1,5 @@
 import { CommonError } from '../../types';
-import {
-    PLATFORM_CREATE,
-    PLATFORM_CREATE_DATA,
-    PLATFORM_CREATE_ERROR,
-} from './constants';
+import { PLATFORM_CREATE, PLATFORM_CREATE_DATA, PLATFORM_CREATE_ERROR } from './constants';
 
 export interface PlatformCreateFetch {
     type: typeof PLATFORM_CREATE;
@@ -29,12 +25,12 @@ export interface PlatformCreateError {
     error: CommonError;
 }
 
-export type PlatformCreateAction =
-    PlatformCreateFetch
-    | PlatformCreateData
-    | PlatformCreateError;
+export type PlatformCreateAction = PlatformCreateFetch | PlatformCreateData | PlatformCreateError;
 
-export const platformCreate = (payload: PlatformCreateFetch['payload'], callbackAction?: PlatformCreateFetch['callbackAction']): PlatformCreateFetch => ({
+export const platformCreate = (
+    payload: PlatformCreateFetch['payload'],
+    callbackAction?: PlatformCreateFetch['callbackAction'],
+): PlatformCreateFetch => ({
     type: PLATFORM_CREATE,
     payload,
     callbackAction,

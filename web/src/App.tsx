@@ -2,15 +2,15 @@ import { createBrowserHistory } from 'history';
 import * as React from 'react';
 import * as ReactGA from 'react-ga';
 import { IntlProvider } from 'react-intl';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Router } from 'react-router';
+import { ErrorWrapper } from 'src/containers';
 import { gaTrackerKey, useSharedLayout } from './api';
-import { ErrorWrapper } from './containers';
+import { SharedLayout } from './components';
 import { useSetMobileDevice } from './hooks';
 import * as mobileTranslations from './mobile/translations';
 import { configsFetch, selectCurrentLanguage, selectMobileDeviceState } from './modules';
 import { languageMap } from './translations';
-import { SharedLayout } from './components';
 import WebSocketProvider from './websocket/WebSocket';
 
 const gaKey = gaTrackerKey();
@@ -31,9 +31,11 @@ const MobileFooter = React.lazy(() => import('./mobile/components/Footer').then(
 /* Desktop components */
 const AlertsContainer = React.lazy(() => import('./containers/Alerts').then(({ Alerts }) => ({ default: Alerts })));
 const CustomizationContainer = React.lazy(() =>
-    import('./containers/Customization').then(({ Customization }) => ({ default: Customization }))
+    import('./containers/Customization').then(({ Customization }) => ({ default: Customization })),
 );
-const P2PAlertsContainer = React.lazy(() => import('./containers/P2P/P2PAlerts').then(({ P2PAlerts }) => ({ default: P2PAlerts })));
+const P2PAlertsContainer = React.lazy(() =>
+    import('./containers/P2P/P2PAlerts').then(({ P2PAlerts }) => ({ default: P2PAlerts })),
+);
 const HeaderContainer = React.lazy(() => import('./containers/Header').then(({ Header }) => ({ default: Header })));
 const SidebarContainer = React.lazy(() => import('./containers/Sidebar').then(({ Sidebar }) => ({ default: Sidebar })));
 const LayoutContainer = React.lazy(() => import('./routes').then(({ Layout }) => ({ default: Layout })));
@@ -69,12 +71,12 @@ const Layout = () => {
     return (
         <div className="pg-mobile-app">
             <SharedLayout>
-                <AlertsContainer/>
-                <LayoutContainer/>
+                <AlertsContainer />
+                <LayoutContainer />
             </SharedLayout>
         </div>
     );
-}
+};
 
 const RenderDeviceContainers = () => {
     const isMobileDevice = useSelector(selectMobileDeviceState);
@@ -95,8 +97,8 @@ const RenderDeviceContainers = () => {
     return (
         <div className="pg-mobile-app">
             <MobileHeader />
-            <AlertsContainer/>
-            <LayoutContainer/>
+            <AlertsContainer />
+            <LayoutContainer />
             <MobileFooter />
         </div>
     );
@@ -113,7 +115,7 @@ export const App = () => {
 
         if (rootElement) {
             rootElement.style.setProperty('--font-family', fontFamily);
-        };
+        }
     }, []);
 
     useSetMobileDevice();

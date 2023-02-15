@@ -31,7 +31,9 @@ describe('Identity reducer', () => {
                 loading: true,
             },
         };
-        expect(identityReducer(initialIdentityState, actions.sendIdentity(confirmIdentityPayload))).toEqual(expectedState);
+        expect(identityReducer(initialIdentityState, actions.sendIdentity(confirmIdentityPayload))).toEqual(
+            expectedState,
+        );
     });
 
     it('should handle SEND_IDENTITY_DATA', () => {
@@ -43,7 +45,9 @@ describe('Identity reducer', () => {
                 loading: false,
             },
         };
-        expect(identityReducer(initialIdentityState, actions.sendIdentityData(confirmIdentityResponse))).toEqual(expectedState);
+        expect(identityReducer(initialIdentityState, actions.sendIdentityData(confirmIdentityResponse))).toEqual(
+            expectedState,
+        );
     });
 
     it('should handle SEND_IDENTITY_ERROR', () => {
@@ -54,7 +58,7 @@ describe('Identity reducer', () => {
                 error: error,
                 loading: false,
             },
-         };
+        };
         expect(identityReducer(initialIdentityState, actions.sendIdentityError(error))).toEqual(expectedState);
     });
 
@@ -66,7 +70,9 @@ describe('Identity reducer', () => {
                 loading: true,
             },
         };
-        expect(identityReducer(initialIdentityState, actions.editIdentity(confirmIdentityPayload))).toEqual(expectedState);
+        expect(identityReducer(initialIdentityState, actions.editIdentity(confirmIdentityPayload))).toEqual(
+            expectedState,
+        );
     });
 
     it('should handle EDIT_IDENTITY_DATA', () => {
@@ -78,7 +84,9 @@ describe('Identity reducer', () => {
                 loading: false,
             },
         };
-        expect(identityReducer(initialIdentityState, actions.editIdentityData(confirmIdentityResponse))).toEqual(expectedState);
+        expect(identityReducer(initialIdentityState, actions.editIdentityData(confirmIdentityResponse))).toEqual(
+            expectedState,
+        );
     });
 
     it('should handle EDIT_IDENTITY_ERROR', () => {
@@ -89,7 +97,7 @@ describe('Identity reducer', () => {
                 error: error,
                 loading: false,
             },
-         };
+        };
         expect(identityReducer(initialIdentityState, actions.editIdentityError(error))).toEqual(expectedState);
     });
 });

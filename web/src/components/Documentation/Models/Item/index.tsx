@@ -22,7 +22,7 @@ export const DocumentationModelsItem: React.FC<ItemInterface> = (props: ItemInte
     }, [intl]);
 
     const getTableData = React.useCallback(() => {
-        return Object.keys(item.properties).map(key => {
+        return Object.keys(item.properties).map((key) => {
             const property = item.properties[key];
             const getFormattedType = () => {
                 switch (property.type) {
@@ -67,11 +67,13 @@ export const DocumentationModelsItem: React.FC<ItemInterface> = (props: ItemInte
                 key,
                 getFormattedType(),
                 property.description,
-                !!property.required ? (
-                    intl.formatMessage({ id: 'page.documentation.models.item.table.data.required.true' })
-                ) : (
-                    intl.formatMessage({ id: 'page.documentation.models.item.table.data.required.false' })
-                ),
+                !!property.required
+                    ? intl.formatMessage({
+                          id: 'page.documentation.models.item.table.data.required.true',
+                      })
+                    : intl.formatMessage({
+                          id: 'page.documentation.models.item.table.data.required.false',
+                      }),
             ];
         });
     }, [item.properties, intl]);
@@ -81,10 +83,7 @@ export const DocumentationModelsItem: React.FC<ItemInterface> = (props: ItemInte
             <h5>{title}</h5>
             <span>{item.description}</span>
             {item.properties && Object.keys(item.properties).length ? (
-                <Table
-                    header={getTableHeaders()}
-                    data={getTableData()}
-                />
+                <Table header={getTableHeaders()} data={getTableData()} />
             ) : null}
         </div>
     );

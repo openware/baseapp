@@ -17,14 +17,16 @@ export function* confirmPhoneSaga(action: SendCodeFetch) {
         yield call(API.post(sessionsConfig(getCsrfToken())), '/resource/phones/verify', action.payload);
         yield put(verifyPhoneData({ message: 'success.phone.confirmation.message' }));
         yield put(changeUserLevel({ level: 2 }));
-        yield put(alertPush({message: ['success.phone.confirmed'], type: 'success'}));
+        yield put(alertPush({ message: ['success.phone.confirmed'], type: 'success' }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: verifyPhoneError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: verifyPhoneError,
+                },
+            }),
+        );
     }
 }

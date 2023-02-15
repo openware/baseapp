@@ -1,29 +1,29 @@
-import * as Sentry from "@sentry/browser";
-import "bootstrap/dist/css/bootstrap-grid.min.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import * as React from "react";
-import { createRoot } from "react-dom/client";
-import { WrappedComponentProps } from "react-intl";
-import "react-perfect-scrollbar/dist/css/styles.css";
-import { Provider } from "react-redux";
-import { sentryEnabled } from "./api/config";
-import { App } from "./App";
-import "./index.pcss";
-import { rootSaga } from "./modules";
-import { sagaMiddleware, store } from "./store";
+import * as Sentry from '@sentry/browser';
+import 'bootstrap/dist/css/bootstrap-grid.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import * as React from 'react';
+import { createRoot } from 'react-dom/client';
+import { WrappedComponentProps } from 'react-intl';
+import 'react-perfect-scrollbar/dist/css/styles.css';
+import { Provider } from 'react-redux';
+import { sentryEnabled } from './api/config';
+import { App } from './App';
+import './index.pcss';
+import { rootSaga } from './modules';
+import { sagaMiddleware, store } from './store';
 
-import "@openware/react-components/build/index.css";
+import '@openware/react-components/build/index.css';
 
 if (!Intl.PluralRules) {
-    require("@formatjs/intl-pluralrules/polyfill");
-    require("@formatjs/intl-pluralrules/locale-data/en");
-    require("@formatjs/intl-pluralrules/locale-data/ru");
+    require('@formatjs/intl-pluralrules/polyfill');
+    require('@formatjs/intl-pluralrules/locale-data/en');
+    require('@formatjs/intl-pluralrules/locale-data/ru');
 }
 // @ts-ignore
 if (!Intl.RelativeTimeFormat) {
-    require("@formatjs/intl-relativetimeformat/polyfill");
-    require("@formatjs/intl-relativetimeformat/locale-data/en");
-    require("@formatjs/intl-relativetimeformat/locale-data/ru");
+    require('@formatjs/intl-relativetimeformat/polyfill');
+    require('@formatjs/intl-relativetimeformat/locale-data/en');
+    require('@formatjs/intl-relativetimeformat/locale-data/ru');
 }
 
 sagaMiddleware.run(rootSaga);
@@ -40,10 +40,10 @@ if (sentryEnabled()) {
     }
 }
 
-const container = document.getElementById("root") as HTMLElement;
+const container = document.getElementById('root') as HTMLElement;
 const root = createRoot(container!);
 root.render(
     <Provider store={store}>
         <App />
-    </Provider>
+    </Provider>,
 );

@@ -1,13 +1,13 @@
 import { PaymentMethod } from 'src/modules/public/p2p';
 import { PaymentMethodAction } from './actions';
 import {
-    PAYMENT_METHOD_LIST,
-    PAYMENT_METHOD_LIST_FETCH,
     PAYMENT_METHOD_CREATE,
     PAYMENT_METHOD_CREATE_FETCH,
     PAYMENT_METHOD_DELETE,
     PAYMENT_METHOD_DELETE_FETCH,
     PAYMENT_METHOD_ERROR,
+    PAYMENT_METHOD_LIST,
+    PAYMENT_METHOD_LIST_FETCH,
     PAYMENT_METHOD_MODAL,
     PAYMENT_METHOD_UPDATE,
     PAYMENT_METHOD_UPDATE_FETCH,
@@ -50,7 +50,10 @@ export const initialPaymentMethodState: PaymentMethodState = {
     },
 };
 
-export const paymentMethodReducer = (state = initialPaymentMethodState, action: PaymentMethodAction): PaymentMethodState => {
+export const paymentMethodReducer = (
+    state = initialPaymentMethodState,
+    action: PaymentMethodAction,
+): PaymentMethodState => {
     switch (action.type) {
         case PAYMENT_METHOD_LIST_FETCH:
             return {

@@ -1,25 +1,20 @@
 import * as React from 'react';
-import {
-    injectIntl,
-} from 'react-intl';
-import {
-    connect,
-    MapDispatchToPropsFunction,
-} from 'react-redux';
+import { injectIntl } from 'react-intl';
+import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { compose } from 'redux';
 import { IntlProps } from '../../';
 import { TabPanel } from '../../components';
-import { HistoryElement } from '../../containers/HistoryElement';
 import { CanCan } from '../../containers';
+import { HistoryElement } from '../../containers/HistoryElement';
 import { setDocumentTitle } from '../../helpers';
 import {
+    AbilitiesInterface,
     fetchHistory,
     marketsFetch,
     resetHistory,
-    walletsFetch,
     RootState,
     selectAbilities,
-    AbilitiesInterface,
+    walletsFetch,
 } from '../../modules';
 
 interface ReduxProps {
@@ -75,7 +70,7 @@ class History extends React.Component<Props, State> {
         );
     }
 
-    private onCurrentTabChange = index => this.setState({ currentTabIndex: index });
+    private onCurrentTabChange = (index) => this.setState({ currentTabIndex: index });
 
     private handleMakeRequest = (index: number) => {
         if (this.state.tab === this.tabMapping[index]) {
@@ -90,25 +85,25 @@ class History extends React.Component<Props, State> {
 
         const quickExchange = {
             content: tab === 'quick_exchange' ? <HistoryElement type="quick_exchange" /> : null,
-            label: this.props.intl.formatMessage({id: 'page.body.history.quick'}),
+            label: this.props.intl.formatMessage({ id: 'page.body.history.quick' }),
         };
 
         const tabs = [
             {
                 content: tab === 'deposits' ? <HistoryElement type="deposits" /> : null,
-                label: this.props.intl.formatMessage({id: 'page.body.history.deposit'}),
+                label: this.props.intl.formatMessage({ id: 'page.body.history.deposit' }),
             },
             {
                 content: tab === 'withdraws' ? <HistoryElement type="withdraws" /> : null,
-                label: this.props.intl.formatMessage({id: 'page.body.history.withdraw'}),
+                label: this.props.intl.formatMessage({ id: 'page.body.history.withdraw' }),
             },
             {
                 content: tab === 'trades' ? <HistoryElement type="trades" /> : null,
-                label: this.props.intl.formatMessage({id: 'page.body.history.trade'}),
+                label: this.props.intl.formatMessage({ id: 'page.body.history.trade' }),
             },
             {
                 content: tab === 'transfers' ? <HistoryElement type="transfers" /> : null,
-                label: this.props.intl.formatMessage({id: 'page.body.history.transfer'}),
+                label: this.props.intl.formatMessage({ id: 'page.body.history.transfer' }),
             },
         ];
 
@@ -124,10 +119,10 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     abilities: selectAbilities(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
     fetchMarkets: () => dispatch(marketsFetch()),
     fetchWallets: () => dispatch(walletsFetch()),
-    fetchHistory: payload => dispatch(fetchHistory(payload)),
+    fetchHistory: (payload) => dispatch(fetchHistory(payload)),
     resetHistory: () => dispatch(resetHistory()),
 });
 

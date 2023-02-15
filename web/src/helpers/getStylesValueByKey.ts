@@ -3,7 +3,6 @@ export const getStylesValueByKey = (variable: string): string => {
     const lightModeBodyElement = document.querySelector<HTMLElement>('.light-mode')!;
     const computedStyles = window.getComputedStyle(document.body);
 
-
     if (variable) {
         const key = variable.slice(4, variable.length - 1);
 

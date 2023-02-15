@@ -1,7 +1,7 @@
 import { BlockchainsAction } from './actions';
 import { BLOCKCHAINS_DATA } from './constants';
 
-export interface BlockchainsState  {
+export interface BlockchainsState {
     list: any[];
 }
 

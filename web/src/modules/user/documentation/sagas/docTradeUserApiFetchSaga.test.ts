@@ -4,11 +4,7 @@ import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { rootSaga, sendError } from '../../../../modules/index';
 import { CommonError } from '../../../types';
-import {
-    docTradeUserApiData,
-    docTradeUserApiError,
-    docTradeUserApiFetch,
-} from '../actions';
+import { docTradeUserApiData, docTradeUserApiError, docTradeUserApiFetch } from '../actions';
 import { DocTradeUserApiDataInterface } from '../types';
 
 const debug = false;
@@ -45,9 +41,7 @@ describe('Documentation trade user api', () => {
                 version: '2.6.0-89e3acd',
             },
             swagger: '2.0',
-            produces: [
-                'application/json',
-            ],
+            produces: ['application/json'],
             securityDefinitions: {
                 Bearer: {
                     type: 'apiKey',
@@ -76,10 +70,7 @@ describe('Documentation trade user api', () => {
             mockAxios.onGet('/swagger').reply(200, fakeResponse);
         };
 
-        const expectedActionsFetch = [
-            docTradeUserApiFetch(),
-            docTradeUserApiData(fakeResponse),
-        ];
+        const expectedActionsFetch = [docTradeUserApiFetch(), docTradeUserApiData(fakeResponse)];
 
         const expectedActionsError = [
             docTradeUserApiFetch(),
@@ -95,7 +86,7 @@ describe('Documentation trade user api', () => {
         it('should fetch deposits in success flow', async () => {
             mockDocTradeUserApiFetch();
 
-            const promise = new Promise(resolve => {
+            const promise = new Promise((resolve) => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     if (actions.length === expectedActionsFetch.length) {
@@ -111,7 +102,7 @@ describe('Documentation trade user api', () => {
 
         it('should handle fetch deposits error', async () => {
             mockNetworkError(mockAxios);
-            const promise = new Promise(resolve => {
+            const promise = new Promise((resolve) => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     if (actions.length === expectedActionsError.length) {

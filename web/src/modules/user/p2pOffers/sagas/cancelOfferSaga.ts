@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects';
 import { alertPush, sendError } from '../../..';
 import { API, RequestOptions } from '../../../../api';
 import { getCsrfToken } from '../../../../helpers';
-import { CancelOfferFetch, cancelOfferError } from '../actions';
+import { cancelOfferError, CancelOfferFetch } from '../actions';
 
 const cancelOptions = (csrfToken?: string): RequestOptions => {
     return {
@@ -17,14 +17,16 @@ export function* cancelOfferSaga(action: CancelOfferFetch) {
 
         yield call(API.post(cancelOptions(getCsrfToken())), `/private/offers/${id}/cancel`, action.payload);
 
-        yield put(alertPush({ message: ['success.offer.cancelling'], type: 'success'}));
+        yield put(alertPush({ message: ['success.offer.cancelling'], type: 'success' }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: cancelOfferError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: cancelOfferError,
+                },
+            }),
+        );
     }
 }

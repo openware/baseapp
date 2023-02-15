@@ -1,9 +1,6 @@
 import { shallow, ShallowWrapper } from 'enzyme';
 import * as React from 'react';
-import {
-    WalletList,
-    WalletListProps,
-} from '../../components';
+import { WalletList, WalletListProps } from '../../components';
 import { Wallet } from '../../modules';
 
 const onWalletSelectionChange = jest.fn();
@@ -18,8 +15,8 @@ const walletItems: Wallet[] = [
         fixed: 8,
         networks: [],
         account_type: '',
-
-    }, {
+    },
+    {
         active: false,
         locked: '100',
         currency: 'USD',
@@ -29,7 +26,8 @@ const walletItems: Wallet[] = [
         fixed: 8,
         networks: [],
         account_type: '',
-    }, {
+    },
+    {
         active: false,
         locked: '0.4',
         currency: 'BTC',
@@ -52,8 +50,7 @@ const defaultProps: WalletListProps = {
     markets: [],
 };
 
-const setup = (props: Partial<WalletListProps> = {}) =>
-    shallow(<WalletList {...{ ...defaultProps, ...props }} />);
+const setup = (props: Partial<WalletListProps> = {}) => shallow(<WalletList {...{ ...defaultProps, ...props }} />);
 
 describe('WalletList', () => {
     let wrapper: ShallowWrapper;

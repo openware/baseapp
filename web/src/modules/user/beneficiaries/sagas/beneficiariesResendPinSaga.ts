@@ -16,14 +16,16 @@ export function* beneficiariesResendPinSaga(action: BeneficiariesResendPin) {
         const { id } = action.payload;
         yield call(API.patch(config(getCsrfToken())), `/account/beneficiaries/${id}/resend_pin`, action.payload);
         yield put(beneficiariesResendPinData(action.payload));
-        yield put(alertPush({message: ['success.beneficiaries.resent_pin'], type: 'success'}));
+        yield put(alertPush({ message: ['success.beneficiaries.resent_pin'], type: 'success' }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: beneficiariesResendPinError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: beneficiariesResendPinError,
+                },
+            }),
+        );
     }
 }

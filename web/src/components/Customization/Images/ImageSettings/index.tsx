@@ -1,9 +1,6 @@
 import React, { FC, useState } from 'react';
 import { LogoIcon } from '../../../../assets/images/LogoIcon';
-import {
-    CustomizationSettingsInterface,
-    LogoInterface,
-} from '../../../../themes';
+import { CustomizationSettingsInterface, LogoInterface } from '../../../../themes';
 import { CustomInput } from '../../../index';
 
 interface ParentProps {
@@ -35,8 +32,9 @@ export const ImageSettings: FC<Props> = (props: Props) => {
     }, [props.resetToDefault]);
 
     const handleSetImageFromConfig = () => {
-        const settingsFromConfig: CustomizationSettingsInterface | undefined =
-        window.env?.palette ? JSON.parse(window.env.palette) : undefined;
+        const settingsFromConfig: CustomizationSettingsInterface | undefined = window.env?.palette
+            ? JSON.parse(window.env.palette)
+            : undefined;
 
         const imageFromSettings: LogoInterface = settingsFromConfig?.[props.imageTitle];
 
@@ -47,11 +45,11 @@ export const ImageSettings: FC<Props> = (props: Props) => {
         const updatedImage = {
             ...imageFromConfig,
             [field]: value,
-        }
+        };
 
         setImageFromConfig(updatedImage);
         props.handleSetHeaderLogo(updatedImage);
-    }
+    };
 
     return (
         <div key={props.imageTitle} className="pg-customization-images__item">
@@ -59,13 +57,12 @@ export const ImageSettings: FC<Props> = (props: Props) => {
             <div className="pg-customization-images__item__preview">
                 {imageFromConfig.url ? (
                     <img
-                        src={imageFromConfig.url} alt={`${props.imageTitle}`}
-                        style={imageFromConfig.width ? { width: `${imageFromConfig.width}px`} : null}
+                        src={imageFromConfig.url}
+                        alt={`${props.imageTitle}`}
+                        style={imageFromConfig.width ? { width: `${imageFromConfig.width}px` } : null}
                     />
                 ) : (
-                    <LogoIcon
-                        styles={imageFromConfig.width ? { width: `${imageFromConfig.width}px`} : null}
-                    />
+                    <LogoIcon styles={imageFromConfig.width ? { width: `${imageFromConfig.width}px` } : null} />
                 )}
             </div>
             <div className="pg-customization-images__item__url">
@@ -94,4 +91,4 @@ export const ImageSettings: FC<Props> = (props: Props) => {
             </div>
         </div>
     );
-}
+};

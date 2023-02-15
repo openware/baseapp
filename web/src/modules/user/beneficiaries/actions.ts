@@ -126,7 +126,7 @@ export interface BeneficiariesResetState {
 }
 
 export type BeneficiariesActions =
-    BeneficiariesFetch
+    | BeneficiariesFetch
     | BeneficiariesData
     | BeneficiariesDataUpdate
     | BeneficiariesError
@@ -169,7 +169,9 @@ export const beneficiariesActivate = (payload: BeneficiariesActivate['payload'])
     payload,
 });
 
-export const beneficiariesActivateData = (payload: BeneficiariesActivateData['payload']): BeneficiariesActivateData => ({
+export const beneficiariesActivateData = (
+    payload: BeneficiariesActivateData['payload'],
+): BeneficiariesActivateData => ({
     type: BENEFICIARIES_ACTIVATE_DATA,
     payload,
 });
@@ -214,7 +216,9 @@ export const beneficiariesResendPin = (payload: BeneficiariesResendPin['payload'
     payload,
 });
 
-export const beneficiariesResendPinData = (payload: BeneficiariesResendPinData['payload']): BeneficiariesResendPinData => ({
+export const beneficiariesResendPinData = (
+    payload: BeneficiariesResendPinData['payload'],
+): BeneficiariesResendPinData => ({
     type: BENEFICIARIES_RESEND_PIN_DATA,
     payload,
 });

@@ -15,14 +15,16 @@ export function* walletsWithdrawCcySaga(action: WalletsWithdrawCcyFetch) {
     try {
         yield call(API.post(walletsWithdrawCcyOptions(getCsrfToken())), '/account/withdraws', action.payload);
         yield put(walletsWithdrawCcyData());
-        yield put(alertPush({message: ['success.withdraw.action'], type: 'success'}));
+        yield put(alertPush({ message: ['success.withdraw.action'], type: 'success' }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: walletsWithdrawCcyError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: walletsWithdrawCcyError,
+                },
+            }),
+        );
     }
 }

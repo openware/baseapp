@@ -1,8 +1,7 @@
 import { call, put, select } from 'redux-saga/effects';
-import { sendError, Currency } from '../../../';
+import { selectCurrenciesState, sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { p2pWalletsData, p2pWalletsError } from '../actions';
-import { selectCurrenciesState } from '../../../';
 
 const peatioOptions: RequestOptions = {
     apiVersion: 'peatio',
@@ -14,16 +13,16 @@ const p2pOptions: RequestOptions = {
 
 export function* p2pWalletsSaga() {
     try {
-        const currenciesList =  yield select(selectCurrenciesState);
+        const currenciesList = yield select(selectCurrenciesState);
         const currencies = currenciesList.list;
         const p2pCurrencies = yield call(API.get(p2pOptions), '/public/currencies');
         const p2pAccounts = yield call(API.get(peatioOptions), '/account/balances?account_type=p2p');
 
-        const p2pAccountByCurrencies = p2pCurrencies.map(p2pCur => {
-            const p2pAccount = p2pAccounts.find(acc => acc.currency === p2pCur.id);
-            const currency = currencies.find(cur => cur.id === p2pCur.id);
+        const p2pAccountByCurrencies = p2pCurrencies.map((p2pCur) => {
+            const p2pAccount = p2pAccounts.find((acc) => acc.currency === p2pCur.id);
+            const currency = currencies.find((cur) => cur.id === p2pCur.id);
 
-            return ({
+            return {
                 currency: currency?.id,
                 account_type: p2pAccount?.account_type,
                 balance: p2pAccount?.balance || 0,
@@ -36,17 +35,19 @@ export function* p2pWalletsSaga() {
                 type: currency?.type,
                 fixed: currency?.precision,
                 iconUrl: currency?.icon_url,
-            });
+            };
         });
 
         yield put(p2pWalletsData(p2pAccountByCurrencies));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: p2pWalletsError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: p2pWalletsError,
+                },
+            }),
+        );
     }
 }

@@ -39,10 +39,7 @@ export interface UserActivityError {
     error: CommonError;
 }
 
-export type UserActivityAction =
-    UserActivityFetch
-    | UserActivityData
-    | UserActivityError;
+export type UserActivityAction = UserActivityFetch | UserActivityData | UserActivityError;
 
 export const getUserActivity = (payload: UserActivityFetchPayload): UserActivityFetch => ({
     type: USER_ACTIVITY_FETCH,

@@ -2,11 +2,11 @@ import cr from 'classnames';
 import React, { FormEvent } from 'react';
 import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { CustomInput } from '../CustomInput';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { EMAIL_REGEX } from '../../helpers';
 import { GeetestCaptchaResponse } from '../../modules';
 import { selectMobileDeviceState } from '../../modules/public/globalSettings';
+import { CustomInput } from '../CustomInput';
 
 export interface EmailFormProps {
     title?: string;
@@ -136,7 +136,7 @@ export const EmailForm: React.FC<EmailFormProps> = (props) => {
                             block={true}
                             type="button"
                             disabled={isButtonDisabled()}
-                            onClick={e => handleClick(e as any)}
+                            onClick={(e) => handleClick(e as any)}
                             size="lg"
                             variant="primary">
                             {isLoading ? 'Loading...' : buttonLabel ? buttonLabel : 'Send'}
@@ -146,4 +146,4 @@ export const EmailForm: React.FC<EmailFormProps> = (props) => {
             </div>
         </form>
     );
-}
+};

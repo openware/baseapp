@@ -28,7 +28,8 @@ export const getTotalPrice = (amount: string, priceMarket: number, proposals: st
         }
     }
 
-    if (sum > 0 && list.length >= 1) { // sum is bigger then order book liqudity
+    if (sum > 0 && list.length >= 1) {
+        // sum is bigger then order book liqudity
         const lastPrice = Number(list[list.length - 1][0]);
         total += lastPrice * sum;
     }
@@ -47,12 +48,12 @@ export const getAmount = (avaiblePrice: number, proposals: string[][], value: nu
             break;
         }
 
-        if (sum <= (Number(proposal[0]) * Number(proposal[1]))) {
+        if (sum <= Number(proposal[0]) * Number(proposal[1])) {
             totalAmount += sum / Number(proposal[0]);
             sum = 0;
         } else {
             totalAmount += Number(proposal[1]);
-            sum -= (Number(proposal[0]) * Number(proposal[1]));
+            sum -= Number(proposal[0]) * Number(proposal[1]);
         }
     }
 

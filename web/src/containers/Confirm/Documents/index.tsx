@@ -22,8 +22,8 @@ import {
     sendDocuments,
 } from '../../../modules';
 
-import DocumentFrontExample from 'src/assets/images/kyc/DocumentFrontExample.svg';
 import DocumentBackExample from 'src/assets/images/kyc/DocumentBackExample.svg';
+import DocumentFrontExample from 'src/assets/images/kyc/DocumentFrontExample.svg';
 import DocumentSelfieExample from 'src/assets/images/kyc/DocumentSelfieExample.svg';
 
 interface ReduxProps {
@@ -58,7 +58,8 @@ type Props = ReduxProps & DispatchProps & RouterProps & IntlProps;
 
 // tslint:disable:member-ordering
 class DocumentsComponent extends React.Component<Props, DocumentsState> {
-    public translate = (key: string, value?: string, min?: string) => this.props.intl.formatMessage({ id: key }, {value, min});
+    public translate = (key: string, value?: string, min?: string) =>
+        this.props.intl.formatMessage({ id: key }, { value, min });
 
     public data = [
         this.translate('page.body.kyc.documents.select.passport'),
@@ -102,7 +103,7 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
             idNumberFocused,
             frontFileSizeErrorMessage,
             backFileSizeErrorMessage,
-            selfieFileSizeErrorMessage
+            selfieFileSizeErrorMessage,
         }: DocumentsState = this.state;
 
         /* tslint:disable */
@@ -241,14 +242,10 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                             type="button"
                             block={true}>
                             {loading ? (
-                                <Spinner
-                                    as="span"
-                                    animation="border"
-                                    size="sm"
-                                    role="status"
-                                    aria-hidden="true"
-                                />
-                            ) : this.translate('page.body.kyc.submit')}
+                                <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+                            ) : (
+                                this.translate('page.body.kyc.submit')
+                            )}
                         </Button>
                     </div>
                 </div>
@@ -258,7 +255,11 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
 
     private uploadFileSizeGuide = () => {
         if (barongUploadSizeMinRange) {
-            return this.translate('page.body.kyc.address.uploadFile.sizeMinMax', barongUploadSizeMaxRange.toString(), barongUploadSizeMinRange.toString());
+            return this.translate(
+                'page.body.kyc.address.uploadFile.sizeMinMax',
+                barongUploadSizeMaxRange.toString(),
+                barongUploadSizeMinRange.toString(),
+            );
         }
 
         return this.translate('page.body.kyc.address.uploadFile.sizeMax', barongUploadSizeMaxRange.toString());
@@ -315,7 +316,10 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
     private handleUploadScan = (uploadEvent, id) => {
         const allFiles: File[] = uploadEvent.target.files;
         const maxDocsCount = 1;
-        const additionalFileList = Array.from(allFiles).length > maxDocsCount ? Array.from(allFiles).slice(0, maxDocsCount) : Array.from(allFiles);
+        const additionalFileList =
+            Array.from(allFiles).length > maxDocsCount
+                ? Array.from(allFiles).slice(0, maxDocsCount)
+                : Array.from(allFiles);
 
         if (!additionalFileList.length) {
             return;
@@ -326,9 +330,13 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         switch (id) {
             case 'front':
                 if (additionalFileList[0].size > barongUploadSizeMaxRange * 1024 * 1024) {
-                    this.setState({ frontFileSizeErrorMessage: this.translate('page.body.kyc.uploadFile.error.tooBig', sizeKB) });
+                    this.setState({
+                        frontFileSizeErrorMessage: this.translate('page.body.kyc.uploadFile.error.tooBig', sizeKB),
+                    });
                 } else if (additionalFileList[0].size < barongUploadSizeMinRange * 1024 * 1024) {
-                    this.setState({ frontFileSizeErrorMessage: this.translate('page.body.kyc.uploadFile.error.tooSmall', sizeKB) });
+                    this.setState({
+                        frontFileSizeErrorMessage: this.translate('page.body.kyc.uploadFile.error.tooSmall', sizeKB),
+                    });
                 } else {
                     this.setState({ frontFileSizeErrorMessage: '' });
                 }
@@ -337,9 +345,13 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                 break;
             case 'back':
                 if (additionalFileList[0].size > barongUploadSizeMaxRange * 1024 * 1024) {
-                    this.setState({ backFileSizeErrorMessage: this.translate('page.body.kyc.uploadFile.error.tooBig', sizeKB) });
+                    this.setState({
+                        backFileSizeErrorMessage: this.translate('page.body.kyc.uploadFile.error.tooBig', sizeKB),
+                    });
                 } else if (additionalFileList[0].size < barongUploadSizeMinRange * 1024 * 1024) {
-                    this.setState({ backFileSizeErrorMessage: this.translate('page.body.kyc.uploadFile.error.tooSmall', sizeKB) });
+                    this.setState({
+                        backFileSizeErrorMessage: this.translate('page.body.kyc.uploadFile.error.tooSmall', sizeKB),
+                    });
                 } else {
                     this.setState({ backFileSizeErrorMessage: '' });
                 }
@@ -348,9 +360,13 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
                 break;
             case 'selfie':
                 if (additionalFileList[0].size > barongUploadSizeMaxRange * 1024 * 1024) {
-                    this.setState({ selfieFileSizeErrorMessage: this.translate('page.body.kyc.uploadFile.error.tooBig', sizeKB) });
+                    this.setState({
+                        selfieFileSizeErrorMessage: this.translate('page.body.kyc.uploadFile.error.tooBig', sizeKB),
+                    });
                 } else if (additionalFileList[0].size < barongUploadSizeMinRange * 1024 * 1024) {
-                    this.setState({ selfieFileSizeErrorMessage: this.translate('page.body.kyc.uploadFile.error.tooSmall', sizeKB) });
+                    this.setState({
+                        selfieFileSizeErrorMessage: this.translate('page.body.kyc.uploadFile.error.tooSmall', sizeKB),
+                    });
                 } else {
                     this.setState({ selfieFileSizeErrorMessage: '' });
                 }
@@ -395,14 +411,23 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
         const typeOfDocuments = this.getDocumentsType(documentsType);
         const filesValid =
             typeOfDocuments === 'Passport'
-                ? fileFront.length && fileSelfie.length && frontFileSizeErrorMessage === '' && selfieFileSizeErrorMessage === ''
-                : fileSelfie.length && fileFront.length && fileBack.length && frontFileSizeErrorMessage === '' && backFileSizeErrorMessage === '' && selfieFileSizeErrorMessage === '';
+                ? fileFront.length &&
+                  fileSelfie.length &&
+                  frontFileSizeErrorMessage === '' &&
+                  selfieFileSizeErrorMessage === ''
+                : fileSelfie.length &&
+                  fileFront.length &&
+                  fileBack.length &&
+                  frontFileSizeErrorMessage === '' &&
+                  backFileSizeErrorMessage === '' &&
+                  selfieFileSizeErrorMessage === '';
 
         return (
             !this.handleValidateInput('idNumber', idNumber) ||
             !this.handleValidateInput('issuedDate', issuedDate) ||
             (expireDate && !this.handleValidateInput('expireDate', expireDate)) ||
-            !filesValid || loading
+            !filesValid ||
+            loading
         );
     };
 
@@ -416,7 +441,9 @@ class DocumentsComponent extends React.Component<Props, DocumentsState> {
 
         const payload = {
             front_side: this.createFormData('front_side', fileFront, identificator),
-            ...(documentsType !== 'Passport' && { back_side: this.createFormData('back_side', fileBack, identificator) }),
+            ...(documentsType !== 'Passport' && {
+                back_side: this.createFormData('back_side', fileBack, identificator),
+            }),
             selfie: this.createFormData('selfie', fileSelfie, identificator),
         };
 
@@ -472,5 +499,5 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispa
 export const Documents = compose(
     injectIntl,
     withRouter,
-    connect(mapStateToProps, mapDispatchToProps)
+    connect(mapStateToProps, mapDispatchToProps),
 )(DocumentsComponent) as any; // tslint:disable-line

@@ -1,14 +1,14 @@
 /* Dark mode theme presets */
-import { BasicNewTheme as BasicNewThemeDark } from './templates/dark/BasicNew';
 import { BasicTheme as BasicThemeDark } from './templates/dark/Basic';
+import { BasicNewTheme as BasicNewThemeDark } from './templates/dark/BasicNew';
 import { GreenTheme as GreenThemeDark } from './templates/dark/Green';
 import { RedTheme as RedThemeDark } from './templates/dark/Red';
 import { VioletTheme as VioletThemeDark } from './templates/dark/Violet';
 import { YellowTheme as YellowThemeDark } from './templates/dark/Yellow';
 
 /* Light mode theme presets */
-import { BasicNewTheme as BasicNewThemeLight } from './templates/light/BasicNew';
 import { BasicTheme as BasicThemeLight } from './templates/light/Basic';
+import { BasicNewTheme as BasicNewThemeLight } from './templates/light/BasicNew';
 import { GreenTheme as GreenThemeLight } from './templates/light/Green';
 import { RedTheme as RedThemeLight } from './templates/light/Red';
 import { VioletTheme as VioletThemeLight } from './templates/light/Violet';

@@ -16,14 +16,16 @@ export function* createOrderSaga(action: P2POrdersCreateFetch) {
         const order = yield call(API.post(executeOptions(getCsrfToken())), '/private/orders', action.payload);
         yield put(p2pOrdersCreateData(order));
         yield put(p2pOrdersAppend(order));
-        yield put(alertPush({ message: ['success.order.created'], type: 'success'}));
+        yield put(alertPush({ message: ['success.order.created'], type: 'success' }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: p2pOrdersCreateError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: p2pOrdersCreateError,
+                },
+            }),
+        );
     }
 }

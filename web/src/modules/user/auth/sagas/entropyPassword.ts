@@ -13,12 +13,14 @@ export function* entropyPassword(action: EntropyPasswordFetch) {
         yield put(entropyPasswordData(data));
     } catch (error) {
         yield put(entropyPasswordError(error));
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: entropyPasswordError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: entropyPasswordError,
+                },
+            }),
+        );
     }
 }

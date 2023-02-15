@@ -77,7 +77,7 @@ describe('Beneficiaries Activate', () => {
         it('should activate beneficiaries in success flow', async () => {
             mockBeneficiariesActivate();
 
-            const promise = new Promise<void>(resolve => {
+            const promise = new Promise<void>((resolve) => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     if (actions.length === expectedBeneficiariesActivateSuccess.length) {
@@ -93,7 +93,7 @@ describe('Beneficiaries Activate', () => {
 
         it('should handle activate beneficiaries error', async () => {
             mockNetworkError(mockAxios);
-            const promise = new Promise<void>(resolve => {
+            const promise = new Promise<void>((resolve) => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     if (actions.length === expectedBeneficiariesActivateError.length) {

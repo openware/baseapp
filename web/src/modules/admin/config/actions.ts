@@ -17,10 +17,7 @@ export interface ConfigUpdateError {
     error: CommonError;
 }
 
-export type ConfigUpdateAction =
-    ConfigUpdate
-    | ConfigUpdateData
-    | ConfigUpdateError;
+export type ConfigUpdateAction = ConfigUpdate | ConfigUpdateData | ConfigUpdateError;
 
 export const configUpdate = (payload: ConfigUpdate['payload']): ConfigUpdate => ({
     type: CONFIG_UPDATE,

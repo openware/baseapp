@@ -3,12 +3,17 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
-import { captchaType, captchaLogin } from '../../api';
+import { captchaLogin, captchaType } from '../../api';
 import { Captcha, SignInComponent, TwoFactorAuth } from '../../components';
 import { EMAIL_REGEX, ERROR_EMPTY_PASSWORD, ERROR_INVALID_EMAIL, setDocumentTitle } from '../../helpers';
 import { useReduxSelector } from '../../hooks';
 import {
+    resetCaptchaState,
+    selectCaptchaResponse,
+    selectGeetestCaptchaSuccess,
     selectMobileDeviceState,
+    selectRecaptchaSuccess,
+    selectSignInError,
     selectSignInRequire2FA,
     selectUserFetching,
     selectUserLoggedIn,
@@ -16,11 +21,6 @@ import {
     signInError,
     signInRequire2FA,
     signUpRequireVerification,
-    selectSignInError,
-    selectRecaptchaSuccess,
-    selectGeetestCaptchaSuccess,
-    selectCaptchaResponse,
-    resetCaptchaState,
 } from '../../modules';
 
 export const SignInScreen: React.FC = () => {
@@ -53,7 +53,7 @@ export const SignInScreen: React.FC = () => {
 
         return () => {
             dispatch(resetCaptchaState());
-        }
+        };
     }, []);
 
     useEffect(() => {
@@ -89,7 +89,7 @@ export const SignInScreen: React.FC = () => {
                 email,
                 password,
                 ...(captchaType() !== 'none' && captchaLogin() && { captcha_response }),
-            })
+            }),
         );
     }, [dispatch, email, password, captcha_response, captchaType()]);
 
@@ -101,7 +101,7 @@ export const SignInScreen: React.FC = () => {
                     password,
                     otp_code: otpCode,
                     ...(captchaType() !== 'none' && captchaLogin() && { captcha_response }),
-                })
+                }),
             );
         }
     }, [dispatch, otpCode, email, password, captchaType(), captchaLogin()]);
@@ -127,7 +127,7 @@ export const SignInScreen: React.FC = () => {
                     break;
             }
         },
-        [emailFocused, passwordFocused]
+        [emailFocused, passwordFocused],
     );
 
     const validateForm = useCallback(() => {
@@ -194,7 +194,9 @@ export const SignInScreen: React.FC = () => {
                         receiveConfirmationLabel={formatMessage({
                             id: 'page.header.signIn.receiveConfirmation',
                         })}
-                        forgotPasswordLabel={formatMessage({ id: 'page.header.signIn.forgotPassword' })}
+                        forgotPasswordLabel={formatMessage({
+                            id: 'page.header.signIn.forgotPassword',
+                        })}
                         isLoading={loading}
                         onForgotPassword={forgotPassword}
                         onSignUp={handleSignUp}

@@ -1,10 +1,6 @@
 import { CommonError } from '../../../modules/types';
 import { CreateQuickExchangeActions } from './actions';
-import {
-    CREATE_QUICK_ORDER_FETCH,
-    CREATE_QUICK_ORDER_DATA,
-    CREATE_QUICK_ORDER_ERROR,
-} from './constants';
+import { CREATE_QUICK_ORDER_DATA, CREATE_QUICK_ORDER_ERROR, CREATE_QUICK_ORDER_FETCH } from './constants';
 
 export interface QuickExchangeState {
     fetching: boolean;

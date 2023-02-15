@@ -5,13 +5,13 @@ import { useHistory, useParams } from 'react-router-dom';
 import { TabPanel } from 'src/components';
 import {
     CanCan,
-    ReferralProgram,
-    ProfileSecurity,
-    ProfilePayment,
-    ProfileAuthDetails,
     ProfileAccountActivity,
     ProfileApiKeys,
+    ProfileAuthDetails,
+    ProfilePayment,
+    ProfileSecurity,
     ProfileVerification,
+    ReferralProgram,
 } from 'src/containers';
 import { useDocumentTitle } from 'src/hooks';
 import { selectAbilities } from 'src/modules';
@@ -53,38 +53,44 @@ export const ProfileScreen: FC = (): ReactElement => {
     }, [routeTab, tabMapping]);
 
     const translate = useCallback((id: string) => formatMessage({ id }), [formatMessage]);
-    const onCurrentTabChange = useCallback((index: number) => {
-        setCurrentTabIndex(index);
-        history.push(`/profile/${tabMapping[index]}`);
-    }, [tabMapping]);
+    const onCurrentTabChange = useCallback(
+        (index: number) => {
+            setCurrentTabIndex(index);
+            history.push(`/profile/${tabMapping[index]}`);
+        },
+        [tabMapping],
+    );
 
-    const onTabChange = useCallback((index: number) => {
-        if (tab !== tabMapping[index]) {
-            setTab(tabMapping[index]);
-        }
-    }, [tabMapping]);
+    const onTabChange = useCallback(
+        (index: number) => {
+            if (tab !== tabMapping[index]) {
+                setTab(tabMapping[index]);
+            }
+        },
+        [tabMapping],
+    );
 
     const renderTabs = useCallback(() => {
         const isP2PEnabled = CanCan.checkAbilityByAction('read', 'P2P', abilities);
         const p2pTabs = [
             {
-                content: tab === 'payment' ? <ProfilePayment/> : null,
+                content: tab === 'payment' ? <ProfilePayment /> : null,
                 label: translate('page.body.profile.tabs.payment'),
-            }
+            },
         ];
 
         return [
             {
-                content: tab === 'security' ? <ProfileSecurity/> : null,
+                content: tab === 'security' ? <ProfileSecurity /> : null,
                 label: translate('page.body.profile.tabs.security'),
             },
             {
-                content: tab === 'api_keys' ? <ProfileApiKeys/> : null,
+                content: tab === 'api_keys' ? <ProfileApiKeys /> : null,
                 label: translate('page.body.profile.tabs.api_keys'),
             },
             ...(isP2PEnabled ? p2pTabs : []),
             {
-                content: tab === 'referral' ? <ReferralProgram/> : null,
+                content: tab === 'referral' ? <ReferralProgram /> : null,
                 label: translate('page.body.profile.tabs.referral'),
             },
         ];
@@ -97,11 +103,11 @@ export const ProfileScreen: FC = (): ReactElement => {
                     <div className="row">
                         <div className="col-12 col-md-6 mx-0">
                             <div className="row col-12 mx-0">
-                                <ProfileAuthDetails/>
+                                <ProfileAuthDetails />
                             </div>
                         </div>
                         <div className="col-12 col-md-6">
-                            <ProfileVerification/>
+                            <ProfileVerification />
                         </div>
                     </div>
                 </div>
@@ -119,7 +125,7 @@ export const ProfileScreen: FC = (): ReactElement => {
             {tab === 'security' && (
                 <div className="row">
                     <div className="col-12">
-                        <ProfileAccountActivity/>
+                        <ProfileAccountActivity />
                     </div>
                 </div>
             )}

@@ -22,16 +22,12 @@ export interface RecentTradesError {
 export interface RecentTradesPush {
     type: typeof RECENT_TRADES_PUSH;
     payload: {
-        trades: PublicTradeEvent[],
-        market: string,
+        trades: PublicTradeEvent[];
+        market: string;
     };
 }
 
-export type RecentTradesActions =
-    RecentTradesFetch
-    | RecentTradesError
-    | RecentTradesData
-    | RecentTradesPush;
+export type RecentTradesActions = RecentTradesFetch | RecentTradesError | RecentTradesData | RecentTradesPush;
 
 export const recentTradesFetch = (payload: RecentTradesFetch['payload']): RecentTradesFetch => ({
     type: RECENT_TRADES_FETCH,

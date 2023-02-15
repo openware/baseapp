@@ -1,10 +1,10 @@
 import {
-    MARKET_UPDATE_FETCH,
     MARKETS_LIST_DATA,
     MARKETS_LIST_ERROR,
     MARKETS_LIST_FETCH,
     MARKET_UPDATE_DATA,
     MARKET_UPDATE_ERROR,
+    MARKET_UPDATE_FETCH,
 } from './constants';
 
 export interface MarketItem {
@@ -42,7 +42,6 @@ export interface MarketsListFetch {
     type: typeof MARKETS_LIST_FETCH;
 }
 
-
 export interface MarketsListData {
     type: typeof MARKETS_LIST_DATA;
     payload: {
@@ -73,8 +72,8 @@ export interface MarketUpdateError {
     type: typeof MARKET_UPDATE_ERROR;
 }
 
-
-export type MarketsAdminAction = MarketsListFetch
+export type MarketsAdminAction =
+    | MarketsListFetch
     | MarketsListData
     | MarketsListError
     | MarketUpdateFetch
@@ -85,7 +84,10 @@ export const getMarketsAdminList = (): MarketsListFetch => ({
     type: MARKETS_LIST_FETCH,
 });
 
-export const updateMarketFetch = (payload: MarketUpdateFetch['payload'], callbackAction?: MarketUpdateFetch['callbackAction']): MarketUpdateFetch => ({
+export const updateMarketFetch = (
+    payload: MarketUpdateFetch['payload'],
+    callbackAction?: MarketUpdateFetch['callbackAction'],
+): MarketUpdateFetch => ({
     type: MARKET_UPDATE_FETCH,
     payload,
     callbackAction,

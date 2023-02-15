@@ -35,7 +35,7 @@ describe('SignIn saga', () => {
         otp: false,
         state: 'active',
         profiles: [],
-        data: '{\"language\":\"en\"}',
+        data: '{"language":"en"}',
         referal_uid: '',
         labels: [],
         phone: [],
@@ -55,7 +55,7 @@ describe('SignIn saga', () => {
     const expectedActionsFetch = [
         signIn(fakeCredentials),
         changeLanguage('en'),
-        userData({user: fakeUser}),
+        userData({ user: fakeUser }),
         signInRequire2FA({ require2fa: false }),
     ];
 
@@ -72,7 +72,7 @@ describe('SignIn saga', () => {
 
     it('should signin user in success flow', async () => {
         mockSignIn();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -89,7 +89,7 @@ describe('SignIn saga', () => {
 
     it('should trigger network error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsNetworkError.length) {

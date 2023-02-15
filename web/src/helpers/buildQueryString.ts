@@ -1,4 +1,4 @@
-const buildQueryArray = data => {
+const buildQueryArray = (data) => {
     let queryArray = '';
 
     if (data && data[0] && data[1]) {
@@ -14,12 +14,11 @@ const buildQueryArray = data => {
 };
 
 // tslint:disable:no-any
-export const buildQueryString = (action: any, key?: string) => (Object.entries(action)
-    .filter(w => w[1] !== '' && w[1] !== undefined)
-    .map((k: any) => {
-        const param = k[0] === 'page' ? Number(k[1]) + 1 : k[1];
-        return (
-            Array.isArray(param) ? buildQueryArray(k) : `${k[0]}=${encodeURIComponent(param)}`
-        );
-    })
-    .join('&'));
+export const buildQueryString = (action: any, key?: string) =>
+    Object.entries(action)
+        .filter((w) => w[1] !== '' && w[1] !== undefined)
+        .map((k: any) => {
+            const param = k[0] === 'page' ? Number(k[1]) + 1 : k[1];
+            return Array.isArray(param) ? buildQueryArray(k) : `${k[0]}=${encodeURIComponent(param)}`;
+        })
+        .join('&');

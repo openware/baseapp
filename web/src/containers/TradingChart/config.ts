@@ -1,8 +1,5 @@
 import { DEFAULT_TRADING_VIEW_INTERVAL } from '../../constants';
-import {
-    customWidgetOptions,
-    customWidgetParams,
-} from '../../custom/tradingChartConfig';
+import { customWidgetOptions, customWidgetParams } from '../../custom/tradingChartConfig';
 
 export const widgetParams = {
     interval: String(DEFAULT_TRADING_VIEW_INTERVAL),
@@ -11,7 +8,7 @@ export const widgetParams = {
 };
 
 export const widgetOptions = (colorTheme?: string) => {
-    return ({
+    return {
         allow_symbol_change: false,
         autosize: true,
         calendar: true,
@@ -36,5 +33,5 @@ export const widgetOptions = (colorTheme?: string) => {
         withdateranges: false,
 
         ...customWidgetOptions(colorTheme),
-    });
+    };
 };

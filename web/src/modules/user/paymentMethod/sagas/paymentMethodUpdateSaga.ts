@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects';
 import { alertPush, sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { getCsrfToken } from '../../../../helpers';
-import { paymentMethodModal, paymentMethodError, paymentMethodUpdate, PaymentMethodUpdateFetch } from '../actions';
+import { paymentMethodError, paymentMethodModal, paymentMethodUpdate, PaymentMethodUpdateFetch } from '../actions';
 
 const updateOptions = (csrfToken?: string): RequestOptions => {
     return {
@@ -19,12 +19,14 @@ export function* paymentMethodUpdateSaga(action: PaymentMethodUpdateFetch) {
         yield put(alertPush({ message: ['success.payment_method.updated'], type: 'success' }));
         yield put(paymentMethodModal({ active: false }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: paymentMethodError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: paymentMethodError,
+                },
+            }),
+        );
     }
 }

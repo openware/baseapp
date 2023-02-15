@@ -24,7 +24,7 @@ const setup = (props: Partial<OrderBook> = {}) =>
     shallow(
         <TestComponentWrapper>
             <OrderBook {...{ ...defaultProps, ...props }} />
-        </TestComponentWrapper>
+        </TestComponentWrapper>,
     );
 
 describe('History', () => {

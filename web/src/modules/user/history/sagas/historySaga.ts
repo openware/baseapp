@@ -44,12 +44,14 @@ export function* historySaga(action: HistoryFetch) {
 
         yield put(successHistory({ list: updatedData, page, nextPageExists, type }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: failHistory,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: failHistory,
+                },
+            }),
+        );
     }
 }

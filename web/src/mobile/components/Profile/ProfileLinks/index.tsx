@@ -3,12 +3,12 @@ import { useIntl } from 'react-intl';
 import { useHistory } from 'react-router';
 import { ChevronIcon } from '../../../assets/images/ChevronIcon';
 
-const ProfileLinksComponent = props => {
+const ProfileLinksComponent = (props) => {
     const intl = useIntl();
     const history = useHistory();
     const links = props.links || [];
 
-    const handleRedirect = location => {
+    const handleRedirect = (location) => {
         if (history.location.pathname !== location.route) {
             history.push({
                 pathname: location.route,
@@ -17,13 +17,9 @@ const ProfileLinksComponent = props => {
         }
     };
 
-    const renderLinkChildren = link => {
+    const renderLinkChildren = (link) => {
         if (link.children) {
-            return (
-                <div className="pg-mobile-profile-links__item__right">
-                    {link.children}
-                </div>
-            );
+            return <div className="pg-mobile-profile-links__item__right">{link.children}</div>;
         }
 
         return (
@@ -35,24 +31,14 @@ const ProfileLinksComponent = props => {
 
     const renderLinksItem = (link, index) => {
         return (
-            <div
-                key={index}
-                className="pg-mobile-profile-links__item"
-                onClick={() => handleRedirect(link)}
-            >
-                <span className="pg-mobile-profile-links__item__left">
-                    {intl.formatMessage({id: link.titleKey})}
-                </span>
+            <div key={index} className="pg-mobile-profile-links__item" onClick={() => handleRedirect(link)}>
+                <span className="pg-mobile-profile-links__item__left">{intl.formatMessage({ id: link.titleKey })}</span>
                 {renderLinkChildren(link)}
             </div>
         );
     };
 
-    return (
-        <div className="pg-mobile-profile-links">
-            {links.length ? links.map(renderLinksItem) : null}
-        </div>
-    );
+    return <div className="pg-mobile-profile-links">{links.length ? links.map(renderLinksItem) : null}</div>;
 };
 
 export const ProfileLinks = React.memo(ProfileLinksComponent);

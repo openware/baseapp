@@ -1,17 +1,14 @@
 import classnames from 'classnames';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import {
-    FilterPrice,
-    PriceValidation,
-    validatePriceStep,
-} from '../../filters';
+import { getTriggerSign } from 'src/containers/OpenOrders/helpers';
 import {
     AMOUNT_PERCENTAGE_ARRAY,
     ORDER_TYPES_WITH_TRIGGER,
-    TRIGGER_BUY_PRICE_MULT,
     TRIGGER_BUY_PRICE_ADJUSTED_TYPES,
+    TRIGGER_BUY_PRICE_MULT,
 } from '../../constants';
+import { FilterPrice, PriceValidation, validatePriceStep } from '../../filters';
 import { cleanPositiveFloatInput, precisionRegExp } from '../../helpers';
 import { OrderInput as OrderInputMobile } from '../../mobile/components';
 import { Decimal } from '../Decimal';
@@ -19,7 +16,6 @@ import { DropdownComponent } from '../Dropdown';
 import { OrderProps } from '../Order';
 import { OrderInput } from '../OrderInput';
 import { PercentageButton } from '../PercentageButton';
-import { getTriggerSign } from 'src/containers/OpenOrders/helpers';
 
 type OnSubmitCallback = (order: OrderProps) => void;
 type DropdownElem = number | string | React.ReactNode;
@@ -108,7 +104,12 @@ export interface OrderFormProps {
     isMobileDevice?: boolean;
     currentMarketFilters: FilterPrice[];
     handleAmountChange: (amount: string, type: FormType) => void;
-    handleChangeAmountByButton: (value: number, orderType: string | React.ReactNode, price: string, type: string) => void;
+    handleChangeAmountByButton: (
+        value: number,
+        orderType: string | React.ReactNode,
+        price: string,
+        type: string,
+    ) => void;
     translate: (id: string, value?: any) => string;
 }
 
@@ -125,9 +126,7 @@ interface OrderFormState {
     side: string;
 }
 
-const handleSetValue = (value: string | number | undefined, defaultValue: string) => (
-    value || defaultValue
-);
+const handleSetValue = (value: string | number | undefined, defaultValue: string) => value || defaultValue;
 
 export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormState> {
     constructor(props: OrderFormProps) {
@@ -155,13 +154,21 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
     public UNSAFE_componentWillReceiveProps(next: OrderFormProps) {
         const nextPriceLimitTruncated = Decimal.format(next.priceLimit, this.props.currentMarketBidPrecision);
 
-        if ((this.state.orderType as string).toLowerCase().includes('limit') && next.priceLimit && nextPriceLimitTruncated !== this.state.price) {
+        if (
+            (this.state.orderType as string).toLowerCase().includes('limit') &&
+            next.priceLimit &&
+            nextPriceLimitTruncated !== this.state.price
+        ) {
             this.handlePriceChange(nextPriceLimitTruncated);
         }
 
         const nextTriggerTruncated = Decimal.format(next.trigger, this.props.currentMarketBidPrecision);
 
-        if (['Stop-loss', 'Take-profit'].includes(String(this.state.orderType)) && next.trigger && nextTriggerTruncated !== this.state.trigger) {
+        if (
+            ['Stop-loss', 'Take-profit'].includes(String(this.state.orderType)) &&
+            next.trigger &&
+            nextTriggerTruncated !== this.state.trigger
+        ) {
             this.handleTriggerChange(nextTriggerTruncated);
         }
 
@@ -197,7 +204,9 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                 {isMobileDevice ? (
                     <OrderInputMobile
                         label={priceText}
-                        placeholder={translate('page.mobile.order.price.placeholder', { currency: from ? from.toUpperCase() : '' })}
+                        placeholder={translate('page.mobile.order.price.placeholder', {
+                            currency: from ? from.toUpperCase() : '',
+                        })}
                         value={price || ''}
                         isFocused={priceFocused}
                         precision={currentMarketBidPrecision}
@@ -217,11 +226,13 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                     />
                 )}
                 <div className={priceErrorClass}>
-                    {translate('page.body.trade.header.newOrder.content.filterPrice', { priceStep: isPriceValid.priceStep })}
+                    {translate('page.body.trade.header.newOrder.content.filterPrice', {
+                        priceStep: isPriceValid.priceStep,
+                    })}
                 </div>
             </React.Fragment>
         );
-    }
+    };
 
     public renderTrigger = () => {
         const { orderType, triggerFocused, trigger, isTriggerValid } = this.state;
@@ -230,18 +241,21 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
         const triggerErrorClass = classnames('error-message', {
             'error-message--visible': (triggerFocused || isMobileDevice) && !isTriggerValid.valid,
         });
-        const triggerText = translate(`page.body.trade.header.newOrder.content.triggerPrice`, { sign: getTriggerSign(String(orderType).toLowerCase(), type) });
+        const triggerText = translate(`page.body.trade.header.newOrder.content.triggerPrice`, {
+            sign: getTriggerSign(String(orderType).toLowerCase(), type),
+        });
 
         return (
             <React.Fragment>
                 {isMobileDevice ? (
                     <OrderInputMobile
                         label={triggerText}
-                        placeholder={
-                            translate(
-                                `page.mobile.order.trigger.placeholder.${(orderType as string).includes('Stop') ? 'stop' : 'take'}`, { currency: from ? from.toUpperCase() : '' },
-                            )
-                        }
+                        placeholder={translate(
+                            `page.mobile.order.trigger.placeholder.${
+                                (orderType as string).includes('Stop') ? 'stop' : 'take'
+                            }`,
+                            { currency: from ? from.toUpperCase() : '' },
+                        )}
                         value={trigger || ''}
                         isFocused={triggerFocused}
                         precision={currentMarketBidPrecision}
@@ -261,11 +275,13 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                     />
                 )}
                 <div className={triggerErrorClass}>
-                    {translate('page.body.trade.header.newOrder.content.filterPrice', { priceStep: isTriggerValid.priceStep })}
+                    {translate('page.body.trade.header.newOrder.content.filterPrice', {
+                        priceStep: isTriggerValid.priceStep,
+                    })}
                 </div>
             </React.Fragment>
         );
-    }
+    };
 
     public getPriceInputs = () => {
         const { orderType, priceMarket } = this.state;
@@ -281,9 +297,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             case 'Take-limit':
                 return (
                     <div className="cr-price-inputs">
-                        <div className="cr-price-inputs__trigger">
-                            {this.renderTrigger()}
-                        </div>
+                        <div className="cr-price-inputs__trigger">{this.renderTrigger()}</div>
                         {this.renderPrice()}
                     </div>
                 );
@@ -294,24 +308,21 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                 return (
                     <div className="cr-order-input">
                         <fieldset className="cr-order-input__fieldset">
-                            <legend className={'cr-order-input__fieldset__label'}>
-                                {priceText}
-                            </legend>
+                            <legend className={'cr-order-input__fieldset__label'}>{priceText}</legend>
                             <div className="cr-order-input__fieldset__input">
-                                &asymp;<span className="cr-order-input__fieldset__input__price">
+                                &asymp;
+                                <span className="cr-order-input__fieldset__input__price">
                                     {handleSetValue(Decimal.format(safePrice, currentMarketBidPrecision, ','), '0')}
                                 </span>
                             </div>
                         </fieldset>
-                        <div className="cr-order-input__crypto-icon">
-                            {from.toUpperCase()}
-                        </div>
+                        <div className="cr-order-input__crypto-icon">{from.toUpperCase()}</div>
                     </div>
                 );
             default:
                 break;
         }
-    }
+    };
 
     public getTotal = () => {
         const { orderType, price, trigger, side } = this.state;
@@ -327,7 +338,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
         } else {
             return safeAmount * (Number(trigger) || 0);
         }
-    }
+    };
 
     public render() {
         const {
@@ -361,32 +372,36 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                     <div className="cr-order-item__dropdown__label">
                         {translate('page.body.trade.header.newOrder.content.orderType')}
                     </div>
-                    <DropdownComponent list={orderTypes} onSelect={this.handleOrderTypeChange} placeholder={orderType as string}/>
+                    <DropdownComponent
+                        list={orderTypes}
+                        onSelect={this.handleOrderTypeChange}
+                        placeholder={orderType as string}
+                    />
                 </div>
-                <div className="cr-order-item">
-                    {this.getPriceInputs()}
-                </div>
+                <div className="cr-order-item">{this.getPriceInputs()}</div>
                 <div className="cr-order-item">
                     {!isMobileDevice && (bestBid || bestAsk) ? (
-                            <div className="cr-order-item__prices">
-                                {bestBid ? (
-                                    <span className="bids">
-                                        &#x25B2; {Decimal.format(bestBid, currentMarketBidPrecision, ',')}
-                                    </span>
-                                ) : null}
-                                {bestAsk ? (
-                                    <span className="asks">
-                                        &#x25BC; {Decimal.format(bestAsk, currentMarketBidPrecision, ',')}
-                                    </span>
-                                ) : null}
-                            </div>
+                        <div className="cr-order-item__prices">
+                            {bestBid ? (
+                                <span className="bids">
+                                    &#x25B2; {Decimal.format(bestBid, currentMarketBidPrecision, ',')}
+                                </span>
+                            ) : null}
+                            {bestAsk ? (
+                                <span className="asks">
+                                    &#x25BC; {Decimal.format(bestAsk, currentMarketBidPrecision, ',')}
+                                </span>
+                            ) : null}
+                        </div>
                     ) : null}
                 </div>
                 <div className="cr-order-item">
                     {isMobileDevice ? (
                         <OrderInputMobile
                             label={amountText}
-                            placeholder={translate('page.mobile.order.amount.placeholder', { currency: to ? to.toUpperCase() : '' })}
+                            placeholder={translate('page.mobile.order.amount.placeholder', {
+                                currency: to ? to.toUpperCase() : '',
+                            })}
                             value={amount || ''}
                             isFocused={amountFocused}
                             precision={currentMarketAskPrecision}
@@ -408,13 +423,9 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
 
                 <div className="cr-order-item">
                     <div className="cr-order-item__percentage-buttons">
-                        {
-                            AMOUNT_PERCENTAGE_ARRAY.map((value, index) => <PercentageButton
-                                value={value}
-                                key={index}
-                                onClick={this.handleChangeAmountByButton}
-                            />)
-                        }
+                        {AMOUNT_PERCENTAGE_ARRAY.map((value, index) => (
+                            <PercentageButton value={value} key={index} onClick={this.handleChangeAmountByButton} />
+                        ))}
                     </div>
                 </div>
 
@@ -428,9 +439,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                                 {orderType === 'Market' ? <span>&asymp;</span> : null}
                                 {Decimal.format(total, currentMarketAskPrecision + currentMarketBidPrecision, ',')}
                             </span>
-                            <span className="cr-order-item__total__content__currency">
-                                {from.toUpperCase()}
-                            </span>
+                            <span className="cr-order-item__total__content__currency">{from.toUpperCase()}</span>
                         </div>
                     </div>
                 </div>
@@ -456,8 +465,7 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
                         disabled={this.checkButtonIsDisabled()}
                         onClick={this.handleSubmit}
                         size="lg"
-                        variant={type === 'buy' ? 'success' : 'danger'}
-                    >
+                        variant={type === 'buy' ? 'success' : 'danger'}>
                         {submitButtonText || type}
                     </Button>
                 </div>
@@ -478,22 +486,24 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
 
         const priceText = translate('page.body.trade.header.newOrder.content.price');
         const amountText = translate('page.body.trade.header.newOrder.content.amount');
-        const triggerText = translate(`page.body.trade.header.newOrder.content.triggerPrice`, { sign: getTriggerSign(String(orderType).toLowerCase(), type) });
+        const triggerText = translate(`page.body.trade.header.newOrder.content.triggerPrice`, {
+            sign: getTriggerSign(String(orderType).toLowerCase(), type),
+        });
 
         switch (field) {
             case priceText:
-                this.setState(prev => ({
+                this.setState((prev) => ({
                     priceFocused: !prev.priceFocused,
                 }));
                 this.props.listenInputPrice && this.props.listenInputPrice();
                 break;
             case amountText:
-                this.setState(prev => ({
+                this.setState((prev) => ({
                     amountFocused: !prev.amountFocused,
                 }));
                 break;
             case triggerText:
-                this.setState(prev => ({
+                this.setState((prev) => ({
                     triggerFocused: !prev.triggerFocused,
                 }));
                 this.props.listenInputTrigger && this.props.listenInputTrigger();
@@ -542,12 +552,12 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
 
     private handleChangeAmountByButton = (value: number) => {
         const { orderType, price, trigger, side } = this.state;
-        const ordType = (orderType as string).toLowerCase()
+        const ordType = (orderType as string).toLowerCase();
 
         let priceToUse = ordType.includes('limit') || orderType === 'Market' ? price : trigger;
 
         if (side === 'buy' && TRIGGER_BUY_PRICE_ADJUSTED_TYPES.includes(ordType)) {
-            priceToUse = (Number(priceToUse) * TRIGGER_BUY_PRICE_MULT).toString()
+            priceToUse = (Number(priceToUse) * TRIGGER_BUY_PRICE_MULT).toString();
         }
 
         this.props.handleChangeAmountByButton(value, orderType, priceToUse, this.props.type);
@@ -562,7 +572,9 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
             orderType,
             amount,
             available: available || 0,
-            ...((orderType as string).toLowerCase().includes('limit') && { price: orderType === 'Market' ? priceMarket : price }),
+            ...((orderType as string).toLowerCase().includes('limit') && {
+                price: orderType === 'Market' ? priceMarket : price,
+            }),
             ...(ORDER_TYPES_WITH_TRIGGER.includes(orderType as string) && { trigger }),
         };
 
@@ -578,11 +590,15 @@ export class OrderForm extends React.PureComponent<OrderFormProps, OrderFormStat
         const safePrice = totalPrice / Number(amount) || priceMarket;
 
         const invalidAmount = Number(amount) <= 0;
-        const invalidLimitPrice = (orderType as string).toLowerCase().includes('limit') && (Number(price) <= 0 || !isPriceValid.valid);
-        const invalidTriggerPrice = ORDER_TYPES_WITH_TRIGGER.includes(orderType as string) && (Number(trigger) <= 0 || !isTriggerValid.valid);
+        const invalidLimitPrice =
+            (orderType as string).toLowerCase().includes('limit') && (Number(price) <= 0 || !isPriceValid.valid);
+        const invalidTriggerPrice =
+            ORDER_TYPES_WITH_TRIGGER.includes(orderType as string) && (Number(trigger) <= 0 || !isTriggerValid.valid);
         const invalidMarketPrice = safePrice <= 0 && orderType === 'Market';
 
-        return disabled || !available || invalidAmount || invalidLimitPrice || invalidMarketPrice || invalidTriggerPrice;
+        return (
+            disabled || !available || invalidAmount || invalidLimitPrice || invalidMarketPrice || invalidTriggerPrice
+        );
     };
 
     private handleEnterPress = (event: React.KeyboardEvent<HTMLDivElement>) => {

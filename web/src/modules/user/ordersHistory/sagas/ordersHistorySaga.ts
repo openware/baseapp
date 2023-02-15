@@ -31,12 +31,14 @@ export function* ordersHistorySaga(action: UserOrdersHistoryFetch) {
 
         yield put(userOrdersHistoryData({ list: data, nextPageExists, pageIndex }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: userOrdersHistoryError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: userOrdersHistoryError,
+                },
+            }),
+        );
     }
 }

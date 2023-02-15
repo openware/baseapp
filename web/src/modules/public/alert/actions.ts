@@ -1,9 +1,4 @@
-import {
-    ALERT_DATA,
-    ALERT_DELETE,
-    ALERT_DELETE_BY_INDEX,
-    ALERT_PUSH,
-} from './constants';
+import { ALERT_DATA, ALERT_DELETE, ALERT_DELETE_BY_INDEX, ALERT_PUSH } from './constants';
 
 export interface Alert {
     type: string;
@@ -30,11 +25,7 @@ export interface AlertDeleteByIndex {
     index: number;
 }
 
-export type AlertAction =
-    AlertPush
-    | AlertData
-    | AlertDelete
-    | AlertDeleteByIndex;
+export type AlertAction = AlertPush | AlertData | AlertDelete | AlertDeleteByIndex;
 
 export const alertPush = (payload: AlertPush['payload']): AlertPush => ({
     type: ALERT_PUSH,

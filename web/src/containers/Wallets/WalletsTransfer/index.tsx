@@ -2,22 +2,22 @@ import React, { FC, ReactElement, useCallback, useEffect, useState } from 'react
 import { Spinner } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import { DoubleDropdownSelector, TransferForm, WalletList } from 'src/components';
+import { WalletsHeader } from 'src/components/WalletsHeader';
+import { TRANSFER_TYPES_LIST } from 'src/constants';
 import { useMarketsFetch, useMarketsTickersFetch, useP2PWalletsFetch, useWalletsFetch } from 'src/hooks';
 import {
     createP2PTransfersFetch,
     selectCurrencies,
     selectMarkets,
     selectMarketTickers,
-    selectP2PWalletsLoading,
     selectP2PWallets,
+    selectP2PWalletsLoading,
     selectWallets,
     selectWalletsLoading,
     Wallet,
 } from 'src/modules';
-import { WalletsHeader } from 'src/components/WalletsHeader';
-import { useHistory } from 'react-router';
-import { TRANSFER_TYPES_LIST } from 'src/constants';
 
 interface ParentProps {
     currency?: string;
@@ -35,7 +35,10 @@ const WalletsTransfer: FC<Props> = (props: Props): ReactElement => {
     const [to, setTo] = useState<string>('P2P');
 
     const { formatMessage } = useIntl();
-    const translate = useCallback((id: string, value?: any) => formatMessage({ id: id }, { ...value }), [formatMessage]);
+    const translate = useCallback(
+        (id: string, value?: any) => formatMessage({ id: id }, { ...value }),
+        [formatMessage],
+    );
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -56,7 +59,8 @@ const WalletsTransfer: FC<Props> = (props: Props): ReactElement => {
 
     useEffect(() => {
         if (wallets.length && selWalletIndex === -1) {
-            const walletToSet = wallets.find(i => i.currency?.toLowerCase() === currency?.toLowerCase()) || wallets[0];
+            const walletToSet =
+                wallets.find((i) => i.currency?.toLowerCase() === currency?.toLowerCase()) || wallets[0];
             setSelWalletIndex(wallets.indexOf(walletToSet));
             setActiveIndex(wallets.indexOf(walletToSet));
 
@@ -67,24 +71,36 @@ const WalletsTransfer: FC<Props> = (props: Props): ReactElement => {
     }, [wallets, history]);
 
     useEffect(() => {
-        const availableSpotToP2PWallet = from.toLowerCase() === 'spot' && to.toLowerCase() === 'p2p' ? wallets.filter(w => p2pWallets.find(p2p => p2p.currency === w.currency)) : wallets;
+        const availableSpotToP2PWallet =
+            from.toLowerCase() === 'spot' && to.toLowerCase() === 'p2p'
+                ? wallets.filter((w) => p2pWallets.find((p2p) => p2p.currency === w.currency))
+                : wallets;
         setFilteredWallets(from.toLowerCase() === 'spot' ? availableSpotToP2PWallet : p2pWallets);
     }, [wallets, p2pWallets, from, to]);
 
-    const onWalletSelectionChange = useCallback((value: Wallet) => {
-        const nextWalletIndex = wallets.findIndex(
-            wallet => wallet.currency.toLowerCase() === value.currency.toLowerCase()
-        );
+    const onWalletSelectionChange = useCallback(
+        (value: Wallet) => {
+            const nextWalletIndex = wallets.findIndex(
+                (wallet) => wallet.currency.toLowerCase() === value.currency.toLowerCase(),
+            );
 
-        setSelWalletIndex(nextWalletIndex);
+            setSelWalletIndex(nextWalletIndex);
 
-        history.push(`/wallets/transfer/${value.currency.toLowerCase()}`);
-    }, [wallets, history]);
-
+            history.push(`/wallets/transfer/${value.currency.toLowerCase()}`);
+        },
+        [wallets, history],
+    );
 
     const formattedWallets = useCallback(() => {
-        const list = nonZeroSelected ? filteredWallets.filter(i => i.currency && i.balance && Number(i.balance) > 0) : filteredWallets.filter(i => i.currency);
-        const filteredList = list.filter(i => !filterValue || i.name?.toLocaleLowerCase().includes(filterValue.toLowerCase()) || i.currency?.toLocaleLowerCase().includes(filterValue.toLowerCase()));
+        const list = nonZeroSelected
+            ? filteredWallets.filter((i) => i.currency && i.balance && Number(i.balance) > 0)
+            : filteredWallets.filter((i) => i.currency);
+        const filteredList = list.filter(
+            (i) =>
+                !filterValue ||
+                i.name?.toLocaleLowerCase().includes(filterValue.toLowerCase()) ||
+                i.currency?.toLocaleLowerCase().includes(filterValue.toLowerCase()),
+        );
 
         return filteredList.map((wallet: Wallet) => ({
             ...wallet,
@@ -93,27 +109,34 @@ const WalletsTransfer: FC<Props> = (props: Props): ReactElement => {
         }));
     }, [filteredWallets, nonZeroSelected, filterValue]);
 
-    const handleTransfer = useCallback((currencyItem: string, amount: string) => {
-        const payload = {
-            currency: currencyItem?.toLowerCase(),
-            amount,
-            from: from.toLowerCase(),
-            to: to.toLowerCase(),
-        };
+    const handleTransfer = useCallback(
+        (currencyItem: string, amount: string) => {
+            const payload = {
+                currency: currencyItem?.toLowerCase(),
+                amount,
+                from: from.toLowerCase(),
+                to: to.toLowerCase(),
+            };
 
-        dispatch(createP2PTransfersFetch(payload));
-    }, [from, to]);
+            dispatch(createP2PTransfersFetch(payload));
+        },
+        [from, to],
+    );
 
     return (
         <div className="pg-wallet-transfers">
             <div className="pg-wallet">
                 <div className="text-center">
-                    {((from === 'spot' && walletsLoading) || (from === 'p2p' && p2pWalletsLoading)) && <Spinner animation="border" variant="primary" />}
+                    {((from === 'spot' && walletsLoading) || (from === 'p2p' && p2pWalletsLoading)) && (
+                        <Spinner animation="border" variant="primary" />
+                    )}
                 </div>
                 <div className="row no-gutters pg-wallet__tabs-content pg-wallet__tabs-content-height">
                     <div className={`col-md-3 col-sm-12 col-12`}>
                         <div className="pg-wallet-transfers__header">
-                            <div className="pg-wallet-transfers__header-title">{translate('page.body.wallets.transfers.transferType')}</div>
+                            <div className="pg-wallet-transfers__header-title">
+                                {translate('page.body.wallets.transfers.transferType')}
+                            </div>
                             <DoubleDropdownSelector
                                 from={from}
                                 to={to}
@@ -140,11 +163,10 @@ const WalletsTransfer: FC<Props> = (props: Props): ReactElement => {
                         />
                     </div>
                     <div className={`pg-wallet-transfers__content col-md-7 col-sm-12 col-12`}>
-                        <div className="pg-wallet-transfers__header-title">{translate('page.body.wallets.transfers.transferDetails')}</div>
-                        <TransferForm
-                            wallet={formattedWallets()[activeIndex]}
-                            handleSubmit={handleTransfer}
-                        />
+                        <div className="pg-wallet-transfers__header-title">
+                            {translate('page.body.wallets.transfers.transferDetails')}
+                        </div>
+                        <TransferForm wallet={formattedWallets()[activeIndex]} handleSubmit={handleTransfer} />
                     </div>
                 </div>
             </div>
@@ -152,6 +174,4 @@ const WalletsTransfer: FC<Props> = (props: Props): ReactElement => {
     );
 };
 
-export {
-    WalletsTransfer,
-};
+export { WalletsTransfer };

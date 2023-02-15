@@ -1,10 +1,6 @@
 import { CommonError } from '../../types';
 import { CreateP2PTransfersActions } from './actions';
-import {
-    CREATE_P2P_TRANSFERS_DATA,
-    CREATE_P2P_TRANSFERS_ERROR,
-    CREATE_P2P_TRANSFERS_FETCH,
-} from './constants';
+import { CREATE_P2P_TRANSFERS_DATA, CREATE_P2P_TRANSFERS_ERROR, CREATE_P2P_TRANSFERS_FETCH } from './constants';
 
 export interface P2PTransfersState {
     fetching: boolean;
@@ -36,7 +32,7 @@ export const p2pTransfersReducer = (state = initialState, action: CreateP2PTrans
             return {
                 ...state,
                 error: action.error,
-                fetching: false,                
+                fetching: false,
             };
         }
         default:

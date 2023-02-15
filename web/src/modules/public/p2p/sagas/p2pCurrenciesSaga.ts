@@ -13,12 +13,14 @@ export function* p2pCurrenciesSaga() {
 
         yield put(p2pCurrenciesData(data));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: p2pCurrenciesError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: p2pCurrenciesError,
+                },
+            }),
+        );
     }
 }

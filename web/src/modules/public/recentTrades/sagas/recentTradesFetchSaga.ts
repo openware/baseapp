@@ -17,12 +17,14 @@ export function* recentTradesFetchSaga(action: RecentTradesFetch) {
         const trades = yield call(API.get(tradesOptions), `/public/markets/${market.id}/trades`);
         yield put(recentTradesData(trades));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'console',
-            extraOptions: {
-                actionError: recentTradesError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'console',
+                extraOptions: {
+                    actionError: recentTradesError,
+                },
+            }),
+        );
     }
 }

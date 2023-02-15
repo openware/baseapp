@@ -7,7 +7,7 @@ const setup = (props: QRCodeProps) =>
     shallow(
         <TestComponentWrapper>
             <QRCode {...props} />
-        </TestComponentWrapper>
+        </TestComponentWrapper>,
     );
 
 describe('QRCode', () => {
