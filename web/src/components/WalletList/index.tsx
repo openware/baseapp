@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react';
-import { Wallet, Currency, Ticker, Market } from '../../modules';
+import { Currency, Market, Ticker, Wallet } from '../../modules';
 import { WalletItem } from '../WalletItem';
 export interface WalletListProps {
     walletItems: Wallet[];
     activeIndex: number;
     currencies: Currency[];
-    tickers:{
-        [key: string]: Ticker,
-    }
+    tickers: {
+        [key: string]: Ticker;
+    };
     markets: Market[];
     /**
      * Callback function which is invoked whenever wallet item is clicked
@@ -47,7 +47,7 @@ export const WalletList: React.FC<WalletListProps> = ({
                 onActiveIndexChange(i);
             }
         },
-        [onWalletSelectionChange, onActiveIndexChange]
+        [onWalletSelectionChange, onActiveIndexChange],
     );
 
     return (

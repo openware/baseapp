@@ -1,7 +1,7 @@
 export const changeElementPosition = (className: string, index: number, gapX: number, gapY: number) => {
     const targetElement = document.getElementsByClassName(className);
 
-    window.onmousemove = e => {
+    window.onmousemove = (e) => {
         const x = e.clientX;
         const y = e.clientY;
 

@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { DropdownComponent, Decimal } from '../';
+import { Decimal, DropdownComponent } from '../';
 import { isUsernameEnabled } from '../../api';
 import { CloseIcon } from '../../assets/images/CloseIcon';
 import { Modal } from '../../components';
@@ -44,13 +44,17 @@ export const InternalTransferComponent = () => {
         }
     }, [transferSuccess]);
 
-    const walletsList = wallets.length ? wallets.map(item => item.currency && item.currency.toUpperCase()) : [];
+    const walletsList = wallets.length ? wallets.map((item) => item.currency && item.currency.toUpperCase()) : [];
 
-    const wallet = wallets.length && wallets.find(item => item.currency.toLowerCase() === currency.toLowerCase());
+    const wallet = wallets.length && wallets.find((item) => item.currency.toLowerCase() === currency.toLowerCase());
 
-    const balanceError = useMemo(() => classnames('cr-internal-transfer__group--balance', {
-        'cr-internal-transfer__group--error': wallet && wallet.balance && +wallet.balance < +amount,
-    }), [amount, wallet]);
+    const balanceError = useMemo(
+        () =>
+            classnames('cr-internal-transfer__group--balance', {
+                'cr-internal-transfer__group--error': wallet && wallet.balance && +wallet.balance < +amount,
+            }),
+        [amount, wallet],
+    );
 
     const translationUsername = isUsernameEnabled() ? 'username' : 'uid';
 
@@ -59,7 +63,7 @@ export const InternalTransferComponent = () => {
             currency: currency.toLowerCase(),
             username_or_uid: username,
             amount,
-            otp
+            otp,
         };
 
         dispatch(createInternalTransfersFetch(payload));
@@ -80,17 +84,11 @@ export const InternalTransferComponent = () => {
         setAmount('');
         setOtp('');
         setClear(true);
-    }
+    };
 
     const renderFooter = useMemo(() => {
         return (
-            <Button
-                block={true}
-                type="button"
-                onClick={handleCreateTransfer}
-                size="lg"
-                variant="primary"
-            >
+            <Button block={true} type="button" onClick={handleCreateTransfer} size="lg" variant="primary">
                 {translate('page.body.internal.transfer.continue')}
             </Button>
         );
@@ -99,10 +97,8 @@ export const InternalTransferComponent = () => {
     const renderHeader = useMemo(() => {
         return (
             <React.Fragment>
-                <div className="cr-modal__container-header-text">
-                    {translate('page.body.internal.transfer.header')}
-                </div>
-                <CloseIcon className={'cr-modal__container-header-cancel'} onClick={() => setShow(false)}/>
+                <div className="cr-modal__container-header-text">{translate('page.body.internal.transfer.header')}</div>
+                <CloseIcon className={'cr-modal__container-header-cancel'} onClick={() => setShow(false)} />
             </React.Fragment>
         );
     }, [translate, setShow]);
@@ -112,7 +108,12 @@ export const InternalTransferComponent = () => {
             <React.Fragment>
                 <div className="cr-modal__container-content__transfer">
                     {translate('page.body.internal.transfer.modal.content.transfer')}
-                    <span><Decimal fixed={wallet ? wallet.fixed : 0} thousSep=",">{amount.toString()}</Decimal>{currency}</span>
+                    <span>
+                        <Decimal fixed={wallet ? wallet.fixed : 0} thousSep=",">
+                            {amount.toString()}
+                        </Decimal>
+                        {currency}
+                    </span>
                     {translate('page.body.internal.transfer.modal.content.to')}
                     <span>{username}</span>
                     {translate('page.body.internal.transfer.modal.content.account')}
@@ -128,11 +129,7 @@ export const InternalTransferComponent = () => {
         <div className="cr-internal-transfer">
             <div className="cr-internal-transfer__header">{translate('page.body.internal.transfer.header')}</div>
             <div className="cr-internal-transfer__inputs">
-                <InternalTransferInput
-                    field={translationUsername}
-                    handleChangeInput={setUsername}
-                    value={username}
-                />
+                <InternalTransferInput field={translationUsername} handleChangeInput={setUsername} value={username} />
                 <div className="cr-internal-transfer__group">
                     <InternalTransferInput
                         field="amount"
@@ -143,32 +140,30 @@ export const InternalTransferComponent = () => {
                     <DropdownComponent
                         className="pg-confirm__content-address__row__content-number-dropdown"
                         list={walletsList}
-                        onSelect={value => setCurrency(walletsList[value])}
+                        onSelect={(value) => setCurrency(walletsList[value])}
                         placeholder="Currency"
                         clear={clear}
                     />
                     <div
                         onClick={() => setAmount(wallet ? Decimal.format(wallet.balance, wallet.fixed, '.') : '')}
-                        className={balanceError}
-                    >
+                        className={balanceError}>
                         {translate('page.body.internal.transfer.account.balance')}
                         <div className="cr-internal-transfer__group--balance-value">
                             {wallet && wallet.balance && currency !== '' ? (
                                 <Decimal fixed={wallet ? wallet.fixed : 0} thousSep=",">
                                     {wallet.balance.toString()}
                                 </Decimal>
-                            ) : 0} {currency}
-                            {(wallet && wallet.balance && +wallet.balance < +amount) ? (
-                                translate('page.body.internal.transfer.insufficient.balance')
-                            ) : null}
+                            ) : (
+                                0
+                            )}{' '}
+                            {currency}
+                            {wallet && wallet.balance && +wallet.balance < +amount
+                                ? translate('page.body.internal.transfer.insufficient.balance')
+                                : null}
                         </div>
                     </div>
                 </div>
-                <InternalTransferInput
-                    field="otp"
-                    handleChangeInput={setOtp}
-                    value={otp}
-                />
+                <InternalTransferInput field="otp" handleChangeInput={setOtp} value={otp} />
             </div>
             <div className="cr-internal-transfer__inputs">
                 <Button
@@ -177,23 +172,25 @@ export const InternalTransferComponent = () => {
                     onClick={() => setShow(!show)}
                     size="lg"
                     variant="primary"
-                    disabled={!username || !otp || !(+amount) || !currency || !(wallet && wallet.balance && +wallet.balance >= +amount)}
-                >
-                        {translate('page.body.internal.transfer.continue')}
+                    disabled={
+                        !username ||
+                        !otp ||
+                        !+amount ||
+                        !currency ||
+                        !(wallet && wallet.balance && +wallet.balance >= +amount)
+                    }>
+                    {translate('page.body.internal.transfer.continue')}
                 </Button>
             </div>
-            <Modal
-                show={show}
-                header={renderHeader}
-                content={renderBody}
-                footer={renderFooter}
-            />
-            {!user.otp && <div className="cr-internal-transfer--require-otp">
-                {translate('page.body.internal.transfer.please.enable.2fa')}
-                <div onClick={() => handleNavigateTo2fa(true)} className="cr-internal-transfer--require-otp-link">
-                    {translate('page.body.internal.transfer.enable')}
+            <Modal show={show} header={renderHeader} content={renderBody} footer={renderFooter} />
+            {!user.otp && (
+                <div className="cr-internal-transfer--require-otp">
+                    {translate('page.body.internal.transfer.please.enable.2fa')}
+                    <div onClick={() => handleNavigateTo2fa(true)} className="cr-internal-transfer--require-otp-link">
+                        {translate('page.body.internal.transfer.enable')}
+                    </div>
                 </div>
-            </div>}
+            )}
         </div>
     );
 };

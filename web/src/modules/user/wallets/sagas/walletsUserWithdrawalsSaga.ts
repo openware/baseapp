@@ -12,12 +12,14 @@ export function* walletsUserWithdrawalsSaga(action: UserWithdrawalsFetch) {
         const feeGroup = yield call(API.get(FeeGroupOption), 'account/withdraws/sums');
         yield put(userWithdrawalsData(feeGroup));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: userWithdrawalsError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: userWithdrawalsError,
+                },
+            }),
+        );
     }
 }

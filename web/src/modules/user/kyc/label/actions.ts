@@ -23,10 +23,7 @@ export interface LabelError {
     error: CommonError;
 }
 
-export type LabelAction =
-    | LabelFetch
-    | LabelData
-    | LabelError;
+export type LabelAction = LabelFetch | LabelData | LabelError;
 
 export const labelFetch = (): LabelFetch => ({
     type: GET_LABEL_FETCH,

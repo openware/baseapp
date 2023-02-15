@@ -6,8 +6,9 @@ import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { IntlProps } from '../../';
 import { CombinedOrderBook, Decimal } from '../../components';
 import { colors } from '../../constants';
-import { accumulateVolume, calcMaxVolume, sortBids, sortAsks } from '../../helpers';
+import { accumulateVolume, calcMaxVolume, sortAsks, sortBids } from '../../helpers';
 import {
+    depthIncrementSubscribeResetLoading,
     Market,
     PublicTrade,
     RootState,
@@ -22,7 +23,6 @@ import {
     selectMobileDeviceState,
     selectOpenOrdersList,
     setCurrentPrice,
-    depthIncrementSubscribeResetLoading,
     Ticker,
 } from '../../modules';
 import { OrderCommon } from '../../modules/types';
@@ -96,14 +96,7 @@ class OrderBookContainer extends React.Component<Props, State> {
     }
 
     public shouldComponentUpdate(nextProps: Props) {
-        const {
-            asks,
-            bids,
-            currentMarket,
-            marketTickers,
-            orderBookLoading,
-            openOrdersList,
-        } = this.props;
+        const { asks, bids, currentMarket, marketTickers, orderBookLoading, openOrdersList } = this.props;
         const { width } = this.state;
         const defaultTicker = {
             last: 0,
@@ -111,22 +104,23 @@ class OrderBookContainer extends React.Component<Props, State> {
         };
 
         const currentMarketTicker = currentMarket && marketTickers ? marketTickers[currentMarket.id] : defaultTicker;
-        const nextCurrentMarketTicker = currentMarket && nextProps.marketTickers ? nextProps.marketTickers[currentMarket.id] : defaultTicker;
+        const nextCurrentMarketTicker =
+            currentMarket && nextProps.marketTickers ? nextProps.marketTickers[currentMarket.id] : defaultTicker;
 
         return (
             JSON.stringify(nextProps.asks) !== JSON.stringify(asks) ||
             JSON.stringify(nextProps.bids) !== JSON.stringify(bids) ||
             (nextProps.currentMarket && nextProps.currentMarket.id) !== (currentMarket && currentMarket.id) ||
             (this.orderRef.current && this.orderRef.current.clientWidth !== width) ||
-            (JSON.stringify(currentMarketTicker) !== JSON.stringify(nextCurrentMarketTicker)) ||
-            (orderBookLoading !== nextProps.orderBookLoading) ||
+            JSON.stringify(currentMarketTicker) !== JSON.stringify(nextCurrentMarketTicker) ||
+            orderBookLoading !== nextProps.orderBookLoading ||
             JSON.stringify(nextProps.openOrdersList) !== JSON.stringify(openOrdersList)
         );
     }
 
     public render() {
         const { asks, bids, forceLarge, orderBookLoading } = this.props;
-        const isLarge = forceLarge || (this.state.width > breakpoint);
+        const isLarge = forceLarge || this.state.width > breakpoint;
 
         const cn = classNames('pg-combined-order-book ', {
             'cr-combined-order-book--data-loading': orderBookLoading,
@@ -137,13 +131,15 @@ class OrderBookContainer extends React.Component<Props, State> {
         return (
             <div className={cn} ref={this.orderRef}>
                 <div className="cr-table-header__content">
-                    {this.props.intl.formatMessage({id: 'page.body.trade.orderbook'})}
+                    {this.props.intl.formatMessage({ id: 'page.body.trade.orderbook' })}
                 </div>
                 {orderBookLoading ? (
                     <div className="pg-combined-order-book-loader">
                         <Spinner animation="border" variant="primary" />
                     </div>
-                ) : this.orderBook(sortBids(bids), sortAsks(asks), isLarge)}
+                ) : (
+                    this.orderBook(sortBids(bids), sortAsks(asks), isLarge)
+                )}
             </div>
         );
     }
@@ -159,8 +155,20 @@ class OrderBookContainer extends React.Component<Props, State> {
                 orderBookEntryBids={accumulateVolume(bids)}
                 rowBackgroundColorAsks={colors[colorTheme]?.orderBook.asks}
                 rowBackgroundColorBids={colors[colorTheme]?.orderBook.bids}
-                dataAsks={this.renderOrderBook(asksData, 'asks', this.props.intl.formatMessage({id: 'page.noDataToShow'}), isLarge, currentMarket)}
-                dataBids={this.renderOrderBook(bids, 'bids', this.props.intl.formatMessage({id: 'page.noDataToShow'}), isLarge, currentMarket)}
+                dataAsks={this.renderOrderBook(
+                    asksData,
+                    'asks',
+                    this.props.intl.formatMessage({ id: 'page.noDataToShow' }),
+                    isLarge,
+                    currentMarket,
+                )}
+                dataBids={this.renderOrderBook(
+                    bids,
+                    'bids',
+                    this.props.intl.formatMessage({ id: 'page.noDataToShow' }),
+                    isLarge,
+                    currentMarket,
+                )}
                 headers={this.renderHeaders()}
                 lastPrice={this.lastPrice()}
                 onSelectAsks={this.handleOnSelectAsks}
@@ -168,7 +176,7 @@ class OrderBookContainer extends React.Component<Props, State> {
                 isLarge={isLarge}
                 noDataAsks={!asksData.length ? true : false}
                 noDataBids={!bids.length ? true : false}
-                noDataMessage={this.props.intl.formatMessage({id: 'page.noDataToShow'})}
+                noDataMessage={this.props.intl.formatMessage({ id: 'page.noDataToShow' })}
             />
         );
     };
@@ -192,7 +200,6 @@ class OrderBookContainer extends React.Component<Props, State> {
                 const currentTicker = currentMarket && this.getTickerValue(currentMarket, marketTickers);
                 lastPrice = currentTicker.last;
 
-
                 if (currentTicker.price_change_percent.includes('+')) {
                     priceChangeSign = 'positive';
                 } else if (currentTicker.price_change_percent.includes('-')) {
@@ -211,14 +218,22 @@ class OrderBookContainer extends React.Component<Props, State> {
                         {Decimal.format(lastPrice, currentMarket.price_precision, ',')}&nbsp;
                         {isMobileDevice ? null : currentMarket.quote_unit.toUpperCase()}
                     </span>
-                    <span>{this.props.intl.formatMessage({id: 'page.body.trade.orderbook.lastMarket'})}</span>
+                    <span>
+                        {this.props.intl.formatMessage({
+                            id: 'page.body.trade.orderbook.lastMarket',
+                        })}
+                    </span>
                 </React.Fragment>
             );
         } else {
             return (
                 <React.Fragment>
                     <span className={'cr-combined-order-book__market-negative'}>0</span>
-                    <span>{this.props.intl.formatMessage({id: 'page.body.trade.orderbook.lastMarket'})}</span>
+                    <span>
+                        {this.props.intl.formatMessage({
+                            id: 'page.body.trade.orderbook.lastMarket',
+                        })}
+                    </span>
                 </React.Fragment>
             );
         }
@@ -226,24 +241,42 @@ class OrderBookContainer extends React.Component<Props, State> {
 
     private renderHeaders = () => {
         const { currentMarket, intl, isMobileDevice } = this.props;
-        const formattedBaseUnit = (currentMarket && currentMarket.base_unit) ? `(${currentMarket.base_unit.toUpperCase()})` : '';
-        const formattedQuoteUnit = (currentMarket && currentMarket.quote_unit) ? `(${currentMarket.quote_unit.toUpperCase()})` : '';
+        const formattedBaseUnit =
+            currentMarket && currentMarket.base_unit ? `(${currentMarket.base_unit.toUpperCase()})` : '';
+        const formattedQuoteUnit =
+            currentMarket && currentMarket.quote_unit ? `(${currentMarket.quote_unit.toUpperCase()})` : '';
 
         if (isMobileDevice) {
             return [
-                `${intl.formatMessage({id: 'page.body.trade.orderbook.header.price'})}\n${formattedQuoteUnit}`,
-                `${intl.formatMessage({id: 'page.body.trade.orderbook.header.amount'})}\n${formattedBaseUnit}`,
+                `${intl.formatMessage({
+                    id: 'page.body.trade.orderbook.header.price',
+                })}\n${formattedQuoteUnit}`,
+                `${intl.formatMessage({
+                    id: 'page.body.trade.orderbook.header.amount',
+                })}\n${formattedBaseUnit}`,
             ];
         }
 
         return [
-            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.price'})}\n${formattedQuoteUnit}`,
-            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.amount'})}\n${formattedBaseUnit}`,
-            `${intl.formatMessage({id: 'page.body.trade.orderbook.header.volume'})}\n${formattedBaseUnit}`,
+            `${intl.formatMessage({
+                id: 'page.body.trade.orderbook.header.price',
+            })}\n${formattedQuoteUnit}`,
+            `${intl.formatMessage({
+                id: 'page.body.trade.orderbook.header.amount',
+            })}\n${formattedBaseUnit}`,
+            `${intl.formatMessage({
+                id: 'page.body.trade.orderbook.header.volume',
+            })}\n${formattedBaseUnit}`,
         ];
     };
 
-    private renderOrderBook = (array: string[][], side: string, message: string, isLarge: boolean, currentMarket?: Market) => {
+    private renderOrderBook = (
+        array: string[][],
+        side: string,
+        message: string,
+        isLarge: boolean,
+        currentMarket?: Market,
+    ) => {
         const { isMobileDevice } = this.props;
         let total = accumulateVolume(array);
         const priceFixed = currentMarket ? currentMarket.price_precision : 0;
@@ -253,62 +286,124 @@ class OrderBookContainer extends React.Component<Props, State> {
             return this.getOrderBookData(isLarge, side, array, priceFixed, amountFixed, total, message);
         }
 
-        return array.length ? array.map((item, i) => {
-            const [price, volume] = item;
+        return array.length
+            ? array.map((item, i) => {
+                  const [price, volume] = item;
 
-            switch (side) {
-                case 'asks':
-                    total = isLarge ? accumulateVolume(array) : accumulateVolume(array.slice(0).reverse()).slice(0).reverse();
+                  switch (side) {
+                      case 'asks':
+                          total = isLarge
+                              ? accumulateVolume(array)
+                              : accumulateVolume(array.slice(0).reverse()).slice(0).reverse();
 
-                    return [
-                        <Decimal key={i} fixed={priceFixed} thousSep="," prevValue={array[i + 1] ? array[i + 1][0] : 0}>{price}</Decimal>,
-                        <Decimal key={i} fixed={amountFixed} thousSep=",">{volume}</Decimal>,
-                        <Decimal key={i} fixed={amountFixed} thousSep=",">{total[i]}</Decimal>,
-                    ];
-                default:
-                    if (isLarge) {
-                        return [
-                            <Decimal key={i} fixed={amountFixed} thousSep=",">{total[i]}</Decimal>,
-                            <Decimal key={i} fixed={amountFixed} thousSep=",">{volume}</Decimal>,
-                            <Decimal key={i} fixed={priceFixed} thousSep="," prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal>,
-                        ];
-                    } else {
-                        return [
-                            <Decimal key={i} fixed={priceFixed} thousSep="," prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal>,
-                            <Decimal key={i} fixed={amountFixed} thousSep=",">{volume}</Decimal>,
-                            <Decimal key={i} fixed={amountFixed} thousSep=",">{total[i]}</Decimal>,
-                        ];
-                    }
-            }
-        }) : [[[''], message]];
+                          return [
+                              <Decimal
+                                  key={i}
+                                  fixed={priceFixed}
+                                  thousSep=","
+                                  prevValue={array[i + 1] ? array[i + 1][0] : 0}>
+                                  {price}
+                              </Decimal>,
+                              <Decimal key={i} fixed={amountFixed} thousSep=",">
+                                  {volume}
+                              </Decimal>,
+                              <Decimal key={i} fixed={amountFixed} thousSep=",">
+                                  {total[i]}
+                              </Decimal>,
+                          ];
+                      default:
+                          if (isLarge) {
+                              return [
+                                  <Decimal key={i} fixed={amountFixed} thousSep=",">
+                                      {total[i]}
+                                  </Decimal>,
+                                  <Decimal key={i} fixed={amountFixed} thousSep=",">
+                                      {volume}
+                                  </Decimal>,
+                                  <Decimal
+                                      key={i}
+                                      fixed={priceFixed}
+                                      thousSep=","
+                                      prevValue={array[i - 1] ? array[i - 1][0] : 0}>
+                                      {price}
+                                  </Decimal>,
+                              ];
+                          } else {
+                              return [
+                                  <Decimal
+                                      key={i}
+                                      fixed={priceFixed}
+                                      thousSep=","
+                                      prevValue={array[i - 1] ? array[i - 1][0] : 0}>
+                                      {price}
+                                  </Decimal>,
+                                  <Decimal key={i} fixed={amountFixed} thousSep=",">
+                                      {volume}
+                                  </Decimal>,
+                                  <Decimal key={i} fixed={amountFixed} thousSep=",">
+                                      {total[i]}
+                                  </Decimal>,
+                              ];
+                          }
+                  }
+              })
+            : [[[''], message]];
     };
 
     private getOrderBookData = (isLarge, side, array, priceFixed, amountFixed, total, message) => {
-        return array.length ? array.map((item, i) => {
-            const [price] = item;
+        return array.length
+            ? array.map((item, i) => {
+                  const [price] = item;
 
-            switch (side) {
-                case 'asks':
-                    total = isLarge ? accumulateVolume(array) : accumulateVolume(array.slice(0).reverse()).slice(0).reverse();
+                  switch (side) {
+                      case 'asks':
+                          total = isLarge
+                              ? accumulateVolume(array)
+                              : accumulateVolume(array.slice(0).reverse()).slice(0).reverse();
 
-                    return [
-                        <Decimal key={i} fixed={priceFixed} thousSep="," prevValue={array[i + 1] ? array[i + 1][0] : 0}>{price}</Decimal>,
-                        <Decimal key={i} fixed={amountFixed} thousSep=",">{total[i]}</Decimal>,
-                    ];
-                default:
-                    if (isLarge) {
-                        return [
-                            <Decimal key={i} fixed={amountFixed}>{total[i]}</Decimal>,
-                            <Decimal key={i} fixed={priceFixed} thousSep="," prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal>,
-                        ];
-                    } else {
-                        return [
-                            <Decimal key={i} fixed={priceFixed} thousSep="," prevValue={array[i - 1] ? array[i - 1][0] : 0}>{price}</Decimal>,
-                            <Decimal key={i} fixed={amountFixed} thousSep=",">{total[i]}</Decimal>,
-                        ];
-                    }
-            }
-        }) : [[[''], message]];
+                          return [
+                              <Decimal
+                                  key={i}
+                                  fixed={priceFixed}
+                                  thousSep=","
+                                  prevValue={array[i + 1] ? array[i + 1][0] : 0}>
+                                  {price}
+                              </Decimal>,
+                              <Decimal key={i} fixed={amountFixed} thousSep=",">
+                                  {total[i]}
+                              </Decimal>,
+                          ];
+                      default:
+                          if (isLarge) {
+                              return [
+                                  <Decimal key={i} fixed={amountFixed}>
+                                      {total[i]}
+                                  </Decimal>,
+                                  <Decimal
+                                      key={i}
+                                      fixed={priceFixed}
+                                      thousSep=","
+                                      prevValue={array[i - 1] ? array[i - 1][0] : 0}>
+                                      {price}
+                                  </Decimal>,
+                              ];
+                          } else {
+                              return [
+                                  <Decimal
+                                      key={i}
+                                      fixed={priceFixed}
+                                      thousSep=","
+                                      prevValue={array[i - 1] ? array[i - 1][0] : 0}>
+                                      {price}
+                                  </Decimal>,
+                                  <Decimal key={i} fixed={amountFixed} thousSep=",">
+                                      {total[i]}
+                                  </Decimal>,
+                              ];
+                          }
+                  }
+              })
+            : [[[''], message]];
     };
 
     private handleOnSelectBids = (index: string) => {
@@ -332,7 +427,15 @@ class OrderBookContainer extends React.Component<Props, State> {
     };
 
     private getTickerValue = (currentMarket: Market, tickers: { [key: string]: Ticker }) => {
-        const defaultTicker = { amount: '0', low: '0', last: '0', high: '0', volume: '0', open: '0', price_change_percent: '+0.00%' };
+        const defaultTicker = {
+            amount: '0',
+            low: '0',
+            last: '0',
+            high: '0',
+            volume: '0',
+            open: '0',
+            price_change_percent: '+0.00%',
+        };
 
         return tickers[currentMarket.id] || defaultTicker;
     };
@@ -359,11 +462,10 @@ const mapStateToProps = (state: RootState) => ({
     isMobileDevice: selectMobileDeviceState(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
-        depthIncrementSubscribeResetLoading: () => dispatch(depthIncrementSubscribeResetLoading()),
-    });
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+    setCurrentPrice: (payload) => dispatch(setCurrentPrice(payload)),
+    depthIncrementSubscribeResetLoading: () => dispatch(depthIncrementSubscribeResetLoading()),
+});
 
 export const OrderBook = injectIntl(connect(mapStateToProps, mapDispatchToProps)(OrderBookContainer)) as any;
 export type OrderBookProps = ReduxProps;

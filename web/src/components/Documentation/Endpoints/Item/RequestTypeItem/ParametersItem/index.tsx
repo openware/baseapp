@@ -12,16 +12,26 @@ export const ParametersItem: React.FC<ItemInterface> = (props: ItemInterface) =>
 
     const getTableHeaders = React.useCallback(() => {
         return [
-            intl.formatMessage({ id: 'page.documentation.endpoints.requestTypeItem.parameters.table.header.name' }),
-            intl.formatMessage({ id: 'page.documentation.endpoints.requestTypeItem.parameters.table.header.location' }),
-            intl.formatMessage({ id: 'page.documentation.endpoints.requestTypeItem.parameters.table.header.description' }),
-            intl.formatMessage({ id: 'page.documentation.endpoints.requestTypeItem.parameters.table.header.required' }),
-            intl.formatMessage({ id: 'page.documentation.endpoints.requestTypeItem.parameters.table.header.schema' }),
+            intl.formatMessage({
+                id: 'page.documentation.endpoints.requestTypeItem.parameters.table.header.name',
+            }),
+            intl.formatMessage({
+                id: 'page.documentation.endpoints.requestTypeItem.parameters.table.header.location',
+            }),
+            intl.formatMessage({
+                id: 'page.documentation.endpoints.requestTypeItem.parameters.table.header.description',
+            }),
+            intl.formatMessage({
+                id: 'page.documentation.endpoints.requestTypeItem.parameters.table.header.required',
+            }),
+            intl.formatMessage({
+                id: 'page.documentation.endpoints.requestTypeItem.parameters.table.header.schema',
+            }),
         ];
     }, [intl]);
 
     const getTableData = React.useCallback(() => {
-        return item.parameters.map(parameter => {
+        return item.parameters.map((parameter) => {
             const getFormattedSchema = () => {
                 switch (parameter.type) {
                     case 'number':
@@ -35,11 +45,13 @@ export const ParametersItem: React.FC<ItemInterface> = (props: ItemInterface) =>
                 parameter.name,
                 parameter.in,
                 parameter.description,
-                !!parameter.required ? (
-                    intl.formatMessage({ id: 'page.documentation.endpoints.requestTypeItem.parameters.table.data.required.true' })
-                ) : (
-                    intl.formatMessage({ id: 'page.documentation.endpoints.requestTypeItem.parameters.table.data.required.false' })
-                ),
+                !!parameter.required
+                    ? intl.formatMessage({
+                          id: 'page.documentation.endpoints.requestTypeItem.parameters.table.data.required.true',
+                      })
+                    : intl.formatMessage({
+                          id: 'page.documentation.endpoints.requestTypeItem.parameters.table.data.required.false',
+                      }),
                 getFormattedSchema(),
             ];
         });
@@ -48,11 +60,12 @@ export const ParametersItem: React.FC<ItemInterface> = (props: ItemInterface) =>
     if (item.parameters && Object.keys(item.parameters).length) {
         return (
             <React.Fragment>
-                <h5>{intl.formatMessage({ id: 'page.documentation.endpoints.requestTypeItem.parameters.title' })}</h5>
-                <Table
-                    header={getTableHeaders()}
-                    data={getTableData()}
-                />
+                <h5>
+                    {intl.formatMessage({
+                        id: 'page.documentation.endpoints.requestTypeItem.parameters.title',
+                    })}
+                </h5>
+                <Table header={getTableHeaders()} data={getTableData()} />
             </React.Fragment>
         );
     }

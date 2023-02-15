@@ -36,7 +36,7 @@ export function* handleErrorSaga(action: ErrorHandlerFetch) {
             yield call(handleSentryError, error);
             break;
         case 'alert':
-            yield call(handleAlertError,  error);
+            yield call(handleAlertError, error);
             break;
         case 'console':
             yield call(handleConsoleError, error);
@@ -44,7 +44,6 @@ export function* handleErrorSaga(action: ErrorHandlerFetch) {
         default:
             break;
     }
-
 
     yield put(getErrorData());
 }
@@ -56,11 +55,13 @@ function* handleSentryError(error) {
 }
 
 function* handleAlertError(error) {
-    yield put(alertPush({
-        message: error.message,
-        code: error.code,
-        type: 'error',
-    }));
+    yield put(
+        alertPush({
+            message: error.message,
+            code: error.code,
+            type: 'error',
+        }),
+    );
 }
 
 function* handleConsoleError(error) {

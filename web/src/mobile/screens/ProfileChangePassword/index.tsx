@@ -3,11 +3,7 @@ import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { ChangePassword } from '../../../components';
-import {
-    changePasswordFetch,
-    entropyPasswordFetch,
-    selectCurrentPasswordEntropy,
- } from '../../../modules';
+import { changePasswordFetch, entropyPasswordFetch, selectCurrentPasswordEntropy } from '../../../modules';
 import { Subheader } from '../../components';
 
 const ChangePasswordScreenComponent: React.FC = () => {
@@ -15,14 +11,14 @@ const ChangePasswordScreenComponent: React.FC = () => {
     const intl = useIntl();
     const history = useHistory();
 
-    const handleChangePassword = payload => {
+    const handleChangePassword = (payload) => {
         if (payload) {
             dispatch(changePasswordFetch(payload));
             history.push('/profile');
         }
     };
 
-    const fetchCurrentPasswordEntropy = payload => {
+    const fetchCurrentPasswordEntropy = (payload) => {
         if (payload) {
             dispatch(entropyPasswordFetch(payload));
         }

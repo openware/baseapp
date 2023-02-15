@@ -9,7 +9,7 @@ const ListReduceHelper = (list, order) => {
         return memo;
     }, []);
 
-    return [{...order}].concat(listReduce);
+    return [{ ...order }].concat(listReduce);
 };
 
 export const insertOrUpdate = (list: OrderCommon[], order: OrderCommon): OrderCommon[] => {
@@ -18,7 +18,7 @@ export const insertOrUpdate = (list: OrderCommon[], order: OrderCommon): OrderCo
         case 'wait':
         case 'trigger_wait':
             if (index === -1) {
-                return [{...order}].concat(list);
+                return [{ ...order }].concat(list);
             }
             if (index !== -1) {
                 return ListReduceHelper(list, order);
@@ -27,12 +27,12 @@ export const insertOrUpdate = (list: OrderCommon[], order: OrderCommon): OrderCo
             return list;
         case 'done':
             if (index === -1) {
-                return [{...order}].concat(list);
+                return [{ ...order }].concat(list);
             }
 
-            return list.map(item => {
+            return list.map((item) => {
                 if (order.id === item.id) {
-                    return {...order};
+                    return { ...order };
                 }
 
                 return item;

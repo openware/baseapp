@@ -24,4 +24,3 @@ export const VioletTheme: ThemeColorInterface[] = [
     { key: '--rgb-landing-background-color', value: '251, 251, 251' },
     { key: '--rgb-strength-meter-very-strong', value: '108, 239, 239' },
 ];
-

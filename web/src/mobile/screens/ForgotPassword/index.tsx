@@ -16,12 +16,10 @@ const ForgotPasswordMobileScreen: React.FC = () => {
                 onBack={() => history.push('/signin')}
                 backTitle={intl.formatMessage({ id: 'page.body.landing.header.button2' })}
                 title={intl.formatMessage({ id: 'page.forgotPassword' })}>
-                <ForgotPasswordScreen/>
+                <ForgotPasswordScreen />
             </Modal>
         </div>
     );
 };
 
-export {
-    ForgotPasswordMobileScreen,
-};
+export { ForgotPasswordMobileScreen };

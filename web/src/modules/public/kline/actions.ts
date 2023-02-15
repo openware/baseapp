@@ -70,7 +70,8 @@ export interface KlineUnsubscribe {
     };
 }
 
-export type KlineActions = KlinePush
+export type KlineActions =
+    | KlinePush
     | KlineFetch
     | KlineData
     | KlineUpdateTimeRange

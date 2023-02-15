@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
-import * as React from 'react';
 import { TestComponentWrapper } from 'lib/test';
+import * as React from 'react';
 import { IntlProps } from '../../';
 import { ConfirmScreen } from '../ConfirmScreen';
 
@@ -8,7 +8,7 @@ const setup = (props: Partial<IntlProps> = {}) =>
     shallow(
         <TestComponentWrapper>
             <ConfirmScreen />
-        </TestComponentWrapper>
+        </TestComponentWrapper>,
     );
 
 describe('ConfirmScreen test', () => {

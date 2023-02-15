@@ -11,8 +11,7 @@ const defaultProps: OrderInputProps = {
     onKeyPress: jest.fn(),
 };
 
-const setup = (props: Partial<OrderInputProps> = {}) =>
-    shallow(<OrderInput {...{ ...defaultProps, ...props }} />);
+const setup = (props: Partial<OrderInputProps> = {}) => shallow(<OrderInput {...{ ...defaultProps, ...props }} />);
 
 describe('InputBlock', () => {
     it('should render', () => {

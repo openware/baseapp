@@ -3,26 +3,28 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { getUserAgent, localeDate } from '../../../../helpers';
 
-const UserActivityItemComponent = props => {
+const UserActivityItemComponent = (props) => {
     const { index, item } = props;
     const intl = useIntl();
 
     const getResultOfUserAction = (value: string) => {
         switch (value) {
             case 'login':
-                return intl.formatMessage({id: 'page.body.profile.content.action.login'});
+                return intl.formatMessage({ id: 'page.body.profile.content.action.login' });
             case 'logout':
-                return intl.formatMessage({id: 'page.body.profile.content.action.logout'});
+                return intl.formatMessage({ id: 'page.body.profile.content.action.logout' });
             case 'request QR code for 2FA':
-                return intl.formatMessage({id: 'page.body.profile.content.action.request2fa'});
+                return intl.formatMessage({ id: 'page.body.profile.content.action.request2fa' });
             case 'enable 2FA':
-                return intl.formatMessage({id: 'page.body.profile.content.action.enable2fa'});
+                return intl.formatMessage({ id: 'page.body.profile.content.action.enable2fa' });
             case 'login::2fa':
-                return intl.formatMessage({id: 'page.body.profile.content.action.login.2fa'});
+                return intl.formatMessage({ id: 'page.body.profile.content.action.login.2fa' });
             case 'request password reset':
-                return intl.formatMessage({id: 'page.body.profile.content.action.requestPasswordReset'});
+                return intl.formatMessage({
+                    id: 'page.body.profile.content.action.requestPasswordReset',
+                });
             case 'password reset':
-                return intl.formatMessage({id: 'page.body.profile.content.action.passwordReset'});
+                return intl.formatMessage({ id: 'page.body.profile.content.action.passwordReset' });
             default:
                 return value;
         }
@@ -34,7 +36,7 @@ const UserActivityItemComponent = props => {
 
     const resultStatusClassName = classnames({
         'color-green': item.result === 'succeed',
-        'color-red':  ['failed', 'denied'].includes(item.result),
+        'color-red': ['failed', 'denied'].includes(item.result),
     });
 
     return (
@@ -57,16 +59,12 @@ const UserActivityItemComponent = props => {
                 </div>
                 <div className="pg-mobile-profile-account-activity-item__row__block">
                     <span>{intl.formatMessage({ id: 'page.mobile.profile.accountActivity.ip' })}</span>
-                    <span className="pg-mobile-profile-account-activity-item__row__block__value">
-                        {item.user_ip}
-                    </span>
+                    <span className="pg-mobile-profile-account-activity-item__row__block__value">{item.user_ip}</span>
                 </div>
                 <div className="pg-mobile-profile-account-activity-item__row__block">
                     <span>{intl.formatMessage({ id: 'page.mobile.profile.accountActivity.result' })}</span>
                     <div className="pg-mobile-profile-account-activity-item__row__block__value">
-                        <span className={resultStatusClassName}>
-                            {item.result}
-                        </span>
+                        <span className={resultStatusClassName}>{item.result}</span>
                     </div>
                 </div>
             </div>

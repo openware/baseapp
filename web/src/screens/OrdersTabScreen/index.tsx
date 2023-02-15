@@ -1,21 +1,12 @@
 import * as React from 'react';
-import {
-    FormattedMessage,
-    injectIntl,
-} from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { compose } from 'redux';
 import { IntlProps } from '../../';
 import { TabPanel } from '../../components';
 import { OrdersElement } from '../../containers/OrdersElement';
 import { setDocumentTitle } from '../../helpers';
-import {
-    marketsFetch,
-    ordersCancelAllFetch,
-    resetOrdersHistory,
-    RootState,
-    selectOrdersHistory,
-} from '../../modules';
+import { marketsFetch, ordersCancelAllFetch, resetOrdersHistory, RootState, selectOrdersHistory } from '../../modules';
 import { OrderCommon } from '../../modules/types';
 
 interface ReduxProps {
@@ -36,7 +27,7 @@ interface State {
 }
 
 class Orders extends React.PureComponent<Props, State> {
-    public state = { tab: 'open', currentTabIndex: 0};
+    public state = { tab: 'open', currentTabIndex: 0 };
 
     public tabMapping = ['open', 'all'];
 
@@ -74,7 +65,7 @@ class Orders extends React.PureComponent<Props, State> {
         );
     }
 
-    private onCurrentTabChange = index => this.setState({ currentTabIndex: index });
+    private onCurrentTabChange = (index) => this.setState({ currentTabIndex: index });
 
     private handleMakeRequest = (index: number) => {
         this.renderTabs();
@@ -90,12 +81,12 @@ class Orders extends React.PureComponent<Props, State> {
 
         return [
             {
-                content: tab === 'open' ? <OrdersElement type="open"/> : null,
-                label: this.props.intl.formatMessage({ id: 'page.body.openOrders.tab.open'}),
+                content: tab === 'open' ? <OrdersElement type="open" /> : null,
+                label: this.props.intl.formatMessage({ id: 'page.body.openOrders.tab.open' }),
             },
             {
                 content: tab === 'all' ? <OrdersElement type="all" /> : null,
-                label: this.props.intl.formatMessage({ id: 'page.body.openOrders.tab.all'}),
+                label: this.props.intl.formatMessage({ id: 'page.body.openOrders.tab.all' }),
             },
         ];
     };
@@ -107,12 +98,11 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     list: selectOrdersHistory(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        marketsFetch: () => dispatch(marketsFetch()),
-        ordersCancelAll: () => dispatch(ordersCancelAllFetch()),
-        resetOrdersHistory: () => dispatch(resetOrdersHistory()),
-    });
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+    marketsFetch: () => dispatch(marketsFetch()),
+    ordersCancelAll: () => dispatch(ordersCancelAllFetch()),
+    resetOrdersHistory: () => dispatch(resetOrdersHistory()),
+});
 
 export const OrdersTabScreen = compose(
     injectIntl,

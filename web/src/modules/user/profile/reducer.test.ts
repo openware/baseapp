@@ -31,7 +31,7 @@ describe('Profile reducer', () => {
             state: 'active',
             csrf_token: '31415926535897932384626433832795028841971',
             profiles: fakeProfiles,
-            data: '{\"language\":\"en\"}',
+            data: '{"language":"en"}',
             referal_uid: '',
             labels: [],
             phone: [],
@@ -127,7 +127,11 @@ describe('Profile reducer', () => {
         };
         const expectedState = {
             ...initialStateProfile,
-            passwordChange: { ...initialStateProfile.passwordChange, success: true, error: undefined },
+            passwordChange: {
+                ...initialStateProfile.passwordChange,
+                success: true,
+                error: undefined,
+            },
         };
         expect(profileReducer(actualState, actions.changePasswordData())).toEqual(expectedState);
     });
@@ -211,7 +215,11 @@ describe('Profile reducer', () => {
         };
         const expectedState = {
             ...initialStateProfile,
-            twoFactorAuth: { ...initialStateProfile.twoFactorAuth, success: false, error: undefined },
+            twoFactorAuth: {
+                ...initialStateProfile.twoFactorAuth,
+                success: false,
+                error: undefined,
+            },
         };
         expect(profileReducer(initialStateProfile, actions.toggle2faFetch(payload))).toEqual(expectedState);
     });
@@ -219,11 +227,19 @@ describe('Profile reducer', () => {
     it('should handle TOGGLE_2FA_DATA', () => {
         const actualState = {
             ...initialStateProfile,
-            twoFactorAuth: { ...initialStateProfile.twoFactorAuth, success: false, error: undefined },
+            twoFactorAuth: {
+                ...initialStateProfile.twoFactorAuth,
+                success: false,
+                error: undefined,
+            },
         };
         const expectedState = {
             ...initialStateProfile,
-            twoFactorAuth: { ...initialStateProfile.twoFactorAuth, success: true, error: undefined },
+            twoFactorAuth: {
+                ...initialStateProfile.twoFactorAuth,
+                success: true,
+                error: undefined,
+            },
         };
         expect(profileReducer(actualState, actions.toggle2faData())).toEqual(expectedState);
     });
@@ -231,7 +247,11 @@ describe('Profile reducer', () => {
     it('should handle TOGGLE_2FA_ERROR', () => {
         const actualState = {
             ...initialStateProfile,
-            twoFactorAuth: { ...initialStateProfile.twoFactorAuth, success: false, error: undefined },
+            twoFactorAuth: {
+                ...initialStateProfile.twoFactorAuth,
+                success: false,
+                error: undefined,
+            },
         };
         const expectedState = {
             ...initialStateProfile,
@@ -255,7 +275,9 @@ describe('Profile reducer', () => {
                 success: false,
             },
         };
-        expect(profileReducer(actualState, actions.changeUserDataFetch({ user: userData.user }))).toEqual(expectedState);
+        expect(profileReducer(actualState, actions.changeUserDataFetch({ user: userData.user }))).toEqual(
+            expectedState,
+        );
     });
 
     it('should handle CHANGE_USER_DATA', () => {

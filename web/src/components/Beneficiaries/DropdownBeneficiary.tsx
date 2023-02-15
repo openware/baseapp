@@ -1,11 +1,11 @@
 import classnames from 'classnames';
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { ChevronIcon } from '../../assets/images/ChevronIcon';
 import { convertToString } from '../../helpers';
-import { BeneficiariesBlockchainItemProps } from './BeneficiariesCrypto/BeneficiariesBlockchainItem';
 import { selectUserIsMember } from '../../modules';
+import { BeneficiariesBlockchainItemProps } from './BeneficiariesCrypto/BeneficiariesBlockchainItem';
 
 type DropdownElem = number | string | React.ReactNode;
 
@@ -24,7 +24,7 @@ export interface DropdownBeneficiaryProps {
      *  This property gives an additional class name
      *  @default empty
      */
-    className?: string,
+    className?: string;
     /**
      * Value for placeholder of Dropdown components
      * @default empty
@@ -50,7 +50,7 @@ const defaultSelected = {
     id: '',
     fee: '',
     minWithdraw: '',
-}
+};
 
 /**
  *  Cryptobase Dropdown that overrides default dropdown with list of options.
@@ -63,9 +63,13 @@ export const DropdownBeneficiary = (props: DropdownBeneficiaryProps) => {
     const { list, className, placeholder, clear, onSelect } = props;
     const defaultPlaceholder = list[0];
 
-    const cx = useMemo(() => classnames('cr-dropdown', className, {
-        'cr-dropdown--default': defaultSelected.protocol === placeholder,
-    }), [selected, placeholder, className]);
+    const cx = useMemo(
+        () =>
+            classnames('cr-dropdown', className, {
+                'cr-dropdown--default': defaultSelected.protocol === placeholder,
+            }),
+        [selected, placeholder, className],
+    );
 
     useEffect(() => {
         if (clear !== false) {
@@ -96,12 +100,8 @@ export const DropdownBeneficiary = (props: DropdownBeneficiaryProps) => {
             return null;
         }
 
-        return  (
-            <Dropdown.Item
-                key={index}
-                onSelect={() => handleSelect(elem, index)}
-                disabled={elem?.props?.disabled}
-            >
+        return (
+            <Dropdown.Item key={index} onSelect={() => handleSelect(elem, index)} disabled={elem?.props?.disabled}>
                 <div>{elem}</div>
             </Dropdown.Item>
         );
@@ -109,7 +109,11 @@ export const DropdownBeneficiary = (props: DropdownBeneficiaryProps) => {
 
     const renderSelectedItem = useMemo(() => {
         if (selected.name && selected.id) {
-            return <div><span>{selected.protocol?.toUpperCase()}</span> {selected.name}({selected.id.toUpperCase()})</div>;
+            return (
+                <div>
+                    <span>{selected.protocol?.toUpperCase()}</span> {selected.name}({selected.id.toUpperCase()})
+                </div>
+            );
         }
 
         return placeholder;
@@ -122,9 +126,7 @@ export const DropdownBeneficiary = (props: DropdownBeneficiaryProps) => {
                     {renderSelectedItem}
                     <ChevronIcon className="cr-dropdown__arrow" />
                 </Dropdown.Toggle>
-                <Dropdown.Menu>
-                    {list.map(renderElem)}
-                </Dropdown.Menu>
+                <Dropdown.Menu>{list.map(renderElem)}</Dropdown.Menu>
             </Dropdown>
         </div>
     );

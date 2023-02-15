@@ -6,7 +6,7 @@ import { compose } from 'redux';
 import { IntlProps } from '../../';
 import { incrementalOrderBook } from '../../api';
 import { Decimal } from '../../components/Decimal';
-import { GridChildInterface, GridItem } from '../../components/GridItem';
+import { GridItem } from '../../components/GridItem';
 import {
     Charts,
     MarketsComponent,
@@ -59,7 +59,7 @@ interface ReduxProps {
     userLoggedIn: boolean;
     rgl: GridLayoutState;
     tickers: {
-        [pair: string]: Ticker,
+        [pair: string]: Ticker;
     };
 }
 
@@ -79,7 +79,7 @@ interface StateProps {
 const ReactGridLayout = WidthProvider(Responsive);
 type Props = DispatchProps & ReduxProps & RouteComponentProps & IntlProps;
 
-const TradingWrapper = props => {
+const TradingWrapper = (props) => {
     const { orderComponentResized, orderBookComponentResized, layouts, handleResize, handeDrag } = props;
     const children = React.useMemo(() => {
         const data = [
@@ -97,15 +97,15 @@ const TradingWrapper = props => {
             },
             {
                 i: 4,
-                render: () => <OpenOrdersComponent/>,
+                render: () => <OpenOrdersComponent />,
             },
             {
                 i: 5,
-                render: () => <RecentTrades/>,
+                render: () => <RecentTrades />,
             },
             {
                 i: 6,
-                render: () => <MarketsComponent/>,
+                render: () => <MarketsComponent />,
             },
         ];
 
@@ -123,11 +123,12 @@ const TradingWrapper = props => {
             draggableHandle=".cr-table-header__content, .pg-trading-screen__tab-panel, .draggable-container"
             rowHeight={14}
             layouts={layouts}
-            onLayoutChange={() => {return;}}
+            onLayoutChange={() => {
+                return;
+            }}
             margin={[5, 5]}
             onResize={handleResize}
-            onDrag={handeDrag}
-        >
+            onDrag={handeDrag}>
             {children}
         </ReactGridLayout>
     );
@@ -176,7 +177,7 @@ class Trading extends React.Component<Props, StateProps> {
                 history.replace(`/trading/${nextProps.currentMarket.id}`);
 
                 if (!incrementalOrderBook()) {
-                  this.props.depthFetch(nextProps.currentMarket);
+                    this.props.depthFetch(nextProps.currentMarket);
                 }
             }
         }
@@ -185,8 +186,13 @@ class Trading extends React.Component<Props, StateProps> {
             this.setTradingTitle(nextProps.currentMarket, nextProps.tickers);
         }
 
-        if (currentMarket?.id !== nextProps.currentMarket?.id && nextProps.currentMarket && role !== 'admin' && role !== 'superadmin') {
-            const firstActiveMarket = markets.length && markets.find(item => item.state && item.state !== 'hidden');
+        if (
+            currentMarket?.id !== nextProps.currentMarket?.id &&
+            nextProps.currentMarket &&
+            role !== 'admin' &&
+            role !== 'superadmin'
+        ) {
+            const firstActiveMarket = markets.length && markets.find((item) => item.state && item.state !== 'hidden');
 
             if (nextProps.currentMarket.state && nextProps.currentMarket.state === 'hidden') {
                 history.replace(`/trading/${firstActiveMarket.id}`);
@@ -207,7 +213,7 @@ class Trading extends React.Component<Props, StateProps> {
         return (
             <div className={'pg-trading-screen'}>
                 <div className={'pg-trading-wrap'}>
-                    <ToolBar/>
+                    <ToolBar />
                     <div data-react-toolbox="grid" className={'cr-grid'}>
                         <div className="cr-grid__grid-wrapper">
                             <TradingWrapper
@@ -226,7 +232,7 @@ class Trading extends React.Component<Props, StateProps> {
 
     private setMarketFromUrlIfExists = (markets: Market[]): void => {
         const urlMarket: string = getUrlPart(2, window.location.pathname);
-        const market: Market | undefined = markets.find(item => item.id === urlMarket);
+        const market: Market | undefined = markets.find((item) => item.id === urlMarket);
 
         if (market) {
             this.props.setCurrentMarket(market);
@@ -264,7 +270,7 @@ class Trading extends React.Component<Props, StateProps> {
     };
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
     currentMarket: selectCurrentMarket(state),
     markets: selectMarkets(state),
     user: selectUserInfo(state),
@@ -273,12 +279,12 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     tickers: selectMarketTickers(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
     marketsFetch: () => dispatch(marketsFetch()),
-    depthFetch: payload => dispatch(depthFetch(payload)),
-    setCurrentPrice: payload => dispatch(setCurrentPrice(payload)),
-    setCurrentMarket: payload => dispatch(setCurrentMarket(payload)),
-    saveLayouts: payload => dispatch(saveLayouts(payload)),
+    depthFetch: (payload) => dispatch(depthFetch(payload)),
+    setCurrentPrice: (payload) => dispatch(setCurrentPrice(payload)),
+    setCurrentMarket: (payload) => dispatch(setCurrentMarket(payload)),
+    saveLayouts: (payload) => dispatch(saveLayouts(payload)),
 });
 
 export const TradingScreen = compose(

@@ -60,7 +60,7 @@ describe('Send Identity Saga', () => {
 
     it('should send identity data in success flow', async () => {
         mockSendIdentity();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -77,7 +77,7 @@ describe('Send Identity Saga', () => {
 
     it('should trigger send identity error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

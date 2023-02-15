@@ -1,20 +1,17 @@
 import { call, put, select } from 'redux-saga/effects';
-import { sendError, Currency } from '../../../';
-import { selectUserIsMember } from '../../../';
+import { Currency, selectCurrenciesState, selectUserIsMember, sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { walletsData, walletsError, WalletsFetch } from '../actions';
 import { Wallet } from '../types';
-import { selectCurrenciesState } from '../../../';
 
 const walletsOptions: RequestOptions = {
     apiVersion: 'peatio',
-};;
-
+};
 
 export function* walletsSaga(action: WalletsFetch) {
     try {
         const accounts = yield call(API.get(walletsOptions), '/account/balances');
-        const currenciesList =  yield select(selectCurrenciesState);
+        const currenciesList = yield select(selectCurrenciesState);
         const isMember: boolean = yield select(selectUserIsMember);
 
         const currencies: Currency[] = currenciesList.list;
@@ -32,10 +29,10 @@ export function* walletsSaga(action: WalletsFetch) {
                 };
             }
 
-            return ({
+            return {
                 ...walletInfo,
                 name: currency?.name,
-                networks: currency?.networks?.map(network => ({
+                networks: currency?.networks?.map((network) => ({
                     explorerTransaction: network?.explorer_transaction,
                     explorerAddress: network?.explorer_address,
                     fee: network?.withdraw_fee,
@@ -43,19 +40,21 @@ export function* walletsSaga(action: WalletsFetch) {
                 type: currency?.type,
                 fixed: currency?.precision,
                 iconUrl: currency?.icon_url,
-            });
+            };
         });
 
-        const wallets = accountsByCurrencies.filter(item => item && item.currency);
+        const wallets = accountsByCurrencies.filter((item) => item && item.currency);
 
         yield put(walletsData(wallets));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: walletsError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: walletsError,
+                },
+            }),
+        );
     }
 }

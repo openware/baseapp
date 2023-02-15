@@ -6,7 +6,7 @@ import { copy } from '../../../helpers';
 import { WarningIcon } from '../../assets/images/WarningIcon';
 import { Modal } from '../../components/Modal';
 
-export const CreatedApiKeyModalComponent = props => {
+export const CreatedApiKeyModalComponent = (props) => {
     const [apiKey, setApiKey] = React.useState({ kid: '', secret: '' });
     const intl = useIntl();
 
@@ -25,8 +25,12 @@ export const CreatedApiKeyModalComponent = props => {
                             className="pg-copyable-text-field__input"
                             fieldId={'access-key-id'}
                             value={apiKey.kid || ''}
-                            copyButtonText={intl.formatMessage({ id: 'page.body.profile.content.copyLink' })}
-                            label={intl.formatMessage({ id: 'page.body.profile.apiKeys.modal.access_key' })}
+                            copyButtonText={intl.formatMessage({
+                                id: 'page.body.profile.content.copyLink',
+                            })}
+                            label={intl.formatMessage({
+                                id: 'page.body.profile.apiKeys.modal.access_key',
+                            })}
                         />
                     </fieldset>
                 </div>
@@ -36,8 +40,12 @@ export const CreatedApiKeyModalComponent = props => {
                             className="pg-copyable-text-field__input"
                             fieldId={'secret_key-id'}
                             value={apiKey.secret || ''}
-                            copyButtonText={intl.formatMessage({ id: 'page.body.profile.content.copyLink' })}
-                            label={intl.formatMessage({ id: 'page.body.profile.apiKeys.modal.secret_key' })}
+                            copyButtonText={intl.formatMessage({
+                                id: 'page.body.profile.content.copyLink',
+                            })}
+                            label={intl.formatMessage({
+                                id: 'page.body.profile.apiKeys.modal.secret_key',
+                            })}
                         />
                     </fieldset>
                 </div>
@@ -47,8 +55,13 @@ export const CreatedApiKeyModalComponent = props => {
                 </div>
                 <div className="cr-mobile-modal__body__note">
                     <p>
-                        {intl.formatMessage({ id: 'page.body.profile.apiKeys.modal.secret_key_info' })}&nbsp;
-                        {intl.formatMessage({ id: 'page.body.profile.apiKeys.modal.secret_key_store' })}
+                        {intl.formatMessage({
+                            id: 'page.body.profile.apiKeys.modal.secret_key_info',
+                        })}
+                        &nbsp;
+                        {intl.formatMessage({
+                            id: 'page.body.profile.apiKeys.modal.secret_key_store',
+                        })}
                     </p>
                     <p>
                         {intl.formatMessage({ id: 'page.body.profile.apiKeys.modal.note' })}&nbsp;
@@ -62,13 +75,8 @@ export const CreatedApiKeyModalComponent = props => {
     const renderModalFooter = () => {
         return (
             <div className="cr-mobile-modal__footer">
-                <Button
-                    block={true}
-                    onClick={props.closeCreatedApiKeyModal}
-                    size="lg"
-                    variant="primary"
-                >
-                    {intl.formatMessage({id: 'page.mobile.createdApiKeyModal.confirm'})}
+                <Button block={true} onClick={props.closeCreatedApiKeyModal} size="lg" variant="primary">
+                    {intl.formatMessage({ id: 'page.mobile.createdApiKeyModal.confirm' })}
                 </Button>
             </div>
         );

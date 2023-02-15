@@ -14,16 +14,20 @@ const executeOptions = (csrfToken?: string): RequestOptions => {
 export function* updateOrderSaga(actionParam: P2POrdersUpdateFetch) {
     try {
         const { action, id, payment_method_id } = actionParam.payload;
-        const data = yield call(API.post(executeOptions(getCsrfToken())), `/private/orders/${id}/${action}`, { payment_method_id });
+        const data = yield call(API.post(executeOptions(getCsrfToken())), `/private/orders/${id}/${action}`, {
+            payment_method_id,
+        });
         yield put(p2pOrdersUpdateData(data));
-        yield put(alertPush({ message: [`success.order.${action}`], type: 'success'}));
+        yield put(alertPush({ message: [`success.order.${action}`], type: 'success' }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: p2pOrdersUpdateError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: p2pOrdersUpdateError,
+                },
+            }),
+        );
     }
 }

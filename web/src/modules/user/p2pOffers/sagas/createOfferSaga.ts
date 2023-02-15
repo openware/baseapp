@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects';
 import { getCsrfToken } from 'src/helpers';
 import { alertPush, sendError } from '../../..';
 import { API, RequestOptions } from '../../../../api';
-import { CreateOfferFetch, createOfferData, createOfferError } from '../actions';
+import { createOfferData, createOfferError, CreateOfferFetch } from '../actions';
 
 const executeOptions = (csrfToken?: string): RequestOptions => {
     return {
@@ -16,14 +16,16 @@ export function* createOfferSaga(action: CreateOfferFetch) {
         yield call(API.post(executeOptions(getCsrfToken())), '/private/offers', action.payload);
 
         yield put(createOfferData());
-        yield put(alertPush({ message: ['success.offer.created'], type: 'success'}));
+        yield put(alertPush({ message: ['success.offer.created'], type: 'success' }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: createOfferError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: createOfferError,
+                },
+            }),
+        );
     }
 }

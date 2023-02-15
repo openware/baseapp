@@ -5,7 +5,7 @@ import { SEND_ADDRESSES_DATA, SEND_ADDRESSES_ERROR, SEND_ADDRESSES_FETCH } from 
 describe('KYC - addresses actions', () => {
     it('should check sendAddresses action creator', () => {
         const fakePayload = new FormData();
-        const expectedAction = {type: SEND_ADDRESSES_FETCH, payload: fakePayload };
+        const expectedAction = { type: SEND_ADDRESSES_FETCH, payload: fakePayload };
         expect(actions.sendAddresses(fakePayload)).toEqual(expectedAction);
     });
 

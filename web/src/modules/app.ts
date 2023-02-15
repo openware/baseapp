@@ -1,54 +1,48 @@
 import { combineReducers } from 'redux';
 import { configUpdateReducer } from './admin/config';
-import { alertReducer  } from './public/alert';
+import { marketsAdminReducer } from './admin/markets';
+import { platformCreateReducer } from './admin/platform';
+import { alertReducer } from './public/alert';
 import { blockchainsReducer } from './public/blockchains';
 import { blocklistAccessReducer } from './public/blocklistAccess';
 import { configsReducer } from './public/configs';
 import { currenciesReducer } from './public/currencies';
 import { errorHandlerReducer } from './public/errorHandler';
-import { changeGlobalSettingsReducer  } from './public/globalSettings';
+import { changeGlobalSettingsReducer } from './public/globalSettings';
 import { gridLayoutReducer } from './public/gridLayout';
-import { changeLanguageReducer  } from './public/i18n';
-import { klineReducer  } from './public/kline';
+import { changeLanguageReducer } from './public/i18n';
+import { klineReducer } from './public/kline';
 import { marketsReducer } from './public/markets';
 import { memberLevelsReducer } from './public/memberLevels';
 import { depthReducer, incrementDepthReducer, orderBookReducer } from './public/orderBook';
-import { recentTradesReducer  } from './public/recentTrades';
-import { withdrawLimitsReducer  } from './public/withdrawLimits';
-import { apiKeysReducer } from './user/apiKeys';
+import { p2pReducer } from './public/p2p';
+import { recentTradesReducer } from './public/recentTrades';
+import { withdrawLimitsReducer } from './public/withdrawLimits';
 import { abilitiesReducer } from './user/abilities';
-import { authReducer  } from './user/auth';
+import { apiKeysReducer } from './user/apiKeys';
+import { authReducer } from './user/auth';
 import { beneficiariesReducer } from './user/beneficiaries';
 import { getGeetestCaptchaReducer } from './user/captcha';
 import { documentationReducer } from './user/documentation';
 import { sendEmailVerificationReducer } from './user/emailVerification';
-import { historyReducer  } from './user/history';
-import { internalTransfersReducer } from './user/internalTransfers';
-import {
-    addressesReducer,
-    documentsReducer,
-    identityReducer,
-    labelReducer,
-    phoneReducer,
-} from './user/kyc';
-import { openOrdersReducer } from './user/openOrders';
-import { ordersReducer  } from './user/orders';
-import { ordersHistoryReducer  } from './user/ordersHistory';
-import { passwordReducer  } from './user/password';
-import { profileReducer  } from './user/profile';
-import { userActivityReducer  } from './user/userActivity';
-import { walletsReducer  } from './user/wallets';
-import { withdrawLimitReducer  } from './user/withdrawLimit';
-import { marketsAdminReducer } from './admin/markets';
-import { platformCreateReducer } from './admin/platform';
-import { quickExchangeReducer } from './user/quickExchange';
-import { p2pReducer } from './public/p2p';
-import { paymentMethodReducer } from './user/paymentMethod';
-import { p2pOffersReducer } from './user/p2pOffers';
-import { p2pTransfersReducer } from './user/p2pTransfers';
-import { p2pOrdersReducer } from './user/p2pOrders';
-import { p2pDisputeReducer } from './user/p2pDispute';
 import { feeGroupReducer } from './user/feeGroup';
+import { historyReducer } from './user/history';
+import { internalTransfersReducer } from './user/internalTransfers';
+import { addressesReducer, documentsReducer, identityReducer, labelReducer, phoneReducer } from './user/kyc';
+import { openOrdersReducer } from './user/openOrders';
+import { ordersReducer } from './user/orders';
+import { ordersHistoryReducer } from './user/ordersHistory';
+import { p2pDisputeReducer } from './user/p2pDispute';
+import { p2pOffersReducer } from './user/p2pOffers';
+import { p2pOrdersReducer } from './user/p2pOrders';
+import { p2pTransfersReducer } from './user/p2pTransfers';
+import { passwordReducer } from './user/password';
+import { paymentMethodReducer } from './user/paymentMethod';
+import { profileReducer } from './user/profile';
+import { quickExchangeReducer } from './user/quickExchange';
+import { userActivityReducer } from './user/userActivity';
+import { walletsReducer } from './user/wallets';
+import { withdrawLimitReducer } from './user/withdrawLimit';
 
 export const publicReducer = combineReducers({
     alerts: alertReducer,

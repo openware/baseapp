@@ -1,6 +1,7 @@
 const hostUrl = window.location.hostname === 'localhost' ? 'http://localhost:9002' : window.location.origin;
 const protocolSSL = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-const rangerHostUrl =  window.location.hostname === 'localhost' ? 'ws://localhost:9003' : `${protocolSSL}${window.location.hostname}`;
+const rangerHostUrl =
+    window.location.hostname === 'localhost' ? 'ws://localhost:9003' : `${protocolSSL}${window.location.hostname}`;
 
 export const defaultConfig: Config = {
     api: {
@@ -29,16 +30,10 @@ export const defaultConfig: Config = {
     passwordEntropyStep: '14',
     storage: {
         defaultStorageLimit: '50',
-        orderBookSideLimit: '25'
+        orderBookSideLimit: '25',
     },
     languages: ['en', 'ru'],
-    kycSteps: [
-        'email',
-        'phone',
-        'profile',
-        'document',
-        'address'
-    ],
+    kycSteps: ['email', 'phone', 'profile', 'document', 'address'],
     captcha_type: 'none',
     password_min_entropy: 0,
     wizard_step: 'false',
@@ -59,7 +54,7 @@ Cryptobase.config.storage = { ...defaultConfig.storage, ...Cryptobase.config.sto
 
 const convertToBoolean = (value: any): boolean => {
     return String(value) === 'true';
-}
+};
 
 export const tradeUrl = () => Cryptobase.config.api.tradeUrl;
 export const authUrl = () => Cryptobase.config.api.authUrl;
@@ -84,7 +79,8 @@ export const msPricesUpdates = () => Cryptobase.config.msPricesUpdates;
 export const defaultStorageLimit = () => Number(Cryptobase.config.storage.defaultStorageLimit);
 export const orderBookSideLimit = () => Number(Cryptobase.config.storage.orderBookSideLimit);
 export const passwordEntropyStep = () => Number(Cryptobase.config.passwordEntropyStep);
-export const languages = (Cryptobase.config.languages && Cryptobase.config.languages.length > 0) ? Cryptobase.config.languages : ['en'];
+export const languages =
+    Cryptobase.config.languages && Cryptobase.config.languages.length > 0 ? Cryptobase.config.languages : ['en'];
 export const kycSteps = () => Cryptobase.config.kycSteps;
 export const isUsernameEnabled = () => convertToBoolean(Cryptobase.config.usernameEnabled);
 export const captchaType = () => Cryptobase.config.captcha_type;

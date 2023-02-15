@@ -1,4 +1,4 @@
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import { TestComponentWrapper } from 'lib/test';
 import React from 'react';
 import { WalletItem } from './';
@@ -7,7 +7,7 @@ const setup = (props: any) =>
     shallow(
         <TestComponentWrapper>
             <WalletItem {...props} />
-        </TestComponentWrapper>
+        </TestComponentWrapper>,
     );
 
 describe('WalletItem #render', () => {

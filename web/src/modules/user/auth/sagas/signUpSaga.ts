@@ -40,12 +40,14 @@ export function* signUpSaga(action: SignUpFetch) {
         yield put(userData({ user: data }));
         yield put(signUpData());
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: signUpError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: signUpError,
+                },
+            }),
+        );
     }
 }

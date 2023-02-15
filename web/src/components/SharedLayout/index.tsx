@@ -1,19 +1,9 @@
 import { Layout } from '@openware/react-opendax';
 import React, { FC } from 'react';
-import {
-    FOOTER_OPTIONS,
-    NAVIGATIONS,
-    LOGO_ICON,
-    DEFAULT_USER_MENU,
-    MOBILE_LOGO_ICON,
-} from './SharedLayout.constants';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-    selectUserInfo,
-    selectUserLoggedIn,
-    logoutFetch,
-} from '../../modules';
+import { logoutFetch, selectUserInfo, selectUserLoggedIn } from '../../modules';
+import { DEFAULT_USER_MENU, FOOTER_OPTIONS, LOGO_ICON, MOBILE_LOGO_ICON, NAVIGATIONS } from './SharedLayout.constants';
 
 interface SharedLayoutProps {
     children: React.ReactNode;
@@ -28,8 +18,9 @@ const FooterProps = {
     socialOptionClassName: 'text-gray-400 hover:text-gray-500 px-2 opacity-60 hover:opacity-100 delay-200',
     socialMoreButtonClassName: 'self-center ml-2 relative bg-gray-100 rounded flex py-1 px-2 cursor-pointer',
     socialMoreTextClassName: 'self-center text-gray-500 text-sm font-bold',
-    socialMoreClassName: 'absolute flex flex-wrap flex-row flex-row bottom-8 right-0 w-52 z-50 p-4 bg-white rounded shadow r-2',
-}
+    socialMoreClassName:
+        'absolute flex flex-wrap flex-row flex-row bottom-8 right-0 w-52 z-50 p-4 bg-white rounded shadow r-2',
+};
 
 export const SharedLayout: FC<SharedLayoutProps> = (props) => {
     const history = useHistory();
@@ -40,11 +31,11 @@ export const SharedLayout: FC<SharedLayoutProps> = (props) => {
 
     const logoutFunc = () => {
         dispatch(logoutFetch());
-    }
+    };
 
     const profileFunc = () => {
         history.push('/profile');
-    }
+    };
 
     const SidebarProps = {
         navigations: NAVIGATIONS,
@@ -59,15 +50,12 @@ export const SharedLayout: FC<SharedLayoutProps> = (props) => {
             },
             userMenuProps: {
                 userMenu: DEFAULT_USER_MENU(profileFunc, logoutFunc),
-            }
-        }
+            },
+        },
     };
 
     return (
-        <Layout
-            footerProps={FooterProps}
-            sidebarProps={SidebarProps}
-        >
+        <Layout footerProps={FooterProps} sidebarProps={SidebarProps}>
             {props.children}
         </Layout>
     );

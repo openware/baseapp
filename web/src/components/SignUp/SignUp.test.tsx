@@ -51,7 +51,7 @@ const setup = (props: Partial<SignUpFormProps> = {}) =>
     shallow(
         <TestComponentWrapper>
             <SignUpForm {...{ ...defaults, ...props }} />
-        </TestComponentWrapper>
+        </TestComponentWrapper>,
     );
 
 describe('SignUp component', () => {
@@ -83,7 +83,10 @@ describe('SignUp component', () => {
     });
 
     it('should have correct labels', () => {
-        const wrapper = setup({ labelSignIn: 'label sign in', labelSignUp: 'label sign up' }).render();
+        const wrapper = setup({
+            labelSignIn: 'label sign in',
+            labelSignUp: 'label sign up',
+        }).render();
         expect(wrapper.find('.cr-sign-up-form__option-inner').first().text()).toBe('label sign in');
         expect(wrapper.find('.__selected').text()).toBe('label sign up');
     });

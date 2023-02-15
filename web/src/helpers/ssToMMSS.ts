@@ -11,6 +11,6 @@ export const ssToMMSS = (seconds: number, minutes: number = 0) => {
         return {
             initialSeconds: initialSeconds,
             initialMinutes: initialMinutes,
-        }
+        };
     }
-}
+};

@@ -21,14 +21,16 @@ export function* ordersHistoryCancelSaga(action: OrdersHistoryCancelFetch) {
             yield call(API.post(ordersCancelOptions(getCsrfToken())), `/market/orders/${id}/cancel`, { id });
         }
 
-        yield put(alertPush({ message: ['success.order.cancelling'], type: 'success'}));
+        yield put(alertPush({ message: ['success.order.cancelling'], type: 'success' }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: ordersHistoryCancelError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: ordersHistoryCancelError,
+                },
+            }),
+        );
     }
 }

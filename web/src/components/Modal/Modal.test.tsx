@@ -1,4 +1,4 @@
-import {shallow, ShallowWrapper} from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { Modal, ModalProps } from './';
@@ -10,8 +10,7 @@ const defaults: ModalProps = {
     footer: <Button onClick={jest.fn()} />,
 };
 
-const setup = (props: Partial<ModalProps> = {}) =>
-    shallow(<Modal {...{ ...defaults, ...props }} />);
+const setup = (props: Partial<ModalProps> = {}) => shallow(<Modal {...{ ...defaults, ...props }} />);
 
 describe('Basic Modal', () => {
     let wrapper: ShallowWrapper;
@@ -30,7 +29,7 @@ describe('Basic Modal', () => {
 
     it('should pass along supplied className', () => {
         const className = 'new-class';
-        const wrapper = setup({ className });//tslint:disable-line
+        const wrapper = setup({ className }); //tslint:disable-line
         expect(wrapper.hasClass(className)).toBeTruthy();
     });
 

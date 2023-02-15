@@ -82,7 +82,10 @@ describe('Beneficiaries actions', () => {
             blockchain_name: '',
         };
 
-        const expectedAction = { type: BENEFICIARIES_ACTIVATE_DATA, payload: fakeActiveBeneficiary };
+        const expectedAction = {
+            type: BENEFICIARIES_ACTIVATE_DATA,
+            payload: fakeActiveBeneficiary,
+        };
         expect(actions.beneficiariesActivateData(fakeActiveBeneficiary)).toEqual(expectedAction);
     });
 
@@ -90,7 +93,6 @@ describe('Beneficiaries actions', () => {
         const expectedAction = { type: BENEFICIARIES_ACTIVATE_ERROR, error: fakeError };
         expect(actions.beneficiariesActivateError(fakeError)).toEqual(expectedAction);
     });
-
 
     it('should check beneficiariesCreate action creator', () => {
         const fakeCreatePayload = {
@@ -101,7 +103,7 @@ describe('Beneficiaries actions', () => {
             otp: '',
         };
 
-        const expectedAction = {type: BENEFICIARIES_CREATE, payload: fakeCreatePayload };
+        const expectedAction = { type: BENEFICIARIES_CREATE, payload: fakeCreatePayload };
         expect(actions.beneficiariesCreate(fakeCreatePayload)).toEqual(expectedAction);
     });
 
@@ -133,7 +135,7 @@ describe('Beneficiaries actions', () => {
             otp: '',
         };
 
-        const expectedAction = {type: BENEFICIARIES_DELETE, payload };
+        const expectedAction = { type: BENEFICIARIES_DELETE, payload };
         expect(actions.beneficiariesDelete(payload)).toEqual(expectedAction);
     });
 
@@ -152,7 +154,7 @@ describe('Beneficiaries actions', () => {
     });
 
     it('should check beneficiariesFetch action creator', () => {
-        const expectedAction = { type: BENEFICIARIES_FETCH, payload: { currency_id: 'btc'} };
+        const expectedAction = { type: BENEFICIARIES_FETCH, payload: { currency_id: 'btc' } };
         expect(actions.beneficiariesFetch({ currency_id: 'btc' })).toEqual(expectedAction);
     });
 
@@ -205,5 +207,4 @@ describe('Beneficiaries actions', () => {
         const expectedAction = { type: BENEFICIARIES_RESEND_PIN_ERROR, error: fakeError };
         expect(actions.beneficiariesResendPinError(fakeError)).toEqual(expectedAction);
     });
-
 });

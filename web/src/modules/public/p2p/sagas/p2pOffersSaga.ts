@@ -14,23 +14,27 @@ export function* p2pOffersSaga(action: OffersFetch) {
         const { side, sort, base, quote, payment_method } = action.payload;
         const { data, headers } = yield call(API.get(config), `/public/offers?${buildQueryString(action.payload)}`);
 
-        yield put(offersData({
-            list: data,
-            total: headers.total,
-            page: action.payload.page,
-            side,
-            sort,
-            base,
-            quote,
-            payment_method,
-        }));
+        yield put(
+            offersData({
+                list: data,
+                total: headers.total,
+                page: action.payload.page,
+                side,
+                sort,
+                base,
+                quote,
+                payment_method,
+            }),
+        );
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: offersError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: offersError,
+                },
+            }),
+        );
     }
 }

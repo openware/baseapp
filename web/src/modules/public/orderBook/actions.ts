@@ -14,12 +14,7 @@ import {
     ORDER_BOOK_ERROR,
     ORDER_BOOK_FETCH,
 } from './constants';
-import {
-    DepthIncrementState,
-    DepthIncrementUpdateData,
-    DepthState,
-    OrderBookState,
-} from './types';
+import { DepthIncrementState, DepthIncrementUpdateData, DepthState, OrderBookState } from './types';
 
 export interface OrderBookFetch {
     type: typeof ORDER_BOOK_FETCH;
@@ -36,9 +31,7 @@ export interface OrderBookError {
     error: CommonError;
 }
 
-export type OrderBookActions = OrderBookFetch
-    | OrderBookData
-    | OrderBookError;
+export type OrderBookActions = OrderBookFetch | OrderBookData | OrderBookError;
 
 export interface DepthFetch {
     type: typeof DEPTH_FETCH;
@@ -82,7 +75,8 @@ export interface DepthIncrementSubscribeResetLoading {
     type: typeof DEPTH_INCREMENT_SUBSCRIBE_RESET_LOADING;
 }
 
-export type DepthActions = DepthFetch
+export type DepthActions =
+    | DepthFetch
     | DepthData
     | DepthError
     | DepthDataIncrement

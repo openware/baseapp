@@ -15,7 +15,7 @@ export interface CustomInputProps {
     onKeyPress?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
     readOnly?: boolean;
     id?: string;
-    handleClick?: ((event: React.MouseEvent<HTMLInputElement, MouseEvent>) => void);
+    handleClick?: (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
     isDisabled?: boolean;
     labelVisible?: boolean;
     autoComplete?: string;
@@ -52,9 +52,7 @@ class CustomInput extends React.Component<Props> {
         return (
             <React.Fragment>
                 <div className="custom-input">
-                    <label className={classNameLabel}>
-                        {(labelVisible || inputValue) && (label || defaultLabel)}
-                    </label>
+                    <label className={classNameLabel}>{(labelVisible || inputValue) && (label || defaultLabel)}</label>
                     <InputGroup size="lg">
                         <FormControl
                             size="lg"
@@ -64,7 +62,7 @@ class CustomInput extends React.Component<Props> {
                             autoFocus={autoFocus}
                             onFocus={this.props.handleFocusInput}
                             onBlur={this.props.handleFocusInput}
-                            onChange={e => this.handleChangeValue(e)}
+                            onChange={(e) => this.handleChangeValue(e)}
                             readOnly={readOnly}
                             id={id}
                             onClick={handleClick}
@@ -84,6 +82,4 @@ class CustomInput extends React.Component<Props> {
     };
 }
 
-export {
-    CustomInput,
-};
+export { CustomInput };

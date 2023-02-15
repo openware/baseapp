@@ -12,12 +12,14 @@ export function* feeGroupSaga(action: FeeGroupFetch) {
         const feeGroup = yield call(API.get(FeeGroupOption), '/account/members/me');
         yield put(feeGroupData(feeGroup));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: feeGroupError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: feeGroupError,
+                },
+            }),
+        );
     }
 }

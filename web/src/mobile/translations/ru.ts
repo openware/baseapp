@@ -65,8 +65,9 @@ export const ru = {
 
     'page.mobile.wallet.withdraw.modal.new.account': 'Confirm new account',
     'page.mobile.wallet.withdraw.modal.confirmation': 'Withdraw confirmation',
-    'page.mobile.wallet.withdraw.modal.confirmation.warning': 'Please check the target address carefully before confirming the withdrawal.',
-    'page.mobile.wallet.withdraw.modal.confirmation.message1': 'You\'ve requested to withdraw',
+    'page.mobile.wallet.withdraw.modal.confirmation.warning':
+        'Please check the target address carefully before confirming the withdrawal.',
+    'page.mobile.wallet.withdraw.modal.confirmation.message1': "You've requested to withdraw",
     'page.mobile.wallet.withdraw.modal.confirmation.message2': 'To this address',
 
     'page.mobile.userInfo.details.uid': 'UID: {uid}',
@@ -114,7 +115,7 @@ export const ru = {
     'page.mobile.confirm.address': 'Residence verification',
     'page.mobile.confirm.back': 'Back',
 
-    'page.body.profile.header.account.content.twoFactorAuthentication':  'Two-factor authentication',
+    'page.body.profile.header.account.content.twoFactorAuthentication': 'Two-factor authentication',
 
     'page.profile.kyc.title': '2FA',
 
@@ -123,5 +124,5 @@ export const ru = {
     'page.mobile.twoFactorModal.send': 'Send',
 
     'page.mobile.createdApiKeyModal.title': 'Created',
-    'page.mobile.createdApiKeyModal.confirm': 'confirm'
+    'page.mobile.createdApiKeyModal.confirm': 'confirm',
 };

@@ -18,12 +18,14 @@ export function* apiKeyCreateSaga(action: ApiKeyCreateFetch) {
         yield put(alertPush({ message: ['success.api_keys.created'], type: 'success' }));
         yield put(apiKeys2FAModal({ active: true, action: 'createSuccess', apiKey }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: apiKeysError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: apiKeysError,
+                },
+            }),
+        );
     }
 }

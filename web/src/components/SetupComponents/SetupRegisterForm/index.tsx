@@ -1,27 +1,15 @@
 import * as React from 'react';
-import { SetupFormInput } from '../';
-import { PasswordStrengthMeter } from '../../'
 import { Button } from 'react-bootstrap';
-import { EMAIL_REGEX } from 'src/helpers';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { passwordMinEntropy } from '../../../api/config';
-import { IntlProps } from '../../../';
+import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import { compose } from 'redux';
-import {
-    connect,
-    MapDispatchToPropsFunction,
-    MapStateToProps,
-} from 'react-redux';
-import {
-    RootState,
-    selectCurrentPasswordEntropy,
-    entropyPasswordFetch,
-} from '../../../modules';
-import {
-    passwordErrorFirstSolution,
-    passwordErrorSecondSolution,
-    passwordErrorThirdSolution,
-} from '../../../helpers';
+import { EMAIL_REGEX } from 'src/helpers';
+import { SetupFormInput } from '../';
+import { PasswordStrengthMeter } from '../../';
+import { IntlProps } from '../../../';
+import { passwordMinEntropy } from '../../../api/config';
+import { passwordErrorFirstSolution, passwordErrorSecondSolution, passwordErrorThirdSolution } from '../../../helpers';
+import { entropyPasswordFetch, RootState, selectCurrentPasswordEntropy } from '../../../modules';
 
 export interface SetupRegisterFormProps {
     handleRegister: (email: string, password: string) => void;
@@ -75,7 +63,7 @@ class SetupRegister extends React.Component<Props, SetupRegisterFormState> {
             passwordErrorFirstSolved,
             passwordErrorSecondSolved,
             passwordErrorThirdSolved,
-            passwordPopUp
+            passwordPopUp,
         } = this.state;
         const { currentPasswordEntropy } = this.props;
         const isEmailValid = email.match(EMAIL_REGEX);
@@ -84,14 +72,10 @@ class SetupRegister extends React.Component<Props, SetupRegisterFormState> {
         return (
             <React.Fragment>
                 <form className="setup-register-form" autoComplete="off">
-                    <SetupFormInput
-                        label="Email"
-                        value={email}
-                        handleChangeInput={this.handleChangeEmail}
-                    />
-                    {(email && !isEmailValid) ? (
+                    <SetupFormInput label="Email" value={email} handleChangeInput={this.handleChangeEmail} />
+                    {email && !isEmailValid ? (
                         <div className="cr-sign-up-form__error">
-                            <FormattedMessage id="page.header.signUp.email.message.error"/>
+                            <FormattedMessage id="page.header.signUp.email.message.error" />
                         </div>
                     ) : null}
                     <SetupFormInput
@@ -119,16 +103,21 @@ class SetupRegister extends React.Component<Props, SetupRegisterFormState> {
                         type="password"
                         handleChangeInput={this.handleChangeConfirmPassword}
                     />
-                    {(confirmPassword && !isConfirmPasswordValid) ? (
+                    {confirmPassword && !isConfirmPasswordValid ? (
                         <div className={'cr-sign-up-form__error'}>
-                            <FormattedMessage id="page.header.signUp.confirmPassword.message.error"/>
+                            <FormattedMessage id="page.header.signUp.confirmPassword.message.error" />
                         </div>
-                     ) : null}
+                    ) : null}
                 </form>
                 <div className="setup-screen__agreement">
                     <div className="setup-screen__agreement-term">
-                        <label className="checkbox-container">I  agree all statements in <a href="#"> terms of service</a>
-                            <input type="checkbox" checked={agreementConfirmed} onChange={() => this.handleToggleConfirmAgreement()} />
+                        <label className="checkbox-container">
+                            I agree all statements in <a href="#"> terms of service</a>
+                            <input
+                                type="checkbox"
+                                checked={agreementConfirmed}
+                                onChange={() => this.handleToggleConfirmAgreement()}
+                            />
                             <span className="checkmark"></span>
                         </label>
                     </div>
@@ -140,8 +129,7 @@ class SetupRegister extends React.Component<Props, SetupRegisterFormState> {
                         size="lg"
                         variant="primary"
                         onClick={this.handleRegister}
-                        disabled={!this.handleValidateForm()}
-                    >
+                        disabled={!this.handleValidateForm()}>
                         Next
                     </Button>
                 </div>
@@ -190,7 +178,7 @@ class SetupRegister extends React.Component<Props, SetupRegisterFormState> {
 
         if (this.state.typingTimeout) {
             clearTimeout(this.state.typingTimeout);
-         }
+        }
 
         this.setState({
             password: value,
@@ -213,18 +201,13 @@ class SetupRegister extends React.Component<Props, SetupRegisterFormState> {
     };
 
     private handleToggleConfirmAgreement = () => {
-        this.setState(prevState => ({
-          agreementConfirmed: !prevState.agreementConfirmed,
+        this.setState((prevState) => ({
+            agreementConfirmed: !prevState.agreementConfirmed,
         }));
     };
 
     private handleValidateForm = () => {
-        const {
-            email,
-            password,
-            confirmPassword,
-            agreementConfirmed,
-        } = this.state;
+        const { email, password, confirmPassword, agreementConfirmed } = this.state;
         const { currentPasswordEntropy } = this.props;
         const isEmailValid = email.match(EMAIL_REGEX);
         const isPasswordValid = currentPasswordEntropy >= passwordMinEntropy();
@@ -239,16 +222,15 @@ class SetupRegister extends React.Component<Props, SetupRegisterFormState> {
         this.props.handleRegister(email, password);
     };
 
-    private translate = (id: string) =>
-        this.props.intl.formatMessage({ id });
+    private translate = (id: string) => this.props.intl.formatMessage({ id });
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
     currentPasswordEntropy: selectCurrentPasswordEntropy(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
-    fetchCurrentPasswordEntropy: payload => dispatch(entropyPasswordFetch(payload)),
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+    fetchCurrentPasswordEntropy: (payload) => dispatch(entropyPasswordFetch(payload)),
 });
 
 export const SetupRegisterForm = compose(

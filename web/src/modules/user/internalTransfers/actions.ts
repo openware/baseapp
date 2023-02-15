@@ -27,11 +27,13 @@ export interface CreateInternalTransfersError {
 }
 
 export type CreateInternalTransfersActions =
-    CreateInternalTransfersFetch
+    | CreateInternalTransfersFetch
     | CreateInternalTransfersData
     | CreateInternalTransfersError;
 
-export const createInternalTransfersFetch = (payload: CreateInternalTransfersFetch['payload']): CreateInternalTransfersFetch => ({
+export const createInternalTransfersFetch = (
+    payload: CreateInternalTransfersFetch['payload'],
+): CreateInternalTransfersFetch => ({
     type: CREATE_INTERNAL_TRANSFERS_FETCH,
     payload,
 });

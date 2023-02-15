@@ -12,17 +12,14 @@ const WalletsMobileScreen: React.FC = () => {
     useWalletsFetch();
     useDocumentTitle('Wallets');
 
-    return <div>
-        <EstimatedValueMobile/>
-        {wallets.map((wallet, index) =>
-            <WalletItem
-                onClick={c => history.push(`/wallets/${c}/history`)}
-                wallet={wallet}
-                key={index}
-            />)}
-    </div>;
+    return (
+        <div>
+            <EstimatedValueMobile />
+            {wallets.map((wallet, index) => (
+                <WalletItem onClick={(c) => history.push(`/wallets/${c}/history`)} wallet={wallet} key={index} />
+            ))}
+        </div>
+    );
 };
 
-export {
-    WalletsMobileScreen,
-};
+export { WalletsMobileScreen };

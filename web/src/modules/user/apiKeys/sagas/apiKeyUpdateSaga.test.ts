@@ -54,10 +54,7 @@ describe('api keys saga', () => {
         mockAxios.onPatch(url).reply(200, fakeUpdatedApiKey);
     };
 
-    const expectedUpdateApiKeyFetchSuccess = [
-        apiKeyUpdateFetch(fakePayload),
-        apiKeyUpdate(fakeUpdatedApiKey),
-    ];
+    const expectedUpdateApiKeyFetchSuccess = [apiKeyUpdateFetch(fakePayload), apiKeyUpdate(fakeUpdatedApiKey)];
 
     const expectedpdateApiKeyFetchError = [
         apiKeyUpdateFetch(fakePayload),
@@ -72,7 +69,7 @@ describe('api keys saga', () => {
 
     it('should update api key', async () => {
         mockUpdateApiKey();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedUpdateApiKeyFetchSuccess.length) {
@@ -88,7 +85,7 @@ describe('api keys saga', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedpdateApiKeyFetchError.length) {

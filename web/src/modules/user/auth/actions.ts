@@ -28,7 +28,7 @@ export interface GeetestCaptchaResponse {
 export interface EntropyPasswordFetch {
     type: typeof AUTH_ENTROPY_PASSWORD_FETCH;
     payload: {
-        password: string,
+        password: string;
     };
 }
 
@@ -185,7 +185,10 @@ export const signInRequire2FA = (payload: SignInRequire2FA['payload']): SignInRe
     payload,
 });
 
-export const signUp = (payload: SignUpFetch['payload'], callbackAction?: SignUpFetch['callbackAction']): SignUpFetch => ({
+export const signUp = (
+    payload: SignUpFetch['payload'],
+    callbackAction?: SignUpFetch['callbackAction'],
+): SignUpFetch => ({
     type: AUTH_SIGN_UP_FETCH,
     payload,
     callbackAction,
@@ -200,7 +203,9 @@ export const signUpError = (error: CommonError): SignUpError => ({
     error,
 });
 
-export const signUpRequireVerification = (payload: SignUpRequireVerification['payload']): SignUpRequireVerification => ({
+export const signUpRequireVerification = (
+    payload: SignUpRequireVerification['payload'],
+): SignUpRequireVerification => ({
     type: AUTH_SIGN_UP_REQUIRE_VERIFICATION,
     payload,
 });

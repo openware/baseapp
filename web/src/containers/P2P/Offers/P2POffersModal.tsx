@@ -1,18 +1,18 @@
 import classnames from 'classnames';
-import React, { FC, ReactElement, useCallback, useEffect, useState, useMemo } from 'react';
+import React, { FC, ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { CloseIcon } from 'src/assets/images/CloseIcon';
-import { AvatarIcon } from 'src/assets/images/NavBarIcons';
-import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION, HOST_URL } from 'src/constants';
-import { cleanPositiveFloatInput, secondToMinutes, precisionRegExp, truncateMiddle } from 'src/helpers';
-import { P2POrderCreate, selectP2PWallets, selectPaymentMethodList, UserPaymentMethod } from 'src/modules';
-import { Decimal, DropdownComponent, Modal, OrderInput } from 'src/components';
-import { PlusIcon } from 'src/assets/images/PlusIcon';
-import { useP2PWalletsFetch } from 'src/hooks';
 import { useHistory } from 'react-router';
 import { isUsernameEnabled } from 'src/api';
+import { CloseIcon } from 'src/assets/images/CloseIcon';
+import { AvatarIcon } from 'src/assets/images/NavBarIcons';
+import { PlusIcon } from 'src/assets/images/PlusIcon';
+import { Decimal, DropdownComponent, Modal, OrderInput } from 'src/components';
+import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION, HOST_URL } from 'src/constants';
+import { cleanPositiveFloatInput, precisionRegExp, secondToMinutes, truncateMiddle } from 'src/helpers';
+import { useP2PWalletsFetch } from 'src/hooks';
+import { P2POrderCreate, selectP2PWallets, selectPaymentMethodList, UserPaymentMethod } from 'src/modules';
 
 interface ParentProps {
     id: number;
@@ -72,26 +72,36 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
 
     useEffect(() => {
         if (userPM.length && paymentMethods.length) {
-            setAvailablePM(userPM.reduce((acc, upm) => { return paymentMethods.find(p => p.payment_method_id === upm.payment_method_id) ? [...acc, upm] : acc }, []));
+            setAvailablePM(
+                userPM.reduce((acc, upm) => {
+                    return paymentMethods.find((p) => p.payment_method_id === upm.payment_method_id)
+                        ? [...acc, upm]
+                        : acc;
+                }, []),
+            );
         }
     }, [userPM, paymentMethod]);
 
     useEffect(() => {
         if (clickAll) {
             defineAmountError(tradeAmount.toString());
-            setReceiveAmount(side === 'buy' ? 
-                Decimal.format(+tradeAmount / +price, amountPrecision, '')
-                : Decimal.format(+tradeAmount * +price, pricePrecision, ''));
+            setReceiveAmount(
+                side === 'buy'
+                    ? Decimal.format(+tradeAmount / +price, amountPrecision, '')
+                    : Decimal.format(+tradeAmount * +price, pricePrecision, ''),
+            );
             setClickAll(false);
         }
     }, [tradeAmount, amountPrecision, price, side, clickAll]);
 
     useEffect(() => {
-        setPricePrecision(wallets.find(w => w.currency === fiatCode)?.fixed || DEFAULT_FIAT_PRECISION);
+        setPricePrecision(wallets.find((w) => w.currency === fiatCode)?.fixed || DEFAULT_FIAT_PRECISION);
     }, [fiatCode, wallets]);
 
     useEffect(() => {
-        setAmountPrecision(wallets.find(w => w.currency === currencyCode.toLowerCase())?.fixed || DEFAULT_CCY_PRECISION);
+        setAmountPrecision(
+            wallets.find((w) => w.currency === currencyCode.toLowerCase())?.fixed || DEFAULT_CCY_PRECISION,
+        );
     }, [currencyCode, wallets]);
 
     useEffect(() => {
@@ -100,102 +110,136 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         }
     }, [availablePM, paymentMethod]);
 
-    const translate = useCallback((key: string, value?: any) => formatMessage({ id: key }, { ...value }), [formatMessage]);
+    const translate = useCallback(
+        (key: string, value?: any) => formatMessage({ id: key }, { ...value }),
+        [formatMessage],
+    );
 
-    const handleAmountChange = useCallback((value: string) => {
-        const convertedValue = cleanPositiveFloatInput(String(value));
+    const handleAmountChange = useCallback(
+        (value: string) => {
+            const convertedValue = cleanPositiveFloatInput(String(value));
 
-        if (convertedValue.match(precisionRegExp(side === 'buy' ? pricePrecision : amountPrecision))) {
-            setTradeAmount(convertedValue);
-            setReceiveAmount(side === 'buy' ? 
-                Decimal.format(+convertedValue / +price, amountPrecision, '')
-                : Decimal.format(+convertedValue * +price, pricePrecision, ''));
-        }
-
-        defineAmountError(convertedValue);
-    }, [amountPrecision, pricePrecision, side, price]);
-
-    const handleReceiveChange = useCallback((value: string) => {
-        const convertedValue = cleanPositiveFloatInput(String(value));
-
-        if (convertedValue.match(precisionRegExp(side === 'buy' ? amountPrecision : pricePrecision))) {
-            setReceiveAmount(convertedValue);
-            setTradeAmount(side === 'buy' ? 
-                Decimal.format(+convertedValue * +price, pricePrecision, '') 
-                : Decimal.format(+convertedValue / +price, amountPrecision, ''));
-        }
-
-        if (side === 'buy') {
-            defineAmountError(String(+convertedValue * +price));
-        } else {
-            defineAmountError(String(Number(price) ? +convertedValue / +price : 0));
-        }
-    }, [amountPrecision, pricePrecision, side, price]);
-
-    const handleSelectPaymentMethod = useCallback((index: number) => {
-        setPaymentMethod(availablePM[index]);
-        definePaymentError(paymentMethod);
-    }, [paymentMethod, availablePM]);
-
-    const defineAmountError = useCallback((value: string) => {
-        let error = '';
-    
-        if (!value) {
-            error = translate('page.body.p2p.error.empty.amount');
-        } else if (Number(value) <= 0) {
-            error = translate('page.body.p2p.error.greater.than.0.amount');
-        } else {
-            const avail = wallets.find(w => w.currency === currencyCode.toLowerCase())?.balance;
-            const low = side === 'buy' ? +lowLimit * +price : lowLimit;
-            const getTop = getTopLimit();
-            const top = side === 'buy' ? getTop * +price : getTop;
-            const limitsPrecision = side === 'buy' ? pricePrecision : amountPrecision;
-            const limitCur = side === 'buy' ? fiatCode : currencyCode;
-
-            if (+value < +low) {
-                error = `${translate('page.body.p2p.modal.error.min.amount')} ${Decimal.format(low, limitsPrecision, ',')} ${limitCur?.toUpperCase()}`;
-            } else if (+value > +top) {
-                error = `${translate('page.body.p2p.modal.error.max.amount')} ${Decimal.format(top, limitsPrecision, ',')} ${limitCur?.toUpperCase()}`;
-            } else if (side === 'sell' && avail && +value > +avail) {
-                error = translate('page.body.p2p.error.insufficient.funds');
-            } else {
-                error = undefined;
+            if (convertedValue.match(precisionRegExp(side === 'buy' ? pricePrecision : amountPrecision))) {
+                setTradeAmount(convertedValue);
+                setReceiveAmount(
+                    side === 'buy'
+                        ? Decimal.format(+convertedValue / +price, amountPrecision, '')
+                        : Decimal.format(+convertedValue * +price, pricePrecision, ''),
+                );
             }
-        }
 
-        setAmountError(error);
-    }, [lowLimit, fiatCode, pricePrecision, side, price, wallets, currencyCode]);
+            defineAmountError(convertedValue);
+        },
+        [amountPrecision, pricePrecision, side, price],
+    );
 
-    const definePaymentError = useCallback((pm?: UserPaymentMethod) => {
-        let error = '';
-    
-        if (side === 'sell' && !pm) {
-            error = translate('page.body.p2p.error.empty.payment.method');
-        }
+    const handleReceiveChange = useCallback(
+        (value: string) => {
+            const convertedValue = cleanPositiveFloatInput(String(value));
 
-        setPaymentMethodError(error);
-    }, [side]);
+            if (convertedValue.match(precisionRegExp(side === 'buy' ? amountPrecision : pricePrecision))) {
+                setReceiveAmount(convertedValue);
+                setTradeAmount(
+                    side === 'buy'
+                        ? Decimal.format(+convertedValue * +price, pricePrecision, '')
+                        : Decimal.format(+convertedValue / +price, amountPrecision, ''),
+                );
+            }
 
-    const validatePriceRange = useCallback((value: number) => {
-        let low = lowLimit;
-        let top = getTopLimit();
+            if (side === 'buy') {
+                defineAmountError(String(+convertedValue * +price));
+            } else {
+                defineAmountError(String(Number(price) ? +convertedValue / +price : 0));
+            }
+        },
+        [amountPrecision, pricePrecision, side, price],
+    );
 
-        if (side === 'buy') {
-            low = +lowLimit * +price;
-            top = getTopLimit() * +price
-        }
+    const handleSelectPaymentMethod = useCallback(
+        (index: number) => {
+            setPaymentMethod(availablePM[index]);
+            definePaymentError(paymentMethod);
+        },
+        [paymentMethod, availablePM],
+    );
 
-        return value >= low && value <= top;
-    }, [lowLimit, side]);
+    const defineAmountError = useCallback(
+        (value: string) => {
+            let error = '';
+
+            if (!value) {
+                error = translate('page.body.p2p.error.empty.amount');
+            } else if (Number(value) <= 0) {
+                error = translate('page.body.p2p.error.greater.than.0.amount');
+            } else {
+                const avail = wallets.find((w) => w.currency === currencyCode.toLowerCase())?.balance;
+                const low = side === 'buy' ? +lowLimit * +price : lowLimit;
+                const getTop = getTopLimit();
+                const top = side === 'buy' ? getTop * +price : getTop;
+                const limitsPrecision = side === 'buy' ? pricePrecision : amountPrecision;
+                const limitCur = side === 'buy' ? fiatCode : currencyCode;
+
+                if (+value < +low) {
+                    error = `${translate('page.body.p2p.modal.error.min.amount')} ${Decimal.format(
+                        low,
+                        limitsPrecision,
+                        ',',
+                    )} ${limitCur?.toUpperCase()}`;
+                } else if (+value > +top) {
+                    error = `${translate('page.body.p2p.modal.error.max.amount')} ${Decimal.format(
+                        top,
+                        limitsPrecision,
+                        ',',
+                    )} ${limitCur?.toUpperCase()}`;
+                } else if (side === 'sell' && avail && +value > +avail) {
+                    error = translate('page.body.p2p.error.insufficient.funds');
+                } else {
+                    error = undefined;
+                }
+            }
+
+            setAmountError(error);
+        },
+        [lowLimit, fiatCode, pricePrecision, side, price, wallets, currencyCode],
+    );
+
+    const definePaymentError = useCallback(
+        (pm?: UserPaymentMethod) => {
+            let error = '';
+
+            if (side === 'sell' && !pm) {
+                error = translate('page.body.p2p.error.empty.payment.method');
+            }
+
+            setPaymentMethodError(error);
+        },
+        [side],
+    );
+
+    const validatePriceRange = useCallback(
+        (value: number) => {
+            let low = lowLimit;
+            let top = getTopLimit();
+
+            if (side === 'buy') {
+                low = +lowLimit * +price;
+                top = getTopLimit() * +price;
+            }
+
+            return value >= low && value <= top;
+        },
+        [lowLimit, side],
+    );
 
     const handleSubmitClick = useCallback(() => {
-        const avail = wallets.find(w => w.currency === currencyCode.toLowerCase())?.balance;
+        const avail = wallets.find((w) => w.currency === currencyCode.toLowerCase())?.balance;
 
-        if (!tradeAmount
-            || Number(tradeAmount) <= 0
-            || (side === 'sell' && avail && +tradeAmount > +avail)
-            || !validatePriceRange(+tradeAmount)
-            || (side === 'sell' && !paymentMethod)
+        if (
+            !tradeAmount ||
+            Number(tradeAmount) <= 0 ||
+            (side === 'sell' && avail && +tradeAmount > +avail) ||
+            !validatePriceRange(+tradeAmount) ||
+            (side === 'sell' && !paymentMethod)
         ) {
             setShowError(true);
             defineAmountError(tradeAmount);
@@ -207,7 +251,7 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
                 side,
                 ...(side === 'sell' && { payment_method_id: paymentMethod.id }),
             };
-    
+
             props.handleSubmit(payload);
         }
     }, [tradeAmount, receiveAmount, price, wallets, currencyCode, paymentMethod, id]);
@@ -215,13 +259,13 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
     const handleClickTradeAll = useCallback(() => {
         if (side === 'buy') {
             const maxLimit = getTopLimit() * +price;
-            if ((+available * +price) < maxLimit) {
+            if (+available * +price < maxLimit) {
                 handleReceiveChange(available.toString());
             } else {
                 handleAmountChange(maxLimit.toString());
             }
         } else {
-            const availableBalance = wallets.find(w => w.currency === currencyCode.toLowerCase())?.balance || 0;
+            const availableBalance = wallets.find((w) => w.currency === currencyCode.toLowerCase())?.balance || 0;
             setTradeAmount(+availableBalance > +available ? available.toString() : availableBalance.toString());
         }
         setClickAll(true);
@@ -235,94 +279,134 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         props.closeModal();
     }, [props.closeModal]);
 
-    const header = useMemo(() => (
-        <React.Fragment>
-            <span className="cr-modal__container-header-title">{translate(`page.body.p2p.modal.header.${side}`)} {currencyCode.toUpperCase()}</span>
-            <div onClick={handleCloseModal} className="cr-modal__container-header-box-close">
-                <CloseIcon className="close-icon" />
-            </div>
-        </React.Fragment>
-    ), [side, currencyCode]);
+    const header = useMemo(
+        () => (
+            <React.Fragment>
+                <span className="cr-modal__container-header-title">
+                    {translate(`page.body.p2p.modal.header.${side}`)} {currencyCode.toUpperCase()}
+                </span>
+                <div onClick={handleCloseModal} className="cr-modal__container-header-box-close">
+                    <CloseIcon className="close-icon" />
+                </div>
+            </React.Fragment>
+        ),
+        [side, currencyCode],
+    );
 
-    const inputClass = useMemo(() => (
-        classnames('cr-order-input__wrapper', {
-            'cr-order-input__wrapper--errored': showError && amountError,
-        })
-    ), [amountError, showError]);
+    const inputClass = useMemo(
+        () =>
+            classnames('cr-order-input__wrapper', {
+                'cr-order-input__wrapper--errored': showError && amountError,
+            }),
+        [amountError, showError],
+    );
 
-    const buttonClass = useMemo(() => (
-        classnames({
-            'buy': side === 'buy',
-            'sell': side === 'sell',
-        })
-    ), [side]);
+    const buttonClass = useMemo(
+        () =>
+            classnames({
+                buy: side === 'buy',
+                sell: side === 'sell',
+            }),
+        [side],
+    );
 
-    const iconsList = useCallback(() =>
-        availablePM.map(i => <img className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${i.payment_method_id}/logo`} alt=""/>), [userPM]);
+    const iconsList = useCallback(
+        () =>
+            availablePM.map((i) => (
+                <img
+                    className="payment-method-logo ml-2 mr-3 mb-1"
+                    src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${i.payment_method_id}/logo`}
+                    alt=""
+                />
+            )),
+        [userPM],
+    );
 
     const renderPMItem = (pm: UserPaymentMethod) => {
-        const keyContainsNumber = pm.data && Object.keys(pm.data).find(i => i.includes('number'));
+        const keyContainsNumber = pm.data && Object.keys(pm.data).find((i) => i.includes('number'));
         const numberValue = keyContainsNumber ? truncateMiddle(pm.data[keyContainsNumber], 12, '****') : '';
 
         return `${pm?.payment_method?.name} ${numberValue}`;
     };
 
-    const renderAvatar = useMemo(() => isUsernameEnabled() ? (
-        <div className="cr-modal__container-content-block">
-            <div className="advertiser">
-                <AvatarIcon fillColor="var(--icons)"/>
-                <div className="advertiser-name">{advertiserName}</div>
-            </div>
-        </div>
-    ) : null, [advertiserName]);
+    const renderAvatar = useMemo(
+        () =>
+            isUsernameEnabled() ? (
+                <div className="cr-modal__container-content-block">
+                    <div className="advertiser">
+                        <AvatarIcon fillColor="var(--icons)" />
+                        <div className="advertiser-name">{advertiserName}</div>
+                    </div>
+                </div>
+            ) : null,
+        [advertiserName],
+    );
 
-    const renderDescription = useMemo(() => description ? (
-        <div className="cr-modal__container-content-block">
-            <div className="description">
-                <span className="description__label">{translate('page.body.p2p.modal.label.description')}</span>
-                <p className="description__content">{description}</p>
-            </div>
-        </div>
-    ) : null, [description]);
+    const renderDescription = useMemo(
+        () =>
+            description ? (
+                <div className="cr-modal__container-content-block">
+                    <div className="description">
+                        <span className="description__label">{translate('page.body.p2p.modal.label.description')}</span>
+                        <p className="description__content">{description}</p>
+                    </div>
+                </div>
+            ) : null,
+        [description],
+    );
 
-    const renderBalance = useMemo(() => side === 'sell' && (
-        <div className="balance">
-            {translate('page.body.p2p.modal.label.balance')}
-            <span className="balance-amount">{Decimal.format(wallets.find(w => w.currency === currencyCode.toLowerCase())?.balance, amountPrecision, '')}</span>
-            <span className="balance-currency">{currencyCode.toUpperCase()}</span>
-        </div>
-    ), [side, wallets, amountPrecision, currencyCode]);
+    const renderBalance = useMemo(
+        () =>
+            side === 'sell' && (
+                <div className="balance">
+                    {translate('page.body.p2p.modal.label.balance')}
+                    <span className="balance-amount">
+                        {Decimal.format(
+                            wallets.find((w) => w.currency === currencyCode.toLowerCase())?.balance,
+                            amountPrecision,
+                            '',
+                        )}
+                    </span>
+                    <span className="balance-currency">{currencyCode.toUpperCase()}</span>
+                </div>
+            ),
+        [side, wallets, amountPrecision, currencyCode],
+    );
 
-    const renderAmountError = useMemo(() => showError && (
-        <span className="error">{amountError}</span>
-    ), [showError, amountError]);
+    const renderAmountError = useMemo(
+        () => showError && <span className="error">{amountError}</span>,
+        [showError, amountError],
+    );
 
-    const renderPaymentMethod = useMemo(() => side === 'sell' && (
-        <React.Fragment>
-            <div className="payment">
-                <label>{translate('page.body.p2p.modal.button.payment')}</label>
-                {availablePM.length ? (
-                    <DropdownComponent
-                        className="cr-create-offer__dp-dropdown"
-                        list={availablePM.map(renderPMItem)}
-                        iconsList={iconsList()}
-                        onSelect={handleSelectPaymentMethod}
-                        placeholder={paymentMethod && renderPMItem(paymentMethod)}
-                    />
-                ) : (
-                    <Button
-                        onClick={() => history.push('/profile/payment')}
-                        size="lg"
-                        variant="outline-primary"
-                    >
-                        <span>{translate('page.body.p2p.create.offer.payment_method.add')}</span>
-                        <PlusIcon className="icon"/>
-                    </Button>
-                )}
-                {showError && <span className="error">{paymentMethodError}</span>}
-            </div>
-        </React.Fragment>
-    ), [side, availablePM, paymentMethod, showError, paymentMethodError]);
+    const renderPaymentMethod = useMemo(
+        () =>
+            side === 'sell' && (
+                <React.Fragment>
+                    <div className="payment">
+                        <label>{translate('page.body.p2p.modal.button.payment')}</label>
+                        {availablePM.length ? (
+                            <DropdownComponent
+                                className="cr-create-offer__dp-dropdown"
+                                list={availablePM.map(renderPMItem)}
+                                iconsList={iconsList()}
+                                onSelect={handleSelectPaymentMethod}
+                                placeholder={paymentMethod && renderPMItem(paymentMethod)}
+                            />
+                        ) : (
+                            <Button
+                                onClick={() => history.push('/profile/payment')}
+                                size="lg"
+                                variant="outline-primary">
+                                <span>{translate('page.body.p2p.create.offer.payment_method.add')}</span>
+                                <PlusIcon className="icon" />
+                            </Button>
+                        )}
+                        {showError && <span className="error">{paymentMethodError}</span>}
+                    </div>
+                </React.Fragment>
+            ),
+        [side, availablePM, paymentMethod, showError, paymentMethodError],
+    );
 
     const getTopLimit = useCallback(() => {
         return +topLimit > +available ? +available : +topLimit;
@@ -330,9 +414,14 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
 
     const body = useCallback(() => {
         const top = getTopLimit();
-        const placeHolder = side === 'buy' ? 
-            `${Decimal.format(+lowLimit * +price, pricePrecision, ',')} - ${Decimal.format(top * +price, pricePrecision, ',')}`
-            : `${Decimal.format(+lowLimit , amountPrecision, ',')} - ${Decimal.format(top, amountPrecision, ',')}`;
+        const placeHolder =
+            side === 'buy'
+                ? `${Decimal.format(+lowLimit * +price, pricePrecision, ',')} - ${Decimal.format(
+                      top * +price,
+                      pricePrecision,
+                      ',',
+                  )}`
+                : `${Decimal.format(+lowLimit, amountPrecision, ',')} - ${Decimal.format(top, amountPrecision, ',')}`;
 
         return (
             <React.Fragment>
@@ -341,21 +430,34 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
                     <div className="detail">
                         <div className="detail-block">
                             <div className="detail-block-left">
-                                <div className="detail-block-label">{translate('page.body.p2p.modal.label.price')}</div>{Decimal.format(price, pricePrecision, ',')} {fiatCode?.toUpperCase()}
+                                <div className="detail-block-label">{translate('page.body.p2p.modal.label.price')}</div>
+                                {Decimal.format(price, pricePrecision, ',')} {fiatCode?.toUpperCase()}
                             </div>
                             <div className="detail-block-right">
-                                <div className="detail-block-label">{translate('page.body.p2p.modal.label.available')}</div>{Decimal.format(available, amountPrecision, ',')} {currencyCode?.toUpperCase()}
+                                <div className="detail-block-label">
+                                    {translate('page.body.p2p.modal.label.available')}
+                                </div>
+                                {Decimal.format(available, amountPrecision, ',')} {currencyCode?.toUpperCase()}
                             </div>
                         </div>
                         <div className="detail-block">
                             <div className="detail-block-left">
-                                <div className="detail-block-label">{translate('page.body.p2p.modal.label.time.limit')}</div>{secondToMinutes(timeLimit)} {translate('page.body.p2p.modal.label.time.minute')}
+                                <div className="detail-block-label">
+                                    {translate('page.body.p2p.modal.label.time.limit')}
+                                </div>
+                                {secondToMinutes(timeLimit)} {translate('page.body.p2p.modal.label.time.minute')}
                             </div>
                             <div className="detail-block-right">
-                                <div className="detail-block-label">{translate('page.body.p2p.modal.label.payment')}</div>
-                                {paymentMethods.map(i => (
+                                <div className="detail-block-label">
+                                    {translate('page.body.p2p.modal.label.payment')}
+                                </div>
+                                {paymentMethods.map((i) => (
                                     <div className="payment-item">
-                                        <img className="payment-method-logo mr-3" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${i?.payment_method?.id}/logo`} alt=""/>
+                                        <img
+                                            className="payment-method-logo mr-3"
+                                            src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${i?.payment_method?.id}/logo`}
+                                            alt=""
+                                        />
                                     </div>
                                 ))}
                             </div>
@@ -367,7 +469,11 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
                     <div className={inputClass}>
                         <OrderInput
                             currency={side === 'buy' ? fiatCode : currencyCode}
-                            label={side === 'buy' ? translate('page.body.p2p.modal.label.buy') : translate('page.body.p2p.modal.label.sell')}
+                            label={
+                                side === 'buy'
+                                    ? translate('page.body.p2p.modal.label.buy')
+                                    : translate('page.body.p2p.modal.label.sell')
+                            }
                             placeholder={placeHolder}
                             value={tradeAmount}
                             isFocused={amountFocused}
@@ -421,29 +527,20 @@ const P2POffersModal: FC<Props> = (props: Props): ReactElement => {
         history,
     ]);
 
-    const footer = useCallback(() => (
-        <Button
-            onClick={handleSubmitClick}
-            size="lg"
-            variant={buttonClass}
-            disabled={showError && !!amountError}
-        >
-            {translate(`page.body.p2p.modal.header.${side}`)} {currencyCode.toUpperCase()}
-        </Button>
-    ), [showError, amountError, handleSubmitClick, buttonClass]);
+    const footer = useCallback(
+        () => (
+            <Button onClick={handleSubmitClick} size="lg" variant={buttonClass} disabled={showError && !!amountError}>
+                {translate(`page.body.p2p.modal.header.${side}`)} {currencyCode.toUpperCase()}
+            </Button>
+        ),
+        [showError, amountError, handleSubmitClick, buttonClass],
+    );
 
     return (
         <div className="cr-p2p-offers-modal">
-            <Modal
-                show={show}
-                header={header}
-                content={body()}
-                footer={footer()}
-            />
+            <Modal show={show} header={header} content={body()} footer={footer()} />
         </div>
     );
 };
 
-export {
-    P2POffersModal,
-};
+export { P2POffersModal };

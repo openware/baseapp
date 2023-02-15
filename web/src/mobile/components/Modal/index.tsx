@@ -3,7 +3,7 @@ import * as React from 'react';
 import { CloseIcon } from '../../../assets/images/CloseIcon';
 import { ArrowIcon } from '../../../containers/ToolBar/icons/ArrowIcon';
 
-const ModalComponent = props => {
+const ModalComponent = (props) => {
     const [shouldAnimate, setShouldAnimate] = React.useState(false);
 
     React.useEffect(() => {
@@ -43,11 +43,12 @@ const ModalComponent = props => {
     const renderDefaultHeader = (
         <div className="cr-mobile-modal__header">
             <div className="cr-mobile-modal__header-back" onClick={handleOnBack}>
-                {props.backTitle ?
+                {props.backTitle ? (
                     <React.Fragment>
-                    <ArrowIcon/>
-                    <span>{props.backTitle}</span>
-                    </React.Fragment> : null}
+                        <ArrowIcon />
+                        <span>{props.backTitle}</span>
+                    </React.Fragment>
+                ) : null}
             </div>
             <div className="cr-mobile-modal__header-title">{props.title}</div>
             <div className="cr-mobile-modal__header-close" onClick={handleOnClose}>
@@ -64,12 +65,10 @@ const ModalComponent = props => {
     });
 
     return (
-        <div className={modalClassName} onClick={e => handleOnClose(e, true)}>
+        <div className={modalClassName} onClick={(e) => handleOnClose(e, true)}>
             <div className={bodyClassName}>
                 {props.header || renderDefaultHeader}
-                <div className="cr-mobile-modal__body">
-                    {props.children}
-                </div>
+                <div className="cr-mobile-modal__body">{props.children}</div>
             </div>
         </div>
     );

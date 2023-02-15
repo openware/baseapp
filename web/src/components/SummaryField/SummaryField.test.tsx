@@ -7,8 +7,7 @@ const defaultProps: SummaryFieldProps = {
     content: <div>Content</div>,
 };
 
-const setup = (props: Partial<SummaryFieldProps> = {}) =>
-    shallow(<SummaryField {...{ ...defaultProps, ...props }} />);
+const setup = (props: Partial<SummaryFieldProps> = {}) => shallow(<SummaryField {...{ ...defaultProps, ...props }} />);
 
 describe('SummaryField', () => {
     it('should render', () => {

@@ -1,9 +1,9 @@
 import { call, put } from 'redux-saga/effects';
 import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
-import { configsData, configsError } from '../actions';
-import { currenciesData } from '../../currencies';
 import { blockchainsData } from '../../blockchains';
+import { currenciesData } from '../../currencies';
+import { configsData, configsError } from '../actions';
 
 const configsOptions: RequestOptions = {
     apiVersion: 'peatio',
@@ -18,12 +18,14 @@ export function* getConfigsSaga() {
 
         yield put(configsData());
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: configsError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: configsError,
+                },
+            }),
+        );
     }
 }

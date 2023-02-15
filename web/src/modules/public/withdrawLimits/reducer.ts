@@ -17,7 +17,10 @@ export const initialWithdrawLimitsState: WithdrawLimitsState = {
     success: false,
 };
 
-export const withdrawLimitsReducer = (state = initialWithdrawLimitsState, action: withdrawLimitsAction): WithdrawLimitsState => {
+export const withdrawLimitsReducer = (
+    state = initialWithdrawLimitsState,
+    action: withdrawLimitsAction,
+): WithdrawLimitsState => {
     switch (action.type) {
         case WITHDRAW_LIMITS_FETCH:
             return {

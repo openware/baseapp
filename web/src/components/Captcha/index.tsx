@@ -11,7 +11,7 @@ import {
     setRecaptchaSuccess,
 } from '../../modules';
 
-export const CaptchaComponent = props => {
+export const CaptchaComponent = (props) => {
     const dispatch = useDispatch();
     const shouldGeetestReset = useSelector(selectShouldGeetestReset);
 
@@ -43,11 +43,9 @@ export const CaptchaComponent = props => {
             case 'recaptcha':
                 return (
                     <div className="pg-captcha--recaptcha">
-                        {captchaId() && <ReCAPTCHA
-                            ref={reCaptchaRef}
-                            sitekey={captchaId()}
-                            onChange={handleRecaptchaChange}
-                        />}
+                        {captchaId() && (
+                            <ReCAPTCHA ref={reCaptchaRef} sitekey={captchaId()} onChange={handleRecaptchaChange} />
+                        )}
                     </div>
                 );
             case 'geetest':

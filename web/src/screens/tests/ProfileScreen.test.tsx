@@ -1,13 +1,13 @@
 import { shallow } from 'enzyme';
-import React from 'react';
 import { TestComponentWrapper } from 'lib/test';
+import React from 'react';
 import { ProfileScreen } from '../';
 
 const setup = () =>
     shallow(
         <TestComponentWrapper>
             <ProfileScreen />
-        </TestComponentWrapper>
+        </TestComponentWrapper>,
     );
 
 describe('ProfileScreen test', () => {

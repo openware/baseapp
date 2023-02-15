@@ -1,9 +1,5 @@
 import { CommonError } from '../../types';
-import {
-    CREATE_QUICK_ORDER_FETCH,
-    CREATE_QUICK_ORDER_DATA,
-    CREATE_QUICK_ORDER_ERROR,
-} from './constants';
+import { CREATE_QUICK_ORDER_DATA, CREATE_QUICK_ORDER_ERROR, CREATE_QUICK_ORDER_FETCH } from './constants';
 
 export interface CreateQuickExchangePayload {
     market: string;
@@ -26,10 +22,7 @@ export interface CreateQuickExchangeError {
     error: CommonError;
 }
 
-export type CreateQuickExchangeActions =
-    CreateQuickExchangeFetch
-    | CreateQuickExchangeData
-    | CreateQuickExchangeError;
+export type CreateQuickExchangeActions = CreateQuickExchangeFetch | CreateQuickExchangeData | CreateQuickExchangeError;
 
 export const createQuickExchangeFetch = (payload: CreateQuickExchangeFetch['payload']): CreateQuickExchangeFetch => ({
     type: CREATE_QUICK_ORDER_FETCH,

@@ -7,7 +7,7 @@ export const customWidgetParams = {};
 
 export const customWidgetOptions = (colorTheme?: string) => {
     if (colorTheme === 'light') {
-        return ({
+        return {
             toolbar_bg: colors.light.chart.primary,
             loading_screen: {
                 backgroundColor: colors.light.chart.primary,
@@ -21,7 +21,7 @@ export const customWidgetOptions = (colorTheme?: string) => {
                 ['mainSeriesProperties.candleStyle.borderDownColor']: colors.light.chart.down,
                 ['mainSeriesProperties.candleStyle.wickUpColor']: colors.light.chart.up,
                 ['mainSeriesProperties.candleStyle.wickDownColor']: colors.light.chart.down,
-                ['paneProperties.background']:  colors.light.chart.primary,
+                ['paneProperties.background']: colors.light.chart.primary,
                 ['paneProperties.vertGridProperties.color']: colors.light.chart.primary,
                 ['paneProperties.vertGridProperties.style']: 1,
                 ['paneProperties.horzGridProperties.color']: colors.light.chart.primary,
@@ -32,14 +32,14 @@ export const customWidgetOptions = (colorTheme?: string) => {
                 ['scalesProperties.backgroundColor']: colors.light.chart.primary,
             },
             theme: 'Light' as ThemeName,
-        });
+        };
     }
 
     const primaryColor = convertRgbToHex(getStylesValueByKey(colors.dark.chart.primary));
     const upColor = convertRgbToHex(getStylesValueByKey(colors.dark.chart.up));
     const downColor = convertRgbToHex(getStylesValueByKey(colors.dark.chart.down));
 
-    return ({
+    return {
         toolbar_bg: primaryColor,
         loading_screen: {
             backgroundColor: primaryColor,
@@ -68,5 +68,5 @@ export const customWidgetOptions = (colorTheme?: string) => {
             ['volume.volume.color.1']: upColor,
         },
         theme: 'Dark' as ThemeName,
-    });
+    };
 };

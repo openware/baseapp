@@ -1,44 +1,40 @@
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import {
-    SetupInfoBlock,
-    SetupFormBlock,
-    SetupGeneralSettingsForm,
-    SetupRegisterForm,
-    SetupLoginForm,
-    SetupMarketsBlock,
-} from '../../components';
-import {
-    connect,
-    MapDispatchToPropsFunction,
-    MapStateToProps,
-} from 'react-redux';
+import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
+import { CloseSetupIcon } from 'src/assets/images/setup/CloseSetupIcon';
+import { SetupCongratsBlock } from 'src/components/SetupComponents/SetupCongratsBlock';
+import { wizardStep } from '../../api';
 import logo from '../../assets/images/setup/logo.svg';
 import bgStep1 from '../../assets/images/setup/step1-background.png';
 import bgStep2 from '../../assets/images/setup/step2-background.png';
 import bgStep3 from '../../assets/images/setup/step3-background.png';
-import { CloseSetupIcon } from 'src/assets/images/setup/CloseSetupIcon';
-import { SetupCongratsBlock } from 'src/components/SetupComponents/SetupCongratsBlock';
+import {
+    SetupFormBlock,
+    SetupGeneralSettingsForm,
+    SetupInfoBlock,
+    SetupLoginForm,
+    SetupMarketsBlock,
+    SetupRegisterForm,
+} from '../../components';
 import {
     getMarketsAdminList,
+    LanguageState,
     MarketItem,
-    selectMarketsAdminList,
+    MarketUpdateItem,
+    platformCreate,
     RootState,
-    updateMarketFetch,
-    userFetch,
+    selectEnabledMarketsAdminList,
+    selectMarketsAdminList,
+    selectMarketsAdminUpdate,
+    selectPlatformCreateSuccess,
+    selectSignUpSuccess,
     selectUserInfo,
-    User,
     signIn,
     signUp,
-    LanguageState,
-    MarketUpdateItem,
-    selectMarketsAdminUpdate,
-    selectEnabledMarketsAdminList,
-    platformCreate,
-    selectSignUpSuccess,
-    selectPlatformCreateSuccess,
+    updateMarketFetch,
+    User,
+    userFetch,
 } from '../../modules';
-import { wizardStep } from '../../api';
 
 interface SetupScreenState {
     currentStep: string;
@@ -112,11 +108,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
     }
 
     public render() {
-        return (
-            <div className="setup-screen">
-                {this.renderCurrentStep()}
-            </div>
-        );
+        return <div className="setup-screen">{this.renderCurrentStep()}</div>;
     }
 
     public renderCurrentStep = () => {
@@ -142,8 +134,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                                 <div className="setup-screen__right-wrapper">
                                     <SetupFormBlock
                                         title="Admin account"
-                                        subtitle="Create the first admin account for your exchange to access the admin panel."
-                                    >
+                                        subtitle="Create the first admin account for your exchange to access the admin panel.">
                                         <SetupRegisterForm handleRegister={this.handleRegister} />
                                     </SetupFormBlock>
                                 </div>
@@ -165,9 +156,10 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                                 <div className="setup-screen__right-wrapper">
                                     <SetupFormBlock
                                         title="General Settings"
-                                        subtitle="Define name and URL of your platform"
-                                    >
-                                        <SetupGeneralSettingsForm handleCreateSettingsSecrets={this.handleCreateSettingsSecrets} />
+                                        subtitle="Define name and URL of your platform">
+                                        <SetupGeneralSettingsForm
+                                            handleCreateSettingsSecrets={this.handleCreateSettingsSecrets}
+                                        />
                                     </SetupFormBlock>
                                 </div>
                             </div>
@@ -188,8 +180,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                                 <div className="setup-screen__right-wrapper">
                                     <SetupFormBlock
                                         title="Select Markets"
-                                        subtitle="Make your list of market pairs that you want to add to your platform. All that market pairs has liquidity on them. You will be able do to congifure or edit you pair after deployment"
-                                    >
+                                        subtitle="Make your list of market pairs that you want to add to your platform. All that market pairs has liquidity on them. You will be able do to congifure or edit you pair after deployment">
                                         <SetupMarketsBlock
                                             marketsList={this.props.markets}
                                             handleClickSave={this.handleSaveMarketsList}
@@ -213,13 +204,14 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                             </div>
                             <div className="setup-screen__right">
                                 <div className="setup-screen__right-wrapper">
-                                    <div className="setup-screen__right-wrapper__close" onClick={this.handleCompleteSetup}>
+                                    <div
+                                        className="setup-screen__right-wrapper__close"
+                                        onClick={this.handleCompleteSetup}>
                                         <CloseSetupIcon />
                                     </div>
                                     <SetupFormBlock
-                                        title='Congratulations! Your exchange is live!'
-                                        subtitle="Use a customisation tool to change the visual appearance of your platform. You can change the colour scheme, fonts, spacing and platform`s logo."
-                                    >
+                                        title="Congratulations! Your exchange is live!"
+                                        subtitle="Use a customisation tool to change the visual appearance of your platform. You can change the colour scheme, fonts, spacing and platform`s logo.">
                                         <SetupCongratsBlock />
                                     </SetupFormBlock>
                                     <div className="setup-screen__step-footer__congrat">
@@ -228,8 +220,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                                             type="button"
                                             size="lg"
                                             variant="primary"
-                                            onClick={this.handleCompleteSetup}
-                                        >
+                                            onClick={this.handleCompleteSetup}>
                                             Continue and Customize
                                         </Button>
                                     </div>
@@ -239,7 +230,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                     );
                 default:
                     window.location.replace('/');
-              }
+            }
         }
     };
 
@@ -258,8 +249,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
                     <div className="setup-screen__right-wrapper">
                         <SetupFormBlock
                             title="Admin account"
-                            subtitle="Sign in the first admin account for your exchange to access the admin panel."
-                        >
+                            subtitle="Sign in the first admin account for your exchange to access the admin panel.">
                             <SetupLoginForm handleLogin={this.handleLogin} />
                         </SetupFormBlock>
                     </div>
@@ -274,7 +264,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
         if (enabledMarkets.length) {
             window.location.replace(`/trading/${enabledMarkets[0].id}#settings`);
         }
-    }
+    };
 
     private handleLogin = (email: string, password: string) => {
         const payload = {
@@ -329,7 +319,7 @@ export class Setup extends React.Component<Props, SetupScreenState> {
     };
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
     markets: selectMarketsAdminList(state),
     user: selectUserInfo(state),
     marketsSuccess: selectMarketsAdminUpdate(state),
@@ -338,11 +328,11 @@ const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     platformCreateSuccess: selectPlatformCreateSuccess(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
     getMarketsList: () => dispatch(getMarketsAdminList()),
     enableMarkets: (payload, cbAction) => dispatch(updateMarketFetch(payload, cbAction)),
     userFetch: () => dispatch(userFetch()),
-    signIn: payload => dispatch(signIn(payload)),
+    signIn: (payload) => dispatch(signIn(payload)),
     signUp: (credentials, cbAction) => dispatch(signUp(credentials, cbAction)),
     platformCreate: (payload, cbAction) => dispatch(platformCreate(payload, cbAction)),
 });

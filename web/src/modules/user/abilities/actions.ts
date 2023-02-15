@@ -1,8 +1,4 @@
-import {
-    ABILITIES_DATA,
-    ABILITIES_ERROR,
-    ABILITIES_FETCH,
-} from './constants';
+import { ABILITIES_DATA, ABILITIES_ERROR, ABILITIES_FETCH } from './constants';
 
 export interface AbilitiesInterface {
     read?: string[];
@@ -28,10 +24,7 @@ export interface AbilitiesData {
     payload: AbilitiesInterface[];
 }
 
-export type AbilitiesAction =
-    | AbilitiesFetch
-    | AbilitiesData
-    | AbilitiesError;
+export type AbilitiesAction = AbilitiesFetch | AbilitiesData | AbilitiesError;
 
 export const abilitiesFetch = (): AbilitiesFetch => ({
     type: ABILITIES_FETCH,

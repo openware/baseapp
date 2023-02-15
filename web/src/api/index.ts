@@ -12,7 +12,7 @@ export interface RequestOptions {
 export type RequestBody = JsonBody | FormData;
 
 export type RequestMethod = (
-    config: RequestOptions
+    config: RequestOptions,
 ) => (url: string, body?: RequestBody) => Promise<AxiosResponse['data']>;
 
 export interface ApiWrapper {
@@ -30,7 +30,7 @@ export const API: ApiWrapper = {
                 method: 'get',
                 url,
             },
-            config
+            config,
         ),
 
     post: (config: RequestOptions) => async (url: string, body?: JsonBody) =>
@@ -40,7 +40,7 @@ export const API: ApiWrapper = {
                 body,
                 url,
             },
-            config
+            config,
         ),
 
     patch: (config: RequestOptions) => async (url: string, body?: JsonBody) =>
@@ -50,7 +50,7 @@ export const API: ApiWrapper = {
                 body,
                 url,
             },
-            config
+            config,
         ),
 
     put: (config: RequestOptions) => async (url: string, body?: JsonBody) =>
@@ -60,7 +60,7 @@ export const API: ApiWrapper = {
                 body,
                 url,
             },
-            config
+            config,
         ),
 
     delete: (config: RequestOptions) => async (url: string, body?: JsonBody) =>
@@ -70,6 +70,6 @@ export const API: ApiWrapper = {
                 body,
                 url,
             },
-            config
+            config,
         ),
 };

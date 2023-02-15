@@ -81,7 +81,7 @@ describe('Saga: OrderBook', () => {
         mockAxios.onGet('/public/markets/btczar/order-book').reply(200, fakeOrderBook);
     };
 
-    const expectedActionsFetch = [ orderBookFetch(fakeMarket), orderBookData(fakeOrderBook) ];
+    const expectedActionsFetch = [orderBookFetch(fakeMarket), orderBookData(fakeOrderBook)];
 
     const expectedActionsError = [
         orderBookFetch(fakeMarket),
@@ -96,7 +96,7 @@ describe('Saga: OrderBook', () => {
 
     it('should fetch orderBook', async () => {
         mockOrderBook();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -112,7 +112,7 @@ describe('Saga: OrderBook', () => {
 
     it('should trigger an error (orderBook)', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

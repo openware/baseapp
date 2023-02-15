@@ -10,12 +10,7 @@ const klineRequestOptions: RequestOptions = {
 
 export function* handleKlineFetchSaga(action: KlineFetch) {
     try {
-        const {
-            market,
-            resolution,
-            from,
-            to,
-        } = action.payload;
+        const { market, resolution, from, to } = action.payload;
 
         const payload = {
             period: resolution,
@@ -31,15 +26,15 @@ export function* handleKlineFetchSaga(action: KlineFetch) {
 
         const data = yield call(API.get(klineRequestOptions), endPoint);
 
-        const convertedData = data.map(elem => {
-            const [date, open, high, low, close, volume] = elem.map(e => {
+        const convertedData = data.map((elem) => {
+            const [date, open, high, low, close, volume] = elem.map((e) => {
                 switch (typeof e) {
                     case 'number':
                         return e;
                     case 'string':
                         return Number.parseFloat(e);
                     default:
-                        throw (new Error(`unexpected type ${typeof e}`));
+                        throw new Error(`unexpected type ${typeof e}`);
                 }
             });
 
@@ -54,12 +49,14 @@ export function* handleKlineFetchSaga(action: KlineFetch) {
         });
         yield put(klineData(convertedData));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: klineError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: klineError,
+                },
+            }),
+        );
     }
 }

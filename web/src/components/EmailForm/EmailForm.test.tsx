@@ -20,7 +20,7 @@ const setup = (props: Partial<EmailFormProps> = {}) =>
     shallow(
         <TestComponentWrapper>
             <EmailForm {...defaults} {...props} />
-        </TestComponentWrapper>
+        </TestComponentWrapper>,
     );
 
 describe('EmailForm component', () => {

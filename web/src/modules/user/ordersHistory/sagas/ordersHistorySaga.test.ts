@@ -27,7 +27,7 @@ describe('Orders History', () => {
             id: 162,
             side: 'buy',
             price: '0.3',
-            state:'wait',
+            state: 'wait',
             created_at: '2018-11-29T16:54:46+01:00',
             origin_volume: '123.1234',
             remaining_volume: '123.1234',
@@ -89,7 +89,7 @@ describe('Orders History', () => {
 
     it('should fetch currency deposit history for 1 page in success flow', async () => {
         mockOrdersHistory();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetchWithFirstPage.length) {
@@ -105,7 +105,7 @@ describe('Orders History', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

@@ -16,9 +16,24 @@ const EstimatedValueMobile = React.memo(() => {
     const currencies = useSelector(selectCurrencies);
     const tickers = useSelector(selectMarketTickers);
     const estimatedValue = estimateValue(VALUATION_PRIMARY_CURRENCY, currencies, wallets, markets, tickers);
-    const estimatedSecondaryValue = estimateUnitValue(VALUATION_SECONDARY_CURRENCY, VALUATION_PRIMARY_CURRENCY, +estimatedValue, currencies, markets, tickers);
-    const estimatedPrecision = handleCCYPrecision(currencies, VALUATION_PRIMARY_CURRENCY.toLowerCase(), DEFAULT_CCY_PRECISION);
-    const estimatedSecondaryPrecision = handleCCYPrecision(currencies, VALUATION_SECONDARY_CURRENCY.toLowerCase(), DEFAULT_CCY_PRECISION);
+    const estimatedSecondaryValue = estimateUnitValue(
+        VALUATION_SECONDARY_CURRENCY,
+        VALUATION_PRIMARY_CURRENCY,
+        +estimatedValue,
+        currencies,
+        markets,
+        tickers,
+    );
+    const estimatedPrecision = handleCCYPrecision(
+        currencies,
+        VALUATION_PRIMARY_CURRENCY.toLowerCase(),
+        DEFAULT_CCY_PRECISION,
+    );
+    const estimatedSecondaryPrecision = handleCCYPrecision(
+        currencies,
+        VALUATION_SECONDARY_CURRENCY.toLowerCase(),
+        DEFAULT_CCY_PRECISION,
+    );
 
     useWalletsFetch();
     useMarketsFetch();
@@ -31,18 +46,24 @@ const EstimatedValueMobile = React.memo(() => {
             </div>
             <div className="cr-mobile-wallets-banner__body">
                 <div className="cr-mobile-wallets-banner__body-wrap">
-                    <span className="cr-mobile-wallets-banner__body-number">{Decimal.format(estimatedValue, estimatedPrecision, ',')}</span>
-                    <span className="cr-mobile-wallets-banner__body-currency">{VALUATION_PRIMARY_CURRENCY.toUpperCase()}</span>
+                    <span className="cr-mobile-wallets-banner__body-number">
+                        {Decimal.format(estimatedValue, estimatedPrecision, ',')}
+                    </span>
+                    <span className="cr-mobile-wallets-banner__body-currency">
+                        {VALUATION_PRIMARY_CURRENCY.toUpperCase()}
+                    </span>
                 </div>
                 <div className="cr-mobile-wallets-banner__body-wrap">
-                    <span className="cr-mobile-wallets-banner__body-number">{Decimal.format(estimatedSecondaryValue, estimatedSecondaryPrecision, ',')}</span>
-                    <span className="cr-mobile-wallets-banner__body-currency">{VALUATION_SECONDARY_CURRENCY.toUpperCase()}</span>
+                    <span className="cr-mobile-wallets-banner__body-number">
+                        {Decimal.format(estimatedSecondaryValue, estimatedSecondaryPrecision, ',')}
+                    </span>
+                    <span className="cr-mobile-wallets-banner__body-currency">
+                        {VALUATION_SECONDARY_CURRENCY.toUpperCase()}
+                    </span>
                 </div>
             </div>
         </div>
     );
 });
 
-export {
-    EstimatedValueMobile,
-};
+export { EstimatedValueMobile };

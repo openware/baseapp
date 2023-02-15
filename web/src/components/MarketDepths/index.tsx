@@ -1,10 +1,10 @@
-import classnames from "classnames";
-import * as React from "react";
+import classnames from 'classnames';
+import * as React from 'react';
 
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
-import { colors } from "../../constants";
-import { convertRgbToHex, getStylesValueByKey } from "../../helpers";
+import { colors } from '../../constants';
+import { convertRgbToHex, getStylesValueByKey } from '../../helpers';
 
 export interface KeyValuePairMarketDepths {
     x: string | number;
@@ -61,33 +61,33 @@ export interface MarketDepthsProps {
     /**
      * Defines interval of values that should be displayed on x-axis
      */
-    intervalX?: number | "preserveStartEnd" | "preserveStart" | "preserveEnd" | undefined;
+    intervalX?: number | 'preserveStartEnd' | 'preserveStart' | 'preserveEnd' | undefined;
     /**
      * Defines interval of values that should be displayed on y-axis
      */
-    intervalY?: number | "preserveStartEnd" | "preserveStart" | "preserveEnd" | undefined;
+    intervalY?: number | 'preserveStartEnd' | 'preserveStart' | 'preserveEnd' | undefined;
     /**
      * Orientation for y-axis
      * @default 'left'
      */
-    orientation?: "left" | "right";
+    orientation?: 'left' | 'right';
     /**
      * Chart type
      * @default 'step'
      */
     chartType?:
-        | "basis"
-        | "basisClosed"
-        | "basisOpen"
-        | "linear"
-        | "linearClosed"
-        | "natural"
-        | "monotoneX"
-        | "monotoneY"
-        | "monotone"
-        | "step"
-        | "stepBefore"
-        | "stepAfter";
+        | 'basis'
+        | 'basisClosed'
+        | 'basisOpen'
+        | 'linear'
+        | 'linearClosed'
+        | 'natural'
+        | 'monotoneX'
+        | 'monotoneY'
+        | 'monotone'
+        | 'step'
+        | 'stepBefore'
+        | 'stepAfter';
     /**
      * Property for gradient of background of ask or bid
      * @default false
@@ -126,7 +126,7 @@ export interface MarketDepthsSettings {
 }
 
 const getColorSettings = (colorTheme?: string) => {
-    if (colorTheme === "light") {
+    if (colorTheme === 'light') {
         return {
             strokeAreaAskColor: colors.light.depth.strokeAreaAsk,
             strokeAreaBidColor: colors.light.depth.strokeAreaBid,
@@ -153,15 +153,15 @@ const getColorSettings = (colorTheme?: string) => {
 
 const CustomTooltip = (props: CustomToolTipProps) => {
     const defaultToolTipColors = {
-        backgroundColor: "rgba(255, 255, 255, 0.4)",
-        color: "black",
-        border: "1px solid #ccc",
+        backgroundColor: 'rgba(255, 255, 255, 0.4)',
+        color: 'black',
+        border: '1px solid #ccc',
     };
     const { active, payload, external, toolTipColors = defaultToolTipColors } = props;
     const { backgroundColor, color, border } = toolTipColors;
     const renderPayload = () => {
         if (!payload || !payload[0]) {
-            return "";
+            return '';
         }
 
         const { name, value } = payload[0];
@@ -181,7 +181,7 @@ const CustomTooltip = (props: CustomToolTipProps) => {
             border,
             color,
             fontSize: 13,
-            boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+            boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
         };
         const payloadData = payload && payload[0] ? payload[0].payload : null;
         const currData = payloadData
@@ -205,15 +205,15 @@ const CustomTooltip = (props: CustomToolTipProps) => {
  */
 export class MarketDepths extends React.PureComponent<MarketDepthsProps> {
     public defaultSettings = {
-        dataKeyX: "ask",
-        dataKeyY: "bid",
+        dataKeyX: 'ask',
+        dataKeyY: 'bid',
         tooltip: true,
-        height: "100%",
+        height: '100%',
         activeDot: {
-            stroke: "rgba(31,42,52,1)",
+            stroke: 'rgba(31,42,52,1)',
             strokeWidth: 1,
             r: 4,
-            fill: "rgba(91,165,132,1)",
+            fill: 'rgba(91,165,132,1)',
         },
     };
 
@@ -231,7 +231,7 @@ export class MarketDepths extends React.PureComponent<MarketDepthsProps> {
             orientation,
             gradientHide,
         } = this.props;
-        const cx = classnames("cr-market-depths", className);
+        const cx = classnames('cr-market-depths', className);
         const colorSettings = getColorSettings(colorTheme);
 
         return (
@@ -247,28 +247,28 @@ export class MarketDepths extends React.PureComponent<MarketDepthsProps> {
                             />
                         )}
                         <XAxis
-                            dataKey={settings.dataKeyX || "ask"}
-                            interval={intervalX || "preserveStartEnd"}
+                            dataKey={settings.dataKeyX || 'ask'}
+                            interval={intervalX || 'preserveStartEnd'}
                             stroke={colorSettings.strokeAxisColor}
                         />
                         <YAxis
-                            orientation={orientation ? orientation : "left"}
-                            dataKey={settings.dataKeyY || "bid"}
-                            interval={intervalY || "preserveStartEnd"}
+                            orientation={orientation ? orientation : 'left'}
+                            dataKey={settings.dataKeyY || 'bid'}
+                            interval={intervalY || 'preserveStartEnd'}
                             stroke={colorSettings.strokeAxisColor}
                         />
                         {settings.tooltip ? (
                             <Tooltip content={<CustomTooltip toolTipColors={toolTipColors} external={data} />} />
                         ) : null}
                         <Area
-                            type={chartType ? chartType : "step"}
+                            type={chartType ? chartType : 'step'}
                             dataKey="bid"
                             stroke={colorSettings.strokeAreaBidColor}
                             fill="url(#bidChartColor)"
                             activeDot={settings.activeDot}
                         />
                         <Area
-                            type={chartType ? chartType : "step"}
+                            type={chartType ? chartType : 'step'}
                             dataKey="ask"
                             stroke={colorSettings.strokeAreaAskColor}
                             fill="url(#askChartColor)"

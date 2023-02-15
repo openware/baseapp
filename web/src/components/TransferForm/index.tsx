@@ -20,7 +20,7 @@ type Props = ParentProps;
  */
 export const TransferForm: FC<Props> = (props: Props) => {
     const [amount, setAmount] = useState<string>('');
-    const [isFocused, setIsFocused] = useState<boolean>(false); 
+    const [isFocused, setIsFocused] = useState<boolean>(false);
     const [showError, setShowError] = useState<boolean>(false);
     const [amountError, setAmountError] = useState<string>('');
 
@@ -28,40 +28,55 @@ export const TransferForm: FC<Props> = (props: Props) => {
 
     const intl = useIntl();
 
-    const handleAmountChange = useCallback((value: string) => {
-        const convertedValue = cleanPositiveFloatInput(String(value));
+    const handleAmountChange = useCallback(
+        (value: string) => {
+            const convertedValue = cleanPositiveFloatInput(String(value));
 
-        if (convertedValue.match(precisionRegExp(wallet?.fixed || DEFAULT_CCY_PRECISION))) {
-            setAmount(convertedValue);
-        }
+            if (convertedValue.match(precisionRegExp(wallet?.fixed || DEFAULT_CCY_PRECISION))) {
+                setAmount(convertedValue);
+            }
 
-        defineAmountError(convertedValue);
-    }, [wallet]);
+            defineAmountError(convertedValue);
+        },
+        [wallet],
+    );
 
-    const handleChangeAmountByButton = useCallback((value: number) => {
-        const newAmount = wallet?.balance ? Decimal.format(+wallet.balance * value, wallet.fixed || DEFAULT_CCY_PRECISION) : '';
-        setAmount(newAmount);
-        defineAmountError(newAmount);
-    }, [wallet]);
+    const handleChangeAmountByButton = useCallback(
+        (value: number) => {
+            const newAmount = wallet?.balance
+                ? Decimal.format(+wallet.balance * value, wallet.fixed || DEFAULT_CCY_PRECISION)
+                : '';
+            setAmount(newAmount);
+            defineAmountError(newAmount);
+        },
+        [wallet],
+    );
 
-    const fieldsetFocusedClass = React.useCallback((error: string) => cr('cr-transfer-form__input--fieldset', {
-        'cr-transfer-form__input--fieldset cr-transfer-form__input--fieldset--focused': isFocused,
-        'cr-transfer-form__input--errored': showError && error,
-    }), [isFocused, showError]);
+    const fieldsetFocusedClass = React.useCallback(
+        (error: string) =>
+            cr('cr-transfer-form__input--fieldset', {
+                'cr-transfer-form__input--fieldset cr-transfer-form__input--fieldset--focused': isFocused,
+                'cr-transfer-form__input--errored': showError && error,
+            }),
+        [isFocused, showError],
+    );
 
-    const defineAmountError = React.useCallback((value: string) => {
-        let error = '';
-    
-        if (!value) {
-            error = intl.formatMessage({ id: 'page.body.p2p.error.empty.amount' });
-        } else if (Number(value) <= 0) {
-            error = intl.formatMessage({ id: 'page.body.p2p.error.greater.than.0.amount' });
-        } else if (wallet && (Number(value) > Number(wallet.balance))) {
-            error = intl.formatMessage({ id: 'page.body.p2p.error.insufficient.funds' });
-        }
+    const defineAmountError = React.useCallback(
+        (value: string) => {
+            let error = '';
 
-        setAmountError(error);
-    }, [wallet]);
+            if (!value) {
+                error = intl.formatMessage({ id: 'page.body.p2p.error.empty.amount' });
+            } else if (Number(value) <= 0) {
+                error = intl.formatMessage({ id: 'page.body.p2p.error.greater.than.0.amount' });
+            } else if (wallet && Number(value) > Number(wallet.balance)) {
+                error = intl.formatMessage({ id: 'page.body.p2p.error.insufficient.funds' });
+            }
+
+            setAmountError(error);
+        },
+        [wallet],
+    );
 
     const handleOnClick = React.useCallback(() => {
         if (!amount || Number(amount) <= 0 || Number(amount) > Number(wallet.balance)) {
@@ -83,19 +98,17 @@ export const TransferForm: FC<Props> = (props: Props) => {
                     placeholder=""
                     label={intl.formatMessage({ id: 'page.body.wallets.transfers.form.amount' })}
                     labelVisible={true}
-                    defaultLabel={intl.formatMessage({ id: 'page.body.wallets.transfers.form.amount' })}
+                    defaultLabel={intl.formatMessage({
+                        id: 'page.body.wallets.transfers.form.amount',
+                    })}
                     handleFocusInput={() => setIsFocused(!isFocused)}
                 />
             </fieldset>
             {showError && <span className="error">{amountError}</span>}
             <div className="cr-transfer-form__percentage-buttons">
-                {AMOUNT_PERCENTAGE_ARRAY.map((value, index) =>
-                    <PercentageButton
-                        value={value}
-                        key={index}
-                        onClick={handleChangeAmountByButton}
-                    />
-                )}
+                {AMOUNT_PERCENTAGE_ARRAY.map((value, index) => (
+                    <PercentageButton value={value} key={index} onClick={handleChangeAmountByButton} />
+                ))}
             </div>
             <div className="cr-transfer-form__total">
                 <label className="cr-transfer-form__total__label">
@@ -114,7 +127,7 @@ export const TransferForm: FC<Props> = (props: Props) => {
                 <label className="cr-transfer-form__available__label">
                     {intl.formatMessage({ id: 'page.body.wallets.transfers.form.available' })}
                 </label>
-                {wallet ? 
+                {wallet ? (
                     <div className="cr-transfer-form__available__content">
                         <span className="cr-transfer-form__available__content__amount">
                             {Decimal.format(wallet.balance, wallet.fixed, ',')}&nbsp;
@@ -123,7 +136,7 @@ export const TransferForm: FC<Props> = (props: Props) => {
                             {wallet.currency.toUpperCase()}
                         </span>
                     </div>
-                : null}
+                ) : null}
             </div>
             <div className="cr-transfer-form__btn-wrapper">
                 <Button
@@ -132,8 +145,7 @@ export const TransferForm: FC<Props> = (props: Props) => {
                     disabled={!wallet}
                     onClick={handleOnClick}
                     size="lg"
-                    variant="primary"
-                >
+                    variant="primary">
                     {intl.formatMessage({ id: 'page.body.wallets.transfers.form.confirm' })}
                 </Button>
             </div>

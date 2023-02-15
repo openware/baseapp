@@ -13,8 +13,7 @@ const defaults: TwoFactorAuthProps = {
     handleClose2fa: jest.fn(),
 };
 
-const setup = (props: Partial<TwoFactorAuthProps> = {}) =>
-    shallow(<TwoFactorAuth {...{ ...defaults, ...props }} />);
+const setup = (props: Partial<TwoFactorAuthProps> = {}) => shallow(<TwoFactorAuth {...{ ...defaults, ...props }} />);
 
 describe('TwoFactorAuth component', () => {
     it('should render', () => {

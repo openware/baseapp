@@ -14,15 +14,12 @@ export interface EmailVerificationError {
 export interface EmailVerificationFetch {
     type: typeof EMAIL_VERIFICATION_FETCH;
     payload: {
-      email: string;
-      captcha_response?: string | GeetestCaptchaResponse;
+        email: string;
+        captcha_response?: string | GeetestCaptchaResponse;
     };
 }
 
-export type EmailVerificationAction =
-    EmailVerificationData
-    | EmailVerificationError
-    | EmailVerificationFetch;
+export type EmailVerificationAction = EmailVerificationData | EmailVerificationError | EmailVerificationFetch;
 
 export const emailVerificationFetch = (payload: EmailVerificationFetch['payload']): EmailVerificationFetch => ({
     type: EMAIL_VERIFICATION_FETCH,

@@ -62,7 +62,7 @@ describe('Beneficiaries Delete', () => {
         it('should delete beneficiary in success flow', async () => {
             mockBeneficiariesDelete();
 
-            const promise = new Promise<void>(resolve => {
+            const promise = new Promise<void>((resolve) => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     if (actions.length === expectedBeneficiariesDeleteSuccess.length) {
@@ -78,7 +78,7 @@ describe('Beneficiaries Delete', () => {
 
         it('should handle delete beneficiary error', async () => {
             mockNetworkError(mockAxios);
-            const promise = new Promise<void>(resolve => {
+            const promise = new Promise<void>((resolve) => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     if (actions.length === expectedBeneficiariesDeleteError.length) {

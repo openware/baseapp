@@ -6,9 +6,9 @@ import {
     P2P_PAYMENT_METHODS_FETCH,
 } from '../constants';
 import { p2pCurrenciesSaga } from './p2pCurrenciesSaga';
+import { p2pHighestPriceSaga } from './p2pHighestPriceSaga';
 import { p2pOffersSaga } from './p2pOffersSaga';
 import { p2pPaymentMethodsSaga } from './p2pPaymentMethodsSaga';
-import { p2pHighestPriceSaga } from './p2pHighestPriceSaga';
 
 export function* rootP2PSaga() {
     yield takeLatest(P2P_OFFERS_FETCH, p2pOffersSaga);

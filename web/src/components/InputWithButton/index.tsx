@@ -1,9 +1,9 @@
 import '@openware/cryptofont';
 import classnames from 'classnames';
 import * as React from 'react';
+import { MouseEventHandler } from 'react';
 import { Button, InputGroup } from 'react-bootstrap';
 import { CustomInput } from '../';
-import { MouseEventHandler } from "react";
 
 const InputWithButton = ({
     value,
@@ -13,7 +13,7 @@ const InputWithButton = ({
     readOnly = false,
     buttonText = '',
     label = '',
-    type = "text",
+    type = 'text',
     handleClickInput = () => {},
     handleClickButton = () => {},
     handleChangeInput = () => {},
@@ -51,15 +51,14 @@ const InputWithButton = ({
                         defaultLabel={label}
                         placeholder={label}
                         handleChangeInput={handleChangeInput}
-                        classNameInput={"cr-input-with_button_input"}
+                        classNameInput={'cr-input-with_button_input'}
                     />
                     <InputGroup.Append>
                         <div className="cr-input-with-button_wrapper">
                             <Button
                                 onClick={handleClickButton}
                                 disabled={disabled}
-                                className={buttonClassName || "cr-input-with-button"}
-                            >
+                                className={buttonClassName || 'cr-input-with-button'}>
                                 {icon ? icon : null}
                                 {buttonText}
                             </Button>
@@ -68,9 +67,7 @@ const InputWithButton = ({
                 </InputGroup>
             </div>
         </fieldset>
-    )
-}
+    );
+};
 
-export {
-    InputWithButton,
-}
+export { InputWithButton };

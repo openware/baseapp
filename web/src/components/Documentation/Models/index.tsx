@@ -12,12 +12,8 @@ export const DocumentationModels: React.FC = () => {
         return (
             <div className="pg-documentation-item pg-documentation-models" id="models">
                 <h4>{intl.formatMessage({ id: 'page.documentation.models.title' })}</h4>
-                {Object.keys(documentation?.definitions).map(key => (
-                    <DocumentationModelsItem
-                        key={key}
-                        title={key}
-                        item={documentation?.definitions[key]}
-                    />
+                {Object.keys(documentation?.definitions).map((key) => (
+                    <DocumentationModelsItem key={key} title={key} item={documentation?.definitions[key]} />
                 ))}
             </div>
         );

@@ -127,8 +127,8 @@ class ProfileVerificationComponent extends React.Component<Props> {
                     (label: Label) =>
                         label.key === kycSteps()[indexOfPrevStep] &&
                         label.value === 'verified' &&
-                        label.scope === 'private'
-                )
+                        label.scope === 'private',
+                ),
             );
 
             if (!prevStepPassed) {

@@ -1,15 +1,8 @@
 // tslint:disable
 import * as React from 'react';
-import {
-    connect,
-    MapDispatchToPropsFunction,
-    MapStateToProps,
-} from 'react-redux';
-import {
-    IChartingLibraryWidget,
-    LanguageCode,
-    widget,
-} from '../../charting_library/charting_library.min';
+import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
+import { periodStringToMinutes } from 'src/websocket/helpers';
+import { IChartingLibraryWidget, LanguageCode, widget } from '../../charting_library/charting_library.min';
 import { stdTimezoneOffset } from '../../helpers';
 import {
     KlineState,
@@ -29,16 +22,8 @@ import {
     selectMarketTickers,
     selectMobileDeviceState,
 } from '../../modules';
-import { periodStringToMinutes } from 'src/websocket/helpers';
-import {
-    CurrentKlineSubscription,
-    dataFeedObject,
-    print,
-} from './api';
-import {
-    widgetOptions,
-    widgetParams,
-} from './config';
+import { CurrentKlineSubscription, dataFeedObject, print } from './api';
+import { widgetOptions, widgetParams } from './config';
 import { getTradingChartTimezone } from './timezones';
 
 interface ReduxProps {
@@ -72,8 +57,11 @@ export class TradingChartComponent extends React.PureComponent<Props> {
             this.setChart(next.markets, next.currentMarket, next.colorTheme);
         }
 
-        if (next.currentMarket && (!this.props.currentMarket || next.currentMarket.id !== this.props.currentMarket.id)) {
-            if (this.props.currentMarket && (this.props.currentMarket.id && this.tvWidget)) {
+        if (
+            next.currentMarket &&
+            (!this.props.currentMarket || next.currentMarket.id !== this.props.currentMarket.id)
+        ) {
+            if (this.props.currentMarket && this.props.currentMarket.id && this.tvWidget) {
                 this.updateChart(next.currentMarket);
             } else {
                 this.setChart(next.markets, next.currentMarket, next.colorTheme);
@@ -90,11 +78,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
     }
 
     public componentDidMount() {
-        const {
-            colorTheme,
-            currentMarket,
-            markets,
-        } = this.props;
+        const { colorTheme, currentMarket, markets } = this.props;
 
         if (currentMarket) {
             this.setChart(markets, currentMarket, colorTheme);
@@ -112,9 +96,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
     }
 
     public render() {
-        return (
-            <div id={widgetParams.containerId} className="pg-trading-chart" />
-        );
+        return <div id={widgetParams.containerId} className="pg-trading-chart" />;
     }
 
     private setChart = (markets: Market[], currentMarket: Market, colorTheme: string) => {
@@ -128,45 +110,43 @@ export class TradingChartComponent extends React.PureComponent<Props> {
         }
 
         const disabledFeatures = {
-            disabled_features: isMobileDevice ?
-            [
-                'border_around_the_chart',
-                'chart_property_page_background',
-                'chart_property_page_scales',
-                'chart_property_page_style',
-                'chart_property_page_timezone_sessions',
-                'chart_property_page_trading',
-                'compare_symbol',
-                'control_bar',
-                'countdown',
-                'create_volume_indicator_by_default',
-                'display_market_status',
-                'edit_buttons_in_legend',
-                'go_to_date',
-                'header_chart_type',
-                'header_compare',
-                'header_indicators',
-                'header_saveload',
-                'header_screenshot',
-                'header_symbol_search',
-                'header_undo_redo',
-                'header_widget_dom_node',
-                'hide_last_na_study_output',
-                'hide_left_toolbar_by_default',
-                'left_toolbar',
-                'legend_context_menu',
-                'main_series_scale_menu',
-                'pane_context_menu',
-                'show_chart_property_page',
-                'study_dialog_search_control',
-                'symbol_info',
-                'timeframes_toolbar',
-                'timezone_menu',
-                'volume_force_overlay',
-            ] : [
-                'header_symbol_search',
-                'use_localstorage_for_settings',
-            ]
+            disabled_features: isMobileDevice
+                ? [
+                      'border_around_the_chart',
+                      'chart_property_page_background',
+                      'chart_property_page_scales',
+                      'chart_property_page_style',
+                      'chart_property_page_timezone_sessions',
+                      'chart_property_page_trading',
+                      'compare_symbol',
+                      'control_bar',
+                      'countdown',
+                      'create_volume_indicator_by_default',
+                      'display_market_status',
+                      'edit_buttons_in_legend',
+                      'go_to_date',
+                      'header_chart_type',
+                      'header_compare',
+                      'header_indicators',
+                      'header_saveload',
+                      'header_screenshot',
+                      'header_symbol_search',
+                      'header_undo_redo',
+                      'header_widget_dom_node',
+                      'hide_last_na_study_output',
+                      'hide_left_toolbar_by_default',
+                      'left_toolbar',
+                      'legend_context_menu',
+                      'main_series_scale_menu',
+                      'pane_context_menu',
+                      'show_chart_property_page',
+                      'study_dialog_search_control',
+                      'symbol_info',
+                      'timeframes_toolbar',
+                      'timezone_menu',
+                      'volume_force_overlay',
+                  ]
+                : ['header_symbol_search', 'use_localstorage_for_settings'],
         };
 
         const defaultWidgetOptions = {
@@ -174,11 +154,15 @@ export class TradingChartComponent extends React.PureComponent<Props> {
             datafeed: this.datafeed,
             interval: widgetParams.interval,
             container_id: widgetParams.containerId,
-            locale: this.languageIncluded(lang) ? lang as LanguageCode : 'en' as LanguageCode,
+            locale: this.languageIncluded(lang) ? (lang as LanguageCode) : ('en' as LanguageCode),
             timezone: getTradingChartTimezone(currentTimeOffset, clockPeriod),
         };
 
-        this.tvWidget = new widget({...defaultWidgetOptions, ...widgetOptions(colorTheme), ...disabledFeatures});
+        this.tvWidget = new widget({
+            ...defaultWidgetOptions,
+            ...widgetOptions(colorTheme),
+            ...disabledFeatures,
+        });
 
         let previousRange = { from: 0, to: 0 };
         if (kline.range.from !== 0 && kline.range.to !== 0) {
@@ -227,10 +211,10 @@ export class TradingChartComponent extends React.PureComponent<Props> {
                 });
             };
 
-            callUpdateChart().then(res => {
+            callUpdateChart().then((res) => {
                 print(res, currentMarket.id);
 
-                if  (!symbolSet) {
+                if (!symbolSet) {
                     print('Rebuild chart', currentMarket.id);
                     this.handleRebuildChart(currentMarket);
                 }
@@ -239,11 +223,7 @@ export class TradingChartComponent extends React.PureComponent<Props> {
     };
 
     private handleRebuildChart = (nextMarket?: Market) => {
-        const {
-            colorTheme,
-            currentMarket,
-            markets,
-        } = this.props;
+        const { colorTheme, currentMarket, markets } = this.props;
 
         if (this.tvWidget && currentMarket) {
             try {
@@ -257,11 +237,39 @@ export class TradingChartComponent extends React.PureComponent<Props> {
     };
 
     private languageIncluded = (lang: string) => {
-        return ['ar', 'zh', 'cs', 'da_DK', 'nl_NL', 'en', 'et_EE', 'fr', 'de', 'el', 'he_IL', 'hu_HU', 'id_ID', 'it', 'ja', 'ko', 'fa', 'pl', 'pt', 'ro', 'ru', 'sk_SK', 'es', 'sv', 'th', 'tr', 'vi'].includes(lang)
+        return [
+            'ar',
+            'zh',
+            'cs',
+            'da_DK',
+            'nl_NL',
+            'en',
+            'et_EE',
+            'fr',
+            'de',
+            'el',
+            'he_IL',
+            'hu_HU',
+            'id_ID',
+            'it',
+            'ja',
+            'ko',
+            'fa',
+            'pl',
+            'pt',
+            'ro',
+            'ru',
+            'sk_SK',
+            'es',
+            'sv',
+            'th',
+            'tr',
+            'vi',
+        ].includes(lang);
     };
 }
 
-const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
     markets: selectMarkets(state),
     colorTheme: selectCurrentColorTheme(state),
     chartRebuild: selectChartRebuildState(state),
@@ -272,11 +280,14 @@ const reduxProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
     isMobileDevice: selectMobileDeviceState(state),
 });
 
-const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
-    klineUpdateTimeRange: payload => dispatch(klineUpdateTimeRange(payload)),
-    subscribeKline: payload => dispatch(klineSubscribe(payload)),
-    unSubscribeKline: payload => dispatch(klineUnsubscribe(payload)),
-    klineUpdatePeriod: payload => dispatch(klineUpdatePeriod(payload)),
+const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+    klineUpdateTimeRange: (payload) => dispatch(klineUpdateTimeRange(payload)),
+    subscribeKline: (payload) => dispatch(klineSubscribe(payload)),
+    unSubscribeKline: (payload) => dispatch(klineUnsubscribe(payload)),
+    klineUpdatePeriod: (payload) => dispatch(klineUpdatePeriod(payload)),
 });
 
-export const TradingChart = connect<ReduxProps, DispatchProps, {}, RootState>(reduxProps, mapDispatchProps)(TradingChartComponent);
+export const TradingChart = connect<ReduxProps, DispatchProps, {}, RootState>(
+    reduxProps,
+    mapDispatchProps,
+)(TradingChartComponent);

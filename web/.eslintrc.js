@@ -6,7 +6,7 @@ module.exports = {
         'plugin:import/errors',
         'plugin:import/warnings',
         'plugin:import/typescript',
-        'plugin:prettier/recommended', // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
+        'plugin:react-hooks/recommended',
     ],
     parserOptions: {
         ecmaVersion: 2018,
@@ -17,7 +17,7 @@ module.exports = {
         project: 'tsconfig.json',
         tsconfigRootDir: __dirname,
     },
-    plugins: ['@typescript-eslint', 'import'],
+    plugins: ['@typescript-eslint', 'unused-imports', 'import'],
     rules: {
         camelcase: 'off',
         '@typescript-eslint/camelcase': 'off',

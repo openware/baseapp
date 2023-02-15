@@ -1,5 +1,5 @@
-import { Offer } from "src/modules";
-import { UserPaymentMethod } from "../paymentMethod";
+import { Offer } from 'src/modules';
+import { UserPaymentMethod } from '../paymentMethod';
 
 export interface P2POrderCreate {
     offer_id: number;

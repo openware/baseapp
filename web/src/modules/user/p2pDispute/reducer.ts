@@ -1,10 +1,6 @@
 import { CommonError } from '../../types';
 import { P2PDisputeActions } from './actions';
-import {
-    P2P_DISPUTE_DATA,
-    P2P_DISPUTE_ERROR,
-    P2P_DISPUTE_FETCH,
-} from './constants';
+import { P2P_DISPUTE_DATA, P2P_DISPUTE_ERROR, P2P_DISPUTE_FETCH } from './constants';
 
 export interface P2PDisputeState {
     fetching: boolean;

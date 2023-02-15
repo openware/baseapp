@@ -4,16 +4,16 @@ import { sliceArray } from '../../../helpers';
 import { CommonError } from '../../types';
 import { ApiKeyDataInterface, ApiKeysAction } from './actions';
 import {
+    API_KEYS_2FA_MODAL,
+    API_KEYS_DATA,
+    API_KEYS_ERROR,
+    API_KEYS_FETCH,
     API_KEY_CREATE,
     API_KEY_CREATE_FETCH,
     API_KEY_DELETE,
     API_KEY_DELETE_FETCH,
     API_KEY_UPDATE,
     API_KEY_UPDATE_FETCH,
-    API_KEYS_2FA_MODAL,
-    API_KEYS_DATA,
-    API_KEYS_ERROR,
-    API_KEYS_FETCH,
 } from './constants';
 
 export interface ApiKeyStateModal {
@@ -72,11 +72,11 @@ export const apiKeysReducer = (state = initialApiKeysState, action: ApiKeysActio
                 error: undefined,
             };
         case API_KEY_UPDATE:
-            const apiKeyIndex = state.apiKeys.findIndex(e => e.kid === action.payload.kid);
+            const apiKeyIndex = state.apiKeys.findIndex((e) => e.kid === action.payload.kid);
             const apiKeys = update(state.apiKeys, {
                 [apiKeyIndex]: {
-                    state: {$set: action.payload.state},
-                    updated_at: {$set: action.payload.updated_at},
+                    state: { $set: action.payload.state },
+                    updated_at: { $set: action.payload.updated_at },
                 },
             });
 
@@ -92,7 +92,7 @@ export const apiKeysReducer = (state = initialApiKeysState, action: ApiKeysActio
         case API_KEY_DELETE:
             return {
                 ...state,
-                apiKeys: state.apiKeys.filter(apiKey => apiKey.kid !== action.payload.kid),
+                apiKeys: state.apiKeys.filter((apiKey) => apiKey.kid !== action.payload.kid),
             };
         case API_KEYS_2FA_MODAL:
             return {

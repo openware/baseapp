@@ -1,10 +1,10 @@
-import React, { FC, ReactElement, useCallback, useState } from "react";
-import { useIntl } from "react-intl";
-import { useDispatch, useSelector } from "react-redux";
-import { Button } from "react-bootstrap";
-import { PaymentMethodModal } from "./PaymentMethodModal";
-import { titleCase, truncateMiddle } from "src/helpers";
-import { useP2PPaymentMethodsFetch, useUserPaymentMethodsFetch } from "src/hooks";
+import React, { FC, ReactElement, useCallback, useState } from 'react';
+import { Button } from 'react-bootstrap';
+import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { HOST_URL } from 'src/constants';
+import { titleCase, truncateMiddle } from 'src/helpers';
+import { useP2PPaymentMethodsFetch, useUserPaymentMethodsFetch } from 'src/hooks';
 import {
     PaymentMethod,
     paymentMethodCreateFetch,
@@ -15,8 +15,8 @@ import {
     selectPaymentMethodList,
     selectPaymentMethodModal,
     UserPaymentMethod,
-} from "src/modules";
-import { HOST_URL } from "src/constants";
+} from 'src/modules';
+import { PaymentMethodModal } from './PaymentMethodModal';
 
 export interface PaymentOptionInterface {
     key: string;
@@ -31,7 +31,7 @@ export interface PaymentOptionInterface {
 
 export const ProfilePayment: FC = (): ReactElement => {
     const [paymentOptions, setPaymentOptions] = useState<PaymentOptionInterface[]>([]);
-    const [searchKeyword, setSearchKeyword] = useState<string>("");
+    const [searchKeyword, setSearchKeyword] = useState<string>('');
     const [filteredPaymentMethods, setFilteredPaymentMethods] = useState<PaymentMethod[]>([]);
     const paymentMethods = useSelector(selectP2PPaymentMethodsData);
     const userPaymentMethods = useSelector(selectPaymentMethodList);
@@ -45,14 +45,21 @@ export const ProfilePayment: FC = (): ReactElement => {
     useUserPaymentMethodsFetch();
 
     const createPaymentMethod = useCallback(() => {
-        dispatch(paymentMethodModal({ active: true, action: "createStep1" }));
+        dispatch(paymentMethodModal({ active: true, action: 'createStep1' }));
     }, [dispatch]);
 
     const deletePaymentMethod = useCallback(
         (item) => {
-            dispatch(paymentMethodModal({ active: true, action: "delete", upm_id: item.id, name: item.name }));
+            dispatch(
+                paymentMethodModal({
+                    active: true,
+                    action: 'delete',
+                    upm_id: item.id,
+                    name: item.name,
+                }),
+            );
         },
-        [dispatch]
+        [dispatch],
     );
 
     const editPaymentMethod = useCallback(
@@ -90,15 +97,15 @@ export const ProfilePayment: FC = (): ReactElement => {
             dispatch(
                 paymentMethodModal({
                     active: true,
-                    action: "update",
+                    action: 'update',
                     upm_id: item.id,
                     payment_method_id: item.payment_method_id,
                     name: item.name,
                     data: item.data,
-                })
+                }),
             );
         },
-        [paymentMethods, userPaymentMethods, dispatch]
+        [paymentMethods, userPaymentMethods, dispatch],
     );
 
     const handleHideModal = useCallback(() => {
@@ -125,7 +132,7 @@ export const ProfilePayment: FC = (): ReactElement => {
                         required: option.required,
                         type: option.type,
                         options: option.options,
-                        value: "",
+                        value: '',
                     });
                 });
 
@@ -134,13 +141,13 @@ export const ProfilePayment: FC = (): ReactElement => {
             dispatch(
                 paymentMethodModal({
                     active: true,
-                    action: "createStep2",
+                    action: 'createStep2',
                     payment_method_id: paymentMethod.id,
                     name: paymentMethod.name,
-                })
+                }),
             );
         },
-        [dispatch]
+        [dispatch],
     );
 
     const handleCustomFieldChange = useCallback(
@@ -150,7 +157,7 @@ export const ProfilePayment: FC = (): ReactElement => {
             option.value = value;
             setPaymentOptions([...paymentOptions.slice(0, index), option, ...paymentOptions.slice(index + 1)]);
         },
-        [paymentOptions]
+        [paymentOptions],
     );
 
     const addPaymentMethodConfirm = useCallback(() => {
@@ -161,7 +168,7 @@ export const ProfilePayment: FC = (): ReactElement => {
             paymentMethodCreateFetch({
                 payment_method_id: Number(modal.payment_method_id),
                 data: customFields,
-            })
+            }),
         );
     }, [paymentOptions, dispatch]);
 
@@ -172,7 +179,7 @@ export const ProfilePayment: FC = (): ReactElement => {
             paymentMethodUpdateFetch({
                 id: Number(modal.upm_id),
                 data: customFields,
-            })
+            }),
         );
     }, [dispatch, paymentOptions]);
 
@@ -192,17 +199,17 @@ export const ProfilePayment: FC = (): ReactElement => {
                     </div>
                     <div className="payment-method-item-header-right">
                         <div className="payment-method-item-edit" onClick={() => editPaymentMethod(item)}>
-                            {translate("page.body.profile.payment.button.edit")}
+                            {translate('page.body.profile.payment.button.edit')}
                         </div>
                         <div className="payment-method-item-delete" onClick={() => deletePaymentMethod(item)}>
-                            {translate("page.body.profile.payment.button.delete")}
+                            {translate('page.body.profile.payment.button.delete')}
                         </div>
                     </div>
                 </div>
                 <div className="payment-method-item-body">
                     {Object.keys(item.data).map((key) => {
                         const value = item.data[key];
-                        const masked = key.includes("number") ? truncateMiddle(value, 12, "****") : value;
+                        const masked = key.includes('number') ? truncateMiddle(value, 12, '****') : value;
 
                         return (
                             <div key={key} className="payment-method-item-body__col">
@@ -227,22 +234,22 @@ export const ProfilePayment: FC = (): ReactElement => {
 
             setSearchKeyword(value);
         },
-        [setSearchKeyword, paymentMethods, setFilteredPaymentMethods]
+        [setSearchKeyword, paymentMethods, setFilteredPaymentMethods],
     );
 
     return (
         <div className="pg-profile-page__payment">
-            <div className="pg-profile-page-header">{translate("page.body.profile.tabs.payment")}</div>
+            <div className="pg-profile-page-header">{translate('page.body.profile.tabs.payment')}</div>
             <div className="pg-profile-page__payment-body">
-                <h2>{translate("page.body.profile.payment.title")}</h2>
-                <p>{translate("page.body.profile.payment.desc")}</p>
+                <h2>{translate('page.body.profile.payment.title')}</h2>
+                <p>{translate('page.body.profile.payment.desc')}</p>
                 <div className="payment-method-list">
                     {userPaymentMethods &&
                         userPaymentMethods.length > 0 &&
                         userPaymentMethods.map(renderPaymentMethodItem)}
                 </div>
                 <Button onClick={createPaymentMethod} size="lg" variant="primary">
-                    {translate("page.body.profile.payment.button.add")}
+                    {translate('page.body.profile.payment.button.add')}
                 </Button>
             </div>
             <PaymentMethodModal

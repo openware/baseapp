@@ -3,13 +3,15 @@ import * as actions from './actions';
 import { initialLabelState, labelReducer } from './reducer';
 
 describe('Label reducer', () => {
-    const labelData = [{
-      created_at: '2018-12-10T12:49:00Z',
-      key: 'email',
-      scope: 'private',
-      updated_at: '2018-12-10T12:49:00Z',
-      value: 'verified',
-    }];
+    const labelData = [
+        {
+            created_at: '2018-12-10T12:49:00Z',
+            key: 'email',
+            scope: 'private',
+            updated_at: '2018-12-10T12:49:00Z',
+            value: 'verified',
+        },
+    ];
 
     const error: CommonError = {
         code: 401,

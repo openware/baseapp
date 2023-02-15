@@ -1,9 +1,5 @@
 import * as actions from './actions';
-import {
-    documentationReducer,
-    DocumentationState,
-    initialDocumentationState,
-} from './reducer';
+import { documentationReducer, DocumentationState, initialDocumentationState } from './reducer';
 import { DocTradeUserApiDataInterface } from './types';
 
 describe('Documentation reducer', () => {
@@ -22,9 +18,7 @@ describe('Documentation reducer', () => {
             version: '2.6.0-89e3acd',
         },
         swagger: '2.0',
-        produces: [
-            'application/json',
-        ],
+        produces: ['application/json'],
         securityDefinitions: {
             Bearer: {
                 type: 'apiKey',
@@ -59,7 +53,9 @@ describe('Documentation reducer', () => {
             data: fakeResponse,
             success: true,
         };
-        expect(documentationReducer(initialDocumentationState, actions.docTradeUserApiData(fakeResponse))).toEqual(expectedState);
+        expect(documentationReducer(initialDocumentationState, actions.docTradeUserApiData(fakeResponse))).toEqual(
+            expectedState,
+        );
     });
 
     it('should handle DOC_TRADE_USER_API_ERROR', () => {
@@ -68,6 +64,8 @@ describe('Documentation reducer', () => {
             ...initialDocumentationState,
             error: fakeError,
         };
-        expect(documentationReducer(initialDocumentationState, actions.docTradeUserApiError(fakeError))).toEqual(expectedState);
+        expect(documentationReducer(initialDocumentationState, actions.docTradeUserApiError(fakeError))).toEqual(
+            expectedState,
+        );
     });
 });

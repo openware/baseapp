@@ -11,9 +11,9 @@ import {
     MARKETS_TICKERS_DATA,
     MARKETS_TICKERS_ERROR,
     MARKETS_TICKERS_FETCH,
-    MARKET_PRICE_FETCH,
     MARKET_PRICE_DATA,
     MARKET_PRICE_ERROR,
+    MARKET_PRICE_FETCH,
 } from './constants';
 import { Market, Ticker } from './types';
 

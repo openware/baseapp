@@ -13,15 +13,21 @@ const changeUserDataOptions = (csrfToken?: string): RequestOptions => {
 
 export function* changeUserDataSaga(action: ChangeUserDataFetch) {
     try {
-        const user = yield call(API.put(changeUserDataOptions(getCsrfToken())), '/resource/users/me', action.payload.user);
+        const user = yield call(
+            API.put(changeUserDataOptions(getCsrfToken())),
+            '/resource/users/me',
+            action.payload.user,
+        );
         yield put(changeUserData({ user }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: changeUserDataError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: changeUserDataError,
+                },
+            }),
+        );
     }
 }

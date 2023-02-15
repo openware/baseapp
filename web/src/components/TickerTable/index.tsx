@@ -1,8 +1,8 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
+import { FIXED_VOL_PRECISION } from 'src/constants';
 import { Market } from '../../modules';
 import { Decimal } from '../Decimal';
-import { FIXED_VOL_PRECISION } from "src/constants";
 
 interface Props {
     currentBidUnit: string;
@@ -64,7 +64,7 @@ export const TickerTable: React.FC<Props> = ({
                 </tr>
             );
         },
-        [redirectToTrading]
+        [redirectToTrading],
     );
 
     return (

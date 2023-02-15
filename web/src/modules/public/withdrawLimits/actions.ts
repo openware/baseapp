@@ -16,9 +16,7 @@ export interface WithdrawLimitsError {
     error: CommonError;
 }
 
-export type withdrawLimitsAction = WithdrawLimitsFetch
-    | WithdrawLimitsData
-    | WithdrawLimitsError;
+export type withdrawLimitsAction = WithdrawLimitsFetch | WithdrawLimitsData | WithdrawLimitsError;
 
 export const withdrawLimitsFetch = (): WithdrawLimitsFetch => ({
     type: WITHDRAW_LIMITS_FETCH,

@@ -1,9 +1,9 @@
 import '@openware/cryptofont';
 import classnames from 'classnames';
 import * as React from 'react';
-import { copy } from '../../helpers';
-import { InputWithButton } from "src/components/InputWithButton";
 import { CopyIcon } from 'src/assets/images/CopyIcon';
+import { InputWithButton } from 'src/components/InputWithButton';
+import { copy } from '../../helpers';
 
 export interface CopyableTextFieldProps {
     /**
@@ -37,7 +37,6 @@ export interface CopyableTextFieldProps {
  * Text field component with ability to copy inner text.
  */
 class CopyableTextField extends React.Component<CopyableTextFieldProps> {
-
     public componentDidMount() {
         if (!this.props.fieldId) {
             throw new Error('CopyableTextField must contain `fieldId` prop');
@@ -45,15 +44,7 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
     }
 
     public render() {
-        const {
-            value,
-            className,
-            disabled,
-            fieldId,
-            copyButtonText,
-            label,
-            isMobile,
-        } = this.props;
+        const { value, className, disabled, fieldId, copyButtonText, label, isMobile } = this.props;
         const doCopy = () => copy(fieldId);
         const cx = classnames('cr-copyable-text-field', className);
 
@@ -68,15 +59,12 @@ class CopyableTextField extends React.Component<CopyableTextFieldProps> {
                 type="text"
                 disabled={disabled}
                 label={label}
-                buttonText={isMobile ? "" : (copyButtonText || "Copy")}
+                buttonText={isMobile ? '' : copyButtonText || 'Copy'}
                 buttonClassName="cr-copyable-text-field__button"
-                icon={< CopyIcon />}
+                icon={<CopyIcon />}
             />
         );
     }
 }
 
-export {
-    CopyableTextField,
-    copy,
-};
+export { CopyableTextField, copy };

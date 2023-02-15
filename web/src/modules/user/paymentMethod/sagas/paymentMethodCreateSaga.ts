@@ -2,12 +2,7 @@ import { call, put } from 'redux-saga/effects';
 import { alertPush, sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { getCsrfToken } from '../../../../helpers';
-import {
-    paymentMethodCreate,
-    PaymentMethodCreateFetch,
-    paymentMethodModal,
-    paymentMethodError,
-} from '../actions';
+import { paymentMethodCreate, PaymentMethodCreateFetch, paymentMethodError, paymentMethodModal } from '../actions';
 
 const createOptions = (csrfToken?: string): RequestOptions => {
     return {
@@ -23,12 +18,14 @@ export function* paymentMethodCreateSaga(action: PaymentMethodCreateFetch) {
         yield put(alertPush({ message: ['success.payment_method.created'], type: 'success' }));
         yield put(paymentMethodModal({ active: false }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: paymentMethodError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: paymentMethodError,
+                },
+            }),
+        );
     }
 }

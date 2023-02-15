@@ -1,8 +1,8 @@
 import { call, put } from 'redux-saga/effects';
 import { sendError } from '../../../';
-import { getCsrfToken } from '../../../../helpers';
 import { API, RequestOptions } from '../../../../api';
-import { PlatformCreateFetch, platformCreateData, platformCreateError } from '../actions';
+import { getCsrfToken } from '../../../../helpers';
+import { platformCreateData, platformCreateError, PlatformCreateFetch } from '../actions';
 
 const platformCreateOptions = (csrfToken?: string): RequestOptions => {
     return {
@@ -33,12 +33,14 @@ export function* platformCreateSaga(action: PlatformCreateFetch) {
         }
         yield put(platformCreateData(action.payload));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: platformCreateError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: platformCreateError,
+                },
+            }),
+        );
     }
 }

@@ -19,9 +19,7 @@ export interface SendDocumentsError {
     error: CommonError;
 }
 
-export type DocumentsAction = SendDocumentsFetch
-    | SendDocumentsData
-    | SendDocumentsError;
+export type DocumentsAction = SendDocumentsFetch | SendDocumentsData | SendDocumentsError;
 
 export const sendDocuments = (payload: SendDocumentsFetch['payload']): SendDocumentsFetch => ({
     type: SEND_DOCUMENTS_FETCH,

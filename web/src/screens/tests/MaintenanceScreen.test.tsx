@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
-import React from 'react';
 import { TestComponentWrapper } from 'lib/test';
+import React from 'react';
 import { IntlProps } from '../../';
 import { MaintenanceScreen } from '../MaintenanceScreen';
 
@@ -8,7 +8,7 @@ const setup = (props: Partial<IntlProps> = {}) =>
     shallow(
         <TestComponentWrapper>
             <MaintenanceScreen />
-        </TestComponentWrapper>
+        </TestComponentWrapper>,
     );
 
 describe('MaintenanceScreen', () => {

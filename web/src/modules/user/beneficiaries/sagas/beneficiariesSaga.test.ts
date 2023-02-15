@@ -65,10 +65,7 @@ describe('Beneficiaries Fetch', () => {
         message: ['Server error'],
     };
 
-    const expectedBeneficiariesActionsFetch = [
-        beneficiariesFetch(),
-        beneficiariesData(fakeBeneficiaries),
-    ];
+    const expectedBeneficiariesActionsFetch = [beneficiariesFetch(), beneficiariesData(fakeBeneficiaries)];
 
     const expectedBeneficiariesActionsError = [
         beneficiariesFetch(),
@@ -83,7 +80,7 @@ describe('Beneficiaries Fetch', () => {
 
     it('should fetch benefciiaries in success flow', async () => {
         mockBeneficiaries();
-        const promise = new Promise<void>(resolve => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedBeneficiariesActionsFetch.length) {
@@ -99,7 +96,7 @@ describe('Beneficiaries Fetch', () => {
 
     it('should trigger fetch benefciiaries error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise<void>(resolve => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedBeneficiariesActionsError.length) {

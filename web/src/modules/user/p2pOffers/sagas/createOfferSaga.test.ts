@@ -1,10 +1,10 @@
 import MockAdapter from 'axios-mock-adapter';
 import { MockStoreEnhanced } from 'redux-mock-store';
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
-import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { rootSaga, sendError } from '../../..';
+import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { CommonError } from '../../../types';
-import { createOfferData, createOfferError, createOffer } from '../actions';
+import { createOffer, createOfferData, createOfferError } from '../actions';
 
 describe('P2P CreateOffer', () => {
     let store: MockStoreEnhanced;
@@ -44,10 +44,7 @@ describe('P2P CreateOffer', () => {
         message: ['Server error'],
     };
 
-    const expectedP2PCreateOfferActionsFetch = [
-        createOffer(fakeCreateOfferPayload),
-        createOfferData(),
-    ];
+    const expectedP2PCreateOfferActionsFetch = [createOffer(fakeCreateOfferPayload), createOfferData()];
 
     const expectedP2PCreateOfferActionsError = [
         createOffer(fakeCreateOfferPayload),
@@ -62,7 +59,7 @@ describe('P2P CreateOffer', () => {
 
     it('should fetch createOffer in success flow', async () => {
         mockP2PCreateOffer();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedP2PCreateOfferActionsFetch.length) {
@@ -78,7 +75,7 @@ describe('P2P CreateOffer', () => {
 
     it('should trigger fetch createOffer error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedP2PCreateOfferActionsError.length) {

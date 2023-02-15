@@ -8,7 +8,8 @@ describe('UserActivity reducer', () => {
             id: 1,
             user_id: 1,
             user_ip: '195.214.197.210',
-            user_agent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
+            user_agent:
+                'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
             topic: 'session',
             action: 'login',
             result: 'succeed',
@@ -19,7 +20,8 @@ describe('UserActivity reducer', () => {
             id: 2,
             user_id: 2,
             user_ip: '195.214.197.210',
-            user_agent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
+            user_agent:
+                'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
             topic: 'session',
             action: 'login',
             result: 'succeed',
@@ -37,7 +39,7 @@ describe('UserActivity reducer', () => {
         const expectedState = {
             ...initialUserActivityState,
             loading: true,
-         };
+        };
         const payload = { page: 0, limit: 25 };
         expect(userActivityReducer(initialUserActivityState, actions.getUserActivity(payload))).toEqual(expectedState);
     });
@@ -53,7 +55,7 @@ describe('UserActivity reducer', () => {
             ...initialUserActivityState,
             ...payload,
             loading: false,
-         };
+        };
 
         expect(userActivityReducer(initialUserActivityState, actions.userActivityData(payload))).toEqual(expectedState);
     });
@@ -65,7 +67,7 @@ describe('UserActivity reducer', () => {
             page: 0,
             total: 0,
             error: error,
-         };
+        };
         expect(userActivityReducer(initialUserActivityState, actions.userActivityError(error))).toEqual(expectedState);
     });
 });

@@ -13,11 +13,7 @@ import {
     OPEN_ORDERS_RESET,
     OPEN_ORDERS_UPDATE,
 } from './constants';
-import {
-    convertOrderEvent,
-    insertIfNotExisted,
-    insertOrUpdate,
-} from './helpers';
+import { convertOrderEvent, insertIfNotExisted, insertOrUpdate } from './helpers';
 
 export interface OpenOrdersState {
     fetching: boolean;
@@ -41,7 +37,11 @@ export const openOrdersReducer = (
         case OPEN_ORDERS_FETCH:
             return { ...state, fetching: true };
         case OPEN_ORDERS_DATA:
-            return { ...state, fetching: false, list: sliceArray(action.payload, defaultStorageLimit()) };
+            return {
+                ...state,
+                fetching: false,
+                list: sliceArray(action.payload, defaultStorageLimit()),
+            };
         case OPEN_ORDERS_UPDATE:
             return {
                 ...state,
@@ -50,13 +50,20 @@ export const openOrdersReducer = (
         case OPEN_ORDERS_ERROR:
             return { ...state, fetching: false, list: [] };
         case OPEN_ORDERS_APPEND:
-            return { ...state, list: sliceArray(insertIfNotExisted(state.list, action.payload), defaultStorageLimit()) };
+            return {
+                ...state,
+                list: sliceArray(insertIfNotExisted(state.list, action.payload), defaultStorageLimit()),
+            };
         case OPEN_ORDERS_RESET:
             return initialOpenOrdersState;
         case OPEN_ORDERS_CANCEL_FETCH:
             return { ...state, cancelFetching: true, cancelError: false };
         case OPEN_ORDERS_CANCEL_DATA:
-            return { ...state, cancelFetching: false, list: sliceArray(action.payload, defaultStorageLimit()) };
+            return {
+                ...state,
+                cancelFetching: false,
+                list: sliceArray(action.payload, defaultStorageLimit()),
+            };
         case OPEN_ORDERS_CANCEL_ERROR:
             return { ...state, cancelFetching: false, cancelError: true };
         default:

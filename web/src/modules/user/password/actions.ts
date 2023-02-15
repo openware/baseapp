@@ -29,7 +29,7 @@ export interface ChangeForgotPasswordFetch {
     type: typeof PASSWORD_CHANGE_FORGOT_PASSWORD_FETCH;
     payload: {
         reset_password_token: string;
-        password: string,
+        password: string;
         confirm_password: string;
     };
 }
@@ -38,15 +38,16 @@ export interface ChangeForgotPasswordSuccess {
     type: typeof PASSWORD_CHANGE_FORGOT_PASSWORD_SUCCESS;
 }
 
-export type PasswordAction = ForgotPasswordFetch
+export type PasswordAction =
+    | ForgotPasswordFetch
     | ForgotPasswordError
     | ForgotPasswordSuccess
     | ChangeForgotPasswordFetch
     | ChangeForgotPasswordSuccess;
 
 export const forgotPassword = (payload: ForgotPasswordFetch['payload']): ForgotPasswordFetch => ({
-   type: PASSWORD_FORGOT_FETCH,
-   payload,
+    type: PASSWORD_FORGOT_FETCH,
+    payload,
 });
 
 export const forgotPasswordError = (error: CommonError): ForgotPasswordError => ({
@@ -58,7 +59,9 @@ export const forgotPasswordSuccess = (): ForgotPasswordSuccess => ({
     type: PASSWORD_FORGOT_SUCCESS,
 });
 
-export const changeForgotPasswordFetch = (payload: ChangeForgotPasswordFetch['payload']): ChangeForgotPasswordFetch => ({
+export const changeForgotPasswordFetch = (
+    payload: ChangeForgotPasswordFetch['payload'],
+): ChangeForgotPasswordFetch => ({
     type: PASSWORD_CHANGE_FORGOT_PASSWORD_FETCH,
     payload,
 });

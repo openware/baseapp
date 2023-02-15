@@ -6,17 +6,21 @@ import { FormattedMessage } from 'react-intl';
 import { connect, MapDispatchToPropsFunction } from 'react-redux';
 import { Link, RouteProps, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import enIcon from 'src/assets/images/sidebar/en.svg';
+import ruIcon from 'src/assets/images/sidebar/ru.svg';
 import { languages } from '../../api/config';
 import { LogoutIcon } from '../../assets/images/sidebar/LogoutIcon';
 import { ProfileIcon } from '../../assets/images/sidebar/ProfileIcon';
 import { SidebarIcons } from '../../assets/images/sidebar/SidebarIcons';
 import { pgRoutes } from '../../constants';
 import {
+    AbilitiesInterface,
     changeLanguage,
     changeUserDataFetch,
     logoutFetch,
     Market,
     RootState,
+    selectAbilities,
     selectCurrentColorTheme,
     selectCurrentLanguage,
     selectCurrentMarket,
@@ -24,12 +28,8 @@ import {
     selectUserInfo,
     selectUserLoggedIn,
     toggleSidebar,
-    selectAbilities,
-    AbilitiesInterface,
     User,
 } from '../../modules';
-import enIcon from 'src/assets/images/sidebar/en.svg';
-import ruIcon from 'src/assets/images/sidebar/ru.svg';
 
 interface State {
     isOpenLanguage: boolean;
@@ -92,7 +92,9 @@ class SidebarContainer extends React.Component<Props, State> {
         return (
             <div className={sidebarClassName}>
                 {this.renderProfileLink()}
-                <div className="pg-sidebar-wrapper-nav">{pgRoutes(isLoggedIn, this.props.abilities).map(this.renderNavItems(address))}</div>
+                <div className="pg-sidebar-wrapper-nav">
+                    {pgRoutes(isLoggedIn, this.props.abilities).map(this.renderNavItems(address))}
+                </div>
                 <div className="pg-sidebar-wrapper-lng">
                     <div className="btn-group pg-navbar__header-settings__account-dropdown dropdown-menu-language-container">
                         <Dropdown>
@@ -240,5 +242,5 @@ const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispa
 
 export const Sidebar = compose(
     withRouter,
-    connect(mapStateToProps, mapDispatchToProps)
+    connect(mapStateToProps, mapDispatchToProps),
 )(SidebarContainer) as React.ComponentClass;

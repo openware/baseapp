@@ -13,12 +13,14 @@ export function* getOrderSaga(action: P2POrderFetch) {
 
         yield put(p2pOrderData(data));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: p2pOrderError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: p2pOrderError,
+                },
+            }),
+        );
     }
 }

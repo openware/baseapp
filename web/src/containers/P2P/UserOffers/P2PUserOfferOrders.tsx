@@ -8,12 +8,7 @@ import { DEFAULT_CCY_PRECISION, DEFAULT_FIAT_PRECISION } from 'src/constants';
 import { localeDate, setOfferStatusColor, setStateType, setTradesType } from 'src/helpers';
 import { Decimal, Table } from '../../../components';
 import { useP2PUserOfferOrdersFetch } from '../../../hooks';
-import {
-    selectP2PUserOfferOrders,
-    P2POrder,
-    selectCurrencies,
-    cancelOffer,
-} from '../../../modules';
+import { cancelOffer, P2POrder, selectCurrencies, selectP2PUserOfferOrders } from '../../../modules';
 
 interface ParentProps {
     offerId: number;
@@ -27,14 +22,17 @@ const P2PUserOfferOrders: FC<Props> = (props: Props): ReactElement => {
     const offer = useSelector(selectP2PUserOfferOrders);
     const currencies = useSelector(selectCurrencies);
     const history = useHistory();
-    const { id } = useParams<{id?: string}>();
+    const { id } = useParams<{ id?: string }>();
     const translate = useCallback((key: string) => formatMessage({ id: key }), [formatMessage]);
 
     useP2PUserOfferOrdersFetch({ offer_id: Number(id) });
 
-    const handleCancel = useCallback((offer_id: number) => () => {
-        dispatch(cancelOffer({ id: offer_id }));
-    }, [cancelOffer, dispatch]);
+    const handleCancel = useCallback(
+        (offer_id: number) => () => {
+            dispatch(cancelOffer({ id: offer_id }));
+        },
+        [cancelOffer, dispatch],
+    );
 
     const headerTitles = () => [
         translate('page.body.p2p.my.offer_orders.table.date'),
@@ -47,7 +45,7 @@ const P2PUserOfferOrders: FC<Props> = (props: Props): ReactElement => {
     ];
 
     const getPrecision = (code: string) => {
-        return currencies.find(i => i.id === code)?.precision || DEFAULT_CCY_PRECISION;
+        return currencies.find((i) => i.id === code)?.precision || DEFAULT_CCY_PRECISION;
     };
 
     const retrieveData = useCallback(() => {
@@ -56,7 +54,11 @@ const P2PUserOfferOrders: FC<Props> = (props: Props): ReactElement => {
         }
 
         const { price, base, quote } = offer;
-        const priceItem = `${Decimal.format(price, getPrecision(quote) || DEFAULT_FIAT_PRECISION, ',')} ${base.toUpperCase()}/${quote.toUpperCase()}`;
+        const priceItem = `${Decimal.format(
+            price,
+            getPrecision(quote) || DEFAULT_FIAT_PRECISION,
+            ',',
+        )} ${base.toUpperCase()}/${quote.toUpperCase()}`;
         const amountPrecision = getPrecision(base);
 
         return offer.orders.map((item: P2POrder) => {
@@ -71,15 +73,23 @@ const P2PUserOfferOrders: FC<Props> = (props: Props): ReactElement => {
                 `${Decimal.format(amount, amountPrecision || DEFAULT_CCY_PRECISION, ',')} ${base.toUpperCase()}`,
                 <span>{user_uid}</span>,
                 <span style={{ color: stateColored.color }}>{stateColored.text}</span>,
-                ['prepared', 'wait'].includes(state) ? <div onClick={() => history.push(`/p2p/order/${item.id}`)}><ArrowRightIcon className="icon-right" /></div> : null,
+                ['prepared', 'wait'].includes(state) ? (
+                    <div onClick={() => history.push(`/p2p/order/${item.id}`)}>
+                        <ArrowRightIcon className="icon-right" />
+                    </div>
+                ) : null,
             ];
-        })
+        });
     }, [offer, currencies]);
 
     const p2pOfferInfo = useCallback(() => {
         const sideColored = setTradesType(offer?.side);
         const amountPrecision = getPrecision(offer?.base);
-        const priceItem = `${Decimal.format(offer?.price, getPrecision(offer?.quote) || DEFAULT_FIAT_PRECISION, ',')} ${offer?.quote.toUpperCase()}`;
+        const priceItem = `${Decimal.format(
+            offer?.price,
+            getPrecision(offer?.quote) || DEFAULT_FIAT_PRECISION,
+            ',',
+        )} ${offer?.quote.toUpperCase()}`;
 
         return offer ? (
             <div className="cr-user-p2p-offer-info">
@@ -96,7 +106,11 @@ const P2PUserOfferOrders: FC<Props> = (props: Props): ReactElement => {
                     <label></label>
                 </div>
                 <div>
-                    <span>{`${Decimal.format(offer.available_amount, amountPrecision || DEFAULT_CCY_PRECISION, ',')} ${offer.base.toUpperCase()}`}</span>
+                    <span>{`${Decimal.format(
+                        offer.available_amount,
+                        amountPrecision || DEFAULT_CCY_PRECISION,
+                        ',',
+                    )} ${offer.base.toUpperCase()}`}</span>
                     <label>{translate('page.body.p2p.my.offer_orders.table.available')}</label>
                 </div>
                 <div>
@@ -104,7 +118,9 @@ const P2PUserOfferOrders: FC<Props> = (props: Props): ReactElement => {
                     <label>{translate('page.body.p2p.my.offer_orders.table.price')}</label>
                 </div>
                 <div>
-                    <span style={{ color: setOfferStatusColor(offer.state) }}>{translate(`page.body.p2p.my.offers.${offer.state}`)}</span>
+                    <span style={{ color: setOfferStatusColor(offer.state) }}>
+                        {translate(`page.body.p2p.my.offers.${offer.state}`)}
+                    </span>
                     <label>{translate('page.body.p2p.my.offer_orders.table.status')}</label>
                 </div>
                 {offer.state === 'wait' ? (
@@ -117,19 +133,17 @@ const P2PUserOfferOrders: FC<Props> = (props: Props): ReactElement => {
             </div>
         ) : (
             <div className="cr-user-p2p-offer-info"></div>
-        )
+        );
     }, [offer]);
 
     return (
         <div className="cr-user-p2p-offer-orders">
             {p2pOfferInfo()}
             <div className="cr-user-p2p-offer-orders-table">
-                <Table header={headerTitles()} data={retrieveData()}/>
+                <Table header={headerTitles()} data={retrieveData()} />
             </div>
         </div>
     );
 };
 
-export {
-    P2PUserOfferOrders,
-}
+export { P2PUserOfferOrders };

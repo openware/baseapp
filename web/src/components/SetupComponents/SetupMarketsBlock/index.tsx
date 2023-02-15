@@ -52,31 +52,51 @@ export class SetupMarketsBlock extends React.Component<SetupMarketBlockProps, Se
                 <div className="setup-markets-block">
                     <div className="setup-markets-block__list">
                         <div className="setup-markets-block__list__title">Selected to your platform</div>
-                        <select size={marketsList.length} multiple={true} value={selectedAddedMarkets} onChange={(e) => this.handleSelectAddedMarket(Array.from(e.target.selectedOptions, option => option.value))}>
+                        <select
+                            size={marketsList.length}
+                            multiple={true}
+                            value={selectedAddedMarkets}
+                            onChange={(e) =>
+                                this.handleSelectAddedMarket(
+                                    Array.from(e.target.selectedOptions, (option) => option.value),
+                                )
+                            }>
                             {this.renderMarketList(addedMarkets)}
                         </select>
                     </div>
                     <div className="setup-markets-block__list">
                         <div className="setup-markets-block__list__command-add">
                             <div className="setup-markets-block__list__command" onClick={this.handleAddMarket}>
-                                <ArrowLeftIcon /><span>Add</span>
+                                <ArrowLeftIcon />
+                                <span>Add</span>
                             </div>
-                            <div  className="setup-markets-block__list__command"  onClick={this.handleAddAllMarkets}>
-                                <ArrowAllLeftIcon /><span>Add All</span>
+                            <div className="setup-markets-block__list__command" onClick={this.handleAddAllMarkets}>
+                                <ArrowAllLeftIcon />
+                                <span>Add All</span>
                             </div>
                         </div>
                         <div className="setup-markets-block__list__command-remove">
-                            <div  className="setup-markets-block__list__command" onClick={this.handleRemoveMarket}>
-                                <ArrowRightIcon /><span>Remove</span>
+                            <div className="setup-markets-block__list__command" onClick={this.handleRemoveMarket}>
+                                <ArrowRightIcon />
+                                <span>Remove</span>
                             </div>
-                            <div  className="setup-markets-block__list__command" onClick={this.handleRemoveAllMarkets}>
-                                <ArrowAllRightIcon /><span>Remove All</span>
+                            <div className="setup-markets-block__list__command" onClick={this.handleRemoveAllMarkets}>
+                                <ArrowAllRightIcon />
+                                <span>Remove All</span>
                             </div>
                         </div>
                     </div>
                     <div className="setup-markets-block__list">
                         <div className="setup-markets-block__list__title">Library</div>
-                        <select size={marketsList.length} multiple={true} value={selectedAvailableMarkets} onChange={e => this.handleSelectAvailableMarket(Array.from(e.target.selectedOptions, option => option.value))}>
+                        <select
+                            size={marketsList.length}
+                            multiple={true}
+                            value={selectedAvailableMarkets}
+                            onChange={(e) =>
+                                this.handleSelectAvailableMarket(
+                                    Array.from(e.target.selectedOptions, (option) => option.value),
+                                )
+                            }>
                             {this.renderMarketList(availableMarkets)}
                         </select>
                     </div>
@@ -88,8 +108,7 @@ export class SetupMarketsBlock extends React.Component<SetupMarketBlockProps, Se
                         size="lg"
                         variant="primary"
                         onClick={this.handleSave}
-                        disabled={!addedMarkets.length}
-                    >
+                        disabled={!addedMarkets.length}>
                         Save
                     </Button>
                 </div>
@@ -111,19 +130,25 @@ export class SetupMarketsBlock extends React.Component<SetupMarketBlockProps, Se
 
     private renderMarketList = (items: string[]) => {
         return items && items.length
-            ? items.map(item => <option key={item} value={item}>{item}</option>)
+            ? items.map((item) => (
+                  <option key={item} value={item}>
+                      {item}
+                  </option>
+              ))
             : null;
     };
 
     private handleAddMarket = () => {
         const addedMarkets = [...this.state.addedMarkets, ...this.state.selectedAvailableMarkets];
-        const availableMarkets = this.props.marketsList.filter(item => {
-             if (addedMarkets.indexOf(item.name) === -1) {
-                return item.name;
-             }
+        const availableMarkets = this.props.marketsList
+            .filter((item) => {
+                if (addedMarkets.indexOf(item.name) === -1) {
+                    return item.name;
+                }
 
-             return undefined;
-        }).filter(item => item !== undefined);
+                return undefined;
+            })
+            .filter((item) => item !== undefined);
 
         this.setState({
             addedMarkets,
@@ -141,20 +166,24 @@ export class SetupMarketsBlock extends React.Component<SetupMarketBlockProps, Se
     };
 
     private handleRemoveMarket = () => {
-        const addedMarkets = this.state.addedMarkets.filter(item => {
-            if (this.state.selectedAddedMarkets.indexOf(item) === -1) {
-                return item;
-            }
+        const addedMarkets = this.state.addedMarkets
+            .filter((item) => {
+                if (this.state.selectedAddedMarkets.indexOf(item) === -1) {
+                    return item;
+                }
 
-            return undefined;
-        }).filter(item => item !== undefined);
-        const availableMarkets = this.props.marketsList.filter(item => {
-             if (addedMarkets.indexOf(item.name) === -1) {
-                return item.name;
-             }
+                return undefined;
+            })
+            .filter((item) => item !== undefined);
+        const availableMarkets = this.props.marketsList
+            .filter((item) => {
+                if (addedMarkets.indexOf(item.name) === -1) {
+                    return item.name;
+                }
 
-             return undefined;
-        }).filter(item => item !== undefined);
+                return undefined;
+            })
+            .filter((item) => item !== undefined);
 
         this.setState({
             addedMarkets: addedMarkets,
@@ -177,19 +206,21 @@ export class SetupMarketsBlock extends React.Component<SetupMarketBlockProps, Se
         const { marketsList } = this.props;
         const { addedMarkets } = this.state;
 
-        const payloadMarkets = marketsList.map(item => {
-            if (addedMarkets.indexOf(item.name) !== -1) {
-                return {
-                    id: item.id,
-                    state: 'enabled',
-                };
-            }
+        const payloadMarkets = marketsList
+            .map((item) => {
+                if (addedMarkets.indexOf(item.name) !== -1) {
+                    return {
+                        id: item.id,
+                        state: 'enabled',
+                    };
+                }
 
-            return undefined;
-        }).filter(item => item !== undefined);
+                return undefined;
+            })
+            .filter((item) => item !== undefined);
 
         this.props.handleClickSave(payloadMarkets);
     };
 
-    private getAllMarketsNames = marketsList => marketsList.map(market => market.name);
+    private getAllMarketsNames = (marketsList) => marketsList.map((market) => market.name);
 }

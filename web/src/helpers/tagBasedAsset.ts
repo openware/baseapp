@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { CURRENCIES_DT, CURRENCIES_MEMO } from 'src/constants';
 
 export const requiresDTTag = (currency: string) => {

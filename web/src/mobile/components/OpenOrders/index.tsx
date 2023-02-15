@@ -19,7 +19,7 @@ const OpenOrdersComponent: React.FC = () => {
     const shouldFetchCancelAll = useSelector(selectShouldFetchCancelAll);
     const shouldFetchCancelSingle = useSelector(selectShouldFetchCancelSingle);
     useUserOrdersHistoryFetch(0, 'open', 25);
-    const waitOrders = orders.filter(o => ['wait', 'trigger_wait'].includes(o.state));
+    const waitOrders = orders.filter((o) => ['wait', 'trigger_wait'].includes(o.state));
 
     const handleCancelAllOrders = () => {
         if (shouldFetchCancelAll) {
@@ -29,11 +29,13 @@ const OpenOrdersComponent: React.FC = () => {
 
     const handleCancelSingleOrder = (id: number) => () => {
         if (shouldFetchCancelAll && shouldFetchCancelSingle) {
-            dispatch(ordersHistoryCancelFetch({
-                id,
-                type: 'open',
-                list: waitOrders,
-            }));
+            dispatch(
+                ordersHistoryCancelFetch({
+                    id,
+                    type: 'open',
+                    list: waitOrders,
+                }),
+            );
         }
     };
 
@@ -41,24 +43,20 @@ const OpenOrdersComponent: React.FC = () => {
         <div className="pg-mobile-open-orders">
             <div className="pg-mobile-open-orders__header">
                 <div className="pg-mobile-open-orders__header__block">
-                    <span>{intl.formatMessage({id: 'page.mobile.orders.open.title'})}</span>
+                    <span>{intl.formatMessage({ id: 'page.mobile.orders.open.title' })}</span>
                 </div>
                 <div className="pg-mobile-open-orders__header__block" onClick={handleCancelAllOrders}>
-                    <span>{intl.formatMessage({id: 'page.mobile.orders.cancelAll'})}</span>
+                    <span>{intl.formatMessage({ id: 'page.mobile.orders.cancelAll' })}</span>
                     <CloseIcon />
                 </div>
             </div>
             <div className="pg-mobile-open-orders__content">
                 {waitOrders.length ? (
                     waitOrders.map((order, index) => (
-                        <OrdersItem
-                            key={index}
-                            order={order}
-                            handleCancel={handleCancelSingleOrder}
-                        />
+                        <OrdersItem key={index} order={order} handleCancel={handleCancelSingleOrder} />
                     ))
                 ) : (
-                    <span className="no-data">{intl.formatMessage({id: 'page.noDataToShow'})}</span>
+                    <span className="no-data">{intl.formatMessage({ id: 'page.noDataToShow' })}</span>
                 )}
             </div>
         </div>

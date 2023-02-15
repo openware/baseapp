@@ -6,8 +6,7 @@ export const selectPaymentMethodModal = (state: RootState): PaymentMethodModal['
 export const selectPaymentMethodError = (state: RootState): PaymentMethodState['error'] =>
     state.user.paymentMethod.error;
 
-export const selectPaymentMethodList = (state: RootState): PaymentMethodState['list'] =>
-    state.user.paymentMethod.list;
+export const selectPaymentMethodList = (state: RootState): PaymentMethodState['list'] => state.user.paymentMethod.list;
 
 export const selectPaymentMethodSuccess = (state: RootState): PaymentMethodState['success'] =>
     state.user.paymentMethod.success;

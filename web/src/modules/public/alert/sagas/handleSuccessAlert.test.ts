@@ -30,26 +30,26 @@ describe('Alert success handler', () => {
     });
 
     const successActionPayload = {
-            message: ['Success message'],
-            type: 'success',
-        };
+        message: ['Success message'],
+        type: 'success',
+    };
 
     const expectedSuccessAlertPushAction = {
-            type: ALERT_PUSH,
-            payload: successActionPayload,
-        };
+        type: ALERT_PUSH,
+        payload: successActionPayload,
+    };
 
     const expectedSuccessAlertDataAction = {
-            type: ALERT_DATA,
-            payload: successActionPayload,
-        };
+        type: ALERT_DATA,
+        payload: successActionPayload,
+    };
 
     const expectedSuccessAlertDeleteAction = {
-            type: ALERT_DELETE,
-        };
+        type: ALERT_DELETE,
+    };
 
     it('should handle success alert', async () => {
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 switch (actions.length) {
@@ -62,7 +62,11 @@ describe('Alert success handler', () => {
                         setTimeout(resolve, 0.01);
                         break;
                     case 3:
-                        expect(actions).toEqual([expectedSuccessAlertPushAction, expectedSuccessAlertDataAction, expectedSuccessAlertDeleteAction]);
+                        expect(actions).toEqual([
+                            expectedSuccessAlertPushAction,
+                            expectedSuccessAlertDataAction,
+                            expectedSuccessAlertDeleteAction,
+                        ]);
                         setTimeout(resolve, 0.01);
                         break;
                     default:

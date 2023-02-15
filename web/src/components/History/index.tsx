@@ -14,7 +14,7 @@ export interface HistoryProps {
     /**
      * Callback called when a row is selected
      */
-     onSelect?: (key: string) => void;
+    onSelect?: (key: string) => void;
 }
 
 export class History extends React.PureComponent<HistoryProps> {
@@ -23,16 +23,9 @@ export class History extends React.PureComponent<HistoryProps> {
 
     public render() {
         const { headers = this.defaultHeaders, onSelect } = this.props;
-        const tableData = this.props.data.map(row => row.map(this.mapRows));
+        const tableData = this.props.data.map((row) => row.map(this.mapRows));
 
-        return (
-            <Table
-                data={tableData}
-                header={headers}
-                titleComponent={this.title}
-                onSelect={onSelect}
-            />
-        );
+        return <Table data={tableData} header={headers} titleComponent={this.title} onSelect={onSelect} />;
     }
 
     public renderAction(actionType: string) {
@@ -47,7 +40,7 @@ export class History extends React.PureComponent<HistoryProps> {
 
     private mapRows = (cell: CellData, index: number) => {
         const { headers = this.defaultHeaders } = this.props;
-        const actionIndex = headers.findIndex(header => header === 'Action');
+        const actionIndex = headers.findIndex((header) => header === 'Action');
 
         return index === actionIndex ? this.renderAction(cell as string) : cell;
     };

@@ -1,8 +1,4 @@
-import {
-    CONFIGS_FETCH,
-    CONFIGS_ERROR,
-    CONFIGS_DATA,
-} from './constants';
+import { CONFIGS_DATA, CONFIGS_ERROR, CONFIGS_FETCH } from './constants';
 
 export interface ConfigsFetch {
     type: typeof CONFIGS_FETCH;

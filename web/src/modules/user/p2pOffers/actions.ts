@@ -1,19 +1,19 @@
 import { Offer, P2POrder } from 'src/modules';
 import { CommonError } from '../../types';
 import {
+    P2P_CANCEL_OFFER_DATA,
+    P2P_CANCEL_OFFER_ERROR,
+    P2P_CANCEL_OFFER_FETCH,
     P2P_CREATE_OFFER_DATA,
     P2P_CREATE_OFFER_ERROR,
     P2P_CREATE_OFFER_FETCH,
-    P2P_USER_OFFER_ORDERS_DATA,
-    P2P_USER_OFFER_ORDERS_ERROR,
-    P2P_USER_OFFER_ORDERS_FETCH,
     P2P_USER_OFFERS_DATA,
     P2P_USER_OFFERS_ERROR,
     P2P_USER_OFFERS_FETCH,
     P2P_USER_OFFERS_UPDATE,
-    P2P_CANCEL_OFFER_DATA,
-    P2P_CANCEL_OFFER_ERROR,
-    P2P_CANCEL_OFFER_FETCH,
+    P2P_USER_OFFER_ORDERS_DATA,
+    P2P_USER_OFFER_ORDERS_ERROR,
+    P2P_USER_OFFER_ORDERS_FETCH,
 } from './constants';
 
 export interface OfferNestedOrders extends Offer {
@@ -94,7 +94,7 @@ export interface CancelOfferFetch {
     type: typeof P2P_CANCEL_OFFER_FETCH;
     payload: {
         id: number;
-    }
+    };
 }
 
 export interface CancelOfferData {
@@ -185,4 +185,3 @@ export const cancelOfferError = (error: CommonError): CancelOfferError => ({
     type: P2P_CANCEL_OFFER_ERROR,
     error,
 });
-

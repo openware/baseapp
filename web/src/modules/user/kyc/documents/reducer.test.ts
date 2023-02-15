@@ -15,7 +15,12 @@ describe('Documents reducer', () => {
             ...initialDocumentsState,
             loading: true,
         };
-        expect(documentsReducer(initialDocumentsState, actions.sendDocuments({front_side: payloadFormData, selfie: payloadFormData}))).toEqual(expectedState);
+        expect(
+            documentsReducer(
+                initialDocumentsState,
+                actions.sendDocuments({ front_side: payloadFormData, selfie: payloadFormData }),
+            ),
+        ).toEqual(expectedState);
     });
 
     it('should handle SEND_DOCUMENTS_DATA', () => {

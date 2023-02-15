@@ -1,12 +1,12 @@
 import classnames from 'classnames';
-import React, { FC, useState, useCallback } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { CustomInput, DropdownComponent } from 'src/components';
+import { HOST_URL } from 'src/constants';
 import { titleCase } from 'src/helpers';
+import { PaymentMethod, PaymentMethodStateModal } from 'src/modules';
 import { PaymentOptionInterface } from './';
 import { PaymentMethodSelector } from './PaymentMethodSelector';
-import { PaymentMethod, PaymentMethodStateModal } from 'src/modules';
-import { HOST_URL } from 'src/constants';
 
 export interface PaymentMethodModalProps {
     paymentOptions: PaymentOptionInterface[];
@@ -24,8 +24,8 @@ export interface PaymentMethodModalProps {
     setSearchKeyword: (keyword: string) => void;
 }
 
-export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
-    const [ showError, setShowError ] = useState<boolean>(false);
+export const PaymentMethodModal: FC<PaymentMethodModalProps> = (props) => {
+    const [showError, setShowError] = useState<boolean>(false);
     const { searchKeyword, paymentMethods, paymentOptions, modal, translate } = props;
 
     const renderHeader = useCallback(() => {
@@ -46,25 +46,31 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
                 break;
         }
 
-        return (<div className="cr-email-form__options-group">
-            <div className="cr-email-form__option">
-                <div className="cr-email-form__option-inner">
-                    {headerText}
-                    <span
-                        className="pg-profile-page__close pg-profile-page__pull-right"
-                        onClick={props.hideModal}
-                    />
+        return (
+            <div className="cr-email-form__options-group">
+                <div className="cr-email-form__option">
+                    <div className="cr-email-form__option-inner">
+                        {headerText}
+                        <span
+                            className="pg-profile-page__close pg-profile-page__pull-right"
+                            onClick={props.hideModal}
+                        />
+                    </div>
                 </div>
             </div>
-        </div>);
+        );
     }, [modal, translate]);
 
     const popularPaymentMethods = useCallback(() => {
         return paymentMethods && paymentMethods.length ? (
             <div className="popular-payment-methods">
-                {paymentMethods.map(item => (
+                {paymentMethods.map((item) => (
                     <div className="popular-payment-method" onClick={() => props.pickPaymentMethodToAdd(item)}>
-                        <img className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${item.id}/logo`} alt=""/>
+                        <img
+                            className="payment-method-logo ml-2 mr-3 mb-1"
+                            src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${item.id}/logo`}
+                            alt=""
+                        />
                         {item.name}
                     </div>
                 ))}
@@ -73,7 +79,7 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
     }, [paymentMethods]);
 
     const handleAddSubmit = useCallback(() => {
-        const hasError = paymentOptions.some(option => option.required && !option.value);
+        const hasError = paymentOptions.some((option) => option.required && !option.value);
         setShowError(hasError);
         if (!hasError) {
             props.addPaymentMethodConfirm();
@@ -81,31 +87,38 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
     }, [paymentOptions]);
 
     const handleUpdateSubmit = useCallback(() => {
-        const hasError = paymentOptions.some(option => option.required && !option.value);
+        const hasError = paymentOptions.some((option) => option.required && !option.value);
         setShowError(hasError);
         if (!hasError) {
             props.updatePaymentMethodConfirm();
         }
     }, [paymentOptions]);
 
-    const inputClass = useCallback((option: PaymentOptionInterface) => (
-        classnames('cr-email-form__group', {
-            'require-error': showError && option.required && !option.value,
-        })
-    ), [showError]);
+    const inputClass = useCallback(
+        (option: PaymentOptionInterface) =>
+            classnames('cr-email-form__group', {
+                'require-error': showError && option.required && !option.value,
+            }),
+        [showError],
+    );
 
     const renderCustomFields = useCallback(() => {
-        return paymentOptions.map(option => {
+        return paymentOptions.map((option) => {
             if (option.type === 'dropdown') {
                 return (
                     <div className={inputClass(option)}>
                         <DropdownComponent
                             list={option.options}
-                            onSelect={index => props.handleCustomFieldChange(option.options[index], option.key)}
+                            onSelect={(index) => props.handleCustomFieldChange(option.options[index], option.key)}
                             placeholder={option.name}
                         />
-                        {showError && option.required && !option.value &&
-                            <span className="error">{translate('page.body.profile.payment.modal.error.empty', {name: titleCase(option.name)})}</span>}
+                        {showError && option.required && !option.value && (
+                            <span className="error">
+                                {translate('page.body.profile.payment.modal.error.empty', {
+                                    name: titleCase(option.name),
+                                })}
+                            </span>
+                        )}
                     </div>
                 );
             } else {
@@ -123,20 +136,25 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
                             defaultLabel={option.description ? option.description : titleCase(option.key)}
                             placeholder={option.name ? option.name : titleCase(option.key)}
                             inputValue={option.value}
-                            handleChangeInput={value => props.handleCustomFieldChange(value, option.key)}
+                            handleChangeInput={(value) => props.handleCustomFieldChange(value, option.key)}
                         />
-                        {showError && option.required && !option.value &&
-                            <span className="error">{translate('page.body.profile.payment.modal.error.empty', {name: titleCase(option.name)})}</span>}
+                        {showError && option.required && !option.value && (
+                            <span className="error">
+                                {translate('page.body.profile.payment.modal.error.empty', {
+                                    name: titleCase(option.name),
+                                })}
+                            </span>
+                        )}
                     </div>
                 );
-            }            
+            }
         });
     }, [showError, paymentMethods, paymentOptions, props.handleCustomFieldChange]);
 
     const renderModalBody = useCallback(() => {
         let body;
         let button;
-        
+
         switch (props.modal.action) {
             case 'createStep1':
                 body = (
@@ -145,7 +163,9 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
                             paymentMethods={props.filtered}
                             searchKeyword={searchKeyword}
                             setSearchKeyword={props.setSearchKeyword}
-                            selectPaymentMethod={(selectedPaymentMethod) => props.pickPaymentMethodToAdd(selectedPaymentMethod)}
+                            selectPaymentMethod={(selectedPaymentMethod) =>
+                                props.pickPaymentMethodToAdd(selectedPaymentMethod)
+                            }
                             translate={translate}
                         />
                         <label>{translate('page.body.profile.payment.modal.body.popular')}</label>
@@ -154,71 +174,72 @@ export const PaymentMethodModal: FC<PaymentMethodModalProps> = props => {
                 );
                 break;
             case 'createStep2':
-                const pm = paymentMethods.find(p => +p.id === +modal.payment_method_id);
+                const pm = paymentMethods.find((p) => +p.id === +modal.payment_method_id);
                 body = (
                     <div>
                         <div className="picked-payment-method">
-                            {pm && <img className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${pm.id}/logo`} alt=""/>}
+                            {pm && (
+                                <img
+                                    className="payment-method-logo ml-2 mr-3 mb-1"
+                                    src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${pm.id}/logo`}
+                                    alt=""
+                                />
+                            )}
                             {pm?.name}
                         </div>
-                        <div className="custom-fields">
-                            {renderCustomFields()}
-                        </div>
+                        <div className="custom-fields">{renderCustomFields()}</div>
                     </div>
                 );
                 button = (
                     <div>
-                        <Button
-                            onClick={handleAddSubmit}
-                            size="lg"
-                            variant="primary"
-                            block={true}
-                        >{translate('page.body.profile.payment.modal.body.confirm')}</Button>
+                        <Button onClick={handleAddSubmit} size="lg" variant="primary" block={true}>
+                            {translate('page.body.profile.payment.modal.body.confirm')}
+                        </Button>
                     </div>
                 );
                 break;
             case 'update':
-                const pmUpdate = paymentMethods.find(p => +p.id === +modal.payment_method_id);
+                const pmUpdate = paymentMethods.find((p) => +p.id === +modal.payment_method_id);
                 body = (
                     <div>
                         <div className="picked-payment-method">
-                            {pmUpdate && <img className="payment-method-logo ml-2 mr-3 mb-1" src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${pmUpdate.id}/logo`} alt=""/>}
+                            {pmUpdate && (
+                                <img
+                                    className="payment-method-logo ml-2 mr-3 mb-1"
+                                    src={`${HOST_URL}/api/v2/p2p/public/payment_methods/${pmUpdate.id}/logo`}
+                                    alt=""
+                                />
+                            )}
                             {pmUpdate?.name}
                         </div>
-                        <div className="custom-fields">
-                            {renderCustomFields()}
-                        </div>
+                        <div className="custom-fields">{renderCustomFields()}</div>
                     </div>
                 );
                 button = (
                     <div>
-                        <Button
-                            onClick={handleUpdateSubmit}
-                            size="lg"
-                            variant="primary"
-                            block={true}
-                        >{translate('page.body.profile.payment.modal.body.confirm')}</Button>
+                        <Button onClick={handleUpdateSubmit} size="lg" variant="primary" block={true}>
+                            {translate('page.body.profile.payment.modal.body.confirm')}
+                        </Button>
                     </div>
                 );
-                break
+                break;
             case 'delete':
                 body = (
-                    <p>{translate('page.body.profile.payment.modal.body.sureDelete', {name: modal.name})}?</p>
+                    <p>
+                        {translate('page.body.profile.payment.modal.body.sureDelete', {
+                            name: modal.name,
+                        })}
+                        ?
+                    </p>
                 );
                 button = (
                     <div className="delete-confirm-buttons">
-                        <Button
-                            onClick={props.handleDelete}
-                            size="lg"
-                            variant="primary"
-                            block={true}
-                        >{translate('page.body.profile.payment.modal.body.yes')}</Button>
-                        <Button
-                            onClick={props.hideModal}
-                            size="lg"
-                            variant="light"
-                            block={true}
-                        >{translate('page.body.profile.payment.modal.body.no')}</Button>
+                        <Button onClick={props.handleDelete} size="lg" variant="primary" block={true}>
+                            {translate('page.body.profile.payment.modal.body.yes')}
+                        </Button>
+                        <Button onClick={props.hideModal} size="lg" variant="light" block={true}>
+                            {translate('page.body.profile.payment.modal.body.no')}
+                        </Button>
                     </div>
                 );
                 break;

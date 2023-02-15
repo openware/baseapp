@@ -21,17 +21,23 @@ export const WalletsHeader: React.FunctionComponent<ParentProps> = (props: Paren
 
     const searchFilter = (row: Wallet, searchKey: string) => {
         props.setFilterValue(searchKey);
-        return row ? row.name?.toLowerCase().includes(searchKey.toLowerCase()) || row.currency?.toLowerCase().includes(searchKey.toLowerCase()) : false;
+        return row
+            ? row.name?.toLowerCase().includes(searchKey.toLowerCase()) ||
+                  row.currency?.toLowerCase().includes(searchKey.toLowerCase())
+            : false;
     };
 
     const handleFilter = (result: object[]) => {
         props.setFilteredWallets(result as Wallet[]);
     };
 
-    const handleToggleCheckbox = React.useCallback(event => {
-        event.preventDefault();
-        props.handleClickCheckBox(!nonZeroSelected);
-    }, [nonZeroSelected, props.handleClickCheckBox]);
+    const handleToggleCheckbox = React.useCallback(
+        (event) => {
+            event.preventDefault();
+            props.handleClickCheckBox(!nonZeroSelected);
+        },
+        [nonZeroSelected, props.handleClickCheckBox],
+    );
 
     return (
         <div className="cr-wallets-header">
@@ -40,7 +46,7 @@ export const WalletsHeader: React.FunctionComponent<ParentProps> = (props: Paren
                     data={wallets}
                     onFilter={handleFilter}
                     filter={searchFilter}
-                    placeholder={intl.formatMessage({id: 'page.body.wallets.overview.seach'})}
+                    placeholder={intl.formatMessage({ id: 'page.body.wallets.overview.seach' })}
                 />
             </div>
             <Form className="cr-wallets-header__checkbox" onClick={handleToggleCheckbox}>
@@ -50,7 +56,7 @@ export const WalletsHeader: React.FunctionComponent<ParentProps> = (props: Paren
                     id="nonZeroSelected"
                     checked={nonZeroSelected}
                     readOnly={true}
-                    label={intl.formatMessage({id: 'page.body.wallets.overview.nonZero'})}
+                    label={intl.formatMessage({ id: 'page.body.wallets.overview.nonZero' })}
                 />
             </Form>
         </div>

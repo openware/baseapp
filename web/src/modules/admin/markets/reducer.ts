@@ -1,12 +1,12 @@
+import { MarketItem, MarketsAdminAction, MarketUpdateItem } from './actions';
 import {
-    MARKET_UPDATE_FETCH,
     MARKETS_LIST_DATA,
     MARKETS_LIST_ERROR,
     MARKETS_LIST_FETCH,
-    MARKET_UPDATE_ERROR,
     MARKET_UPDATE_DATA,
+    MARKET_UPDATE_ERROR,
+    MARKET_UPDATE_FETCH,
 } from './constants';
-import { MarketItem, MarketsAdminAction, MarketUpdateItem } from './actions';
 
 export interface MarketsAdminState {
     loading: boolean;
@@ -56,8 +56,8 @@ export const marketsAdminReducer = (state = initialMarketsAdminState, action: Ma
             };
         case MARKET_UPDATE_ERROR:
             return {
-              ...state,
-              loading: false,
+                ...state,
+                loading: false,
             };
         default:
             return {

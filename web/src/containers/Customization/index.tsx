@@ -85,16 +85,17 @@ class CustomizationContainer extends React.Component<Props, State> {
 
         return [
             {
-                content: currentTabIndex === 0 ? (
-                    <CustomizationThemes
-                        colorTheme={colorTheme}
-                        resetToDefault={resetToDefault}
-                        handleSetCurrentColorTheme={changeColorTheme}
-                        handleSetThemeId={this.handleUpdateState('currentThemeId')}
-                        handleTriggerChartRebuild={this.handleTriggerChartRebuild}
-                        translate={this.translate}
-                    />
-                ) : null,
+                content:
+                    currentTabIndex === 0 ? (
+                        <CustomizationThemes
+                            colorTheme={colorTheme}
+                            resetToDefault={resetToDefault}
+                            handleSetCurrentColorTheme={changeColorTheme}
+                            handleSetThemeId={this.handleUpdateState('currentThemeId')}
+                            handleTriggerChartRebuild={this.handleTriggerChartRebuild}
+                            translate={this.translate}
+                        />
+                    ) : null,
                 label: this.translate('page.body.customization.tabs.themes'),
             },
             {
@@ -106,13 +107,14 @@ class CustomizationContainer extends React.Component<Props, State> {
                 label: this.translate('page.body.customization.tabs.spacing'),
             },
             {
-                content: currentTabIndex === 3 ? (
-                    <CustomizationImages
-                        handleSetHeaderLogo={this.handleUpdateState('headerLogo')}
-                        resetToDefault={resetToDefault}
-                        translate={this.translate}
-                    />
-                ) : null,
+                content:
+                    currentTabIndex === 3 ? (
+                        <CustomizationImages
+                            handleSetHeaderLogo={this.handleUpdateState('headerLogo')}
+                            resetToDefault={resetToDefault}
+                            translate={this.translate}
+                        />
+                    ) : null,
                 label: this.translate('page.body.customization.tabs.images'),
             },
         ];
@@ -135,11 +137,7 @@ class CustomizationContainer extends React.Component<Props, State> {
         const { userLoggedIn, user } = this.props;
         const { currentTabIndex, isOpen } = this.state;
 
-        if (
-            !userLoggedIn ||
-            user?.role !== 'superadmin' ||
-            location.pathname === '/setup'
-        ) {
+        if (!userLoggedIn || user?.role !== 'superadmin' || location.pathname === '/setup') {
             return null;
         }
 
@@ -149,7 +147,7 @@ class CustomizationContainer extends React.Component<Props, State> {
 
         return (
             <div className={customizationClassName}>
-                <div className="pg-customization__toggler" onClick={e => this.handleToggleIsOpen()}>
+                <div className="pg-customization__toggler" onClick={(e) => this.handleToggleIsOpen()}>
                     <PaletteIcon />
                 </div>
                 <TabPanel
@@ -169,8 +167,9 @@ class CustomizationContainer extends React.Component<Props, State> {
 
     private handleClickSaveButton = () => {
         const { currentThemeId, headerLogo } = this.state;
-        const settingsFromConfig: CustomizationSettingsInterface | undefined =
-            window.env?.palette ? JSON.parse(window.env.palette) : undefined;
+        const settingsFromConfig: CustomizationSettingsInterface | undefined = window.env?.palette
+            ? JSON.parse(window.env.palette)
+            : undefined;
         const rootElement = document.documentElement;
         const bodyElement = document.querySelector<HTMLElement>('body')!;
         const currentColors: { [key: string]: ThemeColorInterface[] } = {
@@ -213,19 +212,19 @@ class CustomizationContainer extends React.Component<Props, State> {
             },
         };
 
-        if (currentThemeId >= 0 ) {
+        if (currentThemeId >= 0) {
             settings = {
                 ...settings,
                 theme_id: currentThemeId,
             };
-        };
+        }
 
         if (headerLogo) {
             settings = {
                 ...settings,
                 header_logo: headerLogo,
             };
-        };
+        }
 
         this.props.configUpdate({
             component: 'global',
@@ -249,7 +248,7 @@ class CustomizationContainer extends React.Component<Props, State> {
         return false;
     };
 
-    private handleUpdateState = (key: string) => value => {
+    private handleUpdateState = (key: string) => (value) => {
         // @ts-ignore
         this.setState({
             [key]: value,
@@ -257,7 +256,7 @@ class CustomizationContainer extends React.Component<Props, State> {
     };
 
     private handleToggleIsOpen = () => {
-        this.setState(prevState => ({
+        this.setState((prevState) => ({
             isOpen: !prevState.isOpen,
         }));
     };
@@ -266,7 +265,7 @@ class CustomizationContainer extends React.Component<Props, State> {
         this.props.toggleChartRebuild();
     };
 
-    private translate = (key: string) => this.props.intl.formatMessage({id: key});
+    private translate = (key: string) => this.props.intl.formatMessage({ id: key });
 }
 
 const mapStateToProps = (state: RootState): ReduxProps => ({
@@ -276,13 +275,14 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     userLoggedIn: selectUserLoggedIn(state),
 });
 
-const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        changeColorTheme: payload => dispatch(changeColorTheme(payload)),
-        configUpdate: payload => dispatch(configUpdate(payload)),
-        toggleChartRebuild: () => dispatch(toggleChartRebuild()),
-        triggerApplyWindowEnvs: () => dispatch(triggerApplyWindowEnvs()),
-    });
+const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+    changeColorTheme: (payload) => dispatch(changeColorTheme(payload)),
+    configUpdate: (payload) => dispatch(configUpdate(payload)),
+    toggleChartRebuild: () => dispatch(toggleChartRebuild()),
+    triggerApplyWindowEnvs: () => dispatch(triggerApplyWindowEnvs()),
+});
 
 // tslint:disable no-any
-export const Customization = injectIntl(withRouter(connect(mapStateToProps, mapDispatchProps)(CustomizationContainer) as any) as any);
+export const Customization = injectIntl(
+    withRouter(connect(mapStateToProps, mapDispatchProps)(CustomizationContainer) as any) as any,
+);

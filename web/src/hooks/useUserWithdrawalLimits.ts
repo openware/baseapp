@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { userWithdrawalsFetch, selectShouldFetchWithdrawalLimits } from '../modules';
+import { selectShouldFetchWithdrawalLimits, userWithdrawalsFetch } from '../modules';
 
 export const useUserWithdrawalsFetch = () => {
     const shouldDispatch = useSelector(selectShouldFetchWithdrawalLimits);

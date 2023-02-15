@@ -1,7 +1,4 @@
-import {
-    AVAILABLE_COLOR_TITLES,
-    CustomizationSettingsInterface,
-} from '../themes';
+import { AVAILABLE_COLOR_TITLES, CustomizationSettingsInterface } from '../themes';
 
 /*
 1. Remove all color variables from root and body elements
@@ -10,7 +7,7 @@ export const clearCustomizationSettings = () => {
     const rootElement = document.documentElement;
     const bodyElement = document.querySelector<HTMLElement>('body')!;
 
-    if (rootElement) {    
+    if (rootElement) {
         AVAILABLE_COLOR_TITLES.reduce((result, item) => {
             rootElement.style.removeProperty(item.key);
 
@@ -21,7 +18,7 @@ export const clearCustomizationSettings = () => {
             return result;
         }, {});
     }
-}
+};
 
 /*
 1. Set color style variables of root and body elements
@@ -31,8 +28,9 @@ export const applyCustomizationSettingsColors = (
     customization?: CustomizationSettingsInterface,
     toggleChartRebuild?: () => void,
 ) => {
-    const settingsFromConfig: CustomizationSettingsInterface | undefined =
-        window.env?.palette ? JSON.parse(window.env.palette) : undefined;
+    const settingsFromConfig: CustomizationSettingsInterface | undefined = window.env?.palette
+        ? JSON.parse(window.env.palette)
+        : undefined;
     const rootElement = document.documentElement;
     const bodyElement = document.querySelector<HTMLElement>('body')!;
     let shouldChartRebuild = false;
@@ -41,21 +39,21 @@ export const applyCustomizationSettingsColors = (
         AVAILABLE_COLOR_TITLES.reduce((result, item) => {
             let darkModeColor = undefined;
             let lightModeColor = undefined;
-    
+
             if (customization?.theme_colors?.dark) {
-                darkModeColor = customization.theme_colors.dark.find((color => color.key === item.key));
+                darkModeColor = customization.theme_colors.dark.find((color) => color.key === item.key);
             }
 
             if (!darkModeColor && settingsFromConfig?.theme_colors?.dark) {
-                darkModeColor = settingsFromConfig.theme_colors.dark.find((color => color.key === item.key));
+                darkModeColor = settingsFromConfig.theme_colors.dark.find((color) => color.key === item.key);
             }
 
             if (customization?.theme_colors?.light) {
-                lightModeColor = customization.theme_colors.light.find((color => color.key === item.key));
+                lightModeColor = customization.theme_colors.light.find((color) => color.key === item.key);
             }
 
             if (!lightModeColor && settingsFromConfig?.theme_colors?.light) {
-                lightModeColor = settingsFromConfig.theme_colors.light.find((color => color.key === item.key));
+                lightModeColor = settingsFromConfig.theme_colors.light.find((color) => color.key === item.key);
             }
 
             if (rootElement && darkModeColor) {

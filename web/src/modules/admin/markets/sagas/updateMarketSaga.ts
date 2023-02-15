@@ -1,13 +1,9 @@
 import { all, call, put } from 'redux-saga/effects';
+import { sendError } from '../../../';
 import { API, RequestOptions } from '../../../../api';
 import { getCsrfToken } from '../../../../helpers';
 import { alertPush } from '../../../public/alert';
-import {
-    updateMarketError,
-    updateMarketData,
-    MarketUpdateFetch,
-} from '../actions';
-import { sendError } from '../../../';
+import { MarketUpdateFetch, updateMarketData, updateMarketError } from '../actions';
 
 const enableMarketsConfig = (csrfToken?: string): RequestOptions => {
     return {
@@ -25,7 +21,11 @@ const configUpdateOptions = (csrfToken?: string): RequestOptions => {
 
 export function* updateMarketSaga(action: MarketUpdateFetch) {
     try {
-        yield all(action.payload.map(item => call(API.post(enableMarketsConfig(getCsrfToken())), '/admin/markets/update', item)));
+        yield all(
+            action.payload.map((item) =>
+                call(API.post(enableMarketsConfig(getCsrfToken())), '/admin/markets/update', item),
+            ),
+        );
         if (action.callbackAction) {
             const { scope, key, value, component } = action.callbackAction;
             const payload = {
@@ -36,15 +36,17 @@ export function* updateMarketSaga(action: MarketUpdateFetch) {
 
             yield call(API.put(configUpdateOptions(getCsrfToken())), `/admin/${component}/secret`, payload);
         }
-        yield put(alertPush({message: ['Market updated created'], type: 'success'}));
+        yield put(alertPush({ message: ['Market updated created'], type: 'success' }));
         yield put(updateMarketData());
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: updateMarketError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: updateMarketError,
+                },
+            }),
+        );
     }
 }

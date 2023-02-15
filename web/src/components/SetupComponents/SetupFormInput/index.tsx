@@ -19,7 +19,7 @@ export class SetupFormInput extends React.Component<SetupFormInputProps, SetupFo
         super(props);
 
         this.state = {
-          showTooltip: false,
+            showTooltip: false,
         };
     }
 
@@ -50,14 +50,13 @@ export class SetupFormInput extends React.Component<SetupFormInputProps, SetupFo
 
         return (
             <React.Fragment>
-                <div className="setup-form-input__input__tooltip" onMouseEnter={() => this.handleShowTooltip()} onMouseLeave={() => this.handleHideTooltip()}>
+                <div
+                    className="setup-form-input__input__tooltip"
+                    onMouseEnter={() => this.handleShowTooltip()}
+                    onMouseLeave={() => this.handleHideTooltip()}>
                     <TipIcon />
                 </div>
-                {showTooltip &&
-                    <div className="setup-form-input__input__info">
-                        {tooltipText}
-                    </div>
-                }
+                {showTooltip && <div className="setup-form-input__input__info">{tooltipText}</div>}
             </React.Fragment>
         );
     };
@@ -72,9 +71,9 @@ export class SetupFormInput extends React.Component<SetupFormInputProps, SetupFo
         this.setState({
             showTooltip: false,
         });
-    }
+    };
 
-    private handleChangeValue = e => {
+    private handleChangeValue = (e) => {
         this.props.handleChangeInput && this.props.handleChangeInput(e.target.value);
     };
 

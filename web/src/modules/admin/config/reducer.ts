@@ -25,14 +25,11 @@ export const configUpdateReducer = (state = initialConfigUpdateState, action: Co
                 data: undefined,
             };
         case CONFIG_UPDATE_DATA:
-            if (
-                action.payload.component === 'global' &&
-                action.payload.scope === 'public'
-            ) {
+            if (action.payload.component === 'global' && action.payload.scope === 'public') {
                 window.env = {
                     ...window.env,
-                    [action.payload.key]: action.payload.value
-                }
+                    [action.payload.key]: action.payload.value,
+                };
             }
 
             return {

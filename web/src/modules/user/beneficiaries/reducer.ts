@@ -55,7 +55,7 @@ export interface BeneficiariesState {
     delete: {
         data: {
             id: number;
-        }
+        };
         fetching: boolean;
         success: boolean;
         error?: CommonError;
@@ -63,7 +63,7 @@ export interface BeneficiariesState {
     resendPin: {
         data: {
             id: number;
-        }
+        };
         fetching: boolean;
         success: boolean;
         error?: CommonError;
@@ -121,7 +121,7 @@ export const beneficiariesFetchReducer = (state: BeneficiariesState['fetch'], ac
             };
         case BENEFICIARIES_DATA_UPDATE:
             const updatedData: Beneficiary[] = [...state.data];
-            const updateItemIndex = updatedData.findIndex(item => action.payload && action.payload.id === item.id);
+            const updateItemIndex = updatedData.findIndex((item) => action.payload && action.payload.id === item.id);
 
             if (updateItemIndex > -1) {
                 updatedData[updateItemIndex] = action.payload;
@@ -281,7 +281,7 @@ export const beneficiariesReducer = (state = initialBeneficiariesState, action: 
         case BENEFICIARIES_ERROR:
             return {
                 ...state,
-                fetch: beneficiariesFetchReducer({...state.fetch}, action),
+                fetch: beneficiariesFetchReducer({ ...state.fetch }, action),
             };
         case BENEFICIARIES_CREATE:
         case BENEFICIARIES_CREATE_DATA:
@@ -317,7 +317,7 @@ export const beneficiariesReducer = (state = initialBeneficiariesState, action: 
                 activate: initialBeneficiariesState.activate,
                 resendPin: initialBeneficiariesState.resendPin,
                 delete: initialBeneficiariesState.delete,
-            }
+            };
         default:
             return state;
     }

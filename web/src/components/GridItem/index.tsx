@@ -1,5 +1,5 @@
-import classnames from "classnames";
-import * as React from "react";
+import classnames from 'classnames';
+import * as React from 'react';
 
 export interface GridItemProps {
     /*
@@ -25,7 +25,7 @@ export interface GridChildInterface {
 
 const GridItem: React.FunctionComponent<GridItemProps> = (props: GridItemProps) => {
     const { className, children, title } = props;
-    const cx = classnames("cr-grid-item", className);
+    const cx = classnames('cr-grid-item', className);
 
     return (
         <div className={cx}>

@@ -33,7 +33,7 @@ const setup = (props: Partial<SignInProps> = {}) =>
     shallow(
         <TestComponentWrapper>
             <SignInComponent {...{ ...defaults, ...props }} />
-        </TestComponentWrapper>
+        </TestComponentWrapper>,
     );
 
 // TODO: We need to rewrite tests in order to test hooks
@@ -58,13 +58,19 @@ describe('SignIn component', () => {
     });
 
     it('should have correct labels', () => {
-        const wrapper = setup({ labelSignIn: 'label sign in', labelSignUp: 'label sign up' }).render();
+        const wrapper = setup({
+            labelSignIn: 'label sign in',
+            labelSignUp: 'label sign up',
+        }).render();
         expect(wrapper.find('.__selected').text()).toBe('label sign in');
         expect(wrapper.find('.cr-sign-in-form__tab-signup').text()).toBe('label sign up');
     });
 
     it('should render error blocks', () => {
-        const wrapper = setup({ emailError: 'error email', passwordError: 'error password' }).render();
+        const wrapper = setup({
+            emailError: 'error email',
+            passwordError: 'error password',
+        }).render();
         expect(wrapper.find('.cr-sign-in-form__error').first().text()).toBe('error email');
         expect(wrapper.find('.cr-sign-in-form__error').last().text()).toBe('error password');
     });
@@ -116,11 +122,17 @@ describe('SignIn component', () => {
     });
 
     it('should render captcha block', () => {
-        let wrapper = setup({captchaType: 'recaptcha', renderCaptcha: <div className="cr-sign-in-form__recaptcha">Content</div>});
-        captchaLogin() ?
-        expect(wrapper.find('.cr-sign-in-form__recaptcha').exists()).toBe(true) :
-        expect(wrapper.find('.cr-sign-in-form__recaptcha').exists()).toBe(false);
-        wrapper = setup({captchaType: 'none', renderCaptcha: <div className="cr-sign-in-form__recaptcha">Content</div>});
+        let wrapper = setup({
+            captchaType: 'recaptcha',
+            renderCaptcha: <div className="cr-sign-in-form__recaptcha">Content</div>,
+        });
+        captchaLogin()
+            ? expect(wrapper.find('.cr-sign-in-form__recaptcha').exists()).toBe(true)
+            : expect(wrapper.find('.cr-sign-in-form__recaptcha').exists()).toBe(false);
+        wrapper = setup({
+            captchaType: 'none',
+            renderCaptcha: <div className="cr-sign-in-form__recaptcha">Content</div>,
+        });
         expect(wrapper.find('.cr-sign-in-form__recaptcha').exists()).toBe(false);
     });
 });

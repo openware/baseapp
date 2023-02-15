@@ -46,7 +46,9 @@ const CurrentMarketInfoComponent: React.FC = () => {
                     data={markets}
                     onFilter={handleFilter}
                     filter={searchFilter}
-                    placeholder={intl.formatMessage({id: 'page.mobile.currentMarketInfo.search.placeholder'})}
+                    placeholder={intl.formatMessage({
+                        id: 'page.mobile.currentMarketInfo.search.placeholder',
+                    })}
                 />
             </div>
             <div className="cr-mobile-modal__header-close" onClick={() => setOpenMarketSelector(false)}>
@@ -57,7 +59,9 @@ const CurrentMarketInfoComponent: React.FC = () => {
 
     const currentMarketPricePrecision = currentMarket ? currentMarket.price_precision : DEFAULT_CCY_PRECISION;
     const currentMarketTicker = (currentMarket && tickers[currentMarket.id]) || defaultTicker;
-    const currentMarketTickerChange = +(+currentMarketTicker.last - +currentMarketTicker.open).toFixed(currentMarketPricePrecision);
+    const currentMarketTickerChange = +(+currentMarketTicker.last - +currentMarketTicker.open).toFixed(
+        currentMarketPricePrecision,
+    );
     const currentMarketChangeClass = classnames('', {
         'change-positive': (+currentMarketTickerChange || 0) >= 0,
         'change-negative': (+currentMarketTickerChange || 0) < 0,
@@ -73,7 +77,9 @@ const CurrentMarketInfoComponent: React.FC = () => {
     return (
         <div className="pg-mobile-current-market-info">
             <div className="pg-mobile-current-market-info__left">
-                <div className="pg-mobile-current-market-info__left__selector" onClick={() => setOpenMarketSelector(!isOpenMarketSelector)}>
+                <div
+                    className="pg-mobile-current-market-info__left__selector"
+                    onClick={() => setOpenMarketSelector(!isOpenMarketSelector)}>
                     <span>{currentMarket ? currentMarket.name : ''}</span>
                     <div className={isOpenMarketSelectorClass}>
                         <ChevronIcon />
@@ -85,16 +91,20 @@ const CurrentMarketInfoComponent: React.FC = () => {
                     </span>
                     <span className={currentMarketChangeClass}>
                         {currentMarketTicker.price_change_percent?.charAt(0)}
-                        {Decimal.format(currentMarketTicker.price_change_percent?.slice(1, -1), DEFAULT_PERCENTAGE_PRECISION, ',')}
+                        {Decimal.format(
+                            currentMarketTicker.price_change_percent?.slice(1, -1),
+                            DEFAULT_PERCENTAGE_PRECISION,
+                            ',',
+                        )}
                         %
                     </span>
                 </div>
             </div>
             <div className="pg-mobile-current-market-info__right">
                 <div className="pg-mobile-current-market-info__right__col">
-                    <span>{intl.formatMessage({id: 'page.mobile.currentMarketInfo.volume'})}</span>
-                    <span>{intl.formatMessage({id: 'page.mobile.currentMarketInfo.high'})}</span>
-                    <span>{intl.formatMessage({id: 'page.mobile.currentMarketInfo.low'})}</span>
+                    <span>{intl.formatMessage({ id: 'page.mobile.currentMarketInfo.volume' })}</span>
+                    <span>{intl.formatMessage({ id: 'page.mobile.currentMarketInfo.high' })}</span>
+                    <span>{intl.formatMessage({ id: 'page.mobile.currentMarketInfo.low' })}</span>
                 </div>
                 <div className="pg-mobile-current-market-info__right__col">
                     <span className={currentMarketChangeClass}>

@@ -1,9 +1,5 @@
 import * as React from 'react';
-import {
-    DocumentationEndpoints,
-    DocumentationHeader,
-    DocumentationModels,
-} from '../../components';
+import { DocumentationEndpoints, DocumentationHeader, DocumentationModels } from '../../components';
 import { useDocumentationFetch } from '../../hooks';
 
 export const DocumentationScreen: React.FC = () => {

@@ -38,10 +38,7 @@ describe('api keys saga', () => {
         mockAxios.onDelete(url).reply(200, fakeResponse);
     };
 
-    const expectedUpdateApiKeyFetchSuccess = [
-        apiKeyDeleteFetch(fakePayload),
-        apiKeyDelete(fakeResponse),
-    ];
+    const expectedUpdateApiKeyFetchSuccess = [apiKeyDeleteFetch(fakePayload), apiKeyDelete(fakeResponse)];
 
     const expectedpdateApiKeyFetchError = [
         apiKeyDeleteFetch(fakePayload),
@@ -56,7 +53,7 @@ describe('api keys saga', () => {
 
     it('should delete api key', async () => {
         mockDeleteApiKey();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedUpdateApiKeyFetchSuccess.length) {
@@ -72,7 +69,7 @@ describe('api keys saga', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedpdateApiKeyFetchError.length) {

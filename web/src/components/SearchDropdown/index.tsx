@@ -1,5 +1,5 @@
-import * as React from "react";
-import Select, { OnChangeValue } from "react-select";
+import * as React from 'react';
+import Select, { OnChangeValue } from 'react-select';
 
 export interface OptionsInterface {
     label: string;
@@ -17,7 +17,7 @@ interface OwnProps {
 export const SearchDropdown: React.FC<OwnProps> = ({ className, onSelect, options, placeholder, classNamePrefix }) => (
     <Select
         className={className}
-        classNamePrefix={classNamePrefix || "cr-search-dropdown"}
+        classNamePrefix={classNamePrefix || 'cr-search-dropdown'}
         options={options}
         onChange={onSelect}
         placeholder={placeholder}

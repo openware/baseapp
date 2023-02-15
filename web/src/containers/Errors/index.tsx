@@ -29,10 +29,10 @@ class HandleErrorWrapper extends React.Component<ErrorProps, ErrorWrapperState> 
     }
 
     public componentDidCatch(error, info) {
-        Sentry.withScope(scope => {
+        Sentry.withScope((scope) => {
             scope.setExtras(info);
             const eventId = Sentry.captureException(error);
-            this.setState({eventId});
+            this.setState({ eventId });
         });
     }
 

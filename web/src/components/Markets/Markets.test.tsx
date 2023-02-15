@@ -1,4 +1,4 @@
-import { mount, ReactWrapper, shallow, ShallowWrapper } from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 import { TestComponentWrapper } from 'lib/test';
 import * as React from 'react';
 import { spy } from 'sinon';
@@ -20,7 +20,7 @@ const setup = (props?: Partial<MarketsProps>) =>
     shallow(
         <TestComponentWrapper>
             <Markets {...{ ...defaultProps, ...props }} />
-        </TestComponentWrapper>
+        </TestComponentWrapper>,
     );
 
 describe('Markets', () => {

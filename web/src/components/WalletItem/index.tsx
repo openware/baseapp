@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Wallet, Currency, Market, Ticker } from '../../modules';
+import { formatWithSeparators } from 'src/components';
+import { VALUATION_PRIMARY_CURRENCY } from 'src/constants';
+import { estimateUnitValue } from '../../helpers/estimateValue';
+import { Currency, Market, Ticker, Wallet } from '../../modules';
 import { CryptoIcon } from '../CryptoIcon';
 import { Decimal } from '../Decimal';
-import { estimateUnitValue } from '../../helpers/estimateValue';
-import { VALUATION_PRIMARY_CURRENCY } from 'src/constants';
-import { formatWithSeparators } from 'src/components';
 
 const style: React.CSSProperties = {
     display: 'flex',
@@ -13,8 +13,8 @@ const style: React.CSSProperties = {
 
 interface WalletItemProps {
     currencies: Currency[];
-    tickers:{
-        [key: string]: Ticker,
+    tickers: {
+        [key: string]: Ticker;
     };
     markets: Market[];
 }
@@ -24,17 +24,7 @@ type Props = Wallet & WalletItemProps;
  * Component for displaying information about wallet, including address and amount of currency.
  */
 export const WalletItem: React.FunctionComponent<Props> = (props: Props) => {
-    const {
-        currency,
-        name,
-        balance,
-        active,
-        fixed,
-        iconUrl,
-        markets,
-        tickers,
-        currencies,
-    } = props;
+    const { currency, name, balance, active, fixed, iconUrl, markets, tickers, currencies } = props;
     const cName = `cr-wallet-item ${active ? 'cr-wallet-item--active' : ''}`;
     const estimatedValue = Number(balance)
         ? estimateUnitValue(currency.toUpperCase(), VALUATION_PRIMARY_CURRENCY, +balance, currencies, markets, tickers)
@@ -64,10 +54,10 @@ export const WalletItem: React.FunctionComponent<Props> = (props: Props) => {
                 </div>
             </div>
             <span className="cr-wallet-item__balance">
-                <Decimal fixed={fixed} thousSep=",">{balance ? balance.toString() : '0'}</Decimal>
-                <div className="cr-wallet-item__balance-price">
-                    {`≈ $${formatWithSeparators(estimatedValue, ',')}`}
-                </div>
+                <Decimal fixed={fixed} thousSep=",">
+                    {balance ? balance.toString() : '0'}
+                </Decimal>
+                <div className="cr-wallet-item__balance-price">{`≈ $${formatWithSeparators(estimatedValue, ',')}`}</div>
             </span>
         </div>
     );

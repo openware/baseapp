@@ -1,8 +1,6 @@
 import { CommonState } from '../../types';
 import { CurrenciesAction } from './actions';
-import {
-    CURRENCIES_DATA,
-} from './constants';
+import { CURRENCIES_DATA } from './constants';
 import { Currency } from './types';
 
 export interface CurrenciesState extends CommonState {

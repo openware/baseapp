@@ -1,8 +1,8 @@
 import React, { FC, ReactElement, useCallback } from 'react';
 import { Button } from 'react-bootstrap';
 import { useHistory } from 'react-router';
-import { LockedIcon } from 'src/assets/images/LockedIcon';
 import { ArrowRight } from 'src/assets/images/ArrowRight';
+import { LockedIcon } from 'src/assets/images/LockedIcon';
 
 interface Props {
     text: string;
@@ -18,14 +18,9 @@ export const LockedComponent: FC<Props> = (props: Props): ReactElement => {
 
     return (
         <div className="cr-locked">
-            <LockedIcon className="cr-locked__icon"/>
+            <LockedIcon className="cr-locked__icon" />
             <span className="cr-locked__content">{text}</span>
-            <Button
-                onClick={handleClick}
-                size="lg"
-                variant="secondary"
-                className="cr-locked__btn-content"
-            >
+            <Button onClick={handleClick} size="lg" variant="secondary" className="cr-locked__btn-content">
                 {buttonText} <ArrowRight className="cr-locked__btn-icon" />
             </Button>
         </div>

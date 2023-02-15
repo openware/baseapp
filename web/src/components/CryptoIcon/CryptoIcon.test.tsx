@@ -11,7 +11,7 @@ const setup = (props: Partial<CryptoIconProps> = {}) =>
     shallow(
         <TestComponentWrapper>
             <CryptoIcon {...{ ...defaultProps, ...props }} />
-        </TestComponentWrapper>
+        </TestComponentWrapper>,
     );
 
 describe('CryptoIcon', () => {

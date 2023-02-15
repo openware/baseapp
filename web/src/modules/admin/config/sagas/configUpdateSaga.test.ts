@@ -4,7 +4,7 @@ import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { mockNetworkError, setupMockAxios, setupMockStore } from '../../../../helpers/jest';
 import { rootSaga, sendError } from '../../../index';
 import { CommonError } from '../../../types';
-import { configUpdate, configUpdateData, configUpdateError } from '../actions';
+import { configUpdate, configUpdateError } from '../actions';
 import { ConfigUpdateDataInterface } from '../types';
 
 describe('Saga: configUpdateSaga', () => {
@@ -40,13 +40,11 @@ describe('Saga: configUpdateSaga', () => {
     };
 
     it('should update config', async () => {
-        const expectedActions = [
-            configUpdate(fakeConfig),
-        ];
+        const expectedActions = [configUpdate(fakeConfig)];
 
         mockConfigUpdate();
 
-        const promise = new Promise<void>(resolve => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {
@@ -61,7 +59,6 @@ describe('Saga: configUpdateSaga', () => {
         return promise;
     });
 
-
     it('should trigger an error on config update', async () => {
         const expectedActions = [
             configUpdate(fakeConfig),
@@ -75,7 +72,7 @@ describe('Saga: configUpdateSaga', () => {
         ];
 
         mockNetworkError(mockAxios);
-        const promise = new Promise<void>(resolve => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {

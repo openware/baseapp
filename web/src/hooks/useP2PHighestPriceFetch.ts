@@ -7,7 +7,12 @@ export const useP2PHighestPriceFetch = (base?: Currency, quote?: Currency) => {
 
     React.useEffect(() => {
         if (base && quote) {
-            dispatch(p2pHighestPriceFetch({ base: base.id.toLowerCase(), quote: quote.id.toLowerCase() }));
+            dispatch(
+                p2pHighestPriceFetch({
+                    base: base.id.toLowerCase(),
+                    quote: quote.id.toLowerCase(),
+                }),
+            );
         }
     }, [base, quote, p2pHighestPriceFetch]);
 };

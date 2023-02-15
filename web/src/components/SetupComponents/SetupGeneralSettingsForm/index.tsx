@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { SetupFormInput } from '../';
 import { Button } from 'react-bootstrap';
+import { SetupFormInput } from '../';
 import { DOMAIN_REGEX, EXCHANGE_NAME_REGEX } from '../../../helpers';
 
 export interface SetupGeneralSettingsFormProps {
@@ -12,7 +12,10 @@ export interface SetupGeneralSettingsFormState {
     exchangeUrl: string;
 }
 
-export class SetupGeneralSettingsForm extends React.Component<SetupGeneralSettingsFormProps, SetupGeneralSettingsFormState> {
+export class SetupGeneralSettingsForm extends React.Component<
+    SetupGeneralSettingsFormProps,
+    SetupGeneralSettingsFormState
+> {
     constructor(props: SetupGeneralSettingsFormProps) {
         super(props);
 
@@ -50,8 +53,7 @@ export class SetupGeneralSettingsForm extends React.Component<SetupGeneralSettin
                         size="lg"
                         variant="primary"
                         onClick={this.handleCreateSettingsSecrets}
-                        disabled={!validExchangeUrl || !validExchangeName}
-                    >
+                        disabled={!validExchangeUrl || !validExchangeName}>
                         Next
                     </Button>
                 </div>

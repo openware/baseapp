@@ -101,8 +101,10 @@ const UploadFileComponent: React.FC<Props> = ({
                                 </span>
                             ) : null}
                             {fileSizeErrorMessage ? (
-                                <span className="pg-upload-file__content__form__error__text">{fileSizeErrorMessage}</span>
-                            ) : null }
+                                <span className="pg-upload-file__content__form__error__text">
+                                    {fileSizeErrorMessage}
+                                </span>
+                            ) : null}
                             {sizesText ? (
                                 <span className="pg-upload-file__content__form__info__text">{sizesText}</span>
                             ) : null}

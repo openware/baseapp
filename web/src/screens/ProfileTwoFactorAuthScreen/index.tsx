@@ -66,24 +66,20 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
 
     public doCopy = () => {
         copy('referral-id');
-        this.props.fetchSuccess({message: ['page.body.wallets.tabs.deposit.ccy.message.success'], type: 'success'});
+        this.props.fetchSuccess({
+            message: ['page.body.wallets.tabs.deposit.ccy.message.success'],
+            type: 'success',
+        });
     };
 
     public render() {
         const enable2fa = this.get2faAction();
 
-        return (
-            <div className="pg-profile-two-factor-auth">
-                {this.renderToggle2fa(enable2fa)}
-            </div>
-        );
+        return <div className="pg-profile-two-factor-auth">{this.renderToggle2fa(enable2fa)}</div>;
     }
 
     private renderToggle2fa = (enable2fa: boolean) => {
-        const {
-            barcode,
-            qrUrl,
-        } = this.props;
+        const { barcode, qrUrl } = this.props;
         const { otpCode } = this.state;
 
         const secretRegex = /secret=(\w+)/;
@@ -106,19 +102,46 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                     <div className="col-12 col-lg-8 col-md-9 pr-0 pl-2 pg-profile-two-factor-auth__body--text d-inline-block">
                         <div className="row col-12 pg-profile-two-factor-auth__body--text--group">
                             <div className="d-inline">
-                                <span className="cr-item-number">1   </span>
-                                <span className="cr-item-text">{this.translate('page.body.profile.header.account.content.twoFactorAuthentication.message.1')}</span>
-                                <a target="_blank" rel="noopener noreferrer" href="https://apps.apple.com/app/google-authenticator/id388497605?mt=8">AppStore</a>
-                                <span className="cr-item-text"> {this.translate('page.body.profile.header.account.content.twoFactorAuthentication.message.or')}</span>
-                                <a target="_blank" rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl">Google play</a>
+                                <span className="cr-item-number">1 </span>
+                                <span className="cr-item-text">
+                                    {this.translate(
+                                        'page.body.profile.header.account.content.twoFactorAuthentication.message.1',
+                                    )}
+                                </span>
+                                <a
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    href="https://apps.apple.com/app/google-authenticator/id388497605?mt=8">
+                                    AppStore
+                                </a>
+                                <span className="cr-item-text">
+                                    {' '}
+                                    {this.translate(
+                                        'page.body.profile.header.account.content.twoFactorAuthentication.message.or',
+                                    )}
+                                </span>
+                                <a
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl">
+                                    Google play
+                                </a>
                             </div>
                         </div>
                         <div className="row col-12 pg-profile-two-factor-auth__body--text--group">
                             <div className="d-inline">
-                                <span className="cr-item-number">2    </span>
-                                <span className="cr-item-text">{this.translate('page.body.profile.header.account.content.twoFactorAuthentication.message.2')}</span>
+                                <span className="cr-item-number">2 </span>
+                                <span className="cr-item-text">
+                                    {this.translate(
+                                        'page.body.profile.header.account.content.twoFactorAuthentication.message.2',
+                                    )}
+                                </span>
                                 <br />
-                                <span className="cr-item-text">{this.translate('page.body.profile.header.account.content.twoFactorAuthentication.message.3')}</span>
+                                <span className="cr-item-text">
+                                    {this.translate(
+                                        'page.body.profile.header.account.content.twoFactorAuthentication.message.3',
+                                    )}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -133,19 +156,31 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                     <div className="col-12 pl-2 pg-profile-two-factor-auth__body--text d-inline-block">
                         <div className="row col-12 pg-profile-two-factor-auth__body--text--group">
                             <div className="col-12 col-sm-5">
-                                <span className="cr-item-number">3   </span>
-                                <span className="cr-item-text">{this.translate('page.body.profile.header.account.content.twoFactorAuthentication.message.4')}</span>
+                                <span className="cr-item-number">3 </span>
+                                <span className="cr-item-text">
+                                    {this.translate(
+                                        'page.body.profile.header.account.content.twoFactorAuthentication.message.4',
+                                    )}
+                                </span>
                             </div>
                             <div className="col-12 col-sm-7">
                                 <fieldset className="pg-profile-two-factor-auth__body--input">
-                                    <div className="hidden-label">{this.translate('page.body.profile.header.account.content.twoFactorAuthentication.subHeader')}</div>
+                                    <div className="hidden-label">
+                                        {this.translate(
+                                            'page.body.profile.header.account.content.twoFactorAuthentication.subHeader',
+                                        )}
+                                    </div>
                                     <CustomInput
                                         handleChangeInput={this.handleOtpCodeChange}
                                         type="tel"
                                         inputValue={otpCode}
-                                        placeholder={this.translate('page.body.profile.header.account.content.twoFactorAuthentication.subHeader')}
+                                        placeholder={this.translate(
+                                            'page.body.profile.header.account.content.twoFactorAuthentication.subHeader',
+                                        )}
                                         onKeyPress={this.handleEnterPress}
-                                        label={this.translate('page.body.profile.header.account.content.twoFactorAuthentication.subHeader')}
+                                        label={this.translate(
+                                            'page.body.profile.header.account.content.twoFactorAuthentication.subHeader',
+                                        )}
                                         defaultLabel=""
                                     />
                                 </fieldset>
@@ -155,13 +190,7 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
                 </div>
                 <div className="row p-5">
                     <div className="col-12 m-0">
-                        <Button
-                            onClick={submitHandler}
-                            size="lg"
-                            variant="primary"
-                            type="button"
-                            block={true}
-                        >
+                        <Button onClick={submitHandler} size="lg" variant="primary" type="button" block={true}>
                             {this.translate('page.body.profile.header.account.content.twoFactorAuthentication.enable')}
                         </Button>
                     </div>
@@ -179,15 +208,18 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
     private renderSecret = (secret: string) => {
         return (
             <div className="pg-profile-two-factor-auth__copyablefield__container">
-                <legend>{this.translate('page.body.profile.header.account.content.twoFactorAuthentication.message.mfa')}</legend>
+                <legend>
+                    {this.translate('page.body.profile.header.account.content.twoFactorAuthentication.message.mfa')}
+                </legend>
                 <fieldset onClick={this.doCopy}>
-                    {secret && <CopyableTextField
-                      value={secret}
-                      fieldId="secret-2fa"
-                      label=""
-                      isMobile={this.props.isMobileDevice}
-                    />
-                    }
+                    {secret && (
+                        <CopyableTextField
+                            value={secret}
+                            fieldId="secret-2fa"
+                            label=""
+                            isMobile={this.props.isMobileDevice}
+                        />
+                    )}
                 </fieldset>
             </div>
         );
@@ -237,17 +269,17 @@ class ToggleTwoFactorAuthComponent extends React.Component<Props, State> {
     };
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, Props, RootState> = state => ({
+const mapStateToProps: MapStateToProps<ReduxProps, Props, RootState> = (state) => ({
     qrUrl: selectTwoFactorAuthQR(state),
     barcode: selectTwoFactorAuthBarcode(state),
     success: selectTwoFactorAuthSuccess(state),
     isMobileDevice: selectMobileDeviceState(state),
 });
 
-const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
+const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = (dispatch) => ({
     generateQR: () => dispatch(generate2faQRFetch()),
     toggle2fa: ({ code, enable }) => dispatch(toggle2faFetch({ code, enable })),
-    fetchSuccess: payload => dispatch(alertPush(payload)),
+    fetchSuccess: (payload) => dispatch(alertPush(payload)),
 });
 
 export const ProfileTwoFactorAuthScreen = compose(

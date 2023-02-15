@@ -100,7 +100,7 @@ export interface P2PHighestPriceError {
 }
 
 export type P2PActions =
-    OffersFetch
+    | OffersFetch
     | OffersData
     | OffersError
     | P2PCurrenciesFetch

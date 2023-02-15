@@ -17,7 +17,7 @@ const renderPasswordStrengthMeter = (passwordStrengthMeterLength: number) => (
     <div className="pg-password-strength-meter">
         <div
             className={`pg-password-strength-meter__block ${passwordStrengthClassName(
-                passwordStrengthMeterLength
+                passwordStrengthMeterLength,
             )}`}></div>
     </div>
 );
@@ -31,7 +31,7 @@ const renderPasswordStrengthTip = (props: PasswordStrengthMeterProps, passwordSt
                 </div>
                 <div
                     className={`pg-password-pop-up__strength-status ${passwordStrengthClassName(
-                        passwordStrengthMeterLength
+                        passwordStrengthMeterLength,
                     )}`}>
                     {passwordStrengthStatus(passwordStrengthMeterLength, props.translate)}
                 </div>

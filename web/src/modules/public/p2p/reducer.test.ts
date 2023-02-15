@@ -1,6 +1,6 @@
 import { CommonError } from '../../types';
 import * as actions from './actions';
-import { p2pReducer, initialP2PState } from './reducer';
+import { initialP2PState, p2pReducer } from './reducer';
 import { Offer, P2PCurrency, PaymentMethod } from './types';
 
 describe('P2P reducer', () => {
@@ -94,7 +94,9 @@ describe('P2P reducer', () => {
             },
         };
 
-        expect(p2pReducer(initialP2PState, actions.offersFetch({ page: 0, limit: 1, side: '' }))).toEqual(expectedState);
+        expect(p2pReducer(initialP2PState, actions.offersFetch({ page: 0, limit: 1, side: '' }))).toEqual(
+            expectedState,
+        );
     });
 
     it('should handle offersData', () => {
@@ -113,9 +115,11 @@ describe('P2P reducer', () => {
                 payment_method: undefined,
                 error: undefined,
             },
-         };
+        };
 
-        expect(p2pReducer(initialP2PState, actions.offersData({ list: fakeOffersArray, page: 1, total: 2, side: '' }))).toEqual(expectedState);
+        expect(
+            p2pReducer(initialP2PState, actions.offersData({ list: fakeOffersArray, page: 1, total: 2, side: '' })),
+        ).toEqual(expectedState);
     });
 
     it('should handle offersError', () => {
@@ -157,7 +161,7 @@ describe('P2P reducer', () => {
                 fetching: false,
                 success: true,
             },
-         };
+        };
 
         expect(p2pReducer(initialP2PState, actions.p2pCurrenciesData(fakeP2PCurrenciesArray))).toEqual(expectedState);
     });
@@ -199,9 +203,11 @@ describe('P2P reducer', () => {
                 fetching: false,
                 success: true,
             },
-         };
+        };
 
-        expect(p2pReducer(initialP2PState, actions.p2pPaymentMethodsData(fakeP2PPaymentMethods))).toEqual(expectedState);
+        expect(p2pReducer(initialP2PState, actions.p2pPaymentMethodsData(fakeP2PPaymentMethods))).toEqual(
+            expectedState,
+        );
     });
 
     it('should handle p2pPaymentMethodsError', () => {

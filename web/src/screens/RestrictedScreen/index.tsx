@@ -29,22 +29,18 @@ class Restricted extends React.Component<Props> {
     }
 
     public render() {
-        return(
+        return (
             <div className="pg-restricted-screen">
-                <div className="pg-restricted-screen__title">
-                    404
-                </div>
-                <div className="pg-restricted-screen__content">
-                    {this.translate('page.body.restricted')}
-                </div>
+                <div className="pg-restricted-screen__title">404</div>
+                <div className="pg-restricted-screen__content">{this.translate('page.body.restricted')}</div>
             </div>
         );
     }
 
-    private translate = (key: string) => this.props.intl.formatMessage({id: key});
+    private translate = (key: string) => this.props.intl.formatMessage({ id: key });
 }
 
-const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = (state) => ({
     status: selectPlatformAccessStatus(state),
 });
 

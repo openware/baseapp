@@ -62,12 +62,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
     }
 
     public render() {
-        const {
-            phoneNumber,
-            phoneNumberFocused,
-            confirmationCode,
-            confirmationCodeFocused,
-        } = this.state;
+        const { phoneNumber, phoneNumberFocused, confirmationCode, confirmationCodeFocused } = this.state;
         const { loading } = this.props;
 
         const phoneNumberFocusedClass = cr('pg-confirm__content-phone__row__content', {
@@ -105,9 +100,10 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                                         size="lg"
                                         variant="primary"
                                         type="submit"
-                                        disabled={!phoneNumber}
-                                    >
-                                        {this.state.resendCode ? this.translate('page.body.kyc.phone.resend') : this.translate('page.body.kyc.phone.send')}
+                                        disabled={!phoneNumber}>
+                                        {this.state.resendCode
+                                            ? this.translate('page.body.kyc.phone.resend')
+                                            : this.translate('page.body.kyc.phone.send')}
                                     </Button>
                                 </InputGroup.Append>
                             </InputGroup>
@@ -134,17 +130,12 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
                         onClick={this.confirmPhone}
                         size="lg"
                         variant="primary"
-                        disabled={!confirmationCode || loading}
-                    >
+                        disabled={!confirmationCode || loading}>
                         {loading ? (
-                            <Spinner
-                                as="span"
-                                animation="border"
-                                size="sm"
-                                role="status"
-                                aria-hidden="true"
-                            />
-                        ) : this.translate('page.body.kyc.next')}
+                            <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+                        ) : (
+                            this.translate('page.body.kyc.next')
+                        )}
                     </Button>
                 </div>
             </div>
@@ -152,11 +143,11 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
     }
 
     private handleFieldFocus = (field: string) => {
-        return() => {
+        return () => {
             switch (field) {
                 case 'phoneNumber':
                     this.addPlusSignToPhoneNumber();
-                    this.setState(prev => ({
+                    this.setState((prev) => ({
                         phoneNumberFocused: !prev.phoneNumberFocused,
                     }));
                     break;
@@ -232,7 +223,7 @@ class PhoneComponent extends React.Component<Props, PhoneState> {
         return condition.test(convertedText);
     };
 
-    private handleSendCode = event => {
+    private handleSendCode = (event) => {
         event.preventDefault();
         const requestProps = {
             phone_number: String(this.state.phoneNumber),
@@ -256,13 +247,12 @@ const mapStateToProps = (state: RootState): ReduxProps => ({
     loading: selectVerifyPhoneLoading(state),
 });
 
-const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> =
-    dispatch => ({
-        resendCode: phone => dispatch(resendCode(phone)),
-        sendCode: phone => dispatch(sendCode(phone)),
-        verifyPhone: payload => dispatch(verifyPhone(payload)),
-        changeUserLevel: payload => dispatch(changeUserLevel(payload)),
-    });
+const mapDispatchToProps: MapDispatchToPropsFunction<DispatchProps, {}> = (dispatch) => ({
+    resendCode: (phone) => dispatch(resendCode(phone)),
+    sendCode: (phone) => dispatch(sendCode(phone)),
+    verifyPhone: (payload) => dispatch(verifyPhone(payload)),
+    changeUserLevel: (payload) => dispatch(changeUserLevel(payload)),
+});
 
 export const Phone = compose(
     injectIntl,

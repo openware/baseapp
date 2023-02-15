@@ -12,12 +12,8 @@ export class SetupFormBlock extends React.Component<SetupFormBlockProps> {
 
         return (
             <div className="setup-form-block">
-                <div className="setup-form-block__title">
-                    {title}
-                </div>
-                <div className="setup-form-block__subtitle">
-                    {subtitle}
-                </div>
+                <div className="setup-form-block__title">{title}</div>
+                <div className="setup-form-block__subtitle">{subtitle}</div>
                 {this.renderChildren()}
             </div>
         );
@@ -27,11 +23,7 @@ export class SetupFormBlock extends React.Component<SetupFormBlockProps> {
         const { children } = this.props;
 
         if (children) {
-            return (
-                <div className="setup-form-block__children">
-                    {children}
-                </div>
-            );
+            return <div className="setup-form-block__children">{children}</div>;
         }
 
         return null;

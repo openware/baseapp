@@ -33,7 +33,7 @@ export const TwoFactorAuthComponent: React.FC<TwoFactorAuthProps> = ({
                 onSubmit();
             }
         },
-        [onSubmit, otpCode]
+        [onSubmit, otpCode],
     );
 
     return (

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useEffect, useState } from 'react';
 
 interface TimerProps {
     initialMinutes: number;
@@ -10,14 +10,14 @@ interface TimerProps {
 }
 
 export const Timer = (props: TimerProps) => {
-    const {initialMinutes = 0, initialSeconds = 0, handleRequest, showTimer } = props;
+    const { initialMinutes = 0, initialSeconds = 0, handleRequest, showTimer } = props;
     const [minutes, setMinutes] = useState(initialMinutes);
     const [seconds, setSeconds] = useState(initialSeconds);
 
     useEffect(() => {
         setSeconds(initialSeconds);
         setMinutes(initialMinutes);
-    }, [props.updateTimer])
+    }, [props.updateTimer]);
 
     useEffect(() => {
         let myInterval = setInterval(() => {
@@ -44,10 +44,12 @@ export const Timer = (props: TimerProps) => {
 
     const renderTimer = React.useMemo(() => {
         if (showTimer) {
-            return (+minutes === 0 && +seconds === 0 ?
+            return +minutes === 0 && +seconds === 0 ? (
                 <div className={props.className}>00:00</div>
-                :
-                <div className={props.className}>{+minutes < 10 ?`0${minutes}` : minutes}:{+seconds < 10 ?  `0${seconds}` : seconds}</div>
+            ) : (
+                <div className={props.className}>
+                    {+minutes < 10 ? `0${minutes}` : minutes}:{+seconds < 10 ? `0${seconds}` : seconds}
+                </div>
             );
         }
 
@@ -55,4 +57,4 @@ export const Timer = (props: TimerProps) => {
     }, [showTimer]);
 
     return renderTimer;
-}
+};

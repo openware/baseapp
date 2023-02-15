@@ -29,7 +29,8 @@ export interface SetBlocklistStatus {
     };
 }
 
-export type SendAccessTokenAction = SendAccessTokenFetch
+export type SendAccessTokenAction =
+    | SendAccessTokenFetch
     | SendAccessTokenData
     | SendAccessTokenError
     | SetBlocklistStatus;

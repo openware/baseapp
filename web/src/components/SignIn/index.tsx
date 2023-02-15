@@ -88,26 +88,27 @@ const SignIn: React.FC<SignInProps> = ({
         (value: string) => {
             changeEmail(value);
         },
-        [changeEmail]
+        [changeEmail],
     );
 
     const handleChangePassword = React.useCallback(
         (value: string) => {
             changePassword(value);
         },
-        [changePassword]
+        [changePassword],
     );
 
     const handleFieldFocus = React.useCallback(
         (field: string) => {
             handleChangeFocusField(field);
         },
-        [handleChangeFocusField]
+        [handleChangeFocusField],
     );
 
-    const isButtonDisabled = React.useMemo(() =>
-        !!(captchaLogin() && captchaType !== 'none' && !(reCaptchaSuccess || geetestCaptchaSuccess)),
-    [reCaptchaSuccess, geetestCaptchaSuccess]);
+    const isButtonDisabled = React.useMemo(
+        () => !!(captchaLogin() && captchaType !== 'none' && !(reCaptchaSuccess || geetestCaptchaSuccess)),
+        [reCaptchaSuccess, geetestCaptchaSuccess],
+    );
 
     const handleSubmitForm = React.useCallback(() => {
         refreshError();
@@ -129,7 +130,7 @@ const SignIn: React.FC<SignInProps> = ({
                 handleSubmitForm();
             }
         },
-        [handleSubmitForm, handleValidateForm, isValidForm]
+        [handleSubmitForm, handleValidateForm, isValidForm],
     );
 
     const handleEnterPress = React.useCallback(
@@ -140,7 +141,7 @@ const SignIn: React.FC<SignInProps> = ({
                 handleClick();
             }
         },
-        [handleClick]
+        [handleClick],
     );
 
     const renderForgotButton = React.useMemo(
@@ -151,7 +152,7 @@ const SignIn: React.FC<SignInProps> = ({
                 </div>
             </div>
         ),
-        [forgotPasswordLabel, onForgotPassword, email]
+        [forgotPasswordLabel, onForgotPassword, email],
     );
 
     const renderRegister = React.useMemo(
@@ -165,7 +166,7 @@ const SignIn: React.FC<SignInProps> = ({
                 </span>
             </div>
         ),
-        [formatMessage, history]
+        [formatMessage, history],
     );
 
     return (

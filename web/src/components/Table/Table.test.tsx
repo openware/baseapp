@@ -1,7 +1,6 @@
-import { mount, ReactWrapper, shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { TestComponentWrapper } from 'lib/test';
 import * as React from 'react';
-import { start } from 'repl';
 import { spy } from 'sinon';
 import { CellData, Filter, Table, TableProps, TableState } from '.';
 
@@ -9,7 +8,7 @@ const setup = (props: TableProps) =>
     shallow(
         <TestComponentWrapper>
             <Table {...props} />
-        </TestComponentWrapper>
+        </TestComponentWrapper>,
     );
 
 describe('Table render', () => {

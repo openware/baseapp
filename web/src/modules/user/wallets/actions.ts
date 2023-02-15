@@ -1,9 +1,9 @@
 import { CommonError } from '../../types';
 import {
-    P2P_WALLETS_FETCH,
     P2P_WALLETS_DATA,
-    P2P_WALLETS_ERROR,
     P2P_WALLETS_DATA_WS,
+    P2P_WALLETS_ERROR,
+    P2P_WALLETS_FETCH,
     SET_MOBILE_WALLET_UI,
     WALLETS_ADDRESS_DATA,
     WALLETS_ADDRESS_DATA_WS,
@@ -14,12 +14,12 @@ import {
     WALLETS_ERROR,
     WALLETS_FETCH,
     WALLETS_RESET,
+    WALLETS_USER_WITHDRAWALS_DATA,
+    WALLETS_USER_WITHDRAWALS_ERROR,
+    WALLETS_USER_WITHDRAWALS_FETCH,
     WALLETS_WITHDRAW_CCY_DATA,
     WALLETS_WITHDRAW_CCY_ERROR,
     WALLETS_WITHDRAW_CCY_FETCH,
-    WALLETS_USER_WITHDRAWALS_ERROR,
-    WALLETS_USER_WITHDRAWALS_DATA,
-    WALLETS_USER_WITHDRAWALS_FETCH,
 } from './constants';
 import { Wallet, WalletAddress, WalletWithdrawCCY } from './types';
 
@@ -130,7 +130,8 @@ export interface P2PWalletsDataByRanger {
     };
 }
 
-export type WalletsAction = WalletsFetch
+export type WalletsAction =
+    | WalletsFetch
     | WalletsData
     | WalletsDataByRanger
     | WalletsError
@@ -154,12 +155,12 @@ export type WalletsAction = WalletsFetch
 export const userWithdrawalsFetch = (): UserWithdrawalsFetch => ({
     type: WALLETS_USER_WITHDRAWALS_FETCH,
 });
-    
+
 export const userWithdrawalsData = (payload: UserWithdrawalsData['payload']): UserWithdrawalsData => ({
     type: WALLETS_USER_WITHDRAWALS_DATA,
     payload,
 });
-    
+
 export const userWithdrawalsError = (error: CommonError): UserWithdrawalsError => ({
     type: WALLETS_USER_WITHDRAWALS_ERROR,
     error,

@@ -22,12 +22,14 @@ export function* tickersSaga() {
             yield put(marketsTickersData(convertedTickers));
         }
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: marketsTickersError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: marketsTickersError,
+                },
+            }),
+        );
     }
 }

@@ -39,40 +39,52 @@ const Dispute: FC<Props> = (props: Props): ReactElement => {
     const handleUploadScan = useCallback((uploadEvent) => {
         const allFiles: File[] = uploadEvent.target.files;
         const maxDocsCount = 1;
-        const additionalFileList = Array.from(allFiles).length > maxDocsCount ?  Array.from(allFiles).slice(0, maxDocsCount) : Array.from(allFiles);
+        const additionalFileList =
+            Array.from(allFiles).length > maxDocsCount
+                ? Array.from(allFiles).slice(0, maxDocsCount)
+                : Array.from(allFiles);
 
         setAttachment(additionalFileList);
     }, []);
 
-    const clickNotReceive = useCallback((e, msg) => {
-        if (e) {
-            e.preventDefault();
-            setNotReceive(!notReceive);
-            setTooLong(false);
-            setAmountDifferent(false);
-            setReason(msg);
-        }
-    }, [notReceive]);
+    const clickNotReceive = useCallback(
+        (e, msg) => {
+            if (e) {
+                e.preventDefault();
+                setNotReceive(!notReceive);
+                setTooLong(false);
+                setAmountDifferent(false);
+                setReason(msg);
+            }
+        },
+        [notReceive],
+    );
 
-    const clickTooLong = useCallback((e, msg) => {
-        if (e) {
-            e.preventDefault();
-            setTooLong(!tooLong);
-            setAmountDifferent(false);
-            setNotReceive(false);
-            setReason(msg);
-        }
-    }, [tooLong]);
+    const clickTooLong = useCallback(
+        (e, msg) => {
+            if (e) {
+                e.preventDefault();
+                setTooLong(!tooLong);
+                setAmountDifferent(false);
+                setNotReceive(false);
+                setReason(msg);
+            }
+        },
+        [tooLong],
+    );
 
-    const clickAmountDifferent = useCallback((e, msg) => {
-        if (e) {
-            e.preventDefault();
-            setAmountDifferent(!amountDifferent);
-            setTooLong(false);
-            setNotReceive(false);
-            setReason(msg);
-        }
-    }, [amountDifferent]);
+    const clickAmountDifferent = useCallback(
+        (e, msg) => {
+            if (e) {
+                e.preventDefault();
+                setAmountDifferent(!amountDifferent);
+                setTooLong(false);
+                setNotReceive(false);
+                setReason(msg);
+            }
+        },
+        [amountDifferent],
+    );
 
     const handleSubmitCLick = useCallback(() => {
         if (order) {
@@ -86,24 +98,29 @@ const Dispute: FC<Props> = (props: Props): ReactElement => {
         }
     }, [order, attachment, message, reason]);
 
-    const checkBoxField = useCallback((id: string, checked: boolean, onClick: (e, message) => void) => (
-        <Form className="cr-dispute__checkbox" onClick={e => onClick(e, REASON_MESSAGES[id])}>
-            <Form.Check
-                type="checkbox"
-                custom
-                id={id}
-                checked={checked}
-                readOnly={true}
-                label={translate(`page.body.p2p.dispute.checkbox.${id}`)}
-            />
-        </Form>
-    ), []);
+    const checkBoxField = useCallback(
+        (id: string, checked: boolean, onClick: (e, message) => void) => (
+            <Form className="cr-dispute__checkbox" onClick={(e) => onClick(e, REASON_MESSAGES[id])}>
+                <Form.Check
+                    type="checkbox"
+                    custom
+                    id={id}
+                    checked={checked}
+                    readOnly={true}
+                    label={translate(`page.body.p2p.dispute.checkbox.${id}`)}
+                />
+            </Form>
+        ),
+        [],
+    );
 
-    const messageFocusClass = useCallback(() => (
-        classnames('cr-dispute__group', {
-            'cr-dispute--focused': messageFocused,
-        })
-    ), [messageFocused]);
+    const messageFocusClass = useCallback(
+        () =>
+            classnames('cr-dispute__group', {
+                'cr-dispute--focused': messageFocused,
+            }),
+        [messageFocused],
+    );
 
     return (
         <div className="cr-dispute">
@@ -127,7 +144,7 @@ const Dispute: FC<Props> = (props: Props): ReactElement => {
                 <div className={messageFocusClass()}>
                     <Form.Control
                         placeholder={translate('page.body.p2p.dispute.message.placeholder')}
-                        onChange={e => setMessage(e.target.value)}
+                        onChange={(e) => setMessage(e.target.value)}
                         value={message}
                         onFocus={() => setMessageFocused(!messageFocused)}
                         className="cr-dispute__input__textarea"
@@ -137,12 +154,7 @@ const Dispute: FC<Props> = (props: Props): ReactElement => {
                 </div>
             </div>
             <div className="cr-dispute__btn-wrapper__grid">
-                <Button
-                    onClick={handleSubmitCLick}
-                    size="lg"
-                    variant="primary"
-                    disabled={!attachment.length}
-                >
+                <Button onClick={handleSubmitCLick} size="lg" variant="primary" disabled={!attachment.length}>
                     {translate('page.body.p2p.dispute.submit')}
                 </Button>
             </div>
@@ -150,6 +162,4 @@ const Dispute: FC<Props> = (props: Props): ReactElement => {
     );
 };
 
-export {
-    Dispute,
-};
+export { Dispute };

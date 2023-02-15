@@ -40,11 +40,8 @@ describe('Saga: memberLevelsFetchSaga', () => {
 
     it('should fetch memberLevels in success flow', async () => {
         mockMemberLevels();
-        const expectedMemberLevelsActionsFetch = [
-            memberLevelsFetch(),
-            memberLevelsData(fakeMemberLevels),
-        ];
-        const promise = new Promise(resolve => {
+        const expectedMemberLevelsActionsFetch = [memberLevelsFetch(), memberLevelsData(fakeMemberLevels)];
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedMemberLevelsActionsFetch.length) {
@@ -70,7 +67,7 @@ describe('Saga: memberLevelsFetchSaga', () => {
                 },
             }),
         ];
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedMemberLevelsActionsError.length) {

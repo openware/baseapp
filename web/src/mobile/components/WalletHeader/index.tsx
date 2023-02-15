@@ -22,6 +22,4 @@ const WalletHeaderComponent = (props: Props) => {
 
 const WalletHeader = React.memo(WalletHeaderComponent);
 
-export {
-    WalletHeader,
-};
+export { WalletHeader };

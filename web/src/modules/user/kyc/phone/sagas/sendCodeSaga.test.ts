@@ -49,7 +49,7 @@ describe('Module: phone', () => {
 
     it('should fetch label in success flow', async () => {
         mockLabel();
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -66,7 +66,7 @@ describe('Module: phone', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

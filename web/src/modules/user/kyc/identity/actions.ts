@@ -43,7 +43,8 @@ export interface EditIdentityError {
     error: CommonError;
 }
 
-export type IdentityAction = SendIdentityFetch
+export type IdentityAction =
+    | SendIdentityFetch
     | SendIdentityData
     | SendIdentityError
     | EditIdentityFetch

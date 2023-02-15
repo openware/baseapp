@@ -2,12 +2,12 @@ import { Offer } from 'src/modules';
 import { CommonError } from '../../types';
 import * as actions from './actions';
 import {
-    P2P_CREATE_OFFER_DATA,
-    P2P_CREATE_OFFER_ERROR,
-    P2P_CREATE_OFFER_FETCH,
     P2P_CANCEL_OFFER_DATA,
     P2P_CANCEL_OFFER_ERROR,
     P2P_CANCEL_OFFER_FETCH,
+    P2P_CREATE_OFFER_DATA,
+    P2P_CREATE_OFFER_ERROR,
+    P2P_CREATE_OFFER_FETCH,
 } from './constants';
 
 describe('P2P actions', () => {

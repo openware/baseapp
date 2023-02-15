@@ -2,13 +2,10 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
-import { useWalletsFetch } from '../../../hooks';
-import {
-    selectWallets,
-    Wallet,
-} from '../../../modules/user/wallets';
-import { Subheader, WalletDepositBody, WalletHeader } from '../../components';
 import { DEFAULT_WALLET } from '../../../constants';
+import { useWalletsFetch } from '../../../hooks';
+import { selectWallets, Wallet } from '../../../modules/user/wallets';
+import { Subheader, WalletDepositBody, WalletHeader } from '../../components';
 
 const WalletDeposit: React.FC = () => {
     const intl = useIntl();
@@ -18,7 +15,7 @@ const WalletDeposit: React.FC = () => {
 
     useWalletsFetch();
 
-    const wallet: Wallet = wallets.find(item => item.currency === currency) || DEFAULT_WALLET;
+    const wallet: Wallet = wallets.find((item) => item.currency === currency) || DEFAULT_WALLET;
 
     return (
         <React.Fragment>
@@ -27,12 +24,10 @@ const WalletDeposit: React.FC = () => {
                 backTitle={intl.formatMessage({ id: 'page.body.wallets.balance' })}
                 onGoBack={() => history.push(`/wallets/${currency}/history`)}
             />
-            <WalletHeader currency={wallet.currency} name={wallet.name}/>
-            <WalletDepositBody wallet={wallet}/>
+            <WalletHeader currency={wallet.currency} name={wallet.name} />
+            <WalletDepositBody wallet={wallet} />
         </React.Fragment>
     );
 };
 
-export {
-    WalletDeposit,
-};
+export { WalletDeposit };

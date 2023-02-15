@@ -16,10 +16,7 @@ export interface MemberLevelsError {
     error: CommonError;
 }
 
-export type MemberLevelsAction =
-    MemberLevelsFetch
-    | MemberLevelsData
-    | MemberLevelsError;
+export type MemberLevelsAction = MemberLevelsFetch | MemberLevelsData | MemberLevelsError;
 
 export const memberLevelsFetch = (): MemberLevelsFetch => ({
     type: MEMBER_LEVELS_FETCH,

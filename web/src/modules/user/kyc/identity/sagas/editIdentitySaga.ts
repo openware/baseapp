@@ -17,14 +17,16 @@ export function* editIdentitySaga(action: EditIdentityFetch) {
         const defaultMessage = 'success.identity.accepted';
         const { message = defaultMessage } = response;
         yield put(editIdentityData({ message }));
-        yield put(alertPush({message: [defaultMessage], type: 'success'}));
+        yield put(alertPush({ message: [defaultMessage], type: 'success' }));
     } catch (error) {
-        yield put(sendError({
-            error,
-            processingType: 'alert',
-            extraOptions: {
-                actionError: editIdentityError,
-            },
-        }));
+        yield put(
+            sendError({
+                error,
+                processingType: 'alert',
+                extraOptions: {
+                    actionError: editIdentityError,
+                },
+            }),
+        );
     }
 }

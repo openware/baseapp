@@ -26,13 +26,11 @@ const data = [
 
 const defaults: FilterInputProps = {
     data,
-    filter: (item: typeof data[0], term) => String(item.cryptoCode).toLowerCase()
-        .indexOf(term.toLowerCase()) !== -1,
+    filter: (item: (typeof data)[0], term) => String(item.cryptoCode).toLowerCase().indexOf(term.toLowerCase()) !== -1,
     onFilter: spy(),
 };
 
-const setup = (props: Partial<FilterInputProps> = {}) =>
-    shallow(<FilterInput {...{ ...defaults, ...props }} />);
+const setup = (props: Partial<FilterInputProps> = {}) => shallow(<FilterInput {...{ ...defaults, ...props }} />);
 
 describe('FilterInput', () => {
     let wrapper: ShallowWrapper;
@@ -66,8 +64,6 @@ describe('FilterInput', () => {
             },
         });
 
-        expect((defaults.onFilter as SinonSpy).calledOnceWith(
-            [defaults.data[0]],
-        )).toBeTruthy();
+        expect((defaults.onFilter as SinonSpy).calledOnceWith([defaults.data[0]])).toBeTruthy();
     });
 });

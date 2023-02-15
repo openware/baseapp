@@ -1,8 +1,5 @@
 import { takeLatest } from 'redux-saga/effects';
-import {
-    MARKET_UPDATE_FETCH,
-    MARKETS_LIST_FETCH,
-} from '../constants';
+import { MARKETS_LIST_FETCH, MARKET_UPDATE_FETCH } from '../constants';
 import { getMarketsSaga } from './getMarketsSaga';
 import { updateMarketSaga } from './updateMarketSaga';
 

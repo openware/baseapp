@@ -1,4 +1,4 @@
-import { Offer } from "src/modules/public/p2p";
+import { Offer } from 'src/modules/public/p2p';
 
 export const insertOrUpdate = (
     list: Offer[],
@@ -13,24 +13,20 @@ export const insertOrUpdate = (
     const index = list.findIndex((value: Offer) => value.id === id);
 
     if (offer.state === 'cancelled' || offer.state === 'done') {
-        if (index === -1 ) {
+        if (index === -1) {
             return list;
         } else {
-            return list.filter(i => i.id !== offer.id);
+            return list.filter((i) => i.id !== offer.id);
         }
     }
 
-    if (index === -1
-        && side === offer.side
-        && base === offer.base
-        && quote === offer.quote
-    ) {
-        return [{...offer}, ...list];
+    if (index === -1 && side === offer.side && base === offer.base && quote === offer.quote) {
+        return [{ ...offer }, ...list];
     }
 
-    return list.map(item => {
+    return list.map((item) => {
         if (item.id === offer.id) {
-            return {...offer};
+            return { ...offer };
         }
 
         return item;
@@ -40,5 +36,5 @@ export const insertOrUpdate = (
 export const insertIfNotExisted = (list: Offer[], offer: Offer) => {
     const index = list.findIndex((value: Offer) => value.id === offer.id);
 
-    return (index === -1) ? [{...offer}, ...list] : [...list];
+    return index === -1 ? [{ ...offer }, ...list] : [...list];
 };

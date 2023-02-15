@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { userOfferOrdersFetch, selectShouldFetchP2PUserOfferOrders, selectP2PUserOfferOrders } from '../modules';
+import { selectP2PUserOfferOrders, selectShouldFetchP2PUserOfferOrders, userOfferOrdersFetch } from '../modules';
 
 export const useP2PUserOfferOrdersFetch = ({ offer_id }) => {
     const shouldDispatch = useSelector(selectShouldFetchP2PUserOfferOrders);
