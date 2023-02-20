@@ -1,5 +1,6 @@
-import { shallow, ShallowWrapper } from 'enzyme';
-import * as React from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import React from 'react';
+import { TestComponentWrapper } from 'src/lib/test';
 import { WalletList, WalletListProps } from '../../components';
 import { Wallet } from '../../modules';
 
@@ -50,26 +51,30 @@ const defaultProps: WalletListProps = {
     markets: [],
 };
 
-const setup = (props: Partial<WalletListProps> = {}) => shallow(<WalletList {...{ ...defaultProps, ...props }} />);
+const renderComponent = (props: Partial<WalletListProps> = {}) =>
+    render(
+        <TestComponentWrapper>
+            <WalletList {...{ ...defaultProps, ...props }} />
+        </TestComponentWrapper>,
+    );
 
 describe('WalletList', () => {
-    let wrapper: ShallowWrapper;
+    let wrapper;
 
     beforeEach(() => {
-        wrapper = setup();
+        wrapper = renderComponent();
     });
 
     it('should render', () => {
-        expect(wrapper).toMatchSnapshot();
+        expect(wrapper.container).toMatchSnapshot();
     });
 
     it('should have correct className', () => {
-        expect(wrapper.hasClass('cr-wallet-list')).toBeTruthy();
+        expect(wrapper.container.querySelector('.cr-wallet-list')).toBeInTheDocument();
     });
 
     it('should handle onWalletSelectionChange callback when an element is pressed', () => {
-        const first = wrapper.find('[onClick]').first();
-        first.simulate('click');
+        fireEvent.click(screen.getAllByRole('listitem')[0]);
         expect(onWalletSelectionChange).toHaveBeenCalled();
         expect(onWalletSelectionChange).toHaveBeenCalledTimes(1);
     });

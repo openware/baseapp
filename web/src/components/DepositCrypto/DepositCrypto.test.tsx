@@ -1,15 +1,11 @@
-import { shallow } from 'enzyme';
-import * as React from 'react';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import { rootReducer, Wallet } from '../../modules';
-import { CopyableTextField } from '../CopyableTextField';
+import { render } from '@testing-library/react';
+import React from 'react';
+import { TestComponentWrapper } from 'src/lib/test';
+import { Wallet } from '../../modules';
 import { DepositCrypto } from './';
 
-const store = createStore(rootReducer);
-
 describe('DepositCrypto', () => {
-    let wrapper;
+    let component;
     const handleOnCopy = jest.fn();
     const handleGenerateAddress = jest.fn();
     const wallet: Wallet = {
@@ -19,11 +15,18 @@ describe('DepositCrypto', () => {
         type: 'coin',
         account_type: '',
         networks: [],
+        deposit_addresses: [
+            {
+                address: '0xq',
+                currencies: ['eth'],
+                blockchain_key: 'erc-20',
+            },
+        ],
     };
 
     beforeEach(() => {
-        wrapper = shallow(
-            <Provider store={store}>
+        component = render(
+            <TestComponentWrapper>
                 <DepositCrypto
                     dimensions={118}
                     error={'error123'}
@@ -35,19 +38,19 @@ describe('DepositCrypto', () => {
                     network="erc-20"
                 />
                 ,
-            </Provider>,
+            </TestComponentWrapper>,
         );
     });
 
     it('should contains QRCode', () => {
-        expect(wrapper.find('.qr-code-wrapper')).toBeTruthy();
+        expect(component.container.querySelector('.qr-code-wrapper')).toBeInTheDocument();
     });
 
     it('should contains CopyableTextField', () => {
-        expect(wrapper.find(CopyableTextField)).toBeTruthy();
+        expect(component.container.querySelector('.cr-copyable-text-field')).toBeInTheDocument();
     });
 
     it('should match snapshot', () => {
-        expect(wrapper).toMatchSnapshot();
+        expect(component.container).toMatchSnapshot();
     });
 });

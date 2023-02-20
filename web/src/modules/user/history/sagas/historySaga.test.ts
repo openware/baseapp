@@ -54,7 +54,7 @@ describe('CurrencyHistory', () => {
         message: ['Server error'],
     };
 
-    const fakeSuccessPayloadFirstPage = { list: fakeHistory, page: 0, nextPageExists: false };
+    const fakeSuccessPayloadFirstPage = { list: fakeHistory, page: 0, nextPageExists: false, type: 'deposits' };
     const fakeFetchPayloadFirstPage = { page: 0, currency: 'btc', type: 'deposits', limit: 6 };
 
     const mockHistory = () => {

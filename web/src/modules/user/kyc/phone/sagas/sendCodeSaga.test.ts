@@ -49,7 +49,7 @@ describe('Module: phone', () => {
 
     it('should fetch label in success flow', async () => {
         mockLabel();
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {

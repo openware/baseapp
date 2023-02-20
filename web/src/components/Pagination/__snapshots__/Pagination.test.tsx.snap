@@ -1,43 +1,66 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Pagination should matches snapshot 1`] = `
-<div
-  className="pg-history-elem__pagination"
->
-  <p>
-    <span>
-      1
-    </span>
-    <span>
-       - 
-    </span>
-    <span>
-      6
-    </span>
-    <span>
-       of 
-    </span>
-    <span>
-      30
-    </span>
-  </p>
-  <button
-    className="pg-history__pagination-prev"
-    disabled={true}
-    onClick={[Function]}
+<div>
+  <div
+    class="pg-history-elem__pagination"
   >
-    <PreviousIcon
-      disabled={true}
-    />
-  </button>
-  <button
-    className="pg-history__pagination-next"
-    disabled={false}
-    onClick={[Function]}
-  >
-    <NextPageIcon
-      disabled={false}
-    />
-  </button>
+    <p>
+      <span>
+        1
+      </span>
+      <span>
+         - 
+      </span>
+      <span>
+        6
+      </span>
+      <span>
+         of 
+      </span>
+      <span>
+        30
+      </span>
+    </p>
+    <button
+      class="pg-history__pagination-prev"
+      disabled=""
+    >
+      <svg
+        fill="#878D9A"
+        height="24"
+        viewBox="0 0 22 24"
+        width="22"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          clip-rule="evenodd"
+          d="M14.0545 7.4L12.7782 6L7.30853 12L12.7782 18L14.0545 16.6L9.86105 12L14.0545 7.4Z"
+          fill="var(--pagination-disabled)"
+          fill-opacity="0.5"
+          fill-rule="evenodd"
+        />
+      </svg>
+    </button>
+    <button
+      class="pg-history__pagination-next"
+    >
+      <svg
+        fill="#878D9A"
+        height="24"
+        viewBox="0 0 23 24"
+        width="23"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          clip-rule="evenodd"
+          d="M8.61279 7.4L9.88905 6L15.3587 12L9.88905 18L8.61279 16.6L12.8062 12L8.61279 7.4Z"
+          fill="var(--pagination-active)"
+          fill-opacity=""
+          fill-rule="evenodd"
+        />
+      </svg>
+    </button>
+  </div>
 </div>
 `;

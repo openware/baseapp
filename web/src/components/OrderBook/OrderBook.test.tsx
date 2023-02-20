@@ -1,7 +1,7 @@
-import { shallow, ShallowWrapper } from 'enzyme';
-import { TestComponentWrapper } from 'lib/test';
-import * as React from 'react';
+import { render } from '@testing-library/react';
+import React from 'react';
 import { spy } from 'sinon';
+import { TestComponentWrapper } from 'src/lib/test';
 import { CellData } from '../../components/Table';
 import { mapValues, OrderBook, OrderBookProps } from './';
 
@@ -20,26 +20,19 @@ const defaultProps: OrderBookProps = {
     onSelect: spy(),
 };
 
-const setup = (props: Partial<OrderBook> = {}) =>
-    shallow(
+const renderComponent = (props: Partial<OrderBook> = {}) =>
+    render(
         <TestComponentWrapper>
             <OrderBook {...{ ...defaultProps, ...props }} />
         </TestComponentWrapper>,
     );
 
 describe('History', () => {
-    let wrapper: ShallowWrapper<History>;
-
-    beforeEach(() => {
-        wrapper = setup();
-    });
-
     it('should render', () => {
-        expect(wrapper.render()).toMatchSnapshot();
+        expect(renderComponent().container).toMatchSnapshot();
     });
 
     it('should return correct data', () => {
-        // tslint:disable-next-line:no-magic-numbers
         const orderEntry = [1, 0.2, 3, 2, 0.5];
         const maxVolume = 3;
 

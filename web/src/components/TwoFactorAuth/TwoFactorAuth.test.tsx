@@ -1,7 +1,8 @@
-import * as React from 'react';
+import React from 'react';
+import { TestComponentWrapper } from 'src/lib/test';
 import { TwoFactorAuth, TwoFactorAuthProps } from './';
 
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 
 const defaults: TwoFactorAuthProps = {
     onSubmit: jest.fn(),
@@ -13,16 +14,15 @@ const defaults: TwoFactorAuthProps = {
     handleClose2fa: jest.fn(),
 };
 
-const setup = (props: Partial<TwoFactorAuthProps> = {}) => shallow(<TwoFactorAuth {...{ ...defaults, ...props }} />);
+const renderComponent = (props: Partial<TwoFactorAuthProps> = {}) =>
+    render(
+        <TestComponentWrapper>
+            <TwoFactorAuth {...{ ...defaults, ...props }} />
+        </TestComponentWrapper>,
+    );
 
 describe('TwoFactorAuth component', () => {
     it('should render', () => {
-        const wrapper = setup();
-        expect(wrapper).toMatchSnapshot();
-    });
-
-    it('renders without crashing', () => {
-        const wrapper = setup();
-        expect(wrapper).toBeDefined();
+        expect(renderComponent().container).toMatchSnapshot();
     });
 });

@@ -1,9 +1,7 @@
-import { shallow } from 'enzyme';
-import * as React from 'react';
-import { connect, Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { render } from '@testing-library/react';
+import React from 'react';
+import { TestComponentWrapper } from 'src/lib/test';
 import { RecentTrades } from '..';
-import { rootReducer } from '../../modules';
 
 const defaultProps: {
     recentTrades: any[];
@@ -17,24 +15,15 @@ const defaultProps: {
     userLoggedIn: true,
 };
 
-const store = createStore(rootReducer);
-const RecentTradesComponent = connect()(RecentTrades);
-
-const setup = () =>
-    shallow(
-        <Provider store={store}>
-            <RecentTradesComponent {...{ ...defaultProps }} />
-        </Provider>,
+const renderComponent = () =>
+    render(
+        <TestComponentWrapper>
+            <RecentTrades {...{ ...defaultProps }} />
+        </TestComponentWrapper>,
     );
 
 describe('RecentTradesComponent', () => {
-    let wrapper = setup();
-
-    beforeEach(() => {
-        wrapper = setup();
-    });
-
     it('should render', () => {
-        expect(wrapper).toMatchSnapshot();
+        expect(renderComponent().container).toMatchSnapshot();
     });
 });

@@ -1,27 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CustomInput component should render 1`] = `
-<Fragment>
+<div>
   <div
-    className="custom-input"
+    class="custom-input"
   >
     <label
-      className=""
+      class=""
     />
-    <InputGroup
-      size="lg"
+    <div
+      class="input-group input-group-lg"
     >
-      <FormControl
-        autoFocus={false}
-        onBlur={[MockFunction]}
-        onChange={[Function]}
-        onFocus={[MockFunction]}
+      <input
+        class="form-control form-control-lg"
         placeholder=""
-        size="lg"
         type=""
         value=""
       />
-    </InputGroup>
+    </div>
   </div>
-</Fragment>
+</div>
 `;

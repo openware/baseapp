@@ -59,7 +59,7 @@ describe('P2P CreateOffer', () => {
 
     it('should fetch createOffer in success flow', async () => {
         mockP2PCreateOffer();
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedP2PCreateOfferActionsFetch.length) {
@@ -75,7 +75,7 @@ describe('P2P CreateOffer', () => {
 
     it('should trigger fetch createOffer error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedP2PCreateOfferActionsError.length) {

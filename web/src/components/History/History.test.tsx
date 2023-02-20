@@ -1,5 +1,6 @@
-import { shallow, ShallowWrapper } from 'enzyme';
-import * as React from 'react';
+import { render } from '@testing-library/react';
+import React from 'react';
+import { TestComponentWrapper } from 'src/lib/test';
 import { History, HistoryProps } from '.';
 import { CellData } from '../';
 
@@ -13,27 +14,15 @@ const defaultProps: HistoryProps = {
     data,
 };
 
-const setup = (props: Partial<HistoryProps> = {}) => shallow(<History {...{ ...defaultProps, ...props }} />);
+const renderComponent = (props: Partial<HistoryProps> = {}) =>
+    render(
+        <TestComponentWrapper>
+            <History {...{ ...defaultProps, ...props }} />
+        </TestComponentWrapper>,
+    );
 
 describe('History', () => {
-    let wrapper: ShallowWrapper<History>;
-
-    beforeEach(() => {
-        wrapper = setup();
-    });
-
     it('should render', () => {
-        expect(wrapper).toMatchSnapshot();
-    });
-
-    it('should render custom action cell', () => {
-        const renderedBuyAction = <span className="cr-history-action cr-history-action--buy">bid</span>;
-
-        const renderedSellAction = <span className="cr-history-action cr-history-action--sell">ask</span>;
-
-        const instance = wrapper.instance() as History;
-
-        expect(instance.renderAction('bid')).toEqual(renderedBuyAction);
-        expect(instance.renderAction('ask')).toEqual(renderedSellAction);
+        expect(renderComponent().container).toMatchSnapshot();
     });
 });

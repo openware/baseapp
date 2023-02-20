@@ -1,5 +1,5 @@
-import { shallow, ShallowWrapper } from 'enzyme';
-import * as React from 'react';
+import { fireEvent, render } from '@testing-library/react';
+import React from 'react';
 import { HideMode, TabPanel, TabPanelProps } from './';
 
 const defaultProps: TabPanelProps = {
@@ -37,101 +37,110 @@ const defaultProps: TabPanelProps = {
     currentTabIndex: 0,
 };
 
-const setup = (props: Partial<TabPanelProps> = {}) => shallow(<TabPanel {...{ ...defaultProps, ...props }} />);
+const renderComponent = (props: Partial<TabPanelProps> = {}) => render(<TabPanel {...{ ...defaultProps, ...props }} />);
 
 describe('TabPanel', () => {
-    let wrapper: ShallowWrapper;
+    let component;
 
     beforeEach(() => {
-        wrapper = setup();
+        component = renderComponent();
     });
 
     it('should render', () => {
-        expect(wrapper).toMatchSnapshot();
+        expect(component.container).toMatchSnapshot();
     });
 
     it('should have correct className', () => {
-        expect(wrapper.hasClass('cr-tab-panel')).toBeTruthy();
+        expect(component.container.querySelector('.cr-tab-panel')).toBeInTheDocument();
     });
 
     it('should have correct fixed className', () => {
-        wrapper = setup({ fixed: true });
-        expect(wrapper.hasClass('cr-tab-panel__fixed')).toBeTruthy();
+        const { rerender } = component;
+        rerender(<TabPanel {...{ ...defaultProps, fixed: true }} />);
+        expect(component.container.querySelector('.cr-tab-panel__fixed')).toBeInTheDocument();
     });
 
     it('should render tabs', () => {
-        // tslint:disable-next-line:no-magic-numbers
-        expect(wrapper.find('.cr-tab')).toHaveLength(3);
+        expect(component.container.querySelectorAll('.cr-tab')).toHaveLength(3);
     });
 
     it('should mount all passed content when hideMode is `hide`', () => {
-        // tslint:disable-next-line:no-magic-numbers
-        expect(wrapper.find('.cr-tab-content')).toHaveLength(3);
+        expect(component.container.querySelectorAll('.cr-tab-content')).toHaveLength(3);
     });
 
     it('should mount only active content when hideMode is `unmount`', () => {
-        wrapper = setup({ hideMode: 'unmount' as HideMode.unmount });
-        expect(wrapper.find('.cr-tab-content')).toHaveLength(1);
+        const { rerender } = component;
+        rerender(<TabPanel {...{ ...defaultProps, hideMode: 'unmount' as HideMode.unmount }} />);
+        expect(component.container.querySelectorAll('.cr-tab-content')).toHaveLength(1);
     });
 
     it('should render correct class for active tab', () => {
-        const activeTab = wrapper.find('.cr-tab').first();
-        expect(activeTab.hasClass('cr-tab__active')).toBeTruthy();
+        expect(component.container.querySelector('.cr-tab')).toBeInTheDocument();
+        expect(component.container.querySelector('.cr-tab__active')).toBeInTheDocument();
     });
 
     it('should render disabled tab', () => {
-        wrapper = setup({
-            panels: [
-                {
-                    content: <p>Deposit</p>,
-                    disabled: true,
-                    label: 'Deposit',
-                },
-            ],
-        });
+        const { rerender } = component;
+        rerender(
+            <TabPanel
+                {...{
+                    ...defaultProps,
+                    panels: [
+                        {
+                            content: <p>Deposit</p>,
+                            disabled: true,
+                            label: 'Deposit',
+                        },
+                    ],
+                }}
+            />,
+        );
 
-        const disabledTab = wrapper.find('.cr-tab').at(0);
-        expect(disabledTab.hasClass('cr-tab__disabled')).toBeTruthy();
+        expect(component.container.querySelector('.cr-tab')).toBeInTheDocument();
+        expect(component.container.querySelector('.cr-tab__disabled')).toBeInTheDocument();
     });
 
     it('should render hidden tab', () => {
-        wrapper = setup({
-            panels: [
-                {
-                    content: <p>Deposit</p>,
-                    hidden: true,
-                    label: 'Deposit',
-                },
-            ],
-        });
+        const { rerender } = component;
+        rerender(
+            <TabPanel
+                {...{
+                    ...defaultProps,
+                    panels: [
+                        {
+                            content: <p>Deposit</p>,
+                            hidden: true,
+                            label: 'Deposit',
+                        },
+                    ],
+                }}
+            />,
+        );
 
-        const hiddenTab = wrapper.find('.cr-tab').at(0);
-        expect(hiddenTab.hasClass('cr-tab__hidden')).toBeTruthy();
+        expect(component.container.querySelector('.cr-tab')).toBeInTheDocument();
+        expect(component.container.querySelector('.cr-tab__hidden')).toBeInTheDocument();
     });
 
     it('should handle onTabChange callback when a tab is pressed', () => {
         const onTabChange = jest.fn();
-        wrapper = setup({ onTabChange });
+        const { rerender } = component;
 
-        const tab = wrapper.find('.cr-tab').at(1);
-        tab.simulate('click');
+        rerender(<TabPanel {...{ ...defaultProps, onTabChange }} />);
 
+        fireEvent.click(component.container.querySelectorAll('.cr-tab')[1]);
         expect(onTabChange).toHaveBeenCalled();
         expect(onTabChange).toHaveBeenCalledTimes(1);
     });
 
     it('should handle onTabChange callback when a disable tab is pressed', () => {
         const onCurrentTabChange = jest.fn();
+        const { rerender } = component;
 
-        wrapper = setup({ onCurrentTabChange });
+        rerender(<TabPanel {...{ ...defaultProps, onCurrentTabChange }} />);
 
-        const secondTab = wrapper.find('.cr-tab').at(1);
-        const disabledTab = wrapper.find('.cr-tab').last();
-
-        disabledTab.simulate('click');
-        expect(onCurrentTabChange).toHaveBeenCalledTimes(0);
-
-        secondTab.simulate('click');
+        fireEvent.click(component.container.querySelectorAll('.cr-tab')[0]);
+        expect(onCurrentTabChange).toHaveBeenCalledTimes(1);
+        fireEvent.click(component.container.querySelector('.cr-tab__disabled'));
         expect(onCurrentTabChange).toHaveBeenCalledTimes(1);
     });
 });

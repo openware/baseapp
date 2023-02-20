@@ -1,20 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SummaryField should render 1`] = `
-<div
-  className="cr-summary-field"
->
-  <span
-    className="cr-summary-field-message"
+<div>
+  <div
+    class="cr-summary-field"
   >
-    Message
-  </span>
-  <span
-    className="cr-summary-field-content"
-  >
-    <div>
-      Content
-    </div>
-  </span>
+    <span
+      class="cr-summary-field-message"
+    >
+      Message
+    </span>
+    <span
+      class="cr-summary-field-content"
+    >
+      <div>
+        Content
+      </div>
+    </span>
+  </div>
 </div>
 `;

@@ -72,7 +72,7 @@ describe('Orders', () => {
 
     it('should execute order', async () => {
         mockOrderExecute();
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsSuccess.length) {
@@ -88,7 +88,7 @@ describe('Orders', () => {
 
     it('should handle order execute error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

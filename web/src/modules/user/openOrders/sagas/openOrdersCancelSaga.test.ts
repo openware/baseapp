@@ -115,7 +115,7 @@ describe('Open Orders Cancel', () => {
 
     it('should cancel order', async () => {
         mockOrderCancel(fakeOrder.id);
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -131,7 +131,7 @@ describe('Open Orders Cancel', () => {
 
     it('should cancel order with UUID', async () => {
         mockOrderCancel(fakeFinexOrder.uuid);
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFinexFetch.length) {
@@ -147,7 +147,7 @@ describe('Open Orders Cancel', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

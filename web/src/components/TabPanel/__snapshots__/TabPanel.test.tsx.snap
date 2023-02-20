@@ -1,85 +1,78 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TabPanel should render 1`] = `
-<div
-  className="cr-tab-panel"
->
+<div>
   <div
-    className="cr-tab-panel__navigation-container draggable-container"
+    class="cr-tab-panel"
   >
     <div
-      className="cr-tab-panel__navigation-container-navigation"
-      role="tablist"
+      class="cr-tab-panel__navigation-container draggable-container"
     >
       <div
-        className="cr-tab cr-tab__active"
-        key="0"
-        onClick={[Function]}
-        role="tab"
-        tabIndex={0}
+        class="cr-tab-panel__navigation-container-navigation"
+        role="tablist"
       >
-        Deposit
-        <span
-          className="cr-tab__pointer"
-        />
-      </div>
-      <div
-        className="cr-tab"
-        key="1"
-        onClick={[Function]}
-        role="tab"
-        tabIndex={1}
-      >
-        Withdraw
-      </div>
-      <div
-        className="cr-tab cr-tab__disabled"
-        key="2"
-        onClick={[Function]}
-        role="tab"
-        tabIndex={2}
-      >
-        Disabled
+        <div
+          class="cr-tab cr-tab__active"
+          role="tab"
+          tabindex="0"
+        >
+          Deposit
+          <span
+            class="cr-tab__pointer"
+          />
+        </div>
+        <div
+          class="cr-tab"
+          role="tab"
+          tabindex="1"
+        >
+          Withdraw
+        </div>
+        <div
+          class="cr-tab cr-tab__disabled"
+          role="tab"
+          tabindex="2"
+        >
+          Disabled
+        </div>
       </div>
     </div>
-  </div>
-  <div
-    className="cr-tab-content cr-tab-content__active"
-    key="Deposit-0"
-  >
-    <div>
-      <h4>
-        Deposit
-      </h4>
-      <p>
-        Some deposit tab content
-      </p>
+    <div
+      class="cr-tab-content cr-tab-content__active"
+    >
+      <div>
+        <h4>
+          Deposit
+        </h4>
+        <p>
+          Some deposit tab content
+        </p>
+      </div>
     </div>
-  </div>
-  <div
-    className="cr-tab-content"
-    key="Withdraw-1"
-  >
-    <div>
-      <h4>
-        Withdraw
-      </h4>
-      <p>
-        Some withdraw tab content
-      </p>
+    <div
+      class="cr-tab-content"
+    >
+      <div>
+        <h4>
+          Withdraw
+        </h4>
+        <p>
+          Some withdraw tab content
+        </p>
+      </div>
     </div>
-  </div>
-  <div
-    className="cr-tab-content"
-    key="Disabled-2"
-  >
-    <div>
-      <h4>
-        Disabled
-      </h4>
-      <p>
-        Disabled lorem ipsum dolor sit amet.
-      </p>
+    <div
+      class="cr-tab-content"
+    >
+      <div>
+        <h4>
+          Disabled
+        </h4>
+        <p>
+          Disabled lorem ipsum dolor sit amet.
+        </p>
+      </div>
     </div>
   </div>
 </div>

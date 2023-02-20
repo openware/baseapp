@@ -1,61 +1,56 @@
-import { shallow } from 'enzyme';
-import * as React from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import React from 'react';
 import { Pagination } from '.';
 
-describe('Pagination', () => {
-    const props = {
-        firstElemIndex: 1,
-        lastElemIndex: 6,
-        total: 30,
-        page: 0,
-        nextPageExists: true,
-        onClickPrevPage: jest.fn(),
-        onClickNextPage: jest.fn(),
-    };
+const defaultProps = {
+    firstElemIndex: 1,
+    lastElemIndex: 6,
+    total: 30,
+    page: 0,
+    nextPageExists: true,
+    onClickPrevPage: jest.fn(),
+    onClickNextPage: jest.fn(),
+};
 
-    it('renders without crashing', () => {
-        const wrapper = shallow(<Pagination {...props} />);
-        expect(wrapper).toBeDefined();
+const renderComponent = (props = {}) => render(<Pagination {...{ ...defaultProps, ...props }} />);
+
+describe('Pagination', () => {
+    it('should matches snapshot', () => {
+        expect(renderComponent().container).toMatchSnapshot();
     });
 
     it('should have correct className', () => {
-        const wrapper = shallow(<Pagination {...props} />);
-        expect(wrapper.hasClass('pg-history-elem__pagination'));
+        expect(renderComponent().container.querySelector('.pg-history-elem__pagination')).toBeInTheDocument();
     });
 
     it('has pagination info with right text', () => {
-        const wrapper = shallow(<Pagination {...props} />);
-        expect(wrapper.find('p').text()).toEqual('1 - 6 of 30');
+        const { container } = renderComponent();
+        expect(container.getElementsByTagName('p')[0].textContent).toEqual('1 - 6 of 30');
     });
 
     it('should test click on prev page', () => {
         const spyClickPrev = jest.fn();
-        const wrapper = shallow(<Pagination {...{ ...props, ...{ onClickPrevPage: spyClickPrev } }} />);
-        const prevButton = wrapper.find('.pg-history__pagination-prev');
+        const { rerender } = renderComponent({ onClickPrevPage: spyClickPrev });
+        const prevButton = screen.getAllByRole('button')[0];
 
-        prevButton.simulate('click');
+        fireEvent.click(screen.getAllByRole('button')[0]);
         expect(spyClickPrev).toHaveBeenCalledTimes(0);
 
-        wrapper.setProps({ page: 1 });
-        prevButton.simulate('click');
+        rerender(<Pagination {...{ ...defaultProps, onClickPrevPage: spyClickPrev, page: 1 }} />);
+        fireEvent.click(prevButton);
         expect(spyClickPrev).toHaveBeenCalledTimes(1);
     });
 
     it('should test click on next page', () => {
         const spyClickNext = jest.fn();
-        const wrapper = shallow(<Pagination {...{ ...props, ...{ onClickNextPage: spyClickNext } }} />);
-        const prevButton = wrapper.find('.pg-history__pagination-next');
+        const { rerender } = renderComponent({ onClickNextPage: spyClickNext, nextPageExists: false });
+        const nextButton = screen.getAllByRole('button')[1];
 
-        prevButton.simulate('click');
+        fireEvent.click(nextButton);
+        expect(spyClickNext).toHaveBeenCalledTimes(0);
+
+        rerender(<Pagination {...{ ...defaultProps, onClickNextPage: spyClickNext }} />);
+        fireEvent.click(nextButton);
         expect(spyClickNext).toHaveBeenCalledTimes(1);
-
-        wrapper.setProps({ nextPageExists: false });
-        prevButton.simulate('click');
-        expect(spyClickNext).toHaveBeenCalledTimes(1);
-    });
-
-    it('should matches snapshot', () => {
-        const wrapper = shallow(<Pagination {...props} />);
-        expect(wrapper).toMatchSnapshot();
     });
 });

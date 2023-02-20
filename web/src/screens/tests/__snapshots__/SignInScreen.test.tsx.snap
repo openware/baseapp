@@ -1,107 +1,108 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SignInScreen should render 1`] = `
-<div
-  class="pg-sign-in-screen"
->
+<div>
   <div
-    class="pg-sign-in-screen__container"
+    class="pg-sign-in-screen"
   >
-    <form>
-      <div
-        class="cr-sign-in-form"
-      >
+    <div
+      class="pg-sign-in-screen__container"
+    >
+      <form>
         <div
-          class="cr-sign-in-form__options-group"
+          class="cr-sign-in-form"
         >
           <div
-            class="cr-sign-in-form__option"
+            class="cr-sign-in-form__options-group"
           >
             <div
-              class="cr-sign-in-form__option-inner __selected"
+              class="cr-sign-in-form__option"
             >
-              Sign In
-            </div>
-          </div>
-          <div
-            class="cr-sign-in-form__option"
-          >
-            <div
-              class="cr-sign-in-form__option-inner cr-sign-in-form__tab-signup"
-            >
-              Sign Up
-            </div>
-          </div>
-        </div>
-        <div
-          class="cr-sign-in-form__form-content"
-        >
-          <div
-            class="cr-sign-in-form__group"
-          >
-            <div
-              class="custom-input"
-            >
-              <label
-                class="cr-sign-in-form__label"
-              />
               <div
-                class="input-group input-group-lg"
+                class="cr-sign-in-form__option-inner __selected"
               >
-                <input
-                  autofocus=""
-                  class="form-control form-control-lg"
-                  placeholder="Email"
-                  type="email"
-                  value=""
-                />
+                Sign In
+              </div>
+            </div>
+            <div
+              class="cr-sign-in-form__option"
+            >
+              <div
+                class="cr-sign-in-form__option-inner cr-sign-in-form__tab-signup"
+              >
+                Sign Up
               </div>
             </div>
           </div>
           <div
-            class="cr-sign-in-form__group"
+            class="cr-sign-in-form__form-content"
           >
             <div
-              class="custom-input"
+              class="cr-sign-in-form__group cr-sign-in-form__group--focused"
             >
-              <label
-                class="cr-sign-in-form__label"
-              />
               <div
-                class="input-group input-group-lg"
+                class="custom-input"
               >
-                <input
-                  class="form-control form-control-lg"
-                  placeholder="Password"
-                  type="password"
-                  value=""
+                <label
+                  class="cr-sign-in-form__label"
                 />
+                <div
+                  class="input-group input-group-lg"
+                >
+                  <input
+                    class="form-control form-control-lg"
+                    placeholder="Email"
+                    type="email"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="cr-sign-in-form__group"
+            >
+              <div
+                class="custom-input"
+              >
+                <label
+                  class="cr-sign-in-form__label"
+                />
+                <div
+                  class="input-group input-group-lg"
+                >
+                  <input
+                    class="form-control form-control-lg"
+                    placeholder="Password"
+                    type="password"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="cr-sign-in-form__button-wrapper"
+            >
+              <button
+                class="btn btn-primary btn-block btn-lg"
+                disabled=""
+                type="button"
+              >
+                Sign In
+              </button>
+            </div>
+            <div
+              class="cr-sign-in-form__bottom-section"
+            >
+              <div
+                class="cr-sign-in-form__bottom-section-password"
+              >
+                Forgot password?
               </div>
             </div>
           </div>
-          <div
-            class="cr-sign-in-form__button-wrapper"
-          >
-            <button
-              class="btn btn-primary btn-block btn-lg"
-              disabled=""
-              type="button"
-            >
-              Sign In
-            </button>
-          </div>
-          <div
-            class="cr-sign-in-form__bottom-section"
-          >
-            <div
-              class="cr-sign-in-form__bottom-section-password"
-            >
-              Forgot password?
-            </div>
-          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </div>
 `;

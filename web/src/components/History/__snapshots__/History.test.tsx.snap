@@ -1,59 +1,140 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`History should render 1`] = `
-<Component
-  data={
-    Array [
-      Array [
-        "10:40",
-        <span
-          className="cr-history-action"
+<div>
+  <div
+    class="cr-table-container"
+  >
+    <div
+      class="cr-table-header__content"
+    >
+      <div
+        class="cr-title-component"
+      >
+        Trades History
+      </div>
+    </div>
+    <table
+      class="cr-table"
+    >
+      <thead
+        class="cr-table__head"
+      >
+        <tr
+          class="cr-table__head-row"
         >
-          market
-        </span>,
-        "BTC/USDT",
-        "Buy",
-        "9.400,0",
-        "0, 4005",
-        "3.459",
-      ],
-      Array [
-        "10:40",
-        <span
-          className="cr-history-action"
+          <th>
+            Time
+          </th>
+          <th>
+            Action
+          </th>
+          <th>
+            Price
+          </th>
+          <th>
+            Amount
+          </th>
+          <th>
+            Total
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        class="cr-table__body"
+      >
+        <tr
+          class=""
         >
-          market
-        </span>,
-        "BTC/USDT",
-        "Buy",
-        "9.400,0",
-        "0, 4005",
-        "3.459",
-      ],
-      Array [
-        "10:40",
-        <span
-          className="cr-history-action"
+          <td>
+            10:40
+          </td>
+          <td>
+            <span
+              class="cr-history-action"
+            >
+              market
+            </span>
+          </td>
+          <td>
+            BTC/USDT
+          </td>
+          <td>
+            Buy
+          </td>
+          <td>
+            9.400,0
+          </td>
+          <td>
+            0, 4005
+          </td>
+          <td>
+            3.459
+          </td>
+        </tr>
+        <tr
+          class=""
         >
-          market
-        </span>,
-        "BTC/USDT",
-        "Buy",
-        "9.400,0",
-        "0, 4005",
-        "3.459",
-      ],
-    ]
-  }
-  header={
-    Array [
-      "Time",
-      "Action",
-      "Price",
-      "Amount",
-      "Total",
-    ]
-  }
-  titleComponent="Trades History"
-/>
+          <td>
+            10:40
+          </td>
+          <td>
+            <span
+              class="cr-history-action"
+            >
+              market
+            </span>
+          </td>
+          <td>
+            BTC/USDT
+          </td>
+          <td>
+            Buy
+          </td>
+          <td>
+            9.400,0
+          </td>
+          <td>
+            0, 4005
+          </td>
+          <td>
+            3.459
+          </td>
+        </tr>
+        <tr
+          class=""
+        >
+          <td>
+            10:40
+          </td>
+          <td>
+            <span
+              class="cr-history-action"
+            >
+              market
+            </span>
+          </td>
+          <td>
+            BTC/USDT
+          </td>
+          <td>
+            Buy
+          </td>
+          <td>
+            9.400,0
+          </td>
+          <td>
+            0, 4005
+          </td>
+          <td>
+            3.459
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div
+      class="cr-table-background"
+    />
+  </div>
+</div>
 `;

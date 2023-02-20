@@ -1,86 +1,166 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`WalletList should render 1`] = `
-<ul
-  className="cr-wallet-list"
->
-  <li
-    key="0"
-    onClick={[Function]}
-    style={
-      Object {
-        "listStyleType": "none",
-        "padding": "calc(var(--gap) * 0.5) calc(var(--gap))",
-      }
-    }
+<div>
+  <ul
+    class="cr-wallet-list"
   >
-    <Component
-      account_type=""
-      active={true}
-      balance="456"
-      currencies={Array []}
-      currency="BTC"
-      fixed={8}
-      key="0"
-      locked="1"
-      markets={Array []}
-      name="Bitcoin"
-      networks={Array []}
-      tickers={Object {}}
-      type="fiat"
-    />
-  </li>
-  <li
-    key="1"
-    onClick={[Function]}
-    style={
-      Object {
-        "listStyleType": "none",
-        "padding": "calc(var(--gap) * 0.5) calc(var(--gap))",
-      }
-    }
-  >
-    <Component
-      account_type=""
-      active={false}
-      balance="456"
-      currencies={Array []}
-      currency="USD"
-      fixed={8}
-      key="1"
-      locked="100"
-      markets={Array []}
-      name="United states Dollar"
-      networks={Array []}
-      tickers={Object {}}
-      type="coin"
-    />
-  </li>
-  <li
-    key="2"
-    onClick={[Function]}
-    style={
-      Object {
-        "listStyleType": "none",
-        "padding": "calc(var(--gap) * 0.5) calc(var(--gap))",
-      }
-    }
-  >
-    <Component
-      account_type=""
-      active={false}
-      balance="2"
-      currencies={Array []}
-      currency="BTC"
-      fixed={8}
-      key="2"
-      locked="0.4"
-      markets={Array []}
-      name="Bitcoin - 2"
-      networks={Array []}
-      tickers={Object {}}
-      type="fiat"
-    />
-  </li>
-</ul>
+    <li
+      style="list-style-type: none;"
+    >
+      <div
+        class="cr-wallet-item cr-wallet-item--active"
+        style="display: flex; justify-content: space-between;"
+      >
+        <div
+          class="cr-wallet-item__info"
+        >
+          <span
+            class="cr-crypto-icon cr-wallet-item__icon"
+          >
+            <img
+              alt="BTC"
+            />
+             
+          </span>
+          <div
+            class="cr-wallet-item__description"
+          >
+            <span
+              class="cr-wallet-item__description-currency"
+            >
+              BTC
+            </span>
+            <span
+              class="cr-wallet-item__description-name"
+            >
+              Bitcoin
+            </span>
+          </div>
+        </div>
+        <span
+          class="cr-wallet-item__balance"
+        >
+          <span>
+            456
+          </span>
+          <span
+            class="cr-decimal__opacity"
+          >
+            .00000000
+          </span>
+          <div
+            class="cr-wallet-item__balance-price"
+          >
+            ≈ $0.0000
+          </div>
+        </span>
+      </div>
+    </li>
+    <li
+      style="list-style-type: none;"
+    >
+      <div
+        class="cr-wallet-item "
+        style="display: flex; justify-content: space-between;"
+      >
+        <div
+          class="cr-wallet-item__info"
+        >
+          <span
+            class="cr-crypto-icon cr-wallet-item__icon"
+          >
+            <img
+              alt="USD"
+            />
+             
+          </span>
+          <div
+            class="cr-wallet-item__description"
+          >
+            <span
+              class="cr-wallet-item__description-currency"
+            >
+              USD
+            </span>
+            <span
+              class="cr-wallet-item__description-name"
+            >
+              United states Dollar
+            </span>
+          </div>
+        </div>
+        <span
+          class="cr-wallet-item__balance"
+        >
+          <span>
+            456
+          </span>
+          <span
+            class="cr-decimal__opacity"
+          >
+            .00000000
+          </span>
+          <div
+            class="cr-wallet-item__balance-price"
+          >
+            ≈ $456.0000
+          </div>
+        </span>
+      </div>
+    </li>
+    <li
+      style="list-style-type: none;"
+    >
+      <div
+        class="cr-wallet-item "
+        style="display: flex; justify-content: space-between;"
+      >
+        <div
+          class="cr-wallet-item__info"
+        >
+          <span
+            class="cr-crypto-icon cr-wallet-item__icon"
+          >
+            <img
+              alt="BTC"
+            />
+             
+          </span>
+          <div
+            class="cr-wallet-item__description"
+          >
+            <span
+              class="cr-wallet-item__description-currency"
+            >
+              BTC
+            </span>
+            <span
+              class="cr-wallet-item__description-name"
+            >
+              Bitcoin - 2
+            </span>
+          </div>
+        </div>
+        <span
+          class="cr-wallet-item__balance"
+        >
+          <span>
+            2
+          </span>
+          <span
+            class="cr-decimal__opacity"
+          >
+            .00000000
+          </span>
+          <div
+            class="cr-wallet-item__balance-price"
+          >
+            ≈ $0.0000
+          </div>
+        </span>
+      </div>
+    </li>
+  </ul>
+</div>
 `;

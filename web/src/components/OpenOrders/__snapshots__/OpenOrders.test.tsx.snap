@@ -1,75 +1,191 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`OpenOrders should render 1`] = `
-<div
-  className="cr-open-orders"
->
-  <Component
-    data={
-      Array [
-        Array [
-          "13:50",
-          <span
-            className="cr-open-orders__price"
+<div>
+  <div
+    class="cr-open-orders"
+  >
+    <div
+      class="cr-table-container"
+    >
+      <div
+        class="cr-table-header__content cr-table-header__content-empty"
+      />
+      <table
+        class="cr-table"
+      >
+        <thead
+          class="cr-table__head"
+        >
+          <tr
+            class="cr-table__head-row"
           >
-            buy
-          </span>,
-          "1,442.43",
-          "4,323.04",
-          <Unknown
-            onClick={[Function]}
-          />,
-        ],
-        Array [
-          "13:50",
-          <span
-            className="cr-open-orders__price"
+            <th>
+              Date
+            </th>
+            <th>
+              Action
+            </th>
+            <th>
+              Price
+            </th>
+            <th>
+              Amount
+            </th>
+            <th>
+               
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="cr-table__body"
+        >
+          <tr
+            class=""
           >
-            sell
-          </span>,
-          "1,442.43",
-          "44,323.12",
-          <Unknown
-            onClick={[Function]}
-          />,
-        ],
-        Array [
-          "13:50",
-          <span
-            className="cr-open-orders__price"
+            <td>
+              13:50
+            </td>
+            <td>
+              <span
+                class="cr-open-orders__price"
+              >
+                buy
+              </span>
+            </td>
+            <td>
+              1,442.43
+            </td>
+            <td>
+              4,323.04
+            </td>
+            <td>
+              <svg
+                fill="none"
+                height="14"
+                viewBox="0 0 14 14"
+                width="14"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M5.58434 6.99901L0.875873 11.7079L2.29003 13.1221L6.99849 8.41328L11.707 13.1221L13.1211 11.7079L8.41265 6.99901L13.704 1.7072L12.2899 0.292927L6.99849 5.58474L1.70712 0.292932L0.292969 1.7072L5.58434 6.99901Z"
+                  fill="var(--icons)"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </td>
+          </tr>
+          <tr
+            class=""
           >
-            sell
-          </span>,
-          "1,442.43",
-          "4,323.23",
-          <Unknown
-            onClick={[Function]}
-          />,
-        ],
-        Array [
-          "13:50",
-          <span
-            className="cr-open-orders__price"
+            <td>
+              13:50
+            </td>
+            <td>
+              <span
+                class="cr-open-orders__price"
+              >
+                sell
+              </span>
+            </td>
+            <td>
+              1,442.43
+            </td>
+            <td>
+              44,323.12
+            </td>
+            <td>
+              <svg
+                fill="none"
+                height="14"
+                viewBox="0 0 14 14"
+                width="14"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M5.58434 6.99901L0.875873 11.7079L2.29003 13.1221L6.99849 8.41328L11.707 13.1221L13.1211 11.7079L8.41265 6.99901L13.704 1.7072L12.2899 0.292927L6.99849 5.58474L1.70712 0.292932L0.292969 1.7072L5.58434 6.99901Z"
+                  fill="var(--icons)"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </td>
+          </tr>
+          <tr
+            class=""
           >
-            buy
-          </span>,
-          "1,442.43",
-          "543.33",
-          <Unknown
-            onClick={[Function]}
-          />,
-        ],
-      ]
-    }
-    header={
-      Array [
-        "Date",
-        "Action",
-        "Price",
-        "Amount",
-        "",
-      ]
-    }
-  />
+            <td>
+              13:50
+            </td>
+            <td>
+              <span
+                class="cr-open-orders__price"
+              >
+                sell
+              </span>
+            </td>
+            <td>
+              1,442.43
+            </td>
+            <td>
+              4,323.23
+            </td>
+            <td>
+              <svg
+                fill="none"
+                height="14"
+                viewBox="0 0 14 14"
+                width="14"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M5.58434 6.99901L0.875873 11.7079L2.29003 13.1221L6.99849 8.41328L11.707 13.1221L13.1211 11.7079L8.41265 6.99901L13.704 1.7072L12.2899 0.292927L6.99849 5.58474L1.70712 0.292932L0.292969 1.7072L5.58434 6.99901Z"
+                  fill="var(--icons)"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </td>
+          </tr>
+          <tr
+            class=""
+          >
+            <td>
+              13:50
+            </td>
+            <td>
+              <span
+                class="cr-open-orders__price"
+              >
+                buy
+              </span>
+            </td>
+            <td>
+              1,442.43
+            </td>
+            <td>
+              543.33
+            </td>
+            <td>
+              <svg
+                fill="none"
+                height="14"
+                viewBox="0 0 14 14"
+                width="14"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M5.58434 6.99901L0.875873 11.7079L2.29003 13.1221L6.99849 8.41328L11.707 13.1221L13.1211 11.7079L8.41265 6.99901L13.704 1.7072L12.2899 0.292927L6.99849 5.58474L1.70712 0.292932L0.292969 1.7072L5.58434 6.99901Z"
+                  fill="var(--icons)"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div
+        class="cr-table-background"
+      />
+    </div>
+  </div>
 </div>
 `;

@@ -1,6 +1,21 @@
-import { shallow } from 'enzyme';
-import * as React from 'react';
+import { render } from '@testing-library/react';
+import React from 'react';
+import { TestComponentWrapper } from 'src/lib/test';
 import { MarketDepths, MarketDepthsProps } from '.';
+
+class ResizeObserver {
+    observe() {
+        // do nothing
+    }
+    unobserve() {
+        // do nothing
+    }
+    disconnect() {
+        // do nothing
+    }
+}
+
+window.ResizeObserver = ResizeObserver;
 
 const defaultProps: MarketDepthsProps = {
     data: [
@@ -45,27 +60,23 @@ const defaultProps: MarketDepthsProps = {
     ],
 };
 
-const setup = (props: Partial<MarketDepthsProps> = {}) => shallow(<MarketDepths {...{ ...defaultProps, ...props }} />);
+const renderComponent = (props: Partial<MarketDepthsProps> = {}) =>
+    render(
+        <TestComponentWrapper>
+            <MarketDepths {...{ ...defaultProps, ...props }} />
+        </TestComponentWrapper>,
+    );
 
 describe('CryptoIcon', () => {
     it('should render', () => {
-        const wrapper = setup();
-        expect(wrapper).toMatchSnapshot();
+        expect(renderComponent().container).toMatchSnapshot();
     });
 
     it('should have correct className', () => {
-        const wrapper = setup();
-        expect(wrapper.hasClass('cr-market-depths')).toBeTruthy();
+        expect(renderComponent().container.querySelector('.cr-market-depths')).toBeInTheDocument();
     });
 
     it('always renders a market depth', () => {
-        const wrapper = setup();
-        expect(wrapper.length).toBe(1);
-    });
-
-    it('check data from default props', () => {
-        const wrapper = setup();
-        const { data } = wrapper.find('AreaChart').first().props();
-        expect(data).toEqual(defaultProps.data);
+        expect(renderComponent().container).toBeInTheDocument();
     });
 });

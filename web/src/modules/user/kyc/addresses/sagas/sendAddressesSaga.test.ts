@@ -54,7 +54,7 @@ describe('KYC - Addresses', () => {
 
     it('should fetch sending addresses data', async () => {
         mockConfirmAddressesFetch();
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsSuccess.length) {
@@ -70,7 +70,7 @@ describe('KYC - Addresses', () => {
 
     it('should fetch sending addresses error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

@@ -1,8 +1,7 @@
-import * as React from 'react';
+import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { TestComponentWrapper } from 'src/lib/test';
 import { EmailForm, EmailFormProps } from './index';
-
-import { shallow } from 'enzyme';
-import { TestComponentWrapper } from 'lib/test';
 
 const defaults: EmailFormProps = {
     OnSubmit: jest.fn(),
@@ -16,8 +15,8 @@ const defaults: EmailFormProps = {
     handleReturnBack: jest.fn(),
 };
 
-const setup = (props: Partial<EmailFormProps> = {}) =>
-    shallow(
+const renderComponent = (props: Partial<EmailFormProps> = {}) =>
+    render(
         <TestComponentWrapper>
             <EmailForm {...defaults} {...props} />
         </TestComponentWrapper>,
@@ -25,45 +24,11 @@ const setup = (props: Partial<EmailFormProps> = {}) =>
 
 describe('EmailForm component', () => {
     it('should render', () => {
-        const wrapper = setup().render();
-        expect(wrapper).toMatchSnapshot();
+        expect(renderComponent().container).toMatchSnapshot();
     });
 
     it('should render error block', () => {
-        const wrapper = setup({ emailError: 'error email' }).render();
-        expect(wrapper.find('.cr-email-form__error').text()).toBe('error email');
+        renderComponent({ emailError: 'error email' });
+        expect(screen.getByText('error email')).toBeInTheDocument();
     });
-
-    // TODO: need to reveal
-    // it('should send request', () => {
-    //     const spyOnValidateForm = jest.fn();
-    //     const spyOnSubmit = jest.fn();
-    //     const wrapper = setup({
-    //         email: 'email@email.com',
-    //         validateForm: spyOnValidateForm,
-    //         OnSubmit: spyOnSubmit,
-    //     });
-    //     const button = wrapper.find(Button);
-    //     console.log(wrapper);
-    //     button.simulate('click');
-
-    //     expect(spyOnValidateForm).toHaveBeenCalledTimes(0);
-    //     expect(spyOnSubmit).toHaveBeenCalled();
-    //     expect(spyOnSubmit).toHaveBeenCalledTimes(1);
-    // });
-
-    // it('should validate form', () => {
-    //     const spyOnValidateForm = jest.fn();
-    //     const spyOnSubmit = jest.fn();
-    //     const wrapper = setup({
-    //         email: 'email',
-    //         validateForm: spyOnValidateForm,
-    //         OnSubmit: spyOnSubmit,
-    //     });
-    //     const button = wrapper.find(Button);
-    //     button.simulate('click');
-    //     expect(spyOnValidateForm).toHaveBeenCalled();
-    //     expect(spyOnValidateForm).toHaveBeenCalledTimes(1);
-    //     expect(spyOnSubmit).toHaveBeenCalledTimes(0);
-    // });
 });

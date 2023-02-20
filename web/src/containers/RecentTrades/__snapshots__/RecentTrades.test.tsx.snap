@@ -1,32 +1,74 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`RecentTradesComponent should render 1`] = `
-<ContextProvider
-  value={
-    Object {
-      "store": Object {
-        "@@observable": [Function],
-        "dispatch": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-      },
-      "subscription": Object {
-        "addNestedSub": [Function],
-        "getListeners": [Function],
-        "handleChangeWrapper": [Function],
-        "isSubscribed": [Function],
-        "notifyNestedSubs": [Function],
-        "onStateChange": [Function],
-        "trySubscribe": [Function],
-        "tryUnsubscribe": [Function],
-      },
-    }
-  }
->
-  <Connect(injectIntl(Connect(RecentTradesComponent)))
-    recentTrades={Array []}
-    userLoggedIn={true}
-  />
-</ContextProvider>
+<div>
+  <div
+    class="cr-table__noData"
+  >
+    <div
+      class="pg-recent-trades pg-recent-trades-unlogged"
+    >
+      <div>
+        <div
+          class="cr-table-header__content"
+        >
+          <div
+            class="cr-title-component"
+          >
+            Recent Trades
+          </div>
+        </div>
+        <div
+          class="pg-recent-trades__markets"
+        >
+          <div
+            class="cr-table-container"
+          >
+            <div
+              class="cr-table-header__content cr-table-header__content-empty"
+            />
+            <table
+              class="cr-table"
+            >
+              <thead
+                class="cr-table__head"
+              >
+                <tr
+                  class="cr-table__head-row"
+                >
+                  <th>
+                    Time
+                  </th>
+                  <th>
+                    Amount
+                  </th>
+                  <th>
+                    Price
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                class="cr-table__body"
+              >
+                <tr
+                  class=""
+                >
+                  <td
+                    class="cr-table--no-data"
+                    colspan="3"
+                  >
+                    There is no data to show
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div
+              class="cr-table-background"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 `;

@@ -1,27 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`InputBlock should render 1`] = `
-<div
-  className="cr-order-input"
->
-  <fieldset
-    className="cr-order-input__fieldset"
-  >
-    <CustomInput
-      defaultLabel=""
-      handleChangeInput={[Function]}
-      handleFocusInput={[Function]}
-      inputValue=""
-      label=""
-      onKeyPress={[MockFunction]}
-      placeholder="0"
-      type="number"
-    />
-  </fieldset>
+<div>
   <div
-    className="cr-order-input__crypto-icon"
+    class="cr-order-input"
   >
-    ETH
+    <fieldset
+      class="cr-order-input__fieldset"
+    >
+      <div
+        class="custom-input"
+      >
+        <label />
+        <div
+          class="input-group input-group-lg"
+        >
+          <input
+            class="form-control form-control-lg"
+            placeholder="0"
+            type="number"
+            value=""
+          />
+        </div>
+      </div>
+    </fieldset>
+    <div
+      class="cr-order-input__crypto-icon"
+    >
+      ETH
+    </div>
   </div>
 </div>
 `;

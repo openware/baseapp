@@ -14,7 +14,7 @@ const store = createStore(rootReducer);
 
 const locale = 'en';
 
-export const TestComponentWrapper: React.FC = ({ children }: { children: React.ReactNode }) => {
+export const TestComponentWrapper = ({ children }: { children: any }) => {
     return (
         <Router history={browserHistory}>
             <IntlProvider {...{ locale }} defaultLocale={locale} messages={languageMap[locale]}>

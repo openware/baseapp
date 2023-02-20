@@ -96,7 +96,7 @@ describe('Saga: OrderBook', () => {
 
     it('should fetch orderBook', async () => {
         mockOrderBook();
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -112,7 +112,7 @@ describe('Saga: OrderBook', () => {
 
     it('should trigger an error (orderBook)', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

@@ -84,7 +84,7 @@ describe('Recent Trades module', () => {
     it('should fetch trades', async () => {
         mockOrders();
         const expectedActions = [recentTradesFetch(currentMarket), recentTradesData(fakeTrades)];
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {
@@ -111,7 +111,7 @@ describe('Recent Trades module', () => {
                 },
             }),
         ];
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

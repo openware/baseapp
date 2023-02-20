@@ -1,0 +1,19 @@
+{
+    "preset": "ts-jest",
+    "setupFilesAfterEnv": ["<rootDir>/jest/setupTests.ts"],
+    "transform": {
+        ".+\\.(css|styl|less|sass|scss|pcss)$": "jest-css-modules-transform",
+        "^.+\\.tsx?$": [
+            "ts-jest",
+            {
+                "isolatedModules": true
+            }
+        ],
+        "\\.(jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/jest/fileTransformer.js"
+    },
+    "testEnvironment": "jsdom",
+    "modulePaths": ["<rootDir>"],
+    "moduleNameMapper": {
+        "^.+\\.svg$": "jest-svg-transformer"
+    }
+}

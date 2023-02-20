@@ -30,8 +30,6 @@
         "__mocks__",
         "scripts",
         "spec",
-        "jest.config.js",
-        "./src/**/*.test.*",
         "./src/charting_library"
     ]
 }

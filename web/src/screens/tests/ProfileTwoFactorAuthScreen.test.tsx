@@ -1,11 +1,11 @@
-import { shallow } from 'enzyme';
-import { TestComponentWrapper } from 'lib/test';
+import { render } from '@testing-library/react';
 import React from 'react';
+import { TestComponentWrapper } from 'src/lib/test';
 import { ProfileTwoFactorAuthScreen } from '../';
 import { IntlProps } from '../../';
 
-const setup = (props: Partial<IntlProps> = {}) =>
-    shallow(
+const renderComponent = (props: Partial<IntlProps> = {}) =>
+    render(
         <TestComponentWrapper>
             <ProfileTwoFactorAuthScreen />
         </TestComponentWrapper>,
@@ -13,7 +13,6 @@ const setup = (props: Partial<IntlProps> = {}) =>
 
 describe('ProfileTwoFactorAuthScreen test', () => {
     it('should render', () => {
-        const wrapper = setup().render();
-        expect(wrapper).toMatchSnapshot();
+        expect(renderComponent().container).toMatchSnapshot();
     });
 });

@@ -1,48 +1,428 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`DepositCrypto should match snapshot 1`] = `
-<ContextProvider
-  value={
-    Object {
-      "store": Object {
-        "@@observable": [Function],
-        "dispatch": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-      },
-      "subscription": Object {
-        "addNestedSub": [Function],
-        "getListeners": [Function],
-        "handleChangeWrapper": [Function],
-        "isSubscribed": [Function],
-        "notifyNestedSubs": [Function],
-        "onStateChange": [Function],
-        "trySubscribe": [Function],
-        "tryUnsubscribe": [Function],
-      },
-    }
-  }
->
-  <DepositCrypto
-    dimensions={118}
-    disabled={false}
-    error="error123"
-    handleGenerateAddress={[MockFunction]}
-    handleOnCopy={[MockFunction]}
-    network="erc-20"
-    text="text123"
-    wallet={
-      Object {
-        "account_type": "",
-        "currency": "eth",
-        "fixed": 0,
-        "name": "",
-        "networks": Array [],
-        "type": "coin",
-      }
-    }
-  />
+<div>
+  <div
+    class="cr-withdraw__group__warning"
+  >
+    <div
+      class="cr-withdraw__group__warning-tip"
+    >
+      <svg
+        fill="none"
+        height="14"
+        viewBox="0 0 14 14"
+        width="14"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M7 1C3.6916 1 1 3.69164 1 7.00004C1 10.3084 3.6916 13 7 13C10.3084 13 13 10.3084 13 7.00004C13 3.69164 10.3084 1 7 1ZM7 11.9091C4.29309 11.9091 2.09091 9.70691 2.09091 7.00004C2.09091 4.29316 4.29309 2.09091 7 2.09091C9.70691 2.09091 11.9091 4.29316 11.9091 7.00004C11.9091 9.70691 9.70687 11.9091 7 11.9091Z"
+          fill="var(--icons)"
+          stroke="var(--icons)"
+          stroke-width="0.4"
+        />
+        <path
+          d="M7.00008 3.54541C6.59913 3.54541 6.27295 3.87181 6.27295 4.27301C6.27295 4.67385 6.59913 4.99996 7.00008 4.99996C7.40102 4.99996 7.7272 4.67385 7.7272 4.27301C7.7272 3.87181 7.40102 3.54541 7.00008 3.54541Z"
+          fill="var(--icons)"
+          stroke="var(--icons)"
+          stroke-width="0.4"
+        />
+        <path
+          d="M6.9998 6.09082C6.69856 6.09082 6.45435 6.33504 6.45435 6.63627V9.909C6.45435 10.2102 6.69856 10.4545 6.9998 10.4545C7.30104 10.4545 7.54526 10.2102 7.54526 9.909V6.63627C7.54526 6.33504 7.30104 6.09082 6.9998 6.09082Z"
+          fill="var(--icons)"
+          stroke="var(--icons)"
+          stroke-width="0.4"
+        />
+      </svg>
+    </div>
+    <span>
+      Min. deposit:
+       
+      <span
+        class="cr-withdraw__group__warning-currency"
+      >
+        <span>
+          0
+        </span>
+        <span
+          class="cr-decimal__opacity"
+        />
+         
+        ETH
+      </span>
+    </span>
+  </div>
+  <h5
+    class="cr-deposit-crypto__currency"
+  >
+     (ETH)
+  </h5>
+  <div
+    class="cr-deposit-crypto"
+  >
+    <div>
+      <p
+        class="cr-deposit-info"
+      >
+        text123
+      </p>
+      <div
+        class="d-none d-md-block qr-code-wrapper"
+      >
+        <div
+          class="qr-code"
+        >
+          <svg
+            height="118"
+            viewBox="0 0 21 21"
+            width="118"
+          >
+            <path
+              d="M0,0 h21v21H0z"
+              fill="#FFFFFF"
+              shape-rendering="crispEdges"
+            />
+            <path
+              d="M0 0h7v1H0zM8 0h1v1H8zM10 0h1v1H10zM12 0h1v1H12zM14,0 h7v1H14zM0 1h1v1H0zM6 1h1v1H6zM9 1h1v1H9zM11 1h1v1H11zM14 1h1v1H14zM20,1 h1v1H20zM0 2h1v1H0zM2 2h3v1H2zM6 2h1v1H6zM10 2h1v1H10zM12 2h1v1H12zM14 2h1v1H14zM16 2h3v1H16zM20,2 h1v1H20zM0 3h1v1H0zM2 3h3v1H2zM6 3h1v1H6zM8 3h1v1H8zM11 3h1v1H11zM14 3h1v1H14zM16 3h3v1H16zM20,3 h1v1H20zM0 4h1v1H0zM2 4h3v1H2zM6 4h1v1H6zM9 4h2v1H9zM14 4h1v1H14zM16 4h3v1H16zM20,4 h1v1H20zM0 5h1v1H0zM6 5h1v1H6zM10 5h3v1H10zM14 5h1v1H14zM20,5 h1v1H20zM0 6h7v1H0zM8 6h1v1H8zM10 6h1v1H10zM12 6h1v1H12zM14,6 h7v1H14zM9 7h2v1H9zM12 7h1v1H12zM2 8h1v1H2zM4 8h3v1H4zM8 8h1v1H8zM10 8h1v1H10zM12 8h2v1H12zM17 8h1v1H17zM20,8 h1v1H20zM3 9h2v1H3zM8 9h3v1H8zM17 9h2v1H17zM20,9 h1v1H20zM0 10h1v1H0zM3 10h5v1H3zM9 10h3v1H9zM13 10h2v1H13zM16 10h1v1H16zM18,10 h3v1H18zM1 11h1v1H1zM4 11h2v1H4zM7 11h2v1H7zM10 11h1v1H10zM14 11h1v1H14zM19 11h1v1H19zM0 12h1v1H0zM3 12h2v1H3zM6 12h5v1H6zM13 12h2v1H13zM16 12h2v1H16zM20,12 h1v1H20zM8 13h1v1H8zM10 13h1v1H10zM15 13h1v1H15zM17 13h1v1H17zM20,13 h1v1H20zM0 14h7v1H0zM9 14h1v1H9zM12 14h4v1H12zM17 14h2v1H17zM20,14 h1v1H20zM0 15h1v1H0zM6 15h1v1H6zM8 15h10v1H8zM20,15 h1v1H20zM0 16h1v1H0zM2 16h3v1H2zM6 16h1v1H6zM8 16h1v1H8zM11 16h1v1H11zM15 16h1v1H15zM18 16h1v1H18zM20,16 h1v1H20zM0 17h1v1H0zM2 17h3v1H2zM6 17h1v1H6zM10 17h2v1H10zM18 17h2v1H18zM0 18h1v1H0zM2 18h3v1H2zM6 18h1v1H6zM8 18h1v1H8zM12 18h1v1H12zM16 18h1v1H16zM20,18 h1v1H20zM0 19h1v1H0zM6 19h1v1H6zM9 19h2v1H9zM13 19h1v1H13zM18 19h2v1H18zM0 20h7v1H0zM9 20h1v1H9zM11 20h1v1H11zM14 20h1v1H14zM16 20h1v1H16zM18,20 h3v1H18z"
+              fill="#000000"
+              shape-rendering="crispEdges"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div
+      class="cr-deposit-crypto__block"
+    >
+      <div
+        class="pg-metamask"
+      >
+        <div
+          class="pg-metamask__logo-icon"
+        >
+          <svg
+            fill="none"
+            height="33"
+            viewBox="0 0 35 33"
+            width="35"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M32.9583 1L19.8242 10.7183L22.2666 4.99099L32.9583 1Z"
+              fill="#E17726"
+              stroke="#E17726"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M2.66309 1L15.6802 10.809L13.3548 4.99098L2.66309 1Z"
+              fill="#E27625"
+              stroke="#E27625"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M28.229 23.5332L24.7344 28.8718L32.2173 30.9321L34.3609 23.6499L28.229 23.5332Z"
+              fill="#E27625"
+              stroke="#E27625"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M1.27246 23.6499L3.403 30.9321L10.873 28.8718L7.39129 23.5332L1.27246 23.6499Z"
+              fill="#E27625"
+              stroke="#E27625"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M10.4702 14.5149L8.3916 17.6507L15.7966 17.9876L15.5498 10.0186L10.4702 14.5149Z"
+              fill="#E27625"
+              stroke="#E27625"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M25.1505 14.5148L19.9931 9.92773L19.8242 17.9875L27.2291 17.6506L25.1505 14.5148Z"
+              fill="#E27625"
+              stroke="#E27625"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M10.873 28.8722L15.3549 26.7083L11.4966 23.7021L10.873 28.8722Z"
+              fill="#E27625"
+              stroke="#E27625"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M20.2656 26.7083L24.7345 28.8722L24.1239 23.7021L20.2656 26.7083Z"
+              fill="#E27625"
+              stroke="#E27625"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M24.7345 28.8719L20.2656 26.708L20.6293 29.6105L20.5903 30.8415L24.7345 28.8719Z"
+              fill="#D5BFB2"
+              stroke="#D5BFB2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M10.873 28.8719L15.0302 30.8415L15.0042 29.6105L15.3549 26.708L10.873 28.8719Z"
+              fill="#D5BFB2"
+              stroke="#D5BFB2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M15.1081 21.7837L11.3926 20.6953L14.0168 19.4902L15.1081 21.7837Z"
+              fill="#233447"
+              stroke="#233447"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M20.5127 21.7837L21.604 19.4902L24.2412 20.6953L20.5127 21.7837Z"
+              fill="#233447"
+              stroke="#233447"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M10.8732 28.8718L11.5228 23.5332L7.3916 23.6499L10.8732 28.8718Z"
+              fill="#CC6228"
+              stroke="#CC6228"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M24.0981 23.5332L24.7347 28.8718L28.2293 23.6499L24.0981 23.5332Z"
+              fill="#CC6228"
+              stroke="#CC6228"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M27.2291 17.6504L19.8242 17.9873L20.5127 21.784L21.604 19.4904L24.2412 20.6955L27.2291 17.6504Z"
+              fill="#CC6228"
+              stroke="#CC6228"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M11.3926 20.6955L14.0168 19.4904L15.1081 21.784L15.7966 17.9873L8.3916 17.6504L11.3926 20.6955Z"
+              fill="#CC6228"
+              stroke="#CC6228"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M8.39209 17.6504L11.497 23.7017L11.393 20.6955L8.39209 17.6504Z"
+              fill="#E27525"
+              stroke="#E27525"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M24.2409 20.6955L24.124 23.7017L27.2289 17.6504L24.2409 20.6955Z"
+              fill="#E27525"
+              stroke="#E27525"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M15.797 17.9873L15.1084 21.784L15.9788 26.2673L16.1737 20.3586L15.797 17.9873Z"
+              fill="#E27525"
+              stroke="#E27525"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M19.8242 17.9873L19.4604 20.3457L19.6423 26.2673L20.5127 21.784L19.8242 17.9873Z"
+              fill="#E27525"
+              stroke="#E27525"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M20.513 21.7838L19.6426 26.2671L20.2662 26.7077L24.1246 23.7015L24.2415 20.6953L20.513 21.7838Z"
+              fill="#F5841F"
+              stroke="#F5841F"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M11.3926 20.6953L11.4966 23.7015L15.3549 26.7077L15.9785 26.2671L15.1081 21.7838L11.3926 20.6953Z"
+              fill="#F5841F"
+              stroke="#F5841F"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M20.5904 30.8417L20.6293 29.6107L20.2916 29.3256H15.329L15.0042 29.6107L15.0302 30.8417L10.873 28.8721L12.328 30.0642L15.277 32.0986H20.3305L23.2925 30.0642L24.7345 28.8721L20.5904 30.8417Z"
+              fill="#C0AC9D"
+              stroke="#C0AC9D"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M20.2658 26.7081L19.6422 26.2676H15.9787L15.3552 26.7081L15.0044 29.6107L15.3292 29.3256H20.2918L20.6296 29.6107L20.2658 26.7081Z"
+              fill="#161616"
+              stroke="#161616"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M33.5165 11.3532L34.6208 5.98873L32.9579 1L20.2656 10.3944L25.1502 14.5149L32.0485 16.5234L33.5685 14.7482L32.906 14.2687L33.9582 13.3099L33.1528 12.6879L34.2051 11.8845L33.5165 11.3532Z"
+              fill="#763E1A"
+              stroke="#763E1A"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M1 5.98873L2.11724 11.3532L1.40273 11.8845L2.468 12.6879L1.66255 13.3099L2.71483 14.2687L2.05228 14.7482L3.57225 16.5234L10.4706 14.5149L15.3552 10.3944L2.66287 1L1 5.98873Z"
+              fill="#763E1A"
+              stroke="#763E1A"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M32.0486 16.523L25.1503 14.5146L27.2289 17.6504L24.124 23.7016L28.2292 23.6498H34.361L32.0486 16.523Z"
+              fill="#F5841F"
+              stroke="#F5841F"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M10.4702 14.5146L3.57189 16.523L1.27246 23.6498H7.39129L11.4965 23.7016L8.39161 17.6504L10.4702 14.5146Z"
+              fill="#F5841F"
+              stroke="#F5841F"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+            <path
+              d="M19.8241 17.9878L20.2658 10.3945L22.2664 4.99121H13.3545L15.3551 10.3945L15.7968 17.9878L15.9657 20.372L15.9787 26.2678H19.6422L19.6552 20.372L19.8241 17.9878Z"
+              fill="#F5841F"
+              stroke="#F5841F"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="0.25"
+            />
+          </svg>
+        </div>
+      </div>
+      <form
+        class="cr-deposit-crypto__copyable"
+      >
+        <fieldset
+          class="cr-copyable-text-field"
+        >
+          <fieldset>
+            <div
+              class="cr-input-with-button-field cr-copyable-text-field cr-deposit-crypto__copyable-area"
+            >
+              <div
+                class="input-group"
+              >
+                <div
+                  class="custom-input"
+                >
+                  <label>
+                    Deposit by Wallet Address
+                  </label>
+                  <div
+                    class="input-group input-group-lg"
+                  >
+                    <input
+                      class="form-control form-control-lg"
+                      id="copy_deposit_1"
+                      placeholder="Deposit by Wallet Address"
+                      readonly=""
+                      type="text"
+                      value="0xq"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="input-group-append"
+                >
+                  <div
+                    class="cr-input-with-button_wrapper"
+                  >
+                    <button
+                      class="cr-copyable-text-field__button btn btn-primary"
+                      type="button"
+                    >
+                      <svg
+                        fill="none"
+                        height="18"
+                        viewBox="0 0 19 18"
+                        width="19"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          clip-rule="evenodd"
+                          d="M10.4 7.2C10.4 6.70294 9.99706 6.3 9.5 6.3H3.2C2.70294 6.3 2.3 6.70294 2.3 7.2V15.3C2.3 15.7971 2.70294 16.2 3.2 16.2H9.5C9.99706 16.2 10.4 15.7971 10.4 15.3V7.2ZM1.4 4.5C0.902944 4.5 0.5 4.90294 0.5 5.4V17.1C0.5 17.5971 0.902944 18 1.4 18H11.3C11.7971 18 12.2 17.5971 12.2 17.1V5.4C12.2 4.90294 11.7971 4.5 11.3 4.5H1.4Z"
+                          fill="var(--icons)"
+                          fill-rule="evenodd"
+                        />
+                        <path
+                          d="M9.5 1.8H15.8C16.2971 1.8 16.7 2.20294 16.7 2.7V11.7C16.7 12.1971 16.2971 12.6 15.8 12.6H13.55V14.4H17.6C18.0971 14.4 18.5 13.9971 18.5 13.5V0.9C18.5 0.402944 18.0971 0 17.6 0H7.7C7.20294 0 6.8 0.402944 6.8 0.9V3.6L8.6 3.6V2.7C8.6 2.20294 9.00294 1.8 9.5 1.8Z"
+                          fill="var(--icons)"
+                        />
+                      </svg>
+                      Copy
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  <h5
+    class="cr-deposit-crypto__hint-title"
+  >
+    Send only ETH to this deposit address.
+  </h5>
+  <p
+    class="cr-deposit-crypto__hint"
+  >
+    Sending coin or token other than ETH to this address may result in the loss of your deposit.
+  </p>
   ,
-</ContextProvider>
+</div>
 `;

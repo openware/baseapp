@@ -70,7 +70,7 @@ describe('Saga: depth', () => {
     it('should fetch depth', async () => {
         mockDepth();
         const expectedActionsFetch = [depthFetch(fakeMarket), depthData(fakeDepth)];
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -97,7 +97,7 @@ describe('Saga: depth', () => {
                 },
             }),
         ];
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

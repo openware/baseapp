@@ -1,30 +1,28 @@
-import { shallow } from 'enzyme';
-import { TestComponentWrapper } from 'lib/test';
-import * as React from 'react';
+import { render } from '@testing-library/react';
+import React from 'react';
+import { TestComponentWrapper } from 'src/lib/test';
 import { VerificationScreen } from '..';
-import { IntlProps } from '../../';
 import { extractToken } from '../VerificationScreen';
 
-const setup = (props: Partial<IntlProps> = {}) =>
-    shallow(
+const defaultProps = {
+    location: {
+        search: 'confirmation_token=123123',
+    },
+};
+
+const renderComponent = () =>
+    render(
         <TestComponentWrapper>
-            <VerificationScreen />
+            <VerificationScreen {...defaultProps} />
         </TestComponentWrapper>,
     );
 
 describe('VerificationScreen test', () => {
     it('should render', () => {
-        const wrapper = setup().render();
-        expect(wrapper).toMatchSnapshot();
+        expect(renderComponent().container).toMatchSnapshot();
     });
 
-    const tokenProps = {
-        location: {
-            search: 'confirmation_token=123123',
-        },
-    };
-
     it('extract the token from search url', () => {
-        expect(extractToken(tokenProps)).toEqual('123123');
+        expect(extractToken(defaultProps)).toEqual('123123');
     });
 });

@@ -1,12 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CryptoIcon should render 1`] = `
-<span
-  class="cr-crypto-icon"
->
-  <img
-    alt="btc"
-  />
-   
-</span>
+<div>
+  <span
+    class="cr-crypto-icon"
+  >
+    <img
+      alt="btc"
+    />
+     
+  </span>
+</div>
 `;
