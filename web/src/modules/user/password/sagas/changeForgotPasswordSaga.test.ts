@@ -73,7 +73,7 @@ describe('Change Forgot Password Saga', () => {
 
     it('should change forgotten password in success flow', async () => {
         mockChangeForgotPassword();
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -90,7 +90,7 @@ describe('Change Forgot Password Saga', () => {
 
     it('should change forgotten password in error flow', async () => {
         mockChangeForgotPasswordError();
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {
@@ -107,7 +107,7 @@ describe('Change Forgot Password Saga', () => {
 
     it('should request forgotten password in network error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsNetworkError.length) {

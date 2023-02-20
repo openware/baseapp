@@ -73,7 +73,7 @@ describe('Kline', () => {
         mockKline();
 
         const expectedActions = [klineFetch(fakePayload), klineData(fakeResponseData)];
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActions.length) {
@@ -100,7 +100,7 @@ describe('Kline', () => {
                 },
             }),
         ];
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

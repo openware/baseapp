@@ -86,7 +86,7 @@ describe('Documentation trade user api', () => {
         it('should fetch deposits in success flow', async () => {
             mockDocTradeUserApiFetch();
 
-            const promise = new Promise((resolve) => {
+            const promise = new Promise<void>((resolve) => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     if (actions.length === expectedActionsFetch.length) {
@@ -102,7 +102,7 @@ describe('Documentation trade user api', () => {
 
         it('should handle fetch deposits error', async () => {
             mockNetworkError(mockAxios);
-            const promise = new Promise((resolve) => {
+            const promise = new Promise<void>((resolve) => {
                 store.subscribe(() => {
                     const actions = store.getActions();
                     if (actions.length === expectedActionsError.length) {

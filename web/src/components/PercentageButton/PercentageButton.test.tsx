@@ -1,5 +1,5 @@
-import { shallow, ShallowWrapper } from 'enzyme';
-import * as React from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import React from 'react';
 import { spy } from 'sinon';
 import { PercentageButton, PercentageButtonProps } from '.';
 
@@ -10,23 +10,17 @@ const defaultProps: PercentageButtonProps = {
     onClick: onClickSpy,
 };
 
-const setup = (props: Partial<PercentageButtonProps> = {}) =>
-    shallow(<PercentageButton {...{ ...defaultProps, ...props }} />);
+const renderComponent = (props: Partial<PercentageButtonProps> = {}) =>
+    render(<PercentageButton {...{ ...defaultProps, ...props }} />);
 
 describe('Close Button', () => {
-    let wrapper: ShallowWrapper;
-
-    beforeEach(() => {
-        onClickSpy.resetHistory();
-        wrapper = setup({ onClick: onClickSpy });
-    });
-
     it('should render', () => {
-        expect(wrapper).toMatchSnapshot();
+        expect(renderComponent({ onClick: onClickSpy }).container).toMatchSnapshot();
     });
 
     it('should call onClick callback', () => {
-        wrapper.find('.cr-button-percentage-100').simulate('click');
+        renderComponent({ onClick: onClickSpy });
+        fireEvent.click(screen.getByRole('button'));
         expect(onClickSpy.calledOnce).toBeTruthy();
     });
 });

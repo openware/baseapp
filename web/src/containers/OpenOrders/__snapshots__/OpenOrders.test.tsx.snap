@@ -1,62 +1,129 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`OpenOrders should render 1`] = `
-<ContextProvider
-  value={
-    Object {
-      "store": Object {
-        "@@observable": [Function],
-        "dispatch": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-      },
-      "subscription": Object {
-        "addNestedSub": [Function],
-        "getListeners": [Function],
-        "handleChangeWrapper": [Function],
-        "isSubscribed": [Function],
-        "notifyNestedSubs": [Function],
-        "onStateChange": [Function],
-        "trySubscribe": [Function],
-        "tryUnsubscribe": [Function],
-      },
-    }
-  }
->
-  // @ts-ignore
-  <Connect(Component)
-    cancelFetching={false}
-    currentMarket={
-      Object {
-        "amount_precision": 4,
-        "base_unit": "eth",
-        "id": "ethusd",
-        "max_price": "0.0",
-        "min_amount": "0.0",
-        "min_price": "0.0",
-        "name": "ETH/USD",
-        "price_precision": 4,
-        "quote_unit": "usd",
-      }
-    }
-    fetching={false}
-    list={
-      Array [
-        Object {
-          "created_at": "2019-01-31T21:14:04+01:00",
-          "executed_volume": "10",
-          "id": 131,
-          "market": "ethusd",
-          "origin_volume": "10",
-          "price": "104.4313",
-          "remaining_volume": "0",
-          "side": "sell",
-          "state": "wait",
-        },
-      ]
-    }
-    userLoggedIn={true}
-  />
-</ContextProvider>
+<div>
+  <div
+    class="pg-open-orders pg-open-orders--empty"
+  >
+    <div
+      class="cr-table-header__content"
+    >
+      <div
+        class="cr-title-component"
+      >
+        <span>
+          Open Orders
+        </span>
+        <form
+          class="cr-title-component__checkbox"
+        >
+          <div
+            class="custom-control custom-checkbox"
+          >
+            <input
+              checked=""
+              class="custom-control-input"
+              id="hideOtherPairs"
+              readonly=""
+              type="checkbox"
+            />
+            <label
+              class="custom-control-label"
+              for="hideOtherPairs"
+              title=""
+            >
+              Hide other pairs
+            </label>
+          </div>
+        </form>
+        <span
+          class="cr-table-header__cancel"
+        >
+          Cancel all
+          <svg
+            class="cr-table-header__close"
+            fill="none"
+            height="14"
+            viewBox="0 0 14 14"
+            width="14"
+          >
+            <path
+              clip-rule="evenodd"
+              d="M5.58434 6.99901L0.875873 11.7079L2.29003 13.1221L6.99849 8.41328L11.707 13.1221L13.1211 11.7079L8.41265 6.99901L13.704 1.7072L12.2899 0.292927L6.99849 5.58474L1.70712 0.292932L0.292969 1.7072L5.58434 6.99901Z"
+              fill="var(--icons)"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </span>
+      </div>
+    </div>
+    <div
+      class="cr-open-orders"
+    >
+      <div
+        class="cr-table-container"
+      >
+        <div
+          class="cr-table-header__content cr-table-header__content-empty"
+        />
+        <table
+          class="cr-table"
+        >
+          <thead
+            class="cr-table__head"
+          >
+            <tr
+              class="cr-table__head-row"
+            >
+              <th>
+                Time
+              </th>
+              <th>
+                Market
+              </th>
+              <th>
+                Type
+              </th>
+              <th>
+                Price
+              </th>
+              <th>
+                Amount
+              </th>
+              <th>
+                Value
+              </th>
+              <th>
+                Trigger
+              </th>
+              <th>
+                Filled
+              </th>
+              <th>
+                 
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            class="cr-table__body"
+          >
+            <tr
+              class=""
+            >
+              <td />
+              <td />
+              <td />
+              <td>
+                There is no data to show
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div
+          class="cr-table-background"
+        />
+      </div>
+    </div>
+  </div>
+</div>
 `;

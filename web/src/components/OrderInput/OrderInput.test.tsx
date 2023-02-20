@@ -1,5 +1,5 @@
-import { shallow } from 'enzyme';
-import * as React from 'react';
+import { render } from '@testing-library/react';
+import React from 'react';
 import { OrderInput, OrderInputProps } from '.';
 
 const defaultProps: OrderInputProps = {
@@ -11,22 +11,19 @@ const defaultProps: OrderInputProps = {
     onKeyPress: jest.fn(),
 };
 
-const setup = (props: Partial<OrderInputProps> = {}) => shallow(<OrderInput {...{ ...defaultProps, ...props }} />);
+const renderComponent = (props: Partial<OrderInputProps> = {}) =>
+    render(<OrderInput {...{ ...defaultProps, ...props }} />);
 
 describe('InputBlock', () => {
     it('should render', () => {
-        const wrapper = setup();
-        expect(wrapper).toMatchSnapshot();
+        expect(renderComponent().container).toMatchSnapshot();
     });
 
     it('should have correct className', () => {
-        const wrapper = setup();
-        expect(wrapper.hasClass('cr-order-input')).toBeTruthy();
+        expect(renderComponent().container.querySelector('.cr-order-input')).toBeInTheDocument();
     });
 
     it('should pass along supplied className', () => {
-        const className = 'some-class';
-        const wrapper = setup({ className });
-        expect(wrapper.hasClass(className)).toBeTruthy();
+        expect(renderComponent({ className: 'new-class' }).container.querySelector('.new-class')).toBeInTheDocument();
     });
 });

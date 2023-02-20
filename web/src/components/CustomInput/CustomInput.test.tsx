@@ -1,7 +1,6 @@
-import * as React from 'react';
+import { render } from '@testing-library/react';
+import React from 'react';
 import { CustomInput, CustomInputProps } from './';
-
-import { shallow } from 'enzyme';
 
 const defaults: CustomInputProps = {
     type: '',
@@ -16,16 +15,11 @@ const defaults: CustomInputProps = {
     autoFocus: false,
 };
 
-const setup = (props: Partial<CustomInputProps> = {}) => shallow(<CustomInput {...{ ...defaults, ...props }} />);
+const renderComponent = (props: Partial<CustomInputProps> = {}) =>
+    render(<CustomInput {...{ ...defaults, ...props }} />);
 
 describe('CustomInput component', () => {
     it('should render', () => {
-        const wrapper = setup();
-        expect(wrapper).toMatchSnapshot();
-    });
-
-    it('renders without crashing', () => {
-        const wrapper = setup();
-        expect(wrapper).toBeDefined();
+        expect(renderComponent().container).toMatchSnapshot();
     });
 });

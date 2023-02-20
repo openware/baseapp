@@ -50,7 +50,7 @@ describe('Orders Cancel All', () => {
 
     it('should cancel all open orders', async () => {
         mockCancelAllOrders();
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsSuccess.length) {
@@ -66,7 +66,7 @@ describe('Orders Cancel All', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

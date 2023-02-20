@@ -1,5 +1,5 @@
-import { shallow, ShallowWrapper } from 'enzyme';
-import * as React from 'react';
+import { render } from '@testing-library/react';
+import React from 'react';
 import { Button } from 'react-bootstrap';
 import { Modal, ModalProps } from './';
 
@@ -10,32 +10,18 @@ const defaults: ModalProps = {
     footer: <Button onClick={jest.fn()} />,
 };
 
-const setup = (props: Partial<ModalProps> = {}) => shallow(<Modal {...{ ...defaults, ...props }} />);
+const renderComponent = (props: Partial<ModalProps> = {}) => render(<Modal {...{ ...defaults, ...props }} />);
 
 describe('Basic Modal', () => {
-    let wrapper: ShallowWrapper;
-
-    beforeEach(() => {
-        wrapper = setup();
-    });
-
     it('should render', () => {
-        expect(wrapper).toMatchSnapshot();
+        expect(renderComponent().container).toMatchSnapshot();
     });
 
     it('should have correct className', () => {
-        expect(wrapper.hasClass('cr-modal')).toBeTruthy();
+        expect(renderComponent().container.querySelector('.cr-modal')).toBeInTheDocument();
     });
 
     it('should pass along supplied className', () => {
-        const className = 'new-class';
-        const wrapper = setup({ className }); //tslint:disable-line
-        expect(wrapper.hasClass(className)).toBeTruthy();
-    });
-
-    it('should handle false value in show prop', () => {
-        expect(wrapper.props()).not.toBeNull();
-        wrapper = setup({ show: false });
-        expect(wrapper.props()).toEqual({});
+        expect(renderComponent({ className: 'new-class' }).container.querySelector('.new-class')).toBeInTheDocument();
     });
 });

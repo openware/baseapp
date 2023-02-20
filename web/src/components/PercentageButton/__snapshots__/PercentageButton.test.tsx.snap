@@ -1,10 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Close Button should render 1`] = `
-<button
-  className="cr-button-percentage-100"
-  onClick={[Function]}
->
-  10000%
-</button>
+<div>
+  <button
+    class="cr-button-percentage-100"
+  >
+    10000%
+  </button>
+</div>
 `;

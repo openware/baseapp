@@ -62,7 +62,7 @@ describe('Module: Change user info', () => {
 
     it('should change user data info in success flow', async () => {
         mockchangeUserData();
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetch.length) {
@@ -79,7 +79,7 @@ describe('Module: Change user info', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {

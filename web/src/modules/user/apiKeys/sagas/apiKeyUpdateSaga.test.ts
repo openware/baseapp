@@ -69,7 +69,7 @@ describe('api keys saga', () => {
 
     it('should update api key', async () => {
         mockUpdateApiKey();
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedUpdateApiKeyFetchSuccess.length) {
@@ -85,7 +85,7 @@ describe('api keys saga', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedpdateApiKeyFetchError.length) {

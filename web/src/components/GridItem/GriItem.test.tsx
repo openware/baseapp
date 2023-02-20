@@ -1,27 +1,23 @@
-import { shallow } from 'enzyme';
-import * as React from 'react';
+import { render } from '@testing-library/react';
+import React from 'react';
 import { GridItem, GridItemProps } from '.';
 
 const defaultProps: GridItemProps = {
     children: 'Children',
 };
 
-const setup = (props: Partial<GridItemProps> = {}) => shallow(<GridItem {...{ ...defaultProps, ...props }} />);
+const renderComponent = (props: Partial<GridItemProps> = {}) => render(<GridItem {...{ ...defaultProps, ...props }} />);
 
 describe('GridItem', () => {
     it('should render', () => {
-        const wrapper = setup();
-        expect(wrapper).toMatchSnapshot();
+        expect(renderComponent().container).toMatchSnapshot();
     });
 
     it('should have correct className', () => {
-        const wrapper = setup();
-        expect(wrapper.hasClass('cr-grid-item')).toBeTruthy();
+        expect(renderComponent().container.querySelector('.cr-grid-item')).toBeInTheDocument();
     });
 
     it('should pass along supplied className', () => {
-        const className = 'some-class';
-        const wrapper = setup({ className });
-        expect(wrapper.hasClass(className)).toBeTruthy();
+        expect(renderComponent({ className: 'new-class' }).container.querySelector('.new-class')).toBeInTheDocument();
     });
 });

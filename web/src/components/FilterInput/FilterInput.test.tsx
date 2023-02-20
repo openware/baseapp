@@ -1,5 +1,5 @@
-import { shallow, ShallowWrapper } from 'enzyme';
-import * as React from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import React from 'react';
 import { SinonSpy, spy } from 'sinon';
 import { FilterInput, FilterInputProps } from './';
 
@@ -30,39 +30,30 @@ const defaults: FilterInputProps = {
     onFilter: spy(),
 };
 
-const setup = (props: Partial<FilterInputProps> = {}) => shallow(<FilterInput {...{ ...defaults, ...props }} />);
+const renderComponent = (props: Partial<FilterInputProps> = {}) =>
+    render(<FilterInput {...{ ...defaults, ...props }} />);
 
 describe('FilterInput', () => {
-    let wrapper: ShallowWrapper;
+    let wrapper;
 
     beforeEach(() => {
-        wrapper = setup();
+        wrapper = renderComponent();
     });
 
     it('should render', () => {
-        expect(wrapper).toMatchSnapshot();
+        expect(renderComponent().container).toMatchSnapshot();
     });
 
     it('should render 1 input tag', () => {
-        const input = wrapper.find('input');
-        expect(input.length).toBe(1);
-    });
-
-    it('should render 1 div', () => {
-        const divs = wrapper.find('div');
-        expect(divs.length).toBe(1);
+        expect(screen.getByRole('textbox')).toBeInTheDocument();
     });
 
     it('should have correct className', () => {
-        expect(wrapper.hasClass('cr-search')).toBeTruthy();
+        expect(wrapper.container.querySelector('.cr-search')).toBeInTheDocument();
     });
 
     it('should render correct list from data', () => {
-        wrapper.find('input').simulate('change', {
-            target: {
-                value: 'b',
-            },
-        });
+        fireEvent.change(screen.getByRole('textbox'), { target: { value: 'b' } });
 
         expect((defaults.onFilter as SinonSpy).calledOnceWith([defaults.data[0]])).toBeTruthy();
     });

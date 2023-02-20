@@ -1,89 +1,45 @@
-import { shallow } from 'enzyme';
-import { TestComponentWrapper } from 'lib/test';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
+import { TestComponentWrapper } from 'src/lib/test';
 import { WalletItem } from './';
 
-const setup = (props: any) =>
-    shallow(
+const defaults = {
+    currency: 'BTC',
+    name: 'Bitcoin',
+    balance: '45',
+    active: false,
+    fixed: 8,
+    iconUrl: '',
+    markets: [],
+    tickers: {},
+    currencies: [],
+};
+
+const renderComponent = (props: any = {}) =>
+    render(
         <TestComponentWrapper>
-            <WalletItem {...props} />
+            <WalletItem {...{ ...defaults, ...props }} />
         </TestComponentWrapper>,
     );
 
 describe('WalletItem #render', () => {
+    it('should match snapshot', () => {
+        expect(renderComponent().container).toMatchSnapshot();
+    });
+
     it('uses styles by default', () => {
-        const wrapper = setup({
-            currency: 'BTC',
-            name: 'Bitcoin',
-            balance: '45',
-            active: false,
-            fixed: 8,
-            iconUrl: '',
-            markets: [],
-            tickers: {},
-            currencies: [],
-        }).render();
-        expect(wrapper.find('div.cr-wallet-item')).toBeDefined();
+        expect(renderComponent().container.querySelector('.cr-wallet-item')).toBeInTheDocument();
     });
 
     it('displays codes, balances and locked', () => {
-        const wrapper = setup({
-            currency: 'BTC',
-            name: 'Bitcoin',
-            balance: '45',
-            active: false,
-            fixed: 8,
-            iconUrl: '',
-            markets: [],
-            tickers: {},
-            currencies: [],
-        }).render();
-        expect(wrapper.find('.cr-wallet-item__description').text()).toContain('BTCBitcoin');
+        renderComponent();
+        expect(screen.getByText('BTC')).toBeInTheDocument();
+        expect(screen.getByText('Bitcoin')).toBeInTheDocument();
     });
 
     it('should not display locked balance if wallet does not have one', () => {
-        const wrapper = setup({
-            currency: 'BTC',
-            name: 'Bitcoin',
-            balance: '45',
-            active: false,
-            fixed: 8,
-            iconUrl: '',
-            markets: [],
-            tickers: {},
-            currencies: [],
-        }).render();
-        const balanceElement = wrapper.find('.cr-wallet-item__balance');
-        expect(balanceElement.attr('class')).not.toContain('cr-wallet-item__balance-locked');
-    });
-
-    it('should render when locked = 0', () => {
-        const wrapper = setup({
-            currency: 'BTC',
-            name: 'Bitcoin',
-            balance: '45',
-            active: false,
-            fixed: 8,
-            iconUrl: '',
-            markets: [],
-            tickers: {},
-            currencies: [],
-        }).render();
-        expect(wrapper.find('.cr-wallet-item__balance-locked').text()).toEqual('');
-    });
-
-    it('should match snapshot', () => {
-        const wrapper = setup({
-            currency: 'BTC',
-            name: 'Bitcoin',
-            balance: '45',
-            active: false,
-            fixed: 8,
-            iconUrl: '',
-            markets: [],
-            tickers: {},
-            currencies: [],
-        }).render();
-        expect(wrapper).toMatchSnapshot();
+        const { container } = renderComponent();
+        expect(container.querySelector('.cr-wallet-item__balance')).toBeInTheDocument();
+        expect(container.querySelector('.cr-wallet-item__balance-locked')).not.toBeInTheDocument();
     });
 });

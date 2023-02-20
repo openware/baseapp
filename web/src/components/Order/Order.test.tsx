@@ -1,9 +1,7 @@
-import { mount, shallow, ShallowWrapper } from 'enzyme';
-import * as React from 'react';
-import { SinonSpy, spy } from 'sinon';
+import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { spy } from 'sinon';
 import { Order, OrderComponentProps } from './';
-
-// tslint:disable:no-magic-numbers
 
 const defaultProps: OrderComponentProps = {
     onSubmit: spy(),
@@ -22,24 +20,16 @@ const defaultProps: OrderComponentProps = {
     marketId: 'BTCUSD',
 };
 
-const setup = (props: Partial<OrderComponentProps> = {}) => shallow(<Order {...{ ...defaultProps, ...props }} />);
+const renderComponent = (props: Partial<OrderComponentProps> = {}) =>
+    render(<Order {...{ ...defaultProps, ...props }} />);
 
 describe('Order', () => {
-    let wrapper: ShallowWrapper;
-
-    beforeEach(() => {
-        wrapper = setup();
-    });
-
     it('should match snapshot', () => {
-        expect(wrapper).toMatchSnapshot();
+        expect(renderComponent().container).toMatchSnapshot();
     });
 
-    it('button should be disabled', () => {
-        // tslint:disable: no-shadowed-variable
-        const wrapper = mount(<Order {...{ ...defaultProps }} />);
-        wrapper.find('input').at(2).simulate('click');
-        expect((defaultProps.onSubmit as SinonSpy).calledOnceWith()).toBeFalsy();
-        wrapper.unmount();
+    it('button should be disabled', async () => {
+        renderComponent();
+        expect(screen.getByRole('button', { name: 'sell' })).toBeDisabled();
     });
 });

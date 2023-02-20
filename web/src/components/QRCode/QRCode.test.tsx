@@ -1,25 +1,17 @@
-import { shallow } from 'enzyme';
-import { TestComponentWrapper } from 'lib/test';
+import { render } from '@testing-library/react';
 import React from 'react';
 import { QRCode, QRCodeProps } from '.';
 
-const setup = (props: QRCodeProps) =>
-    shallow(
-        <TestComponentWrapper>
-            <QRCode {...props} />
-        </TestComponentWrapper>,
-    );
+const renderComponent = (props: QRCodeProps) => render(<QRCode {...props} />);
 
 describe('QRCode', () => {
     it('has qr-code className', () => {
-        // tslint:disable-next-line:no-magic-numbers
-        const wrapper = setup({ data: 'sevaerverv343', dimensions: 118 }).render();
-        expect(wrapper.hasClass('qr-code'));
+        const { container } = renderComponent({ data: 'sevaerverv343', dimensions: 118 });
+        expect(container.querySelector('.qr-code')).toBeInTheDocument();
     });
 
     it('renders correctly', () => {
-        // tslint:disable-next-line:no-magic-numbers
-        const wrapper = setup({ data: 'sevaerverv343', dimensions: 118 }).render();
-        expect(wrapper).toMatchSnapshot();
+        const { container } = renderComponent({ data: 'sevaerverv343', dimensions: 118 });
+        expect(container).toMatchSnapshot();
     });
 });

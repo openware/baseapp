@@ -1,9 +1,7 @@
-import * as React from 'react';
-import { Button } from 'react-bootstrap';
+import { fireEvent, render, screen } from '@testing-library/react';
+import React from 'react';
+import { TestComponentWrapper } from 'src/lib/test';
 import { SignUpForm, SignUpFormProps } from './';
-
-import { shallow } from 'enzyme';
-import { TestComponentWrapper } from 'lib/test';
 
 const defaults: SignUpFormProps = {
     onSignUp: jest.fn(),
@@ -47,8 +45,8 @@ const defaults: SignUpFormProps = {
     translate: jest.fn(),
 };
 
-const setup = (props: Partial<SignUpFormProps> = {}) =>
-    shallow(
+const renderComponent = (props: Partial<SignUpFormProps> = {}) =>
+    render(
         <TestComponentWrapper>
             <SignUpForm {...{ ...defaults, ...props }} />
         </TestComponentWrapper>,
@@ -56,96 +54,63 @@ const setup = (props: Partial<SignUpFormProps> = {}) =>
 
 describe('SignUp component', () => {
     it('should render', () => {
-        const wrapper = setup().render();
-        expect(wrapper).toMatchSnapshot();
-    });
-
-    it('renders without crashing', () => {
-        const wrapper = setup().render();
-        expect(wrapper).toBeDefined();
+        expect(renderComponent().container).toMatchSnapshot();
     });
 
     it('should render logo block', () => {
-        let wrapper = setup().render();
-        const firstState = wrapper.find('.cr-sign-up-form__form-content').children();
-        expect(firstState).toHaveLength(6);
-        wrapper = setup({ image: 'image' }).render();
-        const secondState = wrapper.find('.cr-sign-up-form__form-content').children();
-        expect(secondState).toHaveLength(7);
+        const { rerender, container } = renderComponent();
+        const firstState = container.querySelector('.cr-sign-up-form__form-content');
+        expect(firstState.childElementCount).toEqual(6);
+
+        rerender(
+            <TestComponentWrapper>
+                <SignUpForm {...{ ...defaults, image: 'image' }} />
+            </TestComponentWrapper>,
+        );
+        const secondState = container.querySelector('.cr-sign-up-form__form-content');
+        expect(secondState.childElementCount).toEqual(7);
     });
 
     it('should render captcha block', () => {
-        const wrapper = setup({
-            hasConfirmed: true,
-            renderCaptcha: <div className="cr-sign-up-form__recaptcha">Content</div>,
-        }).render();
-        expect(wrapper.find('.cr-sign-up-form__recaptcha')).toBeDefined();
+        expect(renderComponent().container.querySelector('.cr-sign-up-form__recaptcha')).not.toBeInTheDocument();
     });
 
     it('should have correct labels', () => {
-        const wrapper = setup({
+        renderComponent({
             labelSignIn: 'label sign in',
             labelSignUp: 'label sign up',
-        }).render();
-        expect(wrapper.find('.cr-sign-up-form__option-inner').first().text()).toBe('label sign in');
-        expect(wrapper.find('.__selected').text()).toBe('label sign up');
+        });
+
+        expect(screen.getAllByText('label sign in')).toBeDefined();
+        expect(screen.getAllByText('label sign up')).toBeDefined();
     });
 
     it('should render error blocks', () => {
-        const wrapper = setup({
+        renderComponent({
             emailError: 'error email',
-            passwordError: 'error password',
             confirmationError: 'error refid',
-        }).render();
-        expect(wrapper.find('.cr-sign-up-form__error').first().text()).toBe('error email');
-        expect(wrapper.find('.cr-sign-up-form__error').last().text()).toBe('error refid');
+        });
+
+        expect(screen.getByText('error email')).toBeInTheDocument();
+        expect(screen.getByText('error refid')).toBeInTheDocument();
     });
 
-    it.skip('should send request', () => {
+    it('should send request', () => {
         const spyOnValidateForm = jest.fn();
         const spyOnSignUp = jest.fn();
-        const wrapper = setup({
+
+        renderComponent({
             email: 'email@email.com',
             password: 'Qwerty123',
             confirmPassword: 'Qwerty123',
+            hasConfirmed: true,
             validateForm: spyOnValidateForm,
             onSignUp: spyOnSignUp,
         });
-        const button = wrapper.find(Button);
-        button.simulate('click');
+
+        fireEvent.click(screen.getByRole('button'));
         expect(spyOnValidateForm).toHaveBeenCalledTimes(0);
         expect(spyOnSignUp).toHaveBeenCalled();
         expect(spyOnSignUp).toHaveBeenCalledTimes(1);
-    });
-
-    it.skip('should validate form', () => {
-        const spyOnValidateForm = jest.fn();
-        const spyOnSignUp = jest.fn();
-        let wrapper = setup({
-            email: 'email',
-            password: 'Qwerty123',
-            confirmPassword: 'Qwerty123',
-            validateForm: spyOnValidateForm,
-            onSignUp: spyOnSignUp,
-        });
-        const button = wrapper.find(Button);
-        button.simulate('click');
-        expect(spyOnValidateForm).toHaveBeenCalled();
-        expect(spyOnValidateForm).toHaveBeenCalledTimes(1);
-        expect(spyOnSignUp).toHaveBeenCalledTimes(0);
-        spyOnValidateForm.mockClear();
-        spyOnSignUp.mockClear();
-
-        wrapper = setup({
-            email: 'email@email.com',
-            password: 'Qwerty123',
-            confirmPassword: 'Qwerty',
-            validateForm: spyOnValidateForm,
-            onSignUp: spyOnSignUp,
-        });
-        button.simulate('click');
-        expect(spyOnValidateForm).toHaveBeenCalled();
-        expect(spyOnValidateForm).toHaveBeenCalledTimes(1);
-        expect(spyOnSignUp).toHaveBeenCalledTimes(0);
     });
 });

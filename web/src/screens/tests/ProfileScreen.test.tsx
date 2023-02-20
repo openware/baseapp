@@ -1,10 +1,10 @@
-import { shallow } from 'enzyme';
-import { TestComponentWrapper } from 'lib/test';
+import { render } from '@testing-library/react';
 import React from 'react';
+import { TestComponentWrapper } from 'src/lib/test';
 import { ProfileScreen } from '../';
 
-const setup = () =>
-    shallow(
+const renderComponent = () =>
+    render(
         <TestComponentWrapper>
             <ProfileScreen />
         </TestComponentWrapper>,
@@ -12,7 +12,6 @@ const setup = () =>
 
 describe('ProfileScreen test', () => {
     it('should render', () => {
-        const wrapper = setup().render();
-        expect(wrapper).toMatchSnapshot();
+        expect(renderComponent().container).toMatchSnapshot();
     });
 });

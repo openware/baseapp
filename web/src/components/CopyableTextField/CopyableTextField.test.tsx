@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import * as React from 'react';
 import { CopyableTextField, CopyableTextFieldProps } from './';
 
@@ -7,17 +7,15 @@ const defaultProps: CopyableTextFieldProps = {
     fieldId: 'copy_id',
 };
 
-const setup = (props: Partial<CopyableTextFieldProps> = {}) =>
-    shallow(<CopyableTextField {...{ ...defaultProps, ...props }} />);
+const renderComponent = (props: Partial<CopyableTextFieldProps> = {}) =>
+    render(<CopyableTextField {...{ ...defaultProps, ...props }} />);
 
 describe('CopyableTextField', () => {
     it('should render', () => {
-        const wrapper = setup();
-        expect(wrapper).toMatchSnapshot();
+        expect(renderComponent().container).toMatchSnapshot();
     });
 
     it('should contain cr-copyable-text-field className', () => {
-        const wrapper = setup();
-        expect(wrapper.find('.cr-copyable-text-field')).toHaveLength(1);
+        expect(renderComponent().container.querySelector('.cr-copyable-text-field')).toBeInTheDocument();
     });
 });

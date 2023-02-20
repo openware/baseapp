@@ -1,52 +1,54 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`WalletItem #render should match snapshot 1`] = `
-<div
-  class="cr-wallet-item "
-  style="display:flex;justify-content:space-between"
->
+<div>
   <div
-    class="cr-wallet-item__info"
+    class="cr-wallet-item "
+    style="display: flex; justify-content: space-between;"
   >
-    <span
-      class="cr-crypto-icon cr-wallet-item__icon"
-    >
-      <img
-        alt="BTC"
-      />
-       
-    </span>
     <div
-      class="cr-wallet-item__description"
+      class="cr-wallet-item__info"
     >
       <span
-        class="cr-wallet-item__description-currency"
+        class="cr-crypto-icon cr-wallet-item__icon"
       >
-        BTC
+        <img
+          alt="BTC"
+        />
+         
+      </span>
+      <div
+        class="cr-wallet-item__description"
+      >
+        <span
+          class="cr-wallet-item__description-currency"
+        >
+          BTC
+        </span>
+        <span
+          class="cr-wallet-item__description-name"
+        >
+          Bitcoin
+        </span>
+      </div>
+    </div>
+    <span
+      class="cr-wallet-item__balance"
+    >
+      <span>
+        45
       </span>
       <span
-        class="cr-wallet-item__description-name"
+        class="cr-decimal__opacity"
       >
-        Bitcoin
+        .00000000
       </span>
-    </div>
+      <div
+        class="cr-wallet-item__balance-price"
+      >
+        ≈ $0.0000
+      </div>
+    </span>
   </div>
-  <span
-    class="cr-wallet-item__balance"
-  >
-    <span>
-      45
-    </span>
-    <span
-      class="cr-decimal__opacity"
-    >
-      .00000000
-    </span>
-    <div
-      class="cr-wallet-item__balance-price"
-    >
-      ≈ $0.0000
-    </div>
-  </span>
 </div>
 `;

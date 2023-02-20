@@ -50,7 +50,7 @@ describe('P2P CancelOffer', () => {
 
     it('should fetch cancelOffer in success flow', async () => {
         mockP2PCancelOffer();
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedP2PCancelOfferActionsFetch.length) {
@@ -66,7 +66,7 @@ describe('P2P CancelOffer', () => {
 
     it('should trigger fetch cancelOffer error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedP2PCancelOfferActionsError.length) {

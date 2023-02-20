@@ -60,7 +60,7 @@ describe('P2P Currencies Fetch', () => {
 
     it('should fetch p2pCurrencies in success flow', async () => {
         mockP2PCurrencies();
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedP2PCurrenciesActionsFetch.length) {
@@ -76,7 +76,7 @@ describe('P2P Currencies Fetch', () => {
 
     it('should trigger fetch p2pCurrencies error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedP2PCurrenciesActionsError.length) {

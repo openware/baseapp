@@ -1,57 +1,61 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`OrdersTabScreen test should render 1`] = `
-<div
-  class="pg-orders-tab pg-container"
->
+<div>
   <div
-    class="pg-orders-tab__tabs-content"
+    class="pg-orders-tab pg-container"
   >
     <div
-      class="cr-tab-panel"
+      class="pg-orders-tab__tabs-content"
     >
       <div
-        class="cr-tab-panel__navigation-container draggable-container"
+        class="cr-tab-panel"
       >
         <div
-          class="cr-tab-panel__navigation-container-navigation"
-          role="tablist"
+          class="cr-tab-panel__navigation-container draggable-container"
         >
           <div
-            class="cr-tab cr-tab__active"
-            role="tab"
-            tabindex="0"
+            class="cr-tab-panel__navigation-container-navigation"
+            role="tablist"
           >
-            Open
-            <span
-              class="cr-tab__pointer"
-            />
-          </div>
-          <div
-            class="cr-tab"
-            role="tab"
-            tabindex="1"
-          >
-            All
+            <div
+              class="cr-tab cr-tab__active"
+              role="tab"
+              tabindex="0"
+            >
+              Open
+              <span
+                class="cr-tab__pointer"
+              />
+            </div>
+            <div
+              class="cr-tab"
+              role="tab"
+              tabindex="1"
+            >
+              All
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        class="cr-tab-content cr-tab-content__active"
-      >
         <div
-          class="pg-history-elem pg-history-elem-empty"
+          class="cr-tab-content cr-tab-content__active"
         >
-          <p
-            class="pg-history-elem__empty"
+          <div
+            class="pg-history-elem pg-history-elem-empty"
           >
-            There is no data to show
-          </p>
+            <div
+              class="text-center"
+            >
+              <div
+                class="spinner-border text-primary"
+              />
+            </div>
+          </div>
         </div>
+        <div
+          class="cr-tab-content"
+        />
       </div>
-      <div
-        class="cr-tab-content"
-      />
     </div>
   </div>
 </div>

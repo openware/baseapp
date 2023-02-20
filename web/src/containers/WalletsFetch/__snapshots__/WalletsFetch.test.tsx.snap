@@ -1,29 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`WalletsFetch component should match snapshot 1`] = `
-<ContextProvider
-  value={
-    Object {
-      "store": Object {
-        "@@observable": [Function],
-        "dispatch": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-      },
-      "subscription": Object {
-        "addNestedSub": [Function],
-        "getListeners": [Function],
-        "handleChangeWrapper": [Function],
-        "isSubscribed": [Function],
-        "notifyNestedSubs": [Function],
-        "onStateChange": [Function],
-        "trySubscribe": [Function],
-        "tryUnsubscribe": [Function],
-      },
-    }
-  }
->
-  <Connect(withRouter(Connect(WalletsFetchComponent))) />
-</ContextProvider>
-`;
+exports[`WalletsFetch component should match snapshot 1`] = `<div />`;

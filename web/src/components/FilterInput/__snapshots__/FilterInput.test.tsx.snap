@@ -1,30 +1,39 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`FilterInput should render 1`] = `
-<div
-  className="cr-search"
->
-  <span
-    className="cr-search__icon"
+<div>
+  <div
+    class="cr-search"
   >
-    <img
-      alt="search icon"
-      src="test-file-stub"
+    <span
+      class="cr-search__icon"
+    >
+      <img
+        alt="search icon"
+      />
+    </span>
+    <input
+      class="cr-search__input"
+      placeholder="Search"
+      type="text"
+      value=""
     />
-  </span>
-  <input
-    className="cr-search__input"
-    onChange={[Function]}
-    placeholder="Search"
-    type="text"
-    value=""
-  />
-  <span
-    className="cr-search__cancel"
-  >
-    <Component
-      onClick={[Function]}
-    />
-  </span>
+    <span
+      class="cr-search__cancel"
+    >
+      <svg
+        fill="none"
+        height="15"
+        viewBox="0 0 15 15"
+        width="15"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M7.5 0C11.6475 0 15 3.3525 15 7.5C15 11.6475 11.6475 15 7.5 15C3.3525 15 0 11.6475 0 7.5C0 3.3525 3.3525 0 7.5 0ZM10.1925 3.75L7.5 6.4425L4.8075 3.75L3.75 4.8075L6.4425 7.5L3.75 10.1925L4.8075 11.25L7.5 8.5575L10.1925 11.25L11.25 10.1925L8.5575 7.5L11.25 4.8075L10.1925 3.75Z"
+          fill="var(--icons)"
+        />
+      </svg>
+    </span>
+  </div>
 </div>
 `;

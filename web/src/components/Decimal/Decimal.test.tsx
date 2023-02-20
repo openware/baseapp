@@ -1,84 +1,81 @@
-import { shallow } from 'enzyme';
-import * as React from 'react';
+import { render, screen } from '@testing-library/react';
+import React from 'react';
 import { Decimal, DecimalProps } from '.';
 
 const defaultProps: DecimalProps = {
     fixed: 8,
 };
 
-// tslint:disable no-magic-numbers
-const setup = (props: Partial<DecimalProps> = {}) => {
+const renderComponent = (props: Partial<DecimalProps> = {}) => {
     if (props.children) {
-        return shallow(<Decimal {...{ ...defaultProps, ...props }} />);
+        return render(<Decimal {...{ ...defaultProps, ...props }} />);
     }
 
-    return shallow(<Decimal {...{ ...defaultProps, ...props }}>123.3203020023</Decimal>);
+    return render(<Decimal {...{ ...defaultProps, ...props }}>123.3203020023</Decimal>);
 };
 
 describe('Decimal', () => {
     it('should render', () => {
-        const wrapper = setup();
-        expect(wrapper).toMatchSnapshot();
+        expect(renderComponent().container).toMatchSnapshot();
     });
 
     it('should have className for number after dot', () => {
-        const wrapper = setup();
-        expect(wrapper.find('span').last().hasClass('cr-decimal__opacity')).toBeTruthy();
+        expect(renderComponent().container.querySelector('.cr-decimal__opacity')).toBeInTheDocument();
     });
 
     it('should handle empty string child', () => {
-        const wrapper = shallow(<Decimal fixed={8} children={''} />);
-        expect(wrapper).toMatchSnapshot();
+        const { container } = render(<Decimal fixed={8} children={''} />);
+        expect(container).toMatchSnapshot();
     });
 
     it('should handle string child', () => {
-        const wrapper = shallow(<Decimal fixed={8} children={'123.3203020023'} />);
-        expect(wrapper).toMatchSnapshot();
+        const { container } = render(<Decimal fixed={8} children={'123.3203020023'} />);
+        expect(container).toMatchSnapshot();
     });
 
     it('should handle small string child', () => {
-        const wrapper = shallow(<Decimal fixed={8} children={'0.00000007'} />);
-        expect(wrapper).toMatchSnapshot();
+        const { container } = render(<Decimal fixed={8} children={'0.00000007'} />);
+        expect(container).toMatchSnapshot();
     });
 
     it('should handle small exponential string child', () => {
-        const wrapper = shallow(<Decimal fixed={8} children={'3e-8'} />);
-        expect(wrapper).toMatchSnapshot();
+        const { container } = render(<Decimal fixed={8} children={'3e-8'} />);
+        expect(container).toMatchSnapshot();
     });
 
     it('should handle zero number value child', () => {
-        const wrapper = shallow(<Decimal fixed={8} children={0} />);
-        expect(wrapper).toMatchSnapshot();
+        const { container } = render(<Decimal fixed={8} children={0} />);
+        expect(container).toMatchSnapshot();
     });
 
     it('should handle number child', () => {
-        const wrapper = shallow(<Decimal fixed={8} children={123.3203020023} />);
-        expect(wrapper).toMatchSnapshot();
+        const { container } = render(<Decimal fixed={8} children={123.3203020023} />);
+        expect(container).toMatchSnapshot();
     });
 
     it('should handle small number child', () => {
-        const wrapper = shallow(<Decimal fixed={8} children={0.00000007} />);
-        expect(wrapper).toMatchSnapshot();
+        const { container } = render(<Decimal fixed={8} children={0.00000007} />);
+        expect(container).toMatchSnapshot();
     });
 
     it('should handle smallest number child', () => {
-        const wrapper = shallow(<Decimal fixed={8} children={0.000000001} />);
-        expect(wrapper).toMatchSnapshot();
+        const { container } = render(<Decimal fixed={8} children={0.000000001} />);
+        expect(container).toMatchSnapshot();
     });
 
     it('should handle large number child', () => {
-        const wrapper = shallow(<Decimal fixed={8} children={12345678.01234567} />);
-        expect(wrapper).toMatchSnapshot();
+        const { container } = render(<Decimal fixed={8} children={12345678.01234567} />);
+        expect(container).toMatchSnapshot();
     });
 
     it('should handle extremly large number child', () => {
-        const wrapper = shallow(<Decimal fixed={4} children={0.12345678} />);
-        expect(wrapper).toMatchSnapshot();
+        const { container } = render(<Decimal fixed={4} children={0.12345678} />);
+        expect(container).toMatchSnapshot();
     });
 
     it('should handle undefined value', () => {
-        const wrapper = shallow(<Decimal fixed={8}>{undefined}</Decimal>);
-        expect(wrapper.find('span').first().props().children).toEqual('0');
+        render(<Decimal fixed={8}>{undefined}</Decimal>);
+        expect(screen.getAllByText('0').length).toEqual(2);
         expect(Decimal.format('0', 3)).toEqual('0.000');
     });
 
@@ -158,94 +155,94 @@ describe('Decimal', () => {
     });
 
     it('should handle zero fixed value', () => {
-        const wrapper = setup({ fixed: 0, children: '123.092' });
-        expect(wrapper.find('span').first().props().children).toEqual('123');
+        renderComponent({ fixed: 0, children: '123.092' });
+        expect(screen.queryByText('123')).toBeInTheDocument();
     });
 
     it('should rounding child and afterDot - non-highlighted', () => {
-        const wrapper = setup({ children: '123.12399999', fixed: 4 });
-        const spans = wrapper.find('span');
+        const { container } = renderComponent({ children: '123.12399999', fixed: 4 });
+        const spans = container.getElementsByTagName('span');
         expect(spans.length).toEqual(2);
         // first span - highlighted
-        expect(spans.first().hasClass('cr-decimal__opacity')).toBeFalsy();
-        expect(spans.first().props().children).toEqual('123');
+        expect(spans[0].className).not.toEqual('cr-decimal__opacity');
+        expect(spans[0].innerHTML).toEqual('123');
         // second span - rounded and non-highlighted
-        expect(spans.last().hasClass('cr-decimal__opacity')).toBeTruthy();
-        expect(spans.last().props().children).toEqual('.1239');
+        expect(spans[1].className).toEqual('cr-decimal__opacity');
+        expect(spans[1].innerHTML).toEqual('.1239');
     });
 
     it('should handle prevValue prop', () => {
-        const wrapper = setup({
+        const { container } = renderComponent({
             fixed: 5,
             prevValue: '125.1234123',
             children: '123.32030200230000',
         });
-        const spans = wrapper.find('span');
+        const spans = container.getElementsByTagName('span');
         expect(spans.length).toEqual(2);
-        // first span - non-ighlighted
-        expect(spans.first().hasClass('cr-decimal__opacity')).toBeTruthy();
-        expect(spans.first().props().children).toEqual('12');
+        // first span - non-highlighted
+        expect(spans[0].className).toEqual('cr-decimal__opacity');
+        expect(spans[0].innerHTML).toEqual('12');
         // second span - highlighted
-        expect(spans.last().hasClass('cr-decimal__opacity')).toBeFalsy();
-        expect(spans.last().props().children).toEqual('3.32030');
+        expect(spans[1].className).not.toEqual('cr-decimal__opacity');
+        expect(spans[1].innerHTML).toEqual('3.32030');
     });
 
     it('should handle thousands separator formatted prevValue prop', () => {
-        const wrapper = setup({
+        const { container } = renderComponent({
             fixed: 2,
             prevValue: '123456.12',
             children: '123456.14',
             thousSep: ',',
         });
-        const spans = wrapper.find('span');
+        const spans = container.getElementsByTagName('span');
         expect(spans.length).toEqual(2);
-        // first span - non-ighlighted
-        expect(spans.first().hasClass('cr-decimal__opacity')).toBeTruthy();
-        expect(spans.first().props().children).toEqual('123,456.1');
+        // first span - non-highlighted
+        expect(spans[0].className).toEqual('cr-decimal__opacity');
+        expect(spans[0].innerHTML).toEqual('123,456.1');
         // second span - highlighted
-        expect(spans.last().hasClass('cr-decimal__opacity')).toBeFalsy();
-        expect(spans.last().props().children).toEqual('4');
+        expect(spans[1].className).not.toEqual('cr-decimal__opacity');
+        expect(spans[1].innerHTML).toEqual('4');
     });
 
     it('should handle separators formatted prevValue prop', () => {
-        const wrapper = setup({
+        const { container } = renderComponent({
             fixed: 4,
             prevValue: '12345678.1234',
             children: '12346789.1234',
             thousSep: ' ',
             floatSep: ',',
         });
-        const spans = wrapper.find('span');
+        const spans = container.getElementsByTagName('span');
         expect(spans.length).toEqual(2);
-        // first span - non-ighlighted
-        expect(spans.first().hasClass('cr-decimal__opacity')).toBeTruthy();
-        expect(spans.first().props().children).toEqual('12 34');
+        // first span - non-highlighted
+        expect(spans[0].className).toEqual('cr-decimal__opacity');
+        expect(spans[0].innerHTML).toEqual('12 34');
         // second span - highlighted
-        expect(spans.last().hasClass('cr-decimal__opacity')).toBeFalsy();
-        expect(spans.last().props().children).toEqual('6 789,1234');
+        expect(spans[1].className).not.toEqual('cr-decimal__opacity');
+        expect(spans[1].innerHTML).toEqual('6 789,1234');
     });
 
     it('should handle small prevValue prop', () => {
-        const wrapper = setup({ fixed: 8, prevValue: '0.00000001', children: '0.00000002' });
-        const spans = wrapper.find('span');
+        const { container } = renderComponent({ fixed: 8, prevValue: '0.00000001', children: '0.00000002' });
+        const spans = container.getElementsByTagName('span');
         expect(spans.length).toEqual(2);
-        // first span - non-ighlighted
-        expect(spans.first().hasClass('cr-decimal__opacity')).toBeTruthy();
-        expect(spans.first().props().children).toEqual('0.0000000');
+        // first span - non-highlighted
+        expect(spans[0].className).toEqual('cr-decimal__opacity');
+        expect(spans[0].innerHTML).toEqual('0.0000000');
         // second span - highlighted
-        expect(spans.last().hasClass('cr-decimal__opacity')).toBeFalsy();
-        expect(spans.last().props().children).toEqual('2');
+        expect(spans[1].className).not.toEqual('cr-decimal__opacity');
+        expect(spans[1].innerHTML).toEqual('2');
     });
 
     it('should not handle prevValue prop', () => {
-        const wrapper = setup({ fixed: 8, prevValue: '0.00000001', children: '0.00000001' });
-        const spans = wrapper.find('span');
+        const { container } = renderComponent({ fixed: 8, prevValue: '0.00000001', children: '0.00000001' });
+        const spans = container.getElementsByTagName('span');
         expect(spans.length).toEqual(2);
-        // first span - non-ighlighted
-        expect(spans.first().hasClass('cr-decimal__opacity')).toBeTruthy();
-        expect(spans.first().props().children).toEqual('0.00000001');
+        // first span - non-highlighted
+        expect(spans[0].className).toEqual('cr-decimal__opacity');
+        expect(spans[0].innerHTML).toEqual('0.00000001');
         // second span - highlighted
-        expect(spans.last().hasClass('cr-decimal__opacity')).toBeFalsy();
-        expect(spans.last().props().children).toEqual('');
+        expect(spans[1].className).not.toEqual('cr-decimal__opacity');
+        expect(spans[1].innerHTML).toEqual('');
     });
 });

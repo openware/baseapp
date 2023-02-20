@@ -1,67 +1,165 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TwoFactorAuth component should render 1`] = `
-<div
-  className="pg-2fa___form"
->
-  <form>
-    <div
-      className="cr-email-form"
-    >
+<div>
+  <div
+    class="pg-2fa___form"
+  >
+    <form>
       <div
-        className="cr-email-form__options-group"
+        class="cr-email-form"
       >
         <div
-          className="cr-email-form__option"
+          class="cr-email-form__options-group"
         >
           <div
-            className="cr-email-form__option-inner"
+            class="cr-email-form__option"
           >
-            2FA verification
             <div
-              className="cr-email-form__cros-icon"
-              onClick={[MockFunction]}
+              class="cr-email-form__option-inner"
             >
-              <Component
-                className="close-icon"
-              />
+              2FA verification
+              <div
+                class="cr-email-form__cros-icon"
+              >
+                <svg
+                  class="close-icon"
+                  fill="none"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  width="14"
+                >
+                  <path
+                    clip-rule="evenodd"
+                    d="M5.58434 6.99901L0.875873 11.7079L2.29003 13.1221L6.99849 8.41328L11.707 13.1221L13.1211 11.7079L8.41265 6.99901L13.704 1.7072L12.2899 0.292927L6.99849 5.58474L1.70712 0.292932L0.292969 1.7072L5.58434 6.99901Z"
+                    fill="var(--icons)"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div
-        className="cr-email-form__form-content"
-      >
         <div
-          className="cr-email-form__group"
+          class="cr-email-form__form-content"
         >
-          <CodeVerification
-            code=""
-            codeLength={6}
-            inputMode="decimal"
-            message=""
-            onChange={[MockFunction]}
-            onSubmit={[Function]}
-            placeholder="X"
-            showPaste2FA={true}
-            type="text"
-          />
-        </div>
-        <div
-          className="cr-email-form__button-wrapper"
-        >
-          <Button
-            active={false}
-            disabled={true}
-            onClick={[MockFunction]}
-            size="lg"
-            variant="primary"
+          <div
+            class="cr-email-form__group"
           >
-            Sign in
-          </Button>
+            <div
+              class="pg-code-verification"
+            >
+              <div
+                class="pg-code-verification__label"
+              >
+                Enter 2fa code from the Google Authenticator app
+              </div>
+              <div
+                class="pg-code-verification__block"
+              >
+                <div
+                  class="pg-code-verification__block__content"
+                >
+                  <div
+                    class="pg-code-verification__wrapper"
+                  >
+                    <div
+                      class="pg-code-verification__wrapper-item pg-code-verification__wrapper-item-placeholder pg-code-verification__wrapper-item-placeholder-border"
+                    >
+                      X
+                    </div>
+                    <div
+                      class="pg-code-verification__wrapper-item pg-code-verification__wrapper-item-placeholder"
+                    >
+                      X
+                    </div>
+                    <div
+                      class="pg-code-verification__wrapper-item pg-code-verification__wrapper-item-placeholder"
+                    >
+                      X
+                    </div>
+                    <div
+                      class="pg-code-verification__wrapper-item pg-code-verification__wrapper-item-placeholder"
+                    >
+                      X
+                    </div>
+                    <div
+                      class="pg-code-verification__wrapper-item pg-code-verification__wrapper-item-placeholder"
+                    >
+                      X
+                    </div>
+                    <div
+                      class="pg-code-verification__wrapper-item pg-code-verification__wrapper-item-placeholder"
+                    >
+                      X
+                    </div>
+                  </div>
+                  <div
+                    class="pg-code-verification__input"
+                  >
+                    <input
+                      inputmode="decimal"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="pg-code-verification__paste"
+                >
+                  <svg
+                    fill="none"
+                    height="18"
+                    viewBox="0 0 18 18"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      clip-rule="evenodd"
+                      d="M9.89997 10.8C9.89997 11.297 9.49703 11.7 8.99997 11.7H2.69999C2.20294 11.7 1.79999 11.297 1.79999 10.8V2.69999C1.79999 2.20294 2.20294 1.79999 2.69999 1.79999H8.99997C9.49703 1.79999 9.89997 2.20294 9.89997 2.69999V10.8ZM0.899997 13.5C0.402943 13.5 0 13.097 0 12.6V0.899997C0 0.402943 0.402942 0 0.899997 0H10.8C11.297 0 11.7 0.402943 11.7 0.899997V12.6C11.7 13.097 11.297 13.5 10.8 13.5H0.899997Z"
+                      fill="var(--icons)"
+                      fill-rule="evenodd"
+                    />
+                    <path
+                      d="M16.2952 14.1627V16.2943H15.0635V17.9996H17.1478C17.6185 17.9996 18.0005 17.6176 18.0005 17.1469V14.1627H16.2952Z"
+                      fill="var(--icons)"
+                    />
+                    <path
+                      d="M13.5002 16.2H10.8002V18H13.5002V16.2Z"
+                      fill="var(--icons)"
+                    />
+                    <path
+                      d="M8.00544 16.2945V14.1627H6.29998V17.1472C6.29998 17.6179 6.682 17.9999 7.15271 17.9999H9.23728V16.2945H8.00544Z"
+                      fill="var(--icons)"
+                    />
+                    <path
+                      d="M17.1469 3.59999H13.2627V5.3053H16.2943V7.43694H17.9996V4.45264C17.9996 3.98198 17.6176 3.59999 17.1469 3.59999Z"
+                      fill="var(--icons)"
+                    />
+                    <path
+                      d="M18 9.00021H16.2V12.6002H18V9.00021Z"
+                      fill="var(--icons)"
+                    />
+                  </svg>
+                  Paste
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="cr-email-form__button-wrapper"
+          >
+            <button
+              class="btn btn-primary btn-lg"
+              disabled=""
+              type="button"
+            >
+              Sign in
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>
 `;

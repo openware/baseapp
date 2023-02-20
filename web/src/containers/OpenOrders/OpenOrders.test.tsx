@@ -1,9 +1,8 @@
-import { shallow } from 'enzyme';
-import * as React from 'react';
-import { connect, Provider } from 'react-redux';
-import { createStore } from 'redux';
-import { OpenOrdersComponent } from '..';
-import { Market, rootReducer } from '../../modules';
+import { render } from '@testing-library/react';
+import React from 'react';
+import { TestComponentWrapper } from 'src/lib/test';
+import { OpenOrdersComponent } from '.';
+import { Market } from '../../modules';
 import { OrderCommon } from '../../modules/types';
 
 const currentMarket: Market | undefined = {
@@ -40,25 +39,15 @@ const defaultProps = {
     userLoggedIn: true,
 };
 
-const store = createStore(rootReducer);
-const OpenOrders = connect()(OpenOrdersComponent);
-
-const setup = (props: Partial<{}> = {}) =>
-    shallow(
-        <Provider store={store}>
-            // @ts-ignore
-            <OpenOrders {...{ ...defaultProps, ...props }} />
-        </Provider>,
+const renderComponent = (props) =>
+    render(
+        <TestComponentWrapper>
+            <OpenOrdersComponent {...{ ...defaultProps, ...props }} />
+        </TestComponentWrapper>,
     );
 
 describe('OpenOrders', () => {
-    let wrapper = setup();
-
-    beforeEach(() => {
-        wrapper = setup();
-    });
-
     it('should render', () => {
-        expect(wrapper).toMatchSnapshot();
+        expect(renderComponent({}).container).toMatchSnapshot();
     });
 });

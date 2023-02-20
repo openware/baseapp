@@ -1,160 +1,506 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Order should match snapshot 1`] = `
-<div
-  className="cr-order cr-order--extended"
->
+<div>
   <div
-    className="cr-order--extended__buy"
+    class="cr-order cr-order--extended"
   >
-    <Component
-      currentTabIndex={0}
-      fixed={true}
-      onTabChange={[Function]}
-      panels={
-        Array [
-          Object {
-            "content": <OrderForm
-              amount=""
-              available={12}
-              bestAsk="10"
-              bestBid="10"
-              currentMarketAskPrecision={4}
-              currentMarketBidPrecision={5}
-              currentMarketFilters={Array []}
-              from="btc"
-              handleAmountChange={[Function]}
-              handleChangeAmountByButton={[Function]}
-              marketId="BTCUSD"
-              onSubmit={[Function]}
-              orderTypes={
-                Array [
-                  "Limit",
-                  "Market",
-                  "Stop-loss",
-                  "Take-profit",
-                  "Stop-limit",
-                  "Take-limit",
-                ]
-              }
-              orderTypesIndex={
-                Array [
-                  "Limit",
-                  "Market",
-                  "Stop-loss",
-                  "Take-profit",
-                  "Stop-limit",
-                  "Take-limit",
-                ]
-              }
-              priceMarket={5}
-              to="eth"
-              totalPrice={0}
-              translate={
-                [MockFunction] {
-                  "calls": Array [
-                    Array [
-                      "page.body.trade.header.newOrder.content.tabs.buy",
-                    ],
-                    Array [
-                      "page.body.trade.header.newOrder.content.tabs.sell",
-                    ],
-                  ],
-                  "results": Array [
-                    Object {
-                      "type": "return",
-                      "value": undefined,
-                    },
-                    Object {
-                      "type": "return",
-                      "value": undefined,
-                    },
-                  ],
-                }
-              }
-              type="buy"
-            />,
-            "label": "Buy",
-          },
-        ]
-      }
-    />
-  </div>
-  <div
-    className="cr-order--extended__sell"
-  >
-    <Component
-      currentTabIndex={0}
-      fixed={true}
-      onTabChange={[Function]}
-      panels={
-        Array [
-          Object {
-            "content": <OrderForm
-              amount=""
-              available={200}
-              bestAsk="10"
-              bestBid="10"
-              currentMarketAskPrecision={4}
-              currentMarketBidPrecision={5}
-              currentMarketFilters={Array []}
-              from="btc"
-              handleAmountChange={[Function]}
-              handleChangeAmountByButton={[Function]}
-              marketId="BTCUSD"
-              onSubmit={[Function]}
-              orderTypes={
-                Array [
-                  "Limit",
-                  "Market",
-                  "Stop-loss",
-                  "Take-profit",
-                  "Stop-limit",
-                  "Take-limit",
-                ]
-              }
-              orderTypesIndex={
-                Array [
-                  "Limit",
-                  "Market",
-                  "Stop-loss",
-                  "Take-profit",
-                  "Stop-limit",
-                  "Take-limit",
-                ]
-              }
-              priceMarket={10}
-              to="eth"
-              totalPrice={0}
-              translate={
-                [MockFunction] {
-                  "calls": Array [
-                    Array [
-                      "page.body.trade.header.newOrder.content.tabs.buy",
-                    ],
-                    Array [
-                      "page.body.trade.header.newOrder.content.tabs.sell",
-                    ],
-                  ],
-                  "results": Array [
-                    Object {
-                      "type": "return",
-                      "value": undefined,
-                    },
-                    Object {
-                      "type": "return",
-                      "value": undefined,
-                    },
-                  ],
-                }
-              }
-              type="sell"
-            />,
-            "label": "Sell",
-          },
-        ]
-      }
-    />
+    <div
+      class="cr-order--extended__buy"
+    >
+      <div
+        class="cr-tab-panel cr-tab-panel__fixed"
+      >
+        <div
+          class="cr-tab-panel__navigation-container draggable-container"
+        >
+          <div
+            class="cr-tab-panel__navigation-container-navigation"
+            role="tablist"
+          >
+            <div
+              class="cr-tab cr-tab__active"
+              role="tab"
+              tabindex="0"
+            >
+              Buy
+              <span
+                class="cr-tab__pointer"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="cr-tab-content cr-tab-content__active"
+        >
+          <div
+            class="cr-order-form"
+          >
+            <div
+              class="cr-order-item"
+            >
+              <div
+                class="cr-order-item__dropdown__label"
+              />
+              <div
+                class="cr-dropdown cr-dropdown--default"
+              >
+                <div
+                  class="dropdown"
+                >
+                  <button
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    class="dropdown-toggle btn btn-primary"
+                    id="dropdown-basic"
+                    type="button"
+                  >
+                    Limit
+                    <svg
+                      class="cr-dropdown__arrow"
+                      fill="none"
+                      height="8"
+                      viewBox="0 0 12 8"
+                      width="12"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M1.41 0.590088L6 5.17009L10.59 0.590088L12 2.00009L6 8.00009L0 2.00009L1.41 0.590088Z"
+                        fill="var(--icons)"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div
+              class="cr-order-item"
+            >
+              <div
+                class="cr-order-input"
+              >
+                <fieldset
+                  class="cr-order-input__fieldset"
+                >
+                  <div
+                    class="custom-input"
+                  >
+                    <label />
+                    <div
+                      class="input-group input-group-lg"
+                    >
+                      <input
+                        class="form-control form-control-lg"
+                        placeholder="0"
+                        type="number"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                </fieldset>
+                <div
+                  class="cr-order-input__crypto-icon"
+                >
+                  BTC
+                </div>
+              </div>
+              <div
+                class="error-message"
+              />
+            </div>
+            <div
+              class="cr-order-item"
+            >
+              <div
+                class="cr-order-item__prices"
+              >
+                <span
+                  class="bids"
+                >
+                  ▲ 
+                  10.00000
+                </span>
+                <span
+                  class="asks"
+                >
+                  ▼ 
+                  10.00000
+                </span>
+              </div>
+            </div>
+            <div
+              class="cr-order-item"
+            >
+              <div
+                class="cr-order-input"
+              >
+                <fieldset
+                  class="cr-order-input__fieldset"
+                >
+                  <div
+                    class="custom-input"
+                  >
+                    <label />
+                    <div
+                      class="input-group input-group-lg"
+                    >
+                      <input
+                        class="form-control form-control-lg"
+                        placeholder="0"
+                        type="number"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                </fieldset>
+                <div
+                  class="cr-order-input__crypto-icon"
+                >
+                  ETH
+                </div>
+              </div>
+            </div>
+            <div
+              class="cr-order-item"
+            >
+              <div
+                class="cr-order-item__percentage-buttons"
+              >
+                <button
+                  class="cr-percentage-button"
+                >
+                  25%
+                </button>
+                <button
+                  class="cr-percentage-button"
+                >
+                  50%
+                </button>
+                <button
+                  class="cr-percentage-button"
+                >
+                  75%
+                </button>
+                <button
+                  class="cr-percentage-button"
+                >
+                  100%
+                </button>
+              </div>
+            </div>
+            <div
+              class="cr-order-item"
+            >
+              <div
+                class="cr-order-item__total"
+              >
+                <label
+                  class="cr-order-item__total__label"
+                />
+                <div
+                  class="cr-order-item__total__content"
+                >
+                  <span
+                    class="cr-order-item__total__content__amount"
+                  >
+                    0.000000000
+                  </span>
+                  <span
+                    class="cr-order-item__total__content__currency"
+                  >
+                    BTC
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="cr-order-item"
+            >
+              <div
+                class="cr-order-item__available"
+              >
+                <label
+                  class="cr-order-item__available__label"
+                />
+                <div
+                  class="cr-order-item__available__content"
+                >
+                  <span
+                    class="cr-order-item__available__content__amount"
+                  >
+                    12.00000
+                  </span>
+                  <span
+                    class="cr-order-item__available__content__currency"
+                  >
+                    BTC
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="cr-order-item"
+            >
+              <button
+                class="btn-block mr-1 mt-1 btn-lg btn btn-success btn-block btn-lg"
+                disabled=""
+                type="button"
+              >
+                buy
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="cr-order--extended__sell"
+    >
+      <div
+        class="cr-tab-panel cr-tab-panel__fixed"
+      >
+        <div
+          class="cr-tab-panel__navigation-container draggable-container"
+        >
+          <div
+            class="cr-tab-panel__navigation-container-navigation"
+            role="tablist"
+          >
+            <div
+              class="cr-tab cr-tab__active"
+              role="tab"
+              tabindex="0"
+            >
+              Sell
+              <span
+                class="cr-tab__pointer"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="cr-tab-content cr-tab-content__active"
+        >
+          <div
+            class="cr-order-form"
+          >
+            <div
+              class="cr-order-item"
+            >
+              <div
+                class="cr-order-item__dropdown__label"
+              />
+              <div
+                class="cr-dropdown cr-dropdown--default"
+              >
+                <div
+                  class="dropdown"
+                >
+                  <button
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    class="dropdown-toggle btn btn-primary"
+                    id="dropdown-basic"
+                    type="button"
+                  >
+                    Limit
+                    <svg
+                      class="cr-dropdown__arrow"
+                      fill="none"
+                      height="8"
+                      viewBox="0 0 12 8"
+                      width="12"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M1.41 0.590088L6 5.17009L10.59 0.590088L12 2.00009L6 8.00009L0 2.00009L1.41 0.590088Z"
+                        fill="var(--icons)"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div
+              class="cr-order-item"
+            >
+              <div
+                class="cr-order-input"
+              >
+                <fieldset
+                  class="cr-order-input__fieldset"
+                >
+                  <div
+                    class="custom-input"
+                  >
+                    <label />
+                    <div
+                      class="input-group input-group-lg"
+                    >
+                      <input
+                        class="form-control form-control-lg"
+                        placeholder="0"
+                        type="number"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                </fieldset>
+                <div
+                  class="cr-order-input__crypto-icon"
+                >
+                  BTC
+                </div>
+              </div>
+              <div
+                class="error-message"
+              />
+            </div>
+            <div
+              class="cr-order-item"
+            >
+              <div
+                class="cr-order-item__prices"
+              >
+                <span
+                  class="bids"
+                >
+                  ▲ 
+                  10.00000
+                </span>
+                <span
+                  class="asks"
+                >
+                  ▼ 
+                  10.00000
+                </span>
+              </div>
+            </div>
+            <div
+              class="cr-order-item"
+            >
+              <div
+                class="cr-order-input"
+              >
+                <fieldset
+                  class="cr-order-input__fieldset"
+                >
+                  <div
+                    class="custom-input"
+                  >
+                    <label />
+                    <div
+                      class="input-group input-group-lg"
+                    >
+                      <input
+                        class="form-control form-control-lg"
+                        placeholder="0"
+                        type="number"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                </fieldset>
+                <div
+                  class="cr-order-input__crypto-icon"
+                >
+                  ETH
+                </div>
+              </div>
+            </div>
+            <div
+              class="cr-order-item"
+            >
+              <div
+                class="cr-order-item__percentage-buttons"
+              >
+                <button
+                  class="cr-percentage-button"
+                >
+                  25%
+                </button>
+                <button
+                  class="cr-percentage-button"
+                >
+                  50%
+                </button>
+                <button
+                  class="cr-percentage-button"
+                >
+                  75%
+                </button>
+                <button
+                  class="cr-percentage-button"
+                >
+                  100%
+                </button>
+              </div>
+            </div>
+            <div
+              class="cr-order-item"
+            >
+              <div
+                class="cr-order-item__total"
+              >
+                <label
+                  class="cr-order-item__total__label"
+                />
+                <div
+                  class="cr-order-item__total__content"
+                >
+                  <span
+                    class="cr-order-item__total__content__amount"
+                  >
+                    0.000000000
+                  </span>
+                  <span
+                    class="cr-order-item__total__content__currency"
+                  >
+                    BTC
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="cr-order-item"
+            >
+              <div
+                class="cr-order-item__available"
+              >
+                <label
+                  class="cr-order-item__available__label"
+                />
+                <div
+                  class="cr-order-item__available__content"
+                >
+                  <span
+                    class="cr-order-item__available__content__amount"
+                  >
+                    200.0000
+                  </span>
+                  <span
+                    class="cr-order-item__available__content__currency"
+                  >
+                    ETH
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="cr-order-item"
+            >
+              <button
+                class="btn-block mr-1 mt-1 btn-lg btn btn-danger btn-block btn-lg"
+                disabled=""
+                type="button"
+              >
+                sell
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;

@@ -1,10 +1,8 @@
-import * as React from 'react';
-import { captchaLogin } from '../../api';
+import { fireEvent, render, screen } from '@testing-library/react';
+import React from 'react';
+import { captchaLogin } from 'src/api';
+import { TestComponentWrapper } from 'src/lib/test';
 import { SignInComponent, SignInProps } from './';
-
-import { shallow } from 'enzyme';
-import { TestComponentWrapper } from 'lib/test';
-import { Button } from 'react-bootstrap';
 
 const defaults: SignInProps = {
     onForgotPassword: jest.fn(),
@@ -29,65 +27,71 @@ const defaults: SignInProps = {
     captcha_response: '',
 };
 
-const setup = (props: Partial<SignInProps> = {}) =>
-    shallow(
+const renderComponent = (props: Partial<SignInProps> = {}) =>
+    render(
         <TestComponentWrapper>
             <SignInComponent {...{ ...defaults, ...props }} />
         </TestComponentWrapper>,
     );
 
-// TODO: We need to rewrite tests in order to test hooks
 describe('SignIn component', () => {
     it('should render', () => {
-        const wrapper = setup();
-        expect(wrapper.render()).toMatchSnapshot();
+        expect(renderComponent().container).toMatchSnapshot();
     });
 
     it('render correct title', () => {
-        const wrapper = setup().render();
-        expect(wrapper.find('.__selected').text()).toBe('Sign In');
+        renderComponent();
+        expect(screen.getByText('Sign In')).toBeInTheDocument();
     });
 
     it('should render logo block', () => {
-        let wrapper = setup().render();
-        const firstState = wrapper.find('.cr-sign-in-form__form-content').children();
-        expect(firstState).toHaveLength(4);
-        wrapper = setup({ image: 'image' }).render();
-        const secondState = wrapper.find('.cr-sign-in-form__form-content').children();
-        expect(secondState).toHaveLength(5);
+        const { rerender, container } = renderComponent();
+        const firstState = container.querySelector('.cr-sign-in-form__form-content');
+        expect(firstState.childElementCount).toEqual(4);
+
+        rerender(
+            <TestComponentWrapper>
+                <SignInComponent {...{ ...defaults, image: 'image' }} />
+            </TestComponentWrapper>,
+        );
+        const secondState = container.querySelector('.cr-sign-in-form__form-content');
+        expect(secondState.childElementCount).toEqual(5);
     });
 
     it('should have correct labels', () => {
-        const wrapper = setup({
+        renderComponent({
             labelSignIn: 'label sign in',
             labelSignUp: 'label sign up',
-        }).render();
-        expect(wrapper.find('.__selected').text()).toBe('label sign in');
-        expect(wrapper.find('.cr-sign-in-form__tab-signup').text()).toBe('label sign up');
+        });
+
+        expect(screen.getAllByText('label sign in')).toBeDefined();
+        expect(screen.getByText('label sign up')).toBeInTheDocument();
     });
 
     it('should render error blocks', () => {
-        const wrapper = setup({
+        renderComponent({
             emailError: 'error email',
             passwordError: 'error password',
-        }).render();
-        expect(wrapper.find('.cr-sign-in-form__error').first().text()).toBe('error email');
-        expect(wrapper.find('.cr-sign-in-form__error').last().text()).toBe('error password');
+        });
+
+        expect(screen.getByText('error email')).toBeInTheDocument();
+        expect(screen.getByText('error password')).toBeInTheDocument();
     });
 
-    it.skip('should send request', () => {
+    it('should send request', () => {
         const spyOnValidateForm = jest.fn();
         const spyOnRefreshError = jest.fn();
         const spyOnSignIn = jest.fn();
-        const wrapper = setup({
+
+        renderComponent({
             email: 'email@email.com',
             password: 'Qwerty123',
             isFormValid: spyOnValidateForm,
             refreshError: spyOnRefreshError,
             onSignIn: spyOnSignIn,
         });
-        const button = wrapper.find(Button);
-        button.simulate('click');
+
+        fireEvent.click(screen.getByRole('button'));
         expect(spyOnValidateForm).toHaveBeenCalledTimes(0);
         expect(spyOnRefreshError).toHaveBeenCalled();
         expect(spyOnSignIn).toHaveBeenCalled();
@@ -95,44 +99,38 @@ describe('SignIn component', () => {
         expect(spyOnSignIn).toHaveBeenCalledTimes(1);
     });
 
-    it.skip('should validate form', () => {
-        const spyOnValidateForm = jest.fn();
-        const spyOnRefreshError = jest.fn();
-        const spyOnSignIn = jest.fn();
-        const wrapper = setup({
-            email: 'email',
-            password: 'Qwerty123',
-            refreshError: spyOnRefreshError,
-            onSignIn: spyOnSignIn,
-            isFormValid: spyOnValidateForm,
-        });
-        const button = wrapper.find(Button);
-        button.simulate('click');
-        expect(spyOnValidateForm).toHaveBeenCalled();
-        expect(spyOnValidateForm).toHaveBeenCalledTimes(1);
-        expect(spyOnRefreshError).toHaveBeenCalledTimes(0);
-        expect(spyOnSignIn).toHaveBeenCalledTimes(0);
-    });
-
     it('should have correct labels for input fields', () => {
-        let wrapper = setup().render();
-        expect(wrapper.find('.cr-sign-in-form__bottom-section-password').text()).toBe('Forgot your password?');
-        wrapper = setup({ forgotPasswordLabel: 'label forgot password' }).render();
-        expect(wrapper.find('.cr-sign-in-form__bottom-section-password').text()).toBe('label forgot password');
+        const { rerender } = renderComponent();
+        expect(screen.getByText('Forgot your password?')).toBeInTheDocument();
+
+        rerender(
+            <TestComponentWrapper>
+                <SignInComponent {...{ ...defaults, forgotPasswordLabel: 'label forgot password' }} />
+            </TestComponentWrapper>,
+        );
+        expect(screen.getByText('label forgot password')).toBeInTheDocument();
     });
 
     it('should render captcha block', () => {
-        let wrapper = setup({
+        const { container, rerender } = renderComponent({
             captchaType: 'recaptcha',
             renderCaptcha: <div className="cr-sign-in-form__recaptcha">Content</div>,
         });
         captchaLogin()
-            ? expect(wrapper.find('.cr-sign-in-form__recaptcha').exists()).toBe(true)
-            : expect(wrapper.find('.cr-sign-in-form__recaptcha').exists()).toBe(false);
-        wrapper = setup({
-            captchaType: 'none',
-            renderCaptcha: <div className="cr-sign-in-form__recaptcha">Content</div>,
-        });
-        expect(wrapper.find('.cr-sign-in-form__recaptcha').exists()).toBe(false);
+            ? expect(container.querySelector('.cr-sign-in-form__recaptcha')).toBeInTheDocument()
+            : expect(container.querySelector('.cr-sign-in-form__recaptcha')).not.toBeInTheDocument();
+
+        rerender(
+            <TestComponentWrapper>
+                <SignInComponent
+                    {...{
+                        ...defaults,
+                        captchaType: 'none',
+                        renderCaptcha: <div className="cr-sign-in-form__recaptcha">Content</div>,
+                    }}
+                />
+            </TestComponentWrapper>,
+        );
+        expect(container.querySelector('.cr-sign-in-form__recaptcha')).not.toBeInTheDocument();
     });
 });

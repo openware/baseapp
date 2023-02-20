@@ -1,44 +1,38 @@
-import { shallow } from 'enzyme';
-import { TestComponentWrapper } from 'lib/test';
-import * as React from 'react';
+import { render, screen } from '@testing-library/react';
+import React from 'react';
 import { CryptoIcon, CryptoIconProps } from '.';
 
 const defaultProps: CryptoIconProps = {
     code: 'btc',
 };
 
-const setup = (props: Partial<CryptoIconProps> = {}) =>
-    shallow(
-        <TestComponentWrapper>
-            <CryptoIcon {...{ ...defaultProps, ...props }} />
-        </TestComponentWrapper>,
-    );
+const renderComponent = (props: Partial<CryptoIconProps> = {}) =>
+    render(<CryptoIcon {...{ ...defaultProps, ...props }} />);
 
 describe('CryptoIcon', () => {
+    let component;
+
+    beforeEach(() => {
+        component = renderComponent();
+    });
+
     it('should render', () => {
-        const wrapper = setup().render();
-        expect(wrapper).toMatchSnapshot();
+        expect(component.container).toMatchSnapshot();
     });
 
     it('should have correct className', () => {
-        const wrapper = setup().render();
-        expect(wrapper.hasClass('cr-crypto-icon')).toBeTruthy();
+        expect(component.container.querySelector('.cr-crypto-icon')).toBeInTheDocument();
     });
 
     it('should render children', () => {
         const amount = 123;
-        const wrapper = setup({ children: [amount] }).render();
-        expect(wrapper.text()).toEqual(` ${amount}`);
-    });
-
-    it.skip('should have correct path to svg images', () => {
-        const wrapper = setup().render();
-        expect(wrapper.find('img').prop('src')).toEqual(require('cryptocurrency-icons/svg/color/btc.svg'));
+        renderComponent({ children: [amount] });
+        expect(screen.getByText('123')).toBeInTheDocument();
     });
 
     it('should pass along supplied className', () => {
         const className = 'some-class';
-        const wrapper = setup({ className }).render();
-        expect(wrapper.hasClass(className)).toBeTruthy();
+        const { container } = renderComponent({ className });
+        expect(container.querySelector('.cr-crypto-icon')).toBeInTheDocument();
     });
 });

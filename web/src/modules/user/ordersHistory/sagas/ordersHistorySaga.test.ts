@@ -89,7 +89,7 @@ describe('Orders History', () => {
 
     it('should fetch currency deposit history for 1 page in success flow', async () => {
         mockOrdersHistory();
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsFetchWithFirstPage.length) {
@@ -105,7 +105,7 @@ describe('Orders History', () => {
 
     it('should trigger an error', async () => {
         mockNetworkError(mockAxios);
-        const promise = new Promise((resolve) => {
+        const promise = new Promise<void>((resolve) => {
             store.subscribe(() => {
                 const actions = store.getActions();
                 if (actions.length === expectedActionsError.length) {
