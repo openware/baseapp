@@ -61,7 +61,7 @@
     "stylelint-config-standard": "^20.0.0",
     "stylelint-order": "^4.0.0",
     "tslint": "^5.13.1",
-    "ua-parser-js": "^0.7.19",
+    "ua-parser-js": "^0.7.33",
     "ws": "^7.2.0"
   },
   "scripts": {
